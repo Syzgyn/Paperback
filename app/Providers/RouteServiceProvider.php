@@ -34,6 +34,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::pattern('cvid', '[0-9]+');
         Route::model('comic', \App\Comic::class);
         Route::model('issue', \App\Issue::class);
+        Route::model('indexer', \App\Indexer::class);
         parent::boot();
     }
 

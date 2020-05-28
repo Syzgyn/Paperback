@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Comic;
+use App\Indexer;
+use App\Indexers\Newznab;
 use Illuminate\Http\Request;
-use App\Http\Resources\Comic as ComicResource;
-use App\Repositories\ComicVineRepository;
+use Illuminate\Support\Facades\Validator;
 
-class ComicController extends Controller
+use App\Http\Requests\IndexerRequest;
+use App\Http\Resources\IndexerResource;
+use App\Http\Resources\IndexerCollection;
+
+class IndexerController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->comicvine= resolve("ComicVineRepository");
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +20,9 @@ class ComicController extends Controller
      */
     public function index()
     {
-        //
+        $indexers = Indexer::all();
+
+        return new IndexerCollection($indexers);
     }
 
     /**
@@ -31,32 +31,32 @@ class ComicController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(IndexerRequest $request)
     {
-        $cvid = $request->input('cvid');
-        $comic = Comic::createFromCvid($cvid, false);
+        $indexer = Indexer::createChild($request->validated());
 
-        return new ComicResource($comic);
+        return new IndexerResource($indexer);
     }
+
     /**
      * Display the specified resource.
      *
-     * @param  \App\Comic  $comic
+     * @param  \App\Indexer  $indexer
      * @return \Illuminate\Http\Response
      */
-    public function show(Comic $comic)
+    public function show(Indexer $indexer)
     {
-        //
+        return new IndexerResource($indexer);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Comic  $comic
+     * @param  \App\Indexer  $indexer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comic $comic)
+    public function update(Request $request, Indexer $indexer)
     {
         //
     }
@@ -64,16 +64,11 @@ class ComicController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Comic  $comic
+     * @param  \App\Indexer  $indexer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comic $comic)
+    public function destroy(Indexer $indexer)
     {
         //
-    }
-
-    public function search(String $name) {
-        return $this->comicvine->volumes($name);
-        
     }
 }

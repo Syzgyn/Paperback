@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\ComicVine;
+namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class VolumeCollection extends ResourceCollection
+class IndexerCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -16,9 +16,6 @@ class VolumeCollection extends ResourceCollection
     {
         return [
             'data' => $this->collection,
-            'links' => [
-                'self' => 'link-value',
-            ],
         ];
     }
 }

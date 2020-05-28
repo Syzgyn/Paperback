@@ -22,3 +22,9 @@ Route::resource('comic', 'ComicController');
 Route::get('comic/search/{name}', 'ComicController@search');
 
 Route::apiResource('issue', 'IssueController');
+Route::apiResource('indexer', 'IndexerController');
+
+Route::fallback(function(){
+    return response()->json([
+        'message' => 'Page Not Found.'], 404);
+});
