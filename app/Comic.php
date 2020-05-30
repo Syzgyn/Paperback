@@ -26,7 +26,7 @@ class Comic extends Model
     }
 
     public static function createFromCvid($cvid, $grabImage = true) {
-        $repo = new ComicVineRepository();
+        $repo = resolve("ComicVineRepository");
         $volume = $repo->volume($cvid);
 
         $comic = Comic::create($volume);
@@ -39,6 +39,24 @@ class Comic extends Model
         return $comic;
     }
 
+    public updateFromCvid($grabImage = true, $fetchIssues = false) {
+        $repo = resolve("ComicVineRepository");
+        $volume = $repo->volume($cvid);
+
+        $comic->fill($volume);
+
+        if ($grabImage) {
+            $imagePath = $volume->image;
+            $comic->downloadImage($imagePath);
+        }
+
+        if ($fetchIssues) {
+            $this->fetchIssues();
+        }
+
+        return $comic;
+    }
+
     protected function downloadImage($path) {
         //TODO: Replace with Guzzle
         $contents = file_get_contents($path);
@@ -46,13 +64,17 @@ class Comic extends Model
     } 
 
     protected function fetchIssues() {
-        $repo = new ComicVineRepository();
+        $repo = resolve("ComicVineRepository");
         $issues = $repo->volumeIssues($this->cvid);
 
         foreach($issues as $issue) {
             Issue::create($issue);
         }
 
+    }
+
+    public function issues() {
+        return $this->hasMany(\App\Issue::class);
     }
 
     protected static function booted() {

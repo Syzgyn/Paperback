@@ -3,14 +3,22 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Nanigans\SingleTableInheritance\SingleTableInheritanceTrait;
 
 class Indexer extends Model
 {
+    use SingleTableInheritanceTrait;
+
     const INDEXER_TYPES = [
         'newznab' => \App\Indexers\Newznab::class,
     ];
 
     protected $table = "indexers";
+
+    protected static $singleTableTypeField = 'class';
+    protected static $singleTableSubclasses = self::INDEXER_TYPES;
+    protected static $persisted = ['name', 'settings'];
+
     protected $casts = ['settings' => 'array'];
 
     protected $fillable = [
@@ -34,13 +42,7 @@ class Indexer extends Model
         static::saving(function($indexer) {
             if (get_class($indexer) == self::class) {
                 throw new \Exception("Cannot save base indexer class");
-            }
-        });
-
-        static::retrieved(function($indexer) {
-        });
-
-        static::saving(function($indexer) {
-        });
+                }
+            });
     }
 }

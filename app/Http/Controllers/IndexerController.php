@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 use App\Http\Requests\IndexerRequest;
-use App\Http\Resources\IndexerResource;
+use App\Http\Resources\Indexer as IndexerResource;
 use App\Http\Resources\IndexerCollection;
 
 class IndexerController extends Controller
@@ -58,7 +58,10 @@ class IndexerController extends Controller
      */
     public function update(Request $request, Indexer $indexer)
     {
-        //
+        $indexer->fill($request->validate());
+        $indexer->save();
+
+        return new IndexerResource($indexer);
     }
 
     /**
@@ -69,6 +72,7 @@ class IndexerController extends Controller
      */
     public function destroy(Indexer $indexer)
     {
-        //
+        $indexer->delete();
+        return response()->json(['status' => 'OK']);
     }
 }

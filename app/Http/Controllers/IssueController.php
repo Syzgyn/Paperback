@@ -4,15 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Issue;
 use Illuminate\Http\Request;
-use App\Http\Requests\CvidRequest;
 
 class IssueController extends Controller
 {
-    public function __construct()
-    {
-        $this->comicvine= resolve("ComicVineRepository");
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +14,9 @@ class IssueController extends Controller
      */
     public function index()
     {
-        //
+        $issues = Issue::all();
+
+        return new IssueCollection($issues);
     }
 
     /**
@@ -29,9 +25,12 @@ class IssueController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CvidRequest $request)
+    public function store(Request $request)
     {
-        //
+        $cvid = $request->input('cvid');
+        $comic = Issue::createFromCvid($cvid, false);
+
+        return new IssueResource($comic);
     }
 
     /**
@@ -42,7 +41,7 @@ class IssueController extends Controller
      */
     public function show(Issue $issue)
     {
-        //
+        return new IssueResource($issue);
     }
 
     /**
@@ -54,7 +53,10 @@ class IssueController extends Controller
      */
     public function update(Request $request, Issue $issue)
     {
-        //
+        $issue->fill($request->validate());
+        $issue-save();
+
+        return new IssueResource($issue);
     }
 
     /**
@@ -65,6 +67,7 @@ class IssueController extends Controller
      */
     public function destroy(Issue $issue)
     {
-        //
+        $issue->delete();
+        return response()->json(['status' => 'OK']);
     }
 }
