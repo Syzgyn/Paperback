@@ -75,4 +75,15 @@ class IndexerController extends Controller
         $indexer->delete();
         return response()->json(['status' => 'OK']);
     }
+
+    public function search(String $query, Int $offset = 0) {
+        $indexers = Indexer::all();
+
+        $results = [];
+        foreach($indexers as $indexer) {
+            $results = array_merge($results, $indexer->repository->search($query, $offset));
+        }
+
+        return $results;
+    }
 }

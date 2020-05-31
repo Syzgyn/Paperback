@@ -2,17 +2,17 @@
 namespace App\Indexers;
 
 use App\Indexer;
-use App\Events\Indexers\NewznabRetrieved;
-use GuzzleHttp\Client;
+use App\Repositories\NewznabRepository;
+
 use Nanigans\SingleTableInheritance\SingleTableInheritanceTrait;
 
 class Newznab extends Indexer
 {
     use SingleTableInheritanceTrait;
 
-    const URL_ENDPOINT_BASE = "/api";
+    const URL_ENDPOINT_BASE = "/api/";
 
-    public $client;
+    public $repository;
 
     protected static $singleTableType = self::class;
 
@@ -22,9 +22,7 @@ class Newznab extends Indexer
         });
 
         static::retrieved(function($indexer) {
-            $indexer->client = new Client([
-                'base_uri' => trim($indexer->settings['url'], '/') . self::URL_ENDPOINT_BASE,
-            ]);
+            $indexer->repository = new NewznabRepository($indexer);
         });
     }
 }

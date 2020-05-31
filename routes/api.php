@@ -23,6 +23,7 @@ Route::get('comic/search/{name}', 'ComicController@search');
 
 Route::apiResource('issue', 'IssueController');
 Route::apiResource('indexer', 'IndexerController');
+Route::get('indexer/search/{query}/{offset?}', 'IndexerController@search');
 
 Route::fallback(function(){
     return response()->json([

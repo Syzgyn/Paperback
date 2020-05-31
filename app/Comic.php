@@ -39,7 +39,7 @@ class Comic extends Model
         return $comic;
     }
 
-    public updateFromCvid($grabImage = true, $fetchIssues = false) {
+    public function updateFromCvid($grabImage = true, $fetchIssues = false) {
         $repo = resolve("ComicVineRepository");
         $volume = $repo->volume($cvid);
 
@@ -71,10 +71,6 @@ class Comic extends Model
             Issue::create($issue);
         }
 
-    }
-
-    public function issues() {
-        return $this->hasMany(\App\Issue::class);
     }
 
     protected static function booted() {
