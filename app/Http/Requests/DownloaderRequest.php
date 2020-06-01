@@ -5,14 +5,11 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
-use App\Http\Requests\NewznabRequest;
-
-class IndexerRequest extends FormRequest
+class DownloaderRequest extends FormRequest
 {
     protected $types = [
-        'newznab', 
+        'sabnzbd', 
     ];
 
     /**
@@ -38,16 +35,17 @@ class IndexerRequest extends FormRequest
                 'string',
                 Rule::in($this->types),
             ],
-            'enable_search' => 'required|boolean',
+            'enable' => 'required|boolean',
             'name' => 'required',
             'settings.apikey' => 'alpha_num',
-            'settings.url' => 'string',
+            'settings.host' => 'string',
+            'settings.port' => 'numeric',
         ];
     }
 
-    public function withValidator($validator) {
-        $validator->sometimes(['settings.apikey', 'settings.url'], 'required', function($input) {
-            return $input->type == 'newznab';
+    public function withValidator(Validator $validator) {
+        $validator->sometimes(['settings.apikey', 'settings.host', 'settings.port'], 'required', function($input) {
+            return $input->type == 'sabnzbd';
         });
     }
 }

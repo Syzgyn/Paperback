@@ -25,6 +25,10 @@ Route::apiResource('issue', 'IssueController');
 Route::apiResource('indexer', 'IndexerController');
 Route::get('indexer/search/{query}/{offset?}', 'IndexerController@search');
 
+Route::apiResource('downloader', 'DownloaderController');
+Route::post('downloader/download', 'DownloaderController@download');
+Route::post('downloader/test', 'DownloaderController@test');
+
 Route::fallback(function(){
     return response()->json([
         'message' => 'Page Not Found.'], 404);

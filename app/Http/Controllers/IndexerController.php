@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Indexer;
-use App\Indexers\Newznab;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 use App\Http\Requests\IndexerRequest;
 use App\Http\Resources\Indexer as IndexerResource;
 use App\Http\Resources\IndexerCollection;
+use App\Http\Resources\Indexers\NewznabCollection;
 
 class IndexerController extends Controller
 {
@@ -81,9 +80,9 @@ class IndexerController extends Controller
 
         $results = [];
         foreach($indexers as $indexer) {
-            $results = array_merge($results, $indexer->repository->search($query, $offset));
+                $results = array_merge($results, $indexer->search($query, $offset));
         }
 
-        return $results;
+        return new NewznabCollection($results);
     }
 }

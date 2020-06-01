@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Indexers;
 
 use GuzzleHttp\Client;
 
 use App\Indexers\Newznab;
-use App\Http\Resources\NewznabCollection;
 
 class NewznabRepository
 {
@@ -16,7 +15,7 @@ class NewznabRepository
 
     public function __construct(Newznab $indexer) {
         $this->client = new Client([
-            'base_uri' => $indexer->settings['url'] . "/api/",
+            'base_uri' => $indexer->settings['url'] . $indexer::URL_ENDPOINT_BASE,
         ]);
         $this->apikey = $indexer->settings['apikey'];
     }
@@ -39,12 +38,12 @@ class NewznabRepository
             $items = [$items];
         }
 
-        return NewznabCollection::make($items)->resolve();
+        return $items;
     }
 
-    protected function makeRequest($url, $params = []) {
+    protected function makeRequest($url = '', $params = []) {
 		try {
-			$response = $this->client->request('GET', '', ['query' => $params]);
+			$response = $this->client->request('GET', $url, ['query' => $params]);
 		} catch (\Exception $e) {
             return [];
 		}
@@ -55,6 +54,7 @@ class NewznabRepository
 	protected function responseHandler($response)
 	{
 		if ($response) {
+            //Convert the XML to JSON, then back to objects to make it easier to deal with.
             $xml = simplexml_load_string($response);
             $json = json_encode($xml);
             return json_decode($json,TRUE);

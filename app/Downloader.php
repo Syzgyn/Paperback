@@ -5,19 +5,19 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Nanigans\SingleTableInheritance\SingleTableInheritanceTrait;
 
-class Indexer extends Model
+class Downloader extends Model
 {
     use SingleTableInheritanceTrait;
 
-    const INDEXER_TYPES = [
-        'newznab' => \App\Indexers\Newznab::class,
+    const DOWNLOADER_TYPES = [
+        'sabnzbd' => \App\Downloaders\Usenet\Sabnzbd::class, 
     ];
 
-    protected $table = "indexers";
+    protected $table = "downloaders";
 
     protected static $singleTableTypeField = 'class';
-    protected static $singleTableSubclasses = self::INDEXER_TYPES;
-    protected static $persisted = ['name', 'settings', 'enable_search'];
+    protected static $singleTableSubclasses = self::DOWNLOADER_TYPES;
+    protected static $persisted = ['name', 'settings', 'enable'];
 
     protected $casts = ['settings' => 'array'];
 
@@ -25,24 +25,26 @@ class Indexer extends Model
         'name',
         'class',
         'settings',
-        'enable_search',
+        'enable'
     ];
 
     public static function createChild($attrs) {
         $type = $attrs['type'];
         $class = self::getClass($type);
 
-        return $class::create($attrs);
+        $model = new $class;
+
+        return $model->fill($attrs); 
     }
 
     public static function getClass(String $type) {
-        return self::INDEXER_TYPES[$type];
+        return self::DOWNLOADER_TYPES[$type];
     }
 
     protected static function booted() {
-        static::saving(function($indexer) {
-            if (get_class($indexer) == self::class) {
-                throw new \Exception("Cannot save base indexer class");
+        static::saving(function($downloader) {
+            if (get_class($downloader) == self::class) {
+                throw new \Exception("Cannot save base downloader class");
                 }
             });
     }
