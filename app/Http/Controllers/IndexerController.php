@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Indexer;
+use App\Models\Indexer;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\IndexerRequest;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Downloader;
+use App\Models\Downloader;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\DownloaderRequest;

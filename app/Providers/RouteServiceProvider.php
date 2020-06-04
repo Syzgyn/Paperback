@@ -32,9 +32,9 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::pattern('name', '[a-zA-Z0-9\+]+');
         Route::pattern('cvid', '[0-9]+');
-        Route::model('comic', \App\Comic::class);
-        Route::model('issue', \App\Issue::class);
-        Route::model('indexer', \App\Indexer::class);
+        Route::model('comic', \App\Models\Comic::class);
+        Route::model('issue', \App\Models\Issue::class);
+        Route::model('indexer', \App\Models\Indexer::class);
         parent::boot();
     }
 

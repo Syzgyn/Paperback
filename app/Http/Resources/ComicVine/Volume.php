@@ -31,7 +31,7 @@ class Volume extends JsonResource
     protected function processDescription($text) {
         return preg_replace(
             '/href\=\"\//',
-            'href="' . self::URL_BASE,
+            'target="_blank" href="' . self::URL_BASE,
             $text
         );
     }

@@ -49,4 +49,32 @@ class SabnzbdRepository
     public function addUrl($link) {
         return $this->makeRequest('addurl', ['name' => $link]);
     }
+
+    public function history($params = []) {
+        return $this->makeRequest('history', $params);
+    }
+
+    public function queue($params = []) {
+        return $this->makeRequest('queue', $params);
+    }
+
+    public function getDownloadStatus($nzo_id) {
+        $queue = $this->queue();
+
+        foreach ($queue->slots as $slot) {
+            if ($slot->nzo_id == $nzo_id) {
+                return $slot;
+            }
+        }
+
+        $history = $this->history();
+
+        foreach ($history->slots as $slot) {
+            if ($slot->nzo_id == $nzo_id) {
+                return $slot;
+            }
+        }
+
+        return [];
+    }
 }

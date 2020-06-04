@@ -1,7 +1,7 @@
 <?php
 namespace App\Downloaders\Usenet;
 
-use App\Downloader;
+use App\Models\Downloader;
 use App\Repositories\Downloaders\SabnzbdRepository;
 
 use GuzzleHttp\Client;

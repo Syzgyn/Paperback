@@ -1,7 +1,7 @@
 <?php
 namespace App\Indexers;
 
-use App\Indexer;
+use App\Models\Indexer;
 use App\Repositories\Indexers\NewznabRepository;
 
 use Nanigans\SingleTableInheritance\SingleTableInheritanceTrait;

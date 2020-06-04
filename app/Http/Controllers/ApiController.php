@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\ComicVineRepository;
-use App\Comic;
+use App\Models\Comic;
 
 class ApiController extends Controller
 {
