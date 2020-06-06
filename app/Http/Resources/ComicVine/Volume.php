@@ -3,11 +3,12 @@
 namespace App\Http\Resources\ComicVine;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Comic;
+use App\Models\Comic;
 
 class Volume extends JsonResource
 {
     const URL_BASE = "https://comicvine.gamespot.com/";
+    const MAX_LENGTH = 600;
 
     /**
      * Transform the resource into an array.
@@ -29,10 +30,37 @@ class Volume extends JsonResource
     }
 
     protected function processDescription($text) {
-        return preg_replace(
+        $text = preg_replace(
             '/href\=\"\//',
             'target="_blank" href="' . self::URL_BASE,
             $text
         );
+
+        $text = strlen($text) > self::MAX_LENGTH ? substr($text, 0, self::MAX_LENGTH) . "... <a target=\"_blank\" href='" . $this->resource->site_detail_url . "'>Read More</a>" : $text;
+
+        $text = $this->closetags($text);
+
+        return $text;
+    }
+
+    protected function closetags($html) {
+        preg_match_all('#<([a-z]+)(?: .*)?(?<![/|/ ])>#iU', $html, $result);
+        $openedtags = $result[1];
+
+        preg_match_all('#</([a-z]+)>#iU', $html, $result);
+        $closedtags = $result[1];
+        $len_opened = count($openedtags);
+        if (count($closedtags) == $len_opened) {
+            return $html;
+        }
+        $openedtags = array_reverse($openedtags);
+        for ($i=0; $i < $len_opened; $i++) {
+            if (!in_array($openedtags[$i], $closedtags)){
+                $html .= '</'.$openedtags[$i].'>';
+            } else {
+                unset($closedtags[array_search($openedtags[$i], $closedtags)]);
+            }
+        }
+        return $html;
     }
 }

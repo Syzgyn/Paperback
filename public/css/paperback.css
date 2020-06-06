@@ -1,0 +1,77 @@
+.header img.logo {
+    width: 150px;
+    height: 150px;
+}
+
+.navbar-icon {
+    display: block;
+    width: 50px;
+    height: 50px;
+    margin: 1px auto;
+    color: #A0A0A0;
+}
+
+.paperback-navbar li a {
+    min-height: 76px;
+    min-width: 84px;
+    text-align: center;
+    margin: 10px;
+}
+
+body {
+    background-color: #343A40;
+}
+
+.page {
+    box-shadow: 0 0 10px 1px #aaa;
+}
+
+.main-content .row {
+}
+
+.main-content .col {
+}
+
+img.cover-image {
+    height: 250px;
+}
+
+.collapse-content:not(.show){
+    height: 160px !important;
+    overflow: hidden;
+    display: block; 
+}
+
+.collapse-content.collapsing {
+    height: 160px;
+}
+
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+.separator::before, .separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #212529;
+}
+.separator::before {
+    margin-right: .25em;
+}
+.separator::after {
+    margin-left: .25em;
+}
+
+a.read-more-toggle.collapsed span::after {
+    content: "Show More";
+}
+
+a.read-more-toggle:not(.collapsed) span::after {
+    content: "Show Less";
+}
+
+.search-button {
+    width: 20px;
+    height: 20px;
+}
