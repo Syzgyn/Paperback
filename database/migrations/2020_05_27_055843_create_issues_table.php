@@ -15,7 +15,8 @@ class CreateIssuesTable extends Migration
     {
         Schema::create('issues', function (Blueprint $table) {
             $table->unsignedInteger('cvid')->first();
-            $table->foreignId('comic_id')->constrained()->onDelete('cascade');
+            $table->timestamps();
+            $table->foreignId('comic_id')->references('cvid')->on('comics')->onDelete('cascade');
             $table->unsignedInteger('issue_num');
             $table->date('release_date');
             $table->text('description');

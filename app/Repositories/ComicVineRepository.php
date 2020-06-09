@@ -29,7 +29,7 @@ class ComicVineRepository
     }
 
     public function volumeIssues($cvid) {
-        $issues = $this->makeRequest("issues", ['filter' => "issues:$cvid"]);
+        $issues = $this->makeRequest("issues", ['filter' => "volume:$cvid"]);
         return IssueCollection::make($issues->results)->resolve();
     }
 

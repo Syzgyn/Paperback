@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use App\Repositories\ComicVineRepository;
-use App\Issue;
+use App\Models\Issue;
 
 class Comic extends Model
 {
@@ -25,15 +25,24 @@ class Comic extends Model
         return $this->hasMany('App\Issue');
     }
 
-    public static function createFromCvid($cvid, $grabImage = true) {
+    public function getImage() {
+        return asset("/storage/covers/" . $this->cvid . ".jpg");
+    }
+
+    public static function createFromCvid($cvid, $grabImage = true, $searchIssues = false) {
         $repo = resolve("ComicVineRepository");
         $volume = $repo->volume($cvid);
+        $volume['start_year'] = $volume['startYear'];
 
         $comic = Comic::create($volume);
 
         if ($grabImage) {
-            $imagePath = $volume->image;
+            $imagePath = $volume['image'];
             $comic->downloadImage($imagePath);
+        }
+
+        if ($searchIssues) {
+            //TODO: Add job to search issues
         }
 
         return $comic;

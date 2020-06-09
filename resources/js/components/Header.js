@@ -1,14 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Book, Plus, Clock, AlertTriangle, Settings, Search } from 'react-feather'
 
 const Header = () => (
     <div className="container mt-3">
         <div className="row header">
           <div className="col">
             <nav className="paperback-navbar navbar navbar-expand-lg navbar-dark bg-dark">
-              <a className="navbar-brand" href="#">
+              <Link to="/" className="navbar-brand">
                 <img src="/storage/logo.png" className="logo"/>
-              </a>
+              </Link>
               <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
               </button>
@@ -16,46 +17,48 @@ const Header = () => (
               <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav mr-auto">
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
-                        <i className="navbar-icon" data-feather="book"></i>
+                    <Link to="/" className="nav-link">
+                        <Book className="navbar-icon" />
                         Comics
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
-                        <i className="navbar-icon" data-feather="plus"></i>
+                    <Link to="/addcomic" className="nav-link">
+                        <Plus className="navbar-icon" />
                         Add Comic
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
-                        <i className="navbar-icon" data-feather="clock"></i>
+                    <Link to="/activity" className="nav-link">
+                        <Clock className="navbar-icon" />
                         Activity
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
-                        <i className="navbar-icon" data-feather="alert-triangle"></i>
+                    <Link to="/wanted" className="nav-link">
+                        <AlertTriangle className="navbar-icon" />
                         Wanted
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
-                        <i className="navbar-icon" data-feather="settings"></i>
+                    <Link to="/settings" className="nav-link">
+                        <Settings className="navbar-icon" />
                         Settings
-                    </a>
+                    </Link>
                   </li>
                 </ul>
+                {/*
                 <form className="form-inline my-2 my-lg-0">
                     <div className="input-group">
                         <input className="form-control" type="search" placeholder="Search" aria-label="Search" />
                         <div className="input-group-append">
                             <button type="submit" className="btn btn-light" type="button">
-                                <i className="search-button" data-feather="search"></i>
+                                <Search className="search-button" />
                             </button>
                         </div>
                     </div>
                 </form>
+                */}
               </div>
             </nav>
           </div>

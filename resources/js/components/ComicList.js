@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import ComicItem from './ComicItem';
+import ComicItemTemplate from './ComicItemTemplate';
 
 class ComicList extends Component {
     constructor() {
@@ -22,11 +23,15 @@ class ComicList extends Component {
     render () {
         const { comics } = this.state;
         return (
-            <div id="comic-list"> 
-                {comics.map(comic => (
-                    <ComicItem comic={comic} key={comic.cvid}/> 
-                ))}
+        <div className="row">
+            <div className="col-md-12">
+                <div id="comic-list"> 
+                    {comics.map(comic => (
+                        <ComicItemTemplate comic={comic} key={comic.cvid}/> 
+                    ))}
+                </div>
             </div>
+        </div>
         );
     }
 }

@@ -21,22 +21,24 @@ class Volume extends JsonResource
 	    return [
 		    'name' => $this->resource->name,
 		    'description' => $this->processDescription($this->resource->description),
-		    'start_year' => $this->resource->start_year,
-		    'num_issues' => $this->resource->count_of_issues,
+		    'startYear' => $this->resource->start_year,
+		    'numIssues' => $this->resource->count_of_issues,
 		    'url' => $this->resource->site_detail_url,
 		    'cvid' => $this->resource->id,
 		    'image' => $this->resource->image->{Comic::IMAGE_KEY},
+            'publisher' => $this->resource->publisher->name,
+            'inLibrary' => $this->checkLibrary($this->resource->id),
 	    ]; 
     }
 
     protected function processDescription($text) {
+        $text = strlen($text) > self::MAX_LENGTH ? substr($text, 0, self::MAX_LENGTH) . "... <a target=\"_blank\" href='" . $this->resource->site_detail_url . "'>Read More</a>" : $text;
+
         $text = preg_replace(
             '/href\=\"\//',
             'target="_blank" href="' . self::URL_BASE,
             $text
         );
-
-        $text = strlen($text) > self::MAX_LENGTH ? substr($text, 0, self::MAX_LENGTH) . "... <a target=\"_blank\" href='" . $this->resource->site_detail_url . "'>Read More</a>" : $text;
 
         $text = $this->closetags($text);
 
@@ -62,5 +64,9 @@ class Volume extends JsonResource
             }
         }
         return $html;
+    }
+
+    protected function checkLibrary(Int $cvid) {
+        return (Comic::find($cvid) instanceof Comic);
     }
 }

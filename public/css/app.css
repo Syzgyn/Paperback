@@ -10970,7 +10970,11 @@ img.cover-image {
   color: #AAAAAA;
 }
 
-span.comic-issues {
+span.comic-badge {
+  font-size: 1em;
+}
+
+span.comic-publisher {
   font-size: 1em;
 }
 

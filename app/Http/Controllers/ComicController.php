@@ -37,7 +37,8 @@ class ComicController extends Controller
     public function store(Request $request)
     {
         $cvid = $request->input('cvid');
-        $comic = Comic::createFromCvid($cvid, false);
+        $search = $request->input('search');
+        $comic = Comic::createFromCvid($cvid, true, $search);
 
         return new ComicResource($comic);
     }

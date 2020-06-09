@@ -20,6 +20,7 @@ class Comic extends JsonResource
 		    'start_year' => $this->start_year,
 		    'url' => $this->url,
 		    'cvid' => $this->cvid,
+            'image' => $this->image,
         ];
     }
 }

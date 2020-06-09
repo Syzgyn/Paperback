@@ -6,6 +6,7 @@ import Header from './Header'
 
 const IndexerList = lazy(() => import('./IndexerList'));
 const ComicList = lazy(() => import('./ComicList'));
+const AddComic = lazy(() => import('./AddComic'));
 
 
 class App extends Component {
@@ -15,15 +16,16 @@ class App extends Component {
         <div>
           <Header />
             <div className="page container bg-light rounded-lg py-3 mt-2">
-                    <div className="row">
-                        <div className="col-md-12">
-            <Suspense fallback={<div>Loading...</div>}>
-            <Switch>
-              <Route exact path='/' component={ComicList} />
-            </Switch>
-            </Suspense>
-                    </div>
-                </div>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Switch>
+                      <Route exact path='/'>
+                        <ComicList />
+                      </Route>
+                      <Route path='/addcomic'>
+                        <AddComic />
+                      </Route>
+                    </Switch>
+                </Suspense>
             </div>
         </div>
       </BrowserRouter>

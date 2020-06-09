@@ -24,7 +24,7 @@ class ComicItem extends Component {
                     <div className="col-md-10 col-sm-9">
                         <div className="row">
                             <div className="col-12">
-                                <h2>{comic.name} <span className="comic-year">({comic.start_year})</span></h2>
+                                <span className="h2">{comic.name} <span className="comic-year">({comic.start_year})</span></span>
                             </div>
                         </div>
                         <div className="row">
@@ -32,6 +32,11 @@ class ComicItem extends Component {
                                 <div className="comic-description" 
                                     dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(comic.description, { ADD_ATTR: ['target'] })}} >
                                 </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-12">
+                                <span class="comic-issues badge badge-primary">{comic.num_issues} issues</span>
                             </div>
                         </div>
                     </div>
