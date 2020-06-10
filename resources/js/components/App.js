@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Header from './Header'
 //import IndexerList from './IndexerList'
 
-const IndexerList = lazy(() => import('./IndexerList'));
+//const IndexerList = lazy(() => import('./IndexerList'));
 const ComicList = lazy(() => import('./ComicList'));
 const AddComic = lazy(() => import('./AddComic'));
 const ComicView = lazy(() => import('./ComicView'));

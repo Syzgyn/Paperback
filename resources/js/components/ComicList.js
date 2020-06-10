@@ -1,7 +1,5 @@
 import axios from 'axios'
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import ComicItem from './ComicItem';
 import ComicItemTemplate from './ComicItemTemplate';
 
 class ComicList extends Component {

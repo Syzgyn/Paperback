@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 class ComicBadge extends Component
 {
@@ -13,6 +14,11 @@ class ComicBadge extends Component
 
 ComicBadge.defaultProps = {
     variation: 'primary'
+}
+
+ComicBadge.propTypes = {
+    children: PropTypes.string,
+    variation: PropTypes.string,
 }
 
 export default ComicBadge;

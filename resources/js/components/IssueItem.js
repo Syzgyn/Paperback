@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button } from 'reactstrap'
+import PropTypes from 'prop-types'
 import IssueStatus from './IssueStatus'
 import IssueSearchButtons from './IssueSearchButtons'
 
@@ -32,6 +32,17 @@ class IssueItem extends Component
             </tr>
         );
     }
+}
+
+IssueItem.propTypes = {
+    issue: PropTypes.shape({
+        issue_num: PropTypes.number,
+        displayName: PropTypes.string,
+        status: PropTypes.string,
+        release_date: PropTypes.string,
+        cvid: PropTypes.number,
+    }),
+    clickCallback: PropTypes.func,
 }
 
 export default IssueItem

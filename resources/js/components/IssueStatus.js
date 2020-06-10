@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { AlertTriangle } from 'react-feather'
 import {UncontrolledTooltip} from 'reactstrap'
 
@@ -20,7 +21,7 @@ class IssueStatus extends Component
         let id = "status-" + this.props.cvid;
         return (
             <>
-                <span id={id}>"Downloaded"</span>
+                <span id={id}>Downloaded</span>
                 <UncontrolledTooltip placement="top" target={id}>
                     Issue Downloaded 
                 </UncontrolledTooltip>
@@ -39,6 +40,11 @@ class IssueStatus extends Component
                 return ("Unknown...");
         }
     }
+}
+
+IssueStatus.propTypes = {
+    cvid: PropTypes.number.isRequired,
+    status: PropTypes.string
 }
 
 export default IssueStatus

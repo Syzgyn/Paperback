@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Link, useParams, withRouter } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 import ComicItemTemplate from './ComicItemTemplate';
 import IssueList from './IssueList';
@@ -51,6 +52,14 @@ class ComicView extends Component
 
         return ("Something went wrong...")
     }
+}
+
+ComicView.propTypes = {
+    match: PropTypes.shape({
+        params: PropTypes.shape({
+            cvid: PropTypes.number,
+        }),
+    }),
 }
 
 export default withRouter(ComicView)

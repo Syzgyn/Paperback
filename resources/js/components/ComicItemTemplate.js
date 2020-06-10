@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
 import axios from 'axios'
 import DOMPurify from 'dompurify'
@@ -120,6 +121,22 @@ class ComicItemTemplate extends Component {
             </div>
         );
     }
+}
+
+ComicItemTemplate.propTypes = {
+    cvid: PropTypes.number,
+    history: PropTypes.Shape({
+        push: PropTypes.func,
+    }),
+    numIssues: PropTypes.number,
+    startYear: PropTypes.number,
+    publisher: PropTypes.string,
+    image: PropTypes.string,
+    name: PropTypes.string,
+    description: PropTypes.string,
+    inLibrary: PropTypes.bool,
+    singleView: PropTypes.bool,
+    classes: PropTypes.string,
 }
 
 export default withRouter(ComicItemTemplate);

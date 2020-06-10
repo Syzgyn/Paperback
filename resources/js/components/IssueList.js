@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import IssueItem from './IssueItem'
 
 class IssueList extends Component
@@ -24,6 +25,11 @@ class IssueList extends Component
             </table>
         );
     }
+}
+
+IssueList.propTypes = {
+    issues: PropTypes.array,
+    clickCallback: PropTypes.func,
 }
 
 export default IssueList

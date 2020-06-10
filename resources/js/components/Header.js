@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Book, Plus, Clock, AlertTriangle, Settings, Search } from 'react-feather'
+import { Book, Plus, Clock, AlertTriangle, Settings } from 'react-feather'
 
 const Header = () => (
     <div className="container mt-3">

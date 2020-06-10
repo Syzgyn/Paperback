@@ -1,6 +1,5 @@
-import axios from 'axios'
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import { Search as SearchIcon } from 'react-feather';
 
 class Search extends Component {
@@ -52,6 +51,10 @@ class Search extends Component {
         </div>
         );
     }
+}
+
+Search.propTypes = {
+    onSubmit: PropTypes.requiredFunc
 }
 
 export { Search }; 

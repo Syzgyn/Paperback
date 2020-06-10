@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Search, User } from 'react-feather'
 import {UncontrolledTooltip} from 'reactstrap'
 
@@ -21,6 +22,10 @@ class IssueSearchButtons extends Component
             </>
         );
     }
+}
+
+IssueSearchButtons.propTypes = {
+    cvid: PropTypes.number.isRequired
 }
 
 export default IssueSearchButtons

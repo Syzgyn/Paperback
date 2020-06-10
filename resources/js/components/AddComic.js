@@ -1,6 +1,5 @@
 import axios from 'axios'
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import ComicItemTemplate from './ComicItemTemplate';
 import { Search as Searchbar } from './AddComic/Search';
 
@@ -53,8 +52,8 @@ class AddComic extends Component {
                         comics ?
                         <div id="comic-list"> 
                             {comics.map(comic => (
-                                <div className="comic-list-item pb-4"> 
-                                    <ComicItemTemplate key={comic.cvid} {...comic}/> 
+                                <div className="comic-list-item pb-4" key={comic.cvid}> 
+                                    <ComicItemTemplate {...comic}/> 
                                 </div>
                             ))}
                         </div> :
