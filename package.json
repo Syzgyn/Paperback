@@ -7,7 +7,8 @@
     "watch-poll": "npm run watch -- --watch-poll",
     "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
     "prod": "npm run production",
-    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "pretest": "eslint --ignore-path .gitignore ."
   },
   "devDependencies": {
     "@babel/preset-react": "^7.0.0",
@@ -26,7 +27,9 @@
     "sass-loader": "^8.0.0"
   },
   "dependencies": {
+    "eslint": "^7.2.0",
     "feather-icons": "^4.28.0",
+    "prop-types": "^15.7.2",
     "react-overflow": "^0.2.1",
     "react-pluralize": "^1.6.3",
     "reactstrap": "^8.4.1"
