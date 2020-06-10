@@ -5,10 +5,9 @@ class IssueList extends Component
 {
     render() {
         const {issues} = this.props;
-        console.log(this.props);
 
         return (
-            <table class="table">
+            <table className="table">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -19,7 +18,7 @@ class IssueList extends Component
                 </thead>
                 <tbody>
                     {issues.map(issue => (
-                        <IssueItem key={issue.cvid} {...issue}/> 
+                        <IssueItem key={issue.cvid} clickCallback={this.props.clickCallback} issue={issue}/> 
                     ))}
                 </tbody>
             </table>

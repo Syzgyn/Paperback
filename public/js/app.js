@@ -90702,13 +90702,13 @@ var IndexerList = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["lazy"]
   return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ./IndexerList */ "./resources/js/components/IndexerList.js"));
 });
 var ComicList = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["lazy"])(function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(4), __webpack_require__.e(7)]).then(__webpack_require__.bind(null, /*! ./ComicList */ "./resources/js/components/ComicList.js"));
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(8)]).then(__webpack_require__.bind(null, /*! ./ComicList */ "./resources/js/components/ComicList.js"));
 });
 var AddComic = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["lazy"])(function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5), __webpack_require__.e(4), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ./AddComic */ "./resources/js/components/AddComic.js"));
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5), __webpack_require__.e(1), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ./AddComic */ "./resources/js/components/AddComic.js"));
 });
 var ComicView = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["lazy"])(function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(4), __webpack_require__.e(8)]).then(__webpack_require__.bind(null, /*! ./ComicView */ "./resources/js/components/ComicView.js"));
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(4), __webpack_require__.e(1), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./ComicView */ "./resources/js/components/ComicView.js"));
 });
 
 var App = /*#__PURE__*/function (_Component) {

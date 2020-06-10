@@ -22,6 +22,7 @@ class Comic extends JsonResource
 		    'cvid' => $this->cvid,
             'image' => $this->getImage(),
             'issues' => $this->issues,
+            'numIssues' => count($this->issues),
         ];
     }
 }

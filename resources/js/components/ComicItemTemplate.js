@@ -65,6 +65,8 @@ class ComicItemTemplate extends Component {
                 classes,
             } = this.props;
 
+            console.log(this.props);
+
         return (
             <div className={"row " + classes}>
                 <div className="col-md-2 col-sm-3">

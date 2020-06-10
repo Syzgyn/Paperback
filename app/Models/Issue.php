@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Issue extends Model
 {
+    const CV_URL_BASE = "https://comicvine.gamespot.com/";
+
     public $primaryKey = 'cvid';
     public $incrementing = false; 
     protected $fillable = [
@@ -40,6 +42,14 @@ class Issue extends Model
         }
 
         return "Issue #" . $this->attributes['issue_num'];
+    }
+
+    public function getDescriptionAttribute() {
+        return preg_replace(
+            '/href\=\"\//',
+            'target="_blank" href="' . self::CV_URL_BASE,
+            $this->attributes['description']
+        );
     }
 
     public static function createFromCvid() {
