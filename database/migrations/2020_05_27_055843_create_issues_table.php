@@ -19,6 +19,7 @@ class CreateIssuesTable extends Migration
             $table->foreignId('comic_id')->references('cvid')->on('comics')->onDelete('cascade');
             $table->unsignedInteger('issue_num');
             $table->date('release_date');
+            $table->string('name')->nullable();
             $table->text('description');
             $table->string('url');
             $table->string('status')->nullable();

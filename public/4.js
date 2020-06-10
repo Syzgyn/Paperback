@@ -192,11 +192,11 @@ var ComicItemTemplate = /*#__PURE__*/function (_Component) {
           image = _this$props.image,
           name = _this$props.name,
           description = _this$props.description,
-          inLibrary = _this$props.inLibrary;
+          inLibrary = _this$props.inLibrary,
+          singleView = _this$props.singleView,
+          classes = _this$props.classes;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "comic-list-item pb-4"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row"
+        className: "row " + classes
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-2 col-sm-3"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -212,7 +212,7 @@ var ComicItemTemplate = /*#__PURE__*/function (_Component) {
         className: "h2 mr-2"
       }, name, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "comic-year"
-      }, "(", startYear, ")")), publisher ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ComicBadge__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      }, "(", startYear, ")")), !singleView && publisher ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ComicBadge__WEBPACK_IMPORTED_MODULE_5__["default"], {
         variation: "secondary"
       }, publisher) : null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
@@ -239,7 +239,7 @@ var ComicItemTemplate = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "button",
         className: "btn btn-outline-secondary"
-      }, "Already in Library")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Already in Library")) : !singleView ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "btn-group"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         onClick: function onClick() {
@@ -260,15 +260,14 @@ var ComicItemTemplate = /*#__PURE__*/function (_Component) {
         "data-placement": "top",
         "data-html": "true",
         title: "Add and search<br>for missing issues"
-      }, this.state.searchLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_6__["Loader"], null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_6__["Search"], null))))))));
+      }, this.state.searchLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_6__["Loader"], null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_6__["Search"], null))) : ""))));
     }
   }]);
 
   return ComicItemTemplate;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-var ComicItemTemplateWithRouter = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(ComicItemTemplate);
-/* harmony default export */ __webpack_exports__["default"] = (ComicItemTemplateWithRouter);
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(ComicItemTemplate));
 
 /***/ })
 

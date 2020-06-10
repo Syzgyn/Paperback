@@ -7,6 +7,7 @@ import Header from './Header'
 const IndexerList = lazy(() => import('./IndexerList'));
 const ComicList = lazy(() => import('./ComicList'));
 const AddComic = lazy(() => import('./AddComic'));
+const ComicView = lazy(() => import('./ComicView'));
 
 
 class App extends Component {
@@ -23,6 +24,9 @@ class App extends Component {
                       </Route>
                       <Route path='/addcomic'>
                         <AddComic />
+                      </Route>
+                      <Route path='/comic/:cvid'>
+                        <ComicView />
                       </Route>
                     </Switch>
                 </Suspense>

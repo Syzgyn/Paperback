@@ -9,6 +9,7 @@ class Issue extends Model
     public $primaryKey = 'cvid';
     public $incrementing = false; 
     protected $fillable = [
+        'name',
         'comic_id',
         'issue_num',
         'description',
@@ -17,8 +18,28 @@ class Issue extends Model
         'cvid',
     ];
 
+    protected $hidden = [
+        'name',
+    ];
+
+    protected $appends = [
+        'displayName',
+    ];
+
     public function comic() {
-        return $this->belongsTo('App\Comic');
+        return $this->belongsTo('App\Comic', 'cvid', 'comic_id');
+    }
+
+    public function getReleaseDateAttribute() {
+        return date('M j Y', strtotime($this->attributes['release_date']));
+    }
+
+    public function getDisplayNameAttribute() {
+        if (isset($this->attributes['name'])) {
+            return $this->attributes['name'];
+        }
+
+        return "Issue #" . $this->attributes['issue_num'];
     }
 
     public static function createFromCvid() {

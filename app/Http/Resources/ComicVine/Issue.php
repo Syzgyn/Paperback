@@ -15,7 +15,7 @@ class Issue extends JsonResource
     public function toArray($request)
     {
 	    return [
-		    'volume_name' => $this->resource->volume->name,
+		    'name' => $this->resource->name,
             'comic_id' => $this->resource->volume->id,
 		    'description' => $this->resource->description,
 		    'release_date' => $this->resource->cover_date,

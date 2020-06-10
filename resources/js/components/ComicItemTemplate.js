@@ -61,55 +61,57 @@ class ComicItemTemplate extends Component {
                 name,
                 description,
                 inLibrary,
+                singleView,
+                classes,
             } = this.props;
 
         return (
-            <div className="comic-list-item pb-4"> 
-                <div className="row">
-                    <div className="col-md-2 col-sm-3">
-                        <img className="cover-image" src={image} />
+            <div className={"row " + classes}>
+                <div className="col-md-2 col-sm-3">
+                    <img className="cover-image" src={image} />
+                </div>
+                <div className="col-md-10 col-sm-9">
+                    <div className="row">
+                        <div className="col-12">
+                            <span className="h2 mr-2">{name} <span className="comic-year">({startYear})</span></span>
+                            {
+                                (!singleView && publisher) ? 
+                                <ComicBadge variation="secondary">
+                                    {publisher}
+                                </ComicBadge> : null
+                            }
+                        </div>
                     </div>
-                    <div className="col-md-10 col-sm-9">
-                        <div className="row">
-                            <div className="col-12">
-                                <span className="h2 mr-2">{name} <span className="comic-year">({startYear})</span></span>
-                                {
-                                    publisher ? 
-                                    <ComicBadge variation="secondary">
-                                        {publisher}
-                                    </ComicBadge> : null
-                                }
+                    <div className="row">
+                        <div className="col-12">
+                            <div className="comic-description" 
+                                dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(description, { ADD_ATTR: ['target'] })}} >
                             </div>
                         </div>
-                        <div className="row">
-                            <div className="col-12">
-                                <div className="comic-description" 
-                                    dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(description, { ADD_ATTR: ['target'] })}} >
-                                </div>
-                            </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-2">
+                            <ComicBadge><Pluralize singular={'issue'} count={numIssues} /></ComicBadge>
                         </div>
-                        <div className="row">
-                            <div className="col-2">
-                                <ComicBadge><Pluralize singular={'issue'} count={numIssues} /></ComicBadge>
-                            </div>
-                            <div className="col-md-3 offset-md-7">
-                                {
-                                    inLibrary ? 
-                                    <Link to={"/comic/" + cvid}>
-                                        <button type="button" className="btn btn-outline-secondary">
-                                            Already in Library
-                                        </button>
-                                    </Link> : 
-                                    <div className="btn-group">
-                                        <button onClick={() => this.addComic()} type="button" className="btn btn-success" data-toggle="tooltip" data-placement="top" title="Add">
-                                            {this.state.addLoading ? <LoaderIcon /> : <PlusIcon />}
-                                        </button>
-                                        <button onClick={() => this.addAndSearchComic()} type="button" className="btn btn-success" data-toggle="tooltip" data-placement="top" data-html="true" title="Add and search<br>for missing issues">
-                                            {this.state.searchLoading ? <LoaderIcon /> : <SearchIcon />}
-                                        </button>
-                                    </div>
-                                }
-                            </div>
+                        <div className="col-md-3 offset-md-7">
+                            {
+                                inLibrary ? 
+                                <Link to={"/comic/" + cvid}>
+                                    <button type="button" className="btn btn-outline-secondary">
+                                        Already in Library
+                                    </button>
+                                </Link> : 
+                                !singleView ? 
+                                <div className="btn-group">
+                                    <button onClick={() => this.addComic()} type="button" className="btn btn-success" data-toggle="tooltip" data-placement="top" title="Add">
+                                        {this.state.addLoading ? <LoaderIcon /> : <PlusIcon />}
+                                    </button>
+                                    <button onClick={() => this.addAndSearchComic()} type="button" className="btn btn-success" data-toggle="tooltip" data-placement="top" data-html="true" title="Add and search<br>for missing issues">
+                                        {this.state.searchLoading ? <LoaderIcon /> : <SearchIcon />}
+                                    </button>
+                                </div> :
+                                ""
+                            }
                         </div>
                     </div>
                 </div>
@@ -118,5 +120,4 @@ class ComicItemTemplate extends Component {
     }
 }
 
-const ComicItemTemplateWithRouter = withRouter(ComicItemTemplate);
-export default ComicItemTemplateWithRouter;
+export default withRouter(ComicItemTemplate);

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Issue;
 use Illuminate\Http\Request;
+use App\Http\Resources\IssueResource;
+use App\Http\Resources\IssueCollection;
 
 class IssueController extends Controller
 {

@@ -14,5 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::view('/bootstrap', 'bootstrap');
-Route::view('/{path?}', 'app');
+Route::view('/{path?}', 'app')->where('path', '.*');
 

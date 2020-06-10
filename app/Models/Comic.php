@@ -22,7 +22,7 @@ class Comic extends Model
     ];
 
     public function issues() {
-        return $this->hasMany('App\Issue');
+        return $this->hasMany('App\Models\Issue', 'comic_id', 'cvid')->orderBy('issue_num', 'DESC'); 
     }
 
     public function getImage() {

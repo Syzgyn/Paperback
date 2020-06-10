@@ -18,8 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('comic/search', 'ComicController@search');
 Route::resource('comic', 'ComicController');
-Route::get('comic/search/{name}', 'ComicController@search');
 
 Route::apiResource('issue', 'IssueController');
 Route::apiResource('indexer', 'IndexerController');

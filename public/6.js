@@ -103,7 +103,11 @@ var AddComic = /*#__PURE__*/function (_Component) {
                   loading: true
                 });
                 _context.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/comic/search/' + value).then(function (response) {
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/comic/search/', {
+                  params: {
+                    query: value
+                  }
+                }).then(function (response) {
                   _this3.setState({
                     comics: response.data.data,
                     loading: false
@@ -130,6 +134,7 @@ var AddComic = /*#__PURE__*/function (_Component) {
       var _this$state = this.state,
           comics = _this$state.comics,
           loading = _this$state.loading;
+      console.log(comics);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_AddComic_Search__WEBPACK_IMPORTED_MODULE_5__["Search"], {
         onSubmit: this.onSearchSubmit
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", {
@@ -139,9 +144,11 @@ var AddComic = /*#__PURE__*/function (_Component) {
       }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("span", null, "Loading...") : comics ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", {
         id: "comic-list"
       }, comics.map(function (comic) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_ComicItemTemplate__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", {
+          className: "comic-list-item pb-4"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_ComicItemTemplate__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({
           key: comic.cvid
-        }, comic));
+        }, comic)));
       })) : "")));
     }
   }]);

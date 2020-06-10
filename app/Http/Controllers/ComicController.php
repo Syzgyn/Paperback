@@ -80,8 +80,9 @@ class ComicController extends Controller
         return response()->json(['status' => 'OK']);
     }
 
-    public function search(String $name) {
-        return $this->comicvine->volumes($name);
+    public function search(Request $request) {
+        $search = $request->input('query');
+        return $this->comicvine->volumes($search);
         
     }
 }

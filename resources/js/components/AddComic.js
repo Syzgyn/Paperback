@@ -29,13 +29,19 @@ class AddComic extends Component {
     async search(value) {
         this.setState({loading: true});
 
-        await axios.get('/api/comic/search/' + value).then(response => {
+        await axios.get('/api/comic/search/', {
+            params: {
+                query: value,
+            }
+        })
+        .then(response => {
             this.setState({comics: response.data.data, loading: false});
         });
     }
 
     render () {
         const { comics, loading } = this.state;
+        console.log(comics);
         return (
         <>
             <Searchbar onSubmit={this.onSearchSubmit} />
@@ -47,7 +53,9 @@ class AddComic extends Component {
                         comics ?
                         <div id="comic-list"> 
                             {comics.map(comic => (
-                                <ComicItemTemplate key={comic.cvid} {...comic}/> 
+                                <div className="comic-list-item pb-4"> 
+                                    <ComicItemTemplate key={comic.cvid} {...comic}/> 
+                                </div>
                             ))}
                         </div> :
                         ""
