@@ -28,6 +28,7 @@
   "dependencies": {
     "feather-icons": "^4.28.0",
     "react-overflow": "^0.2.1",
-    "react-pluralize": "^1.6.3"
+    "react-pluralize": "^1.6.3",
+    "reactstrap": "^8.4.1"
   }
 }
