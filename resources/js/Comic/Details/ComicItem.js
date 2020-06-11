@@ -4,7 +4,7 @@ import { Link, withRouter } from 'react-router-dom'
 import axios from 'axios'
 import DOMPurify from 'dompurify'
 import Pluralize from 'react-pluralize'
-import ComicBadge from './ComicBadge'
+import ComicBadge from '@/Components/ComicBadge'
 import { Plus as PlusIcon, Search as SearchIcon, Loader as LoaderIcon } from 'react-feather'
 
 class ComicItemTemplate extends Component {
@@ -66,10 +66,8 @@ class ComicItemTemplate extends Component {
                 classes,
             } = this.props;
 
-            console.log(this.props);
-
         return (
-            <div className={"row " + classes}>
+            <div className={"row pb-5 " + classes}>
                 <div className="col-md-2 col-sm-3">
                     <img className="cover-image" src={image} />
                 </div>
@@ -125,7 +123,7 @@ class ComicItemTemplate extends Component {
 
 ComicItemTemplate.propTypes = {
     cvid: PropTypes.number,
-    history: PropTypes.Shape({
+    history: PropTypes.shape({
         push: PropTypes.func,
     }),
     numIssues: PropTypes.number,

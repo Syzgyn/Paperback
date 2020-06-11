@@ -4,9 +4,12 @@ namespace App\Http\Resources\ComicVine;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Models\Comic;
+use App\Traits\TruncateHtml;
 
 class Volume extends JsonResource
 {
+    use TruncateHtml;
+
     const URL_BASE = "https://comicvine.gamespot.com/";
     const MAX_LENGTH = 600;
 
@@ -20,8 +23,9 @@ class Volume extends JsonResource
     {
 	    return [
 		    'name' => $this->resource->name,
-		    'description' => $this->processDescription($this->resource->description),
-		    'startYear' => $this->resource->start_year,
+		    'displayDescription' => $this->processDescription($this->resource->description),
+            'description' => $this->resource->description,
+		    'startYear' => (Int)$this->resource->start_year,
 		    'numIssues' => $this->resource->count_of_issues,
 		    'url' => $this->resource->site_detail_url,
 		    'cvid' => $this->resource->id,
@@ -32,7 +36,8 @@ class Volume extends JsonResource
     }
 
     protected function processDescription($text) {
-        $text = strlen($text) > self::MAX_LENGTH ? substr($text, 0, self::MAX_LENGTH) . "... <a target=\"_blank\" href='" . $this->resource->site_detail_url . "'>Read More</a>" : $text;
+        $text = $this->printTruncated($text, self::MAX_LENGTH, "... <a target=\"_blank\" href='" . $this->resource->site_detail_url . "'>Read More</a>");
+
 
         $text = preg_replace(
             '/href\=\"\//',
@@ -40,30 +45,7 @@ class Volume extends JsonResource
             $text
         );
 
-        $text = $this->closetags($text);
-
         return $text;
-    }
-
-    protected function closetags($html) {
-        preg_match_all('#<([a-z]+)(?: .*)?(?<![/|/ ])>#iU', $html, $result);
-        $openedtags = $result[1];
-
-        preg_match_all('#</([a-z]+)>#iU', $html, $result);
-        $closedtags = $result[1];
-        $len_opened = count($openedtags);
-        if (count($closedtags) == $len_opened) {
-            return $html;
-        }
-        $openedtags = array_reverse($openedtags);
-        for ($i=0; $i < $len_opened; $i++) {
-            if (!in_array($openedtags[$i], $closedtags)){
-                $html .= '</'.$openedtags[$i].'>';
-            } else {
-                unset($closedtags[array_search($openedtags[$i], $closedtags)]);
-            }
-        }
-        return $html;
     }
 
     protected function checkLibrary(Int $cvid) {

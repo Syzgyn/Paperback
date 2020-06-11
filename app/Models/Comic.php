@@ -21,11 +21,21 @@ class Comic extends Model
         'cvid',
     ];
 
+    protected $casts = [
+        'cvid' => 'integer',
+        'start_year' => 'integer',
+        'downloadedIssuesCount' => 'integer',
+    ];
+
     public function issues() {
         return $this->hasMany('App\Models\Issue', 'comic_id', 'cvid')->orderBy('issue_num', 'DESC'); 
     }
 
-    public function getImage() {
+    public function getDownloadedIssuesCountAttribute() {
+        return $this->issues()->where('status', 'downloaded')->count();
+    }
+
+    public function getImageAttribute() {
         return asset("/storage/covers/" . $this->cvid . ".jpg");
     }
 

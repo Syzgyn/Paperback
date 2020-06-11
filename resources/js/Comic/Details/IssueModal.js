@@ -44,7 +44,7 @@ IssueModal.propTypes = {
     toggleModal: PropTypes.func,
     isOpen: PropTypes.bool,
     issue: PropTypes.shape({
-        displayName: PropTypes.string.isRequired,
+        displayName: PropTypes.string,
         description: PropTypes.string
     }),
 }

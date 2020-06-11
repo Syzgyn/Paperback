@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
-import ComicItemTemplate from './ComicItemTemplate';
+import ComicItem from './ComicItem'
 import IssueList from './IssueList';
 import IssueModal from './IssueModal';
 
-class ComicView extends Component
+class ComicDetails extends Component
 {
     constructor() {
         super();
@@ -27,8 +27,7 @@ class ComicView extends Component
     }
 
     toggleModal(issue) {
-        console.log(issue);
-        this.setState({modal: !this.state.modal, issue: issue}, () => {console.log(this.state)})
+        this.setState({modal: !this.state.modal, issue: issue});
     }
 
     render() {
@@ -43,7 +42,7 @@ class ComicView extends Component
 
             return (
                 <>
-                    <ComicItemTemplate singleView="true" classes="pb-3" {...comic} /> 
+                    <ComicItem singleView={true} classes="pb-3" {...comic} /> 
                     <IssueList issues={issues} clickCallback={this.toggleModal}/>
                     <IssueModal isOpen={this.state.modal} issue={this.state.issue} toggleModal={this.toggleModal} />
                 </>
@@ -54,12 +53,12 @@ class ComicView extends Component
     }
 }
 
-ComicView.propTypes = {
+ComicDetails.propTypes = {
     match: PropTypes.shape({
         params: PropTypes.shape({
-            cvid: PropTypes.number,
+            cvid: PropTypes.string,
         }),
     }),
 }
 
-export default withRouter(ComicView)
+export default withRouter(ComicDetails)

@@ -20,7 +20,7 @@ class Search extends Component {
     onFormSubmit(event) {
         event.preventDefault();
 
-        const callback = this.props.onSubmit;
+        const callback = this.props.searchCallback;
         callback(this.state.value);
     }
 
@@ -54,7 +54,7 @@ class Search extends Component {
 }
 
 Search.propTypes = {
-    onSubmit: PropTypes.requiredFunc
+    searchCallback: PropTypes.func.isRequired 
 }
 
 export { Search }; 

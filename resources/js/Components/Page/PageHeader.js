@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Book, Plus, Clock, AlertTriangle, Settings } from 'react-feather'
 
-const Header = () => (
+const PageHeader = () => (
     <div className="container mt-3">
         <div className="row header">
           <div className="col">
@@ -23,7 +23,7 @@ const Header = () => (
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link to="/addcomic" className="nav-link">
+                    <Link to="/add/new" className="nav-link">
                         <Plus className="navbar-icon" />
                         Add Comic
                     </Link>
@@ -66,4 +66,4 @@ const Header = () => (
     </div>
 )
 
-export default Header
+export default PageHeader

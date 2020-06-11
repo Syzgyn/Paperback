@@ -28,6 +28,11 @@ class Issue extends Model
         'displayName',
     ];
 
+    protected $casts = [
+        'issue_num' => 'integer',
+        'cvid' => 'integer',
+    ];
+
     public function comic() {
         return $this->belongsTo('App\Comic', 'cvid', 'comic_id');
     }

@@ -5,20 +5,20 @@ class ComicBadge extends Component
 {
     render() {
         const content = this.props.children;
-        const { variation } = this.props;
+        const { color } = this.props;
         return (
-            <span className={"comic-badge badge badge-" + variation}>{content}</span>
+            <span className={"comic-badge mr-2 badge badge-" + color}>{content}</span>
         );
     }
 }
 
 ComicBadge.defaultProps = {
-    variation: 'primary'
+    color: 'primary'
 }
 
 ComicBadge.propTypes = {
-    children: PropTypes.string,
-    variation: PropTypes.string,
+    children: PropTypes.node,
+    color: PropTypes.string,
 }
 
 export default ComicBadge;

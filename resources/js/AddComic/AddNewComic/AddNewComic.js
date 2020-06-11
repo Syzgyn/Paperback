@@ -1,9 +1,9 @@
 import axios from 'axios'
 import React, { Component } from 'react'
-import ComicItemTemplate from './ComicItemTemplate';
-import { Search as Searchbar } from './AddComic/Search';
+import ComicItem from './ComicItem'
+import { Search as Searchbar } from './Search';
 
-class AddComic extends Component {
+class AddNewComic extends Component {
     constructor() {
         super();
         this.state = {
@@ -16,7 +16,6 @@ class AddComic extends Component {
     }
 
     onSearchSubmit(value) {
-        console.log(value);
         const hasValue = !!value.trim();
         this.setState({searchValue: value}, () => {
             if (hasValue) {
@@ -40,10 +39,9 @@ class AddComic extends Component {
 
     render () {
         const { comics, loading } = this.state;
-        console.log(comics);
         return (
         <>
-            <Searchbar onSubmit={this.onSearchSubmit} />
+            <Searchbar searchCallback={this.onSearchSubmit} />
             <div className="row">
                 <div className="col-12">
                     {
@@ -53,7 +51,7 @@ class AddComic extends Component {
                         <div id="comic-list"> 
                             {comics.map(comic => (
                                 <div className="comic-list-item pb-4" key={comic.cvid}> 
-                                    <ComicItemTemplate {...comic}/> 
+                                    <ComicItem {...comic}/> 
                                 </div>
                             ))}
                         </div> :
@@ -66,4 +64,4 @@ class AddComic extends Component {
     }
 }
 
-export default AddComic 
+export default AddNewComic 
