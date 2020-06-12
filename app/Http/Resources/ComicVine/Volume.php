@@ -30,7 +30,7 @@ class Volume extends JsonResource
 		    'url' => $this->resource->site_detail_url,
 		    'cvid' => $this->resource->id,
 		    'image' => $this->resource->image->{Comic::IMAGE_KEY},
-            'publisher' => $this->resource->publisher->name,
+            'publisher' => ($this->resource->publisher) ? $this->resource->publisher->name : null,
             'inLibrary' => $this->checkLibrary($this->resource->id),
 	    ]; 
     }

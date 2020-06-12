@@ -1,7 +1,9 @@
 import axios from 'axios'
 import React, { Component } from 'react'
 import ComicItem from './ComicItem'
-import { Search as Searchbar } from './Search';
+import { Search as Searchbar } from './Search'
+import LoadingIndicator from '@/Components/Loading/LoadingIndicator'
+import PageRow from '@/Components/Page/PageRow'
 
 class AddNewComic extends Component {
     constructor() {
@@ -39,26 +41,31 @@ class AddNewComic extends Component {
 
     render () {
         const { comics, loading } = this.state;
+
+        if (loading) {
+            return (
+                <PageRow>
+                    <LoadingIndicator />
+                </PageRow>
+            );
+        }
+
         return (
         <>
             <Searchbar searchCallback={this.onSearchSubmit} />
-            <div className="row">
-                <div className="col-12">
-                    {
-                        loading ? 
-                        <span>Loading...</span> :
-                        comics ?
-                        <div id="comic-list"> 
-                            {comics.map(comic => (
-                                <div className="comic-list-item pb-4" key={comic.cvid}> 
-                                    <ComicItem {...comic}/> 
-                                </div>
-                            ))}
-                        </div> :
-                        ""
-                    }
-                </div>
-            </div>
+            <PageRow>
+                {
+                    comics ?
+                    <div id="comic-list">
+                        {comics.map(comic => (
+                            <div className="comic-list-item pb-4" key={comic.cvid}>
+                                <ComicItem {...comic}/>
+                            </div>
+                        ))}
+                    </div> :
+                    ""
+                }
+            </PageRow>
         </>
         );
     }

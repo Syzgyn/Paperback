@@ -11053,3 +11053,10 @@ a.hideLink {
   transition: width 0.6s ease;
 }
 
+.indexer-item {
+  width: 290px;
+  height: 90px;
+  display: inline-block;
+  cursor: pointer;
+}
+

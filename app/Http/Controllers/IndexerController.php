@@ -85,4 +85,8 @@ class IndexerController extends Controller
 
         return new NewznabCollection($results);
     }
+
+    public function schema(Request $request) {
+        return Indexer::buildSchemas();
+    }
 }

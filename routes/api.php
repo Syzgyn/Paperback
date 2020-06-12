@@ -22,6 +22,8 @@ Route::get('comic/search', 'ComicController@search');
 Route::resource('comic', 'ComicController');
 
 Route::apiResource('issue', 'IssueController');
+
+Route::get('indexer/schema', 'IndexerController@schema');
 Route::apiResource('indexer', 'IndexerController');
 Route::get('indexer/search/{query}/{offset?}', 'IndexerController@search');
 

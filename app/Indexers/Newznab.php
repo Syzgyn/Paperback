@@ -16,6 +16,19 @@ class Newznab extends Indexer
 
     protected static $singleTableType = self::class;
 
+    protected $schema = [
+        'protocol' => 'usenet',
+        'name' => 'Newznab',
+        'fields' => [
+            'apikey' => [
+                'label' => 'API Key',
+                'type' => 'text',
+                'validation' => 'required|alpha_num',
+                'validationField' => 'settings.apikey',
+            ],
+        ],
+    ];
+
     public function search($query, $offset = 0) {
         return $this->repository->search($query, $offset);
     }

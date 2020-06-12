@@ -125,3 +125,10 @@ a.hideLink {
     box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
     transition: width .6s ease;
 }
+
+.indexer-item {
+    width: 290px;
+    height: 90px;
+    display: inline-block;
+    cursor: pointer;
+}

@@ -131,7 +131,7 @@ ComicItemTemplate.propTypes = {
     publisher: PropTypes.string,
     image: PropTypes.string,
     name: PropTypes.string,
-    description: PropTypes.string,
+    displayDescription: PropTypes.string,
     inLibrary: PropTypes.bool,
     singleView: PropTypes.bool,
     classes: PropTypes.string,
