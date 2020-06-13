@@ -14,6 +14,8 @@ class NzoStatus extends JsonResource
      */
     public function toArray($request)
     {
-        'nzo_id' => 
+        return [
+            'nzo_id' => null,
+        ];
     }
 }

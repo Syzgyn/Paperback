@@ -14,7 +14,7 @@ class Indexer extends Model
         'newznab' => \App\Indexers\Newznab::class,
     ];
 
-    protected $table = "indexers";
+    protected $table = 'indexers';
 
     protected static $singleTableTypeField = 'class';
     protected static $singleTableSubclasses = self::INDEXER_TYPES;
@@ -40,26 +40,30 @@ class Indexer extends Model
         ],
     ];
 
-    public static function createChild($attrs) {
+    public static function createChild($attrs)
+    {
         $type = $attrs['type'];
         $class = self::getClass($type);
 
         return $class::create($attrs);
     }
 
-    public static function getClass(String $type) {
+    public static function getClass(String $type)
+    {
         return self::INDEXER_TYPES[$type];
     }
 
-    protected static function booted() {
-        static::saving(function($indexer) {
+    protected static function booted()
+    {
+        static::saving(function ($indexer) {
             if (get_class($indexer) == self::class) {
-                throw new \Exception("Cannot save base indexer class");
-                }
-            });
+                throw new \Exception('Cannot save base indexer class');
+            }
+        });
     }
 
-    public function buildSchema() {
+    public function buildSchema()
+    {
         $schema = array_merge_recursive($this->baseSchema, $this->schema);
         $output = [
             'protocol' => $schema['protocol'],
@@ -69,13 +73,13 @@ class Indexer extends Model
             'fields' => [],
         ];
 
-        foreach($schema['fields'] as $name => $field) {
+        foreach ($schema['fields'] as $name => $field) {
             $output['fields'][] = [
                 'name' => $name,
                 'label' => $field['label'],
                 'type' => $field['type'],
-                'value' => "", 
-                'required' => in_array('required', $field['validation'],
+                'value' => '',
+                'required' => in_array('required', $field['validation']),
             ];
         }
 
@@ -85,7 +89,7 @@ class Indexer extends Model
     public static function buildSchemas()
     {
         $schemas = [];
-        foreach(self::INDEXER_TYPES as $key => $class) {
+        foreach (self::INDEXER_TYPES as $key => $class) {
             $indexer = new $class();
             $schemas[] = $indexer->buildSchema();
         }
