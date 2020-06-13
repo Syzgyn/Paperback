@@ -11,6 +11,7 @@ class IndexerEmptyItem extends Component
         this.state = {
             addModal: false,
             schema: [],
+            implementation: {},
         }
 
         this.toggleAddModal = this.toggleAddModal.bind(this);
@@ -28,10 +29,11 @@ class IndexerEmptyItem extends Component
         this.setState({editModal: !this.state.editModal});
     }
 
-    onAddModalClosed(indexerSelected = false) {
+    onAddModalClosed(indexerSelected = false, implementation = {}) {
         this.setState({
             addModal: false,
             editModal: indexerSelected,
+            implementation: this.state.schema.find(indexer => indexer.type === implementation), 
         });
     }
 
@@ -40,6 +42,7 @@ class IndexerEmptyItem extends Component
     }
 
     openAddModal() {
+        console.log("opening");
         if (!this.state.schema.length) {
         axios.get('/api/indexer/schema')
             .then(response => {

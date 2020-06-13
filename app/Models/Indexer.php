@@ -59,12 +59,13 @@ class Indexer extends Model
             });
     }
 
-    public function buildSchema($classNameType) {
+    public function buildSchema() {
         $schema = array_merge_recursive($this->baseSchema, $this->schema);
         $output = [
             'protocol' => $schema['protocol'],
             'name' => $schema['name'],
-            'type' => $classNameType,
+            'type' => array_search(static::class, self::INDEXER_TYPES),
+            'enableSearch' => $this->enable_search || true,
             'fields' => [],
         ];
 
@@ -72,7 +73,9 @@ class Indexer extends Model
             $output['fields'][] = [
                 'name' => $name,
                 'label' => $field['label'],
-                'type' => $field['type']
+                'type' => $field['type'],
+                'value' => "", 
+                'required' => in_array('required', $field['validation'],
             ];
         }
 
@@ -84,7 +87,7 @@ class Indexer extends Model
         $schemas = [];
         foreach(self::INDEXER_TYPES as $key => $class) {
             $indexer = new $class();
-            $schemas[] = $indexer->buildSchema($key);
+            $schemas[] = $indexer->buildSchema();
         }
 
         return $schemas;

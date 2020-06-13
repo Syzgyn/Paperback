@@ -86,7 +86,15 @@ class IndexerController extends Controller
         return new NewznabCollection($results);
     }
 
-    public function schema(Request $request) {
+    public function schema(Request $request, $name=null) {
+        if ($name) { 
+            //TODO: Validation
+            $className = Indexer::INDEXER_TYPES[$name];
+            $indexer = new $className();
+
+            return $indexer->buildSchema();
+        }
+
         return Indexer::buildSchemas();
     }
 }

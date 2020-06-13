@@ -9,9 +9,7 @@ class IndexerAddModalContent extends Component {
     }
 
     onIndexerSelect(implementation) {
-        //TODO: push selected implementation up
-        console.log(implementation);
-        this.props.onModalClose(true);
+        this.props.onModalClose(true, implementation);
     }
 
     render() {
@@ -21,7 +19,7 @@ class IndexerAddModalContent extends Component {
 
         return (
             <>
-                <h2>Newznab</h2>
+                <h2>Usenet</h2>
                 <div className="indexer-list">
                     {schema
                         .filter(indexer => {return indexer.protocol == "usenet"})

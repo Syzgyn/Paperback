@@ -23,15 +23,16 @@ Route::resource('comic', 'ComicController');
 
 Route::apiResource('issue', 'IssueController');
 
+Route::get('indexer/schema/{class}', 'IndexerController@schema');
 Route::get('indexer/schema', 'IndexerController@schema');
-Route::apiResource('indexer', 'IndexerController');
 Route::get('indexer/search/{query}/{offset?}', 'IndexerController@search');
+Route::apiResource('indexer', 'IndexerController');
 
 Route::apiResource('downloader', 'DownloaderController');
 Route::post('downloader/download', 'DownloaderController@download');
 Route::post('downloader/test', 'DownloaderController@test');
 
-Route::fallback(function(){
+Route::fallback(function () {
     return response()->json([
         'message' => 'Page Not Found.'], 404);
 });
