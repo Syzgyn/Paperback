@@ -12,3 +12,4 @@ npm-debug.log
 yarn-error.log
 .*.swp
 .*.swo
+.php_cs.cache
