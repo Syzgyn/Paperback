@@ -2,14 +2,14 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
 class DownloaderRequest extends FormRequest
 {
     protected $types = [
-        'sabnzbd', 
+        'sabnzbd',
     ];
 
     /**
@@ -43,8 +43,9 @@ class DownloaderRequest extends FormRequest
         ];
     }
 
-    public function withValidator(Validator $validator) {
-        $validator->sometimes(['settings.apikey', 'settings.host', 'settings.port'], 'required', function($input) {
+    public function withValidator(Validator $validator)
+    {
+        $validator->sometimes(['settings.apikey', 'settings.host', 'settings.port'], 'required', function ($input) {
             return $input->type == 'sabnzbd';
         });
     }

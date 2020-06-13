@@ -10,7 +10,7 @@ class Newznab extends Indexer
 {
     use SingleTableInheritanceTrait;
 
-    const URL_ENDPOINT_BASE = "/api/";
+    const URL_ENDPOINT_BASE = '/api/';
 
     public $repository;
 
@@ -29,16 +29,18 @@ class Newznab extends Indexer
         ],
     ];
 
-    public function search($query, $offset = 0) {
+    public function search($query, $offset = 0)
+    {
         return $this->repository->search($query, $offset);
     }
 
-    protected static function booted() {
-        static::creating(function($indexer) {
+    protected static function booted()
+    {
+        static::creating(function ($indexer) {
             $indexer->class = self::class;
         });
 
-        static::retrieved(function($indexer) {
+        static::retrieved(function ($indexer) {
             $indexer->repository = new NewznabRepository($indexer);
             $indexer->class = self::class;
         });

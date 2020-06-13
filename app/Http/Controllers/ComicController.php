@@ -4,16 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Comic;
 use Illuminate\Http\Request;
-use App\Http\Resources\Comic as ComicResource;
 use App\Http\Resources\ComicCollection;
-use App\Repositories\ComicVineRepository;
+use App\Http\Resources\Comic as ComicResource;
 
 class ComicController extends Controller
 {
-
     public function __construct()
     {
-        $this->comicvine = resolve("ComicVineRepository");
+        $this->comicvine = resolve('ComicVineRepository');
     }
 
     /**
@@ -63,7 +61,7 @@ class ComicController extends Controller
     public function update(Request $request, Comic $comic)
     {
         $comic->fill($request->validate());
-        $comic-save();
+        $comic - save();
 
         return new ComicResource($comic);
     }
@@ -77,12 +75,14 @@ class ComicController extends Controller
     public function destroy(Comic $comic)
     {
         $indexer->delete();
+
         return response()->json(['status' => 'OK']);
     }
 
-    public function search(Request $request) {
+    public function search(Request $request)
+    {
         $search = $request->input('query');
+
         return $this->comicvine->volumes($search);
-        
     }
 }

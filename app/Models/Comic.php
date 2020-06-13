@@ -4,15 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
-use App\Repositories\ComicVineRepository;
-use App\Models\Issue;
 
 class Comic extends Model
 {
-    const IMAGE_KEY = "small_url";
+    const IMAGE_KEY = 'small_url';
 
     public $primaryKey = 'cvid';
-    public $incrementing = false; 
+    public $incrementing = false;
     protected $fillable = [
         'name',
         'description',
@@ -27,20 +25,24 @@ class Comic extends Model
         'downloadedIssuesCount' => 'integer',
     ];
 
-    public function issues() {
-        return $this->hasMany('App\Models\Issue', 'comic_id', 'cvid')->orderBy('issue_num', 'DESC'); 
+    public function issues()
+    {
+        return $this->hasMany('App\Models\Issue', 'comic_id', 'cvid')->orderBy('issue_num', 'DESC');
     }
 
-    public function getDownloadedIssuesCountAttribute() {
+    public function getDownloadedIssuesCountAttribute()
+    {
         return $this->issues()->where('status', 'downloaded')->count();
     }
 
-    public function getImageAttribute() {
-        return asset("/storage/covers/" . $this->cvid . ".jpg");
+    public function getImageAttribute()
+    {
+        return asset('/storage/covers/' . $this->cvid . '.jpg');
     }
 
-    public static function createFromCvid($cvid, $grabImage = true, $searchIssues = false) {
-        $repo = resolve("ComicVineRepository");
+    public static function createFromCvid($cvid, $grabImage = true, $searchIssues = false)
+    {
+        $repo = resolve('ComicVineRepository');
         $volume = $repo->volume($cvid);
         $volume['start_year'] = $volume['startYear'];
 
@@ -58,8 +60,9 @@ class Comic extends Model
         return $comic;
     }
 
-    public function updateFromCvid($grabImage = true, $fetchIssues = false) {
-        $repo = resolve("ComicVineRepository");
+    public function updateFromCvid($grabImage = true, $fetchIssues = false)
+    {
+        $repo = resolve('ComicVineRepository');
         $volume = $repo->volume($cvid);
 
         $comic->fill($volume);
@@ -76,24 +79,26 @@ class Comic extends Model
         return $comic;
     }
 
-    protected function downloadImage($path) {
+    protected function downloadImage($path)
+    {
         //TODO: Replace with Guzzle
         $contents = file_get_contents($path);
-        Storage::disk('covers')->put($this->cvid . ".jpg", $contents);
-    } 
-
-    protected function fetchIssues() {
-        $repo = resolve("ComicVineRepository");
-        $issues = $repo->volumeIssues($this->cvid);
-
-        foreach($issues as $issue) {
-            Issue::create($issue);
-        }
-
+        Storage::disk('covers')->put($this->cvid . '.jpg', $contents);
     }
 
-    protected static function booted() {
-        static::created(function($comic) {
+    protected function fetchIssues()
+    {
+        $repo = resolve('ComicVineRepository');
+        $issues = $repo->volumeIssues($this->cvid);
+
+        foreach ($issues as $issue) {
+            Issue::create($issue);
+        }
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($comic) {
             $comic->fetchIssues();
         });
     }

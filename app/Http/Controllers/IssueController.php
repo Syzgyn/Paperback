@@ -56,7 +56,7 @@ class IssueController extends Controller
     public function update(Request $request, Issue $issue)
     {
         $issue->fill($request->validate());
-        $issue-save();
+        $issue - save();
 
         return new IssueResource($issue);
     }
@@ -70,6 +70,7 @@ class IssueController extends Controller
     public function destroy(Issue $issue)
     {
         $issue->delete();
+
         return response()->json(['status' => 'OK']);
     }
 }

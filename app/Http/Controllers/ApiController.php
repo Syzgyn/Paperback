@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Repositories\ComicVineRepository;
 use App\Models\Comic;
+use App\Repositories\ComicVineRepository;
 
 class ApiController extends Controller
 {
@@ -18,7 +17,7 @@ class ApiController extends Controller
     public function index()
     {
         // Get all the post
-        $comics = $this->comicvine->volumes("transmetropolitan");
+        $comics = $this->comicvine->volumes('transmetropolitan');
 
         return view('api', compact('comics'));
     }
@@ -27,12 +26,13 @@ class ApiController extends Controller
     {
     }
 
-    public function search($name) {
+    public function search($name)
+    {
         return $this->comicvine->volumes($name);
     }
 
-    public function addComic(int $cvid) {
+    public function addComic(int $cvid)
+    {
         return Comic::createFromCvid($cvid);
-
     }
 }

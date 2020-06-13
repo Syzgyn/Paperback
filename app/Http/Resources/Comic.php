@@ -14,12 +14,12 @@ class Comic extends JsonResource
      */
     public function toArray($request)
     {
-        return [ 
-		    'name' => $this->name,
-		    'description' => $this->description,
-		    'startYear' => $this->start_year,
-		    'url' => $this->url,
-		    'cvid' => $this->cvid,
+        return [
+            'name' => $this->name,
+            'description' => $this->description,
+            'startYear' => $this->start_year,
+            'url' => $this->url,
+            'cvid' => $this->cvid,
             'image' => $this->image,
             'issues' => $this->issues,
             'numIssues' => count($this->issues),

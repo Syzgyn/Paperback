@@ -14,22 +14,23 @@ class Issue extends JsonResource
      */
     public function toArray($request)
     {
-	    return [
-		    'volume_name' => $this->getName(),
+        return [
+            'volume_name' => $this->getName(),
             'comic_id' => $this->comic_id,
-		    'description' => $this->description,
-		    'release_date' => $this->release_date,
-		    'issue_num' => $this->issue_num,
-		    'url' => $this->url,
-		    'cvid' => $this->cvid,
-	    ]; 
+            'description' => $this->description,
+            'release_date' => $this->release_date,
+            'issue_num' => $this->issue_num,
+            'url' => $this->url,
+            'cvid' => $this->cvid,
+        ];
     }
 
-    protected function getName() {
+    protected function getName()
+    {
         if ($this->name) {
             return $this->name;
         }
 
-        return "Issue #" . $this->issue_num;
+        return 'Issue #' . $this->issue_num;
     }
 }

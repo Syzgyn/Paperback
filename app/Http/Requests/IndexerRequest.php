@@ -2,17 +2,13 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
-
-use App\Http\Requests\NewznabRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
 class IndexerRequest extends FormRequest
 {
     protected $types = [
-        'newznab', 
+        'newznab',
     ];
 
     /**
@@ -45,8 +41,9 @@ class IndexerRequest extends FormRequest
         ];
     }
 
-    public function withValidator($validator) {
-        $validator->sometimes(['settings.apikey', 'settings.url'], 'required', function($input) {
+    public function withValidator($validator)
+    {
+        $validator->sometimes(['settings.apikey', 'settings.url'], 'required', function ($input) {
             return $input->type == 'newznab';
         });
     }

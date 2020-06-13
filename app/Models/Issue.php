@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Issue extends Model
 {
-    const CV_URL_BASE = "https://comicvine.gamespot.com/";
+    const CV_URL_BASE = 'https://comicvine.gamespot.com/';
 
     public $primaryKey = 'cvid';
-    public $incrementing = false; 
+    public $incrementing = false;
     protected $fillable = [
         'name',
         'comic_id',
@@ -33,23 +33,27 @@ class Issue extends Model
         'cvid' => 'integer',
     ];
 
-    public function comic() {
+    public function comic()
+    {
         return $this->belongsTo('App\Comic', 'cvid', 'comic_id');
     }
 
-    public function getReleaseDateAttribute() {
+    public function getReleaseDateAttribute()
+    {
         return date('M j Y', strtotime($this->attributes['release_date']));
     }
 
-    public function getDisplayNameAttribute() {
+    public function getDisplayNameAttribute()
+    {
         if (isset($this->attributes['name'])) {
             return $this->attributes['name'];
         }
 
-        return "Issue #" . $this->attributes['issue_num'];
+        return 'Issue #' . $this->attributes['issue_num'];
     }
 
-    public function getDescriptionAttribute() {
+    public function getDescriptionAttribute()
+    {
         return preg_replace(
             '/href\=\"\//',
             'target="_blank" href="' . self::CV_URL_BASE,
@@ -57,8 +61,9 @@ class Issue extends Model
         );
     }
 
-    public static function createFromCvid() {
-        $repo = resolve("ComicVineRepository");
+    public static function createFromCvid()
+    {
+        $repo = resolve('ComicVineRepository');
         $issue = $repo->issue($cvid);
 
         $issue = Issue::create($volume);
@@ -66,8 +71,9 @@ class Issue extends Model
         return $issue;
     }
 
-    public function updateFromCvid() {
-        $repo = resolve("ComicVineRepository");
+    public function updateFromCvid()
+    {
+        $repo = resolve('ComicVineRepository');
         $issue = $repo->issue($cvid);
 
         $issue->fill($volume);

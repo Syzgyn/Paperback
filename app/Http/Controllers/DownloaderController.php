@@ -6,9 +6,9 @@ use App\Models\Downloader;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\DownloaderRequest;
+use App\Http\Resources\DownloaderCollection;
 use App\Http\Requests\DownloaderDownloadRequest;
 use App\Http\Resources\Downloader as DownloaderResource;
-use App\Http\Resources\DownloaderCollection;
 
 class DownloaderController extends Controller
 {
@@ -73,28 +73,31 @@ class DownloaderController extends Controller
     public function destroy(Downloader $downloader)
     {
         $downloader->delete();
+
         return response()->json(['status' => 'OK']);
     }
 
-    public function download(DownloaderDownloadRequest $request) {
+    public function download(DownloaderDownloadRequest $request)
+    {
         $link = $request->validated()['link'];
         $downloaders = Downloader::all();
 
-        foreach($downloaders as $downloader) {
+        foreach ($downloaders as $downloader) {
             if ($downloader->enable) {
                 try {
                     $response = $downloader->download($link);
-                    return $response;
 
+                    return $response;
                 } catch (\Exception $e) {
                 }
             }
         }
 
-        throw new \Exception("No downloader was available");
+        throw new \Exception('No downloader was available');
     }
 
-    public function test(DownloaderRequest $request) {
+    public function test(DownloaderRequest $request)
+    {
         $downloader = Downloader::createChild($request->validated());
         $result = $downloader->test();
 

@@ -6,8 +6,8 @@ use App\Models\Indexer;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\IndexerRequest;
-use App\Http\Resources\Indexer as IndexerResource;
 use App\Http\Resources\IndexerCollection;
+use App\Http\Resources\Indexer as IndexerResource;
 use App\Http\Resources\Indexers\NewznabCollection;
 
 class IndexerController extends Controller
@@ -72,22 +72,25 @@ class IndexerController extends Controller
     public function destroy(Indexer $indexer)
     {
         $indexer->delete();
+
         return response()->json(['status' => 'OK']);
     }
 
-    public function search(String $query, Int $offset = 0) {
+    public function search(String $query, Int $offset = 0)
+    {
         $indexers = Indexer::all();
 
         $results = [];
-        foreach($indexers as $indexer) {
-                $results = array_merge($results, $indexer->search($query, $offset));
+        foreach ($indexers as $indexer) {
+            $results = array_merge($results, $indexer->search($query, $offset));
         }
 
         return new NewznabCollection($results);
     }
 
-    public function schema(Request $request, $name=null) {
-        if ($name) { 
+    public function schema(Request $request, $name = null)
+    {
+        if ($name) {
             //TODO: Validation
             $className = Indexer::INDEXER_TYPES[$name];
             $indexer = new $className();
