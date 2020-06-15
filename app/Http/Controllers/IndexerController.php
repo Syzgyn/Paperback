@@ -57,7 +57,7 @@ class IndexerController extends Controller
      */
     public function update(Request $request, Indexer $indexer)
     {
-        $indexer->fill($request->validate());
+        $indexer->fill($request->all());
         $indexer->save();
 
         return new IndexerResource($indexer);
@@ -98,7 +98,7 @@ class IndexerController extends Controller
             $className = Indexer::INDEXER_TYPES[$name];
             $indexer = new $className();
 
-            return $indexer->buildSchema();
+            return $indexer->schema;
         }
 
         return Indexer::buildSchemas();

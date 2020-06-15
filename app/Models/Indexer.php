@@ -43,7 +43,9 @@ class Indexer extends Model
     public function fill(array $attributes)
     {
         parent::fill($attributes);
-        $this->moveAttributes();
+        if (count($attributes)) {
+            $this->moveAttributes();
+        }
     }
 
     protected function moveAttributes()
@@ -69,6 +71,9 @@ class Indexer extends Model
 
             //Nested attribute
             $root = &$this->attributes[$base];
+            if (! is_array($root)) {
+                $root = json_decode($root, true);
+            }
             while (count($keys) > 1) {
                 $branch = array_shift($path);
 
@@ -122,14 +127,14 @@ class Indexer extends Model
         });
     }
 
-    public function buildSchema()
+    public function getSchemaAttribute()
     {
-        $schema = array_merge_recursive($this->baseSchema, $this->schema);
+        $schema = array_merge_recursive($this->baseSchema, $this->modelSchema);
         $output = [
             'protocol' => $schema['protocol'],
             'name' => $schema['name'],
             'type' => array_search(static::class, self::INDEXER_TYPES),
-            'enableSearch' => $this->enable_search || true,
+            'enableSearch' => isset($this->enable_search) ? (bool)$this->enable_search : true,
             'fields' => [],
         ];
 
@@ -151,7 +156,7 @@ class Indexer extends Model
         $schemas = [];
         foreach (self::INDEXER_TYPES as $key => $class) {
             $indexer = new $class();
-            $schemas[] = $indexer->buildSchema();
+            $schemas[] = $indexer->schema;
         }
 
         return $schemas;

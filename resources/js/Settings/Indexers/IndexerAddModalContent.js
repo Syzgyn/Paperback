@@ -8,8 +8,8 @@ class IndexerAddModalContent extends Component {
         this.onIndexerSelect = this.onIndexerSelect.bind(this);
     }
 
-    onIndexerSelect(implementation) {
-        this.props.onModalClose(true, implementation);
+    onIndexerSelect(modelType) {
+        this.props.onModalClose(true, modelType);
     }
 
     render() {

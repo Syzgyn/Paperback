@@ -4,18 +4,37 @@ import { Form, FormGroup, Label, Input } from 'reactstrap';
 
 class IndexerEditModalContent extends Component
 {
+    constructor(props) {
+        super(props);
+        this.state = {
+            //implementation: props.implementation || props.indexer.schema || {}
+        };
+    }
+
     render() {
         const {
-            implementation,
             formRef,
+            indexer,
         } = this.props;
+
+        let schema = null;
+        if (indexer) {
+            schema = this.props.indexer.schema;
+
+            //Populate default values
+            schema.name = indexer.name;
+            schema.fields.forEach((item, index) => {
+                schema.fields[index].value = indexer.settings[item.name];
+            });
+        } else {
+            schema = this.props.implementation;
+        }
 
         const {
             enableSearch,
             fields,
-        } = implementation;
-
-        const name = "";
+            name,
+        } = schema;
 
         return (
             <Form onSubmit={this.onFormSubmit} id="addForm" innerRef={formRef}>
@@ -39,7 +58,8 @@ class IndexerEditModalContent extends Component
 }
 
 IndexerEditModalContent.propTypes = {
-    implementation: PropTypes.object.isRequired,
+    implementation: PropTypes.object,
+    indexer: PropTypes.object,
     formRef: PropTypes.object.isRequired,
 }
 

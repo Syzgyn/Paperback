@@ -30,7 +30,7 @@ class Newznab extends Indexer
 
     protected static $singleTableType = self::class;
 
-    protected $schema = [
+    protected $modelSchema = [
         'protocol' => 'usenet',
         'name' => 'Newznab',
         'fields' => [

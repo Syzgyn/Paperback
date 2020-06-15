@@ -449,8 +449,8 @@ var IndexerAddModalContent = /*#__PURE__*/function (_Component) {
 
   _createClass(IndexerAddModalContent, [{
     key: "onIndexerSelect",
-    value: function onIndexerSelect(implementation) {
-      this.props.onModalClose(true, implementation);
+    value: function onIndexerSelect(modelType) {
+      this.props.onModalClose(true, modelType);
     }
   }, {
     key: "render",
@@ -631,6 +631,7 @@ var IndexerEditModal = /*#__PURE__*/function (_Component) {
     _this.formRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.onClickTest = _this.onClickTest.bind(_assertThisInitialized(_this));
     _this.onClickSave = _this.onClickSave.bind(_assertThisInitialized(_this));
+    _this.onClickDelete = _this.onClickDelete.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -640,7 +641,13 @@ var IndexerEditModal = /*#__PURE__*/function (_Component) {
       var data = form_serialize__WEBPACK_IMPORTED_MODULE_3___default()(this.formRef.current, {
         hash: true
       });
-      data.type = this.props.implementation.type;
+
+      if (this.props.indexer !== undefined) {
+        data.type = this.props.indexer.schema.type;
+      } else {
+        data.type = this.props.implementation.type;
+      }
+
       data.enableSearch = data.enableSearch === "on";
       return data;
     }
@@ -664,27 +671,58 @@ var IndexerEditModal = /*#__PURE__*/function (_Component) {
   }, {
     key: "onClickSave",
     value: function onClickSave() {
+      var _this3 = this;
+
       var data = this.prepareData();
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/indexer', data).then(function (response) {
-        console.log(response);
+      var url = '/api/indexer';
+      var method = 'post';
+      var indexer = this.props.indexer;
+
+      if (indexer) {
+        url += '/' + indexer.id;
+        method = 'put';
+      }
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a[method](url, data).then(function (response) {
+        _this3.props.toggleModal(true);
+      });
+    }
+  }, {
+    key: "onClickDelete",
+    value: function onClickDelete() {
+      var _this4 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]('/api/indexer/' + this.props.indexer.id).then(function (response) {
+        _this4.props.toggleModal(true);
       });
     }
   }, {
     key: "render",
     value: function render() {
-      var toggleModal = this.props.toggleModal;
+      var _this$props = this.props,
+          toggleModal = _this$props.toggleModal,
+          name = _this$props.name,
+          implementation = _this$props.implementation,
+          indexer = _this$props.indexer;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["Modal"], {
         isOpen: this.props.isOpen,
-        toggle: this.props.toggleModal,
+        toggle: toggleModal,
         className: "indexerModal",
         size: "lg"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["ModalHeader"], {
         toggle: this.props.toggleModal
-      }, this.props.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["ModalBody"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IndexerEditModalContent__WEBPACK_IMPORTED_MODULE_5__["default"], {
-        implementation: this.props.implementation,
+      }, name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["ModalBody"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IndexerEditModalContent__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        indexer: indexer,
+        implementation: implementation,
         toggleModal: toggleModal,
         formRef: this.formRef
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["ModalFooter"], null, this.state.testSuccess ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Test Successful") : "", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["Button"], {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["ModalFooter"], null, this.state.testSuccess ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Test Successful") : "", indexer ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["Button"], {
+        color: "danger mr-auto",
+        onClick: this.onClickDelete
+      }, "Delete") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["Button"], {
+        color: "secondary mr-auto",
+        onClick: toggleModal
+      }, "Close"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["Button"], {
         color: "secondary",
         onClick: this.onClickTest
       }, "Test"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["Button"], {
@@ -704,7 +742,8 @@ IndexerEditModal.propTypes = {
   toggleModal: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func,
   isOpen: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.bool,
   name: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
-  implementation: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.object
+  implementation: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.object,
+  existingIndexer: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.bool
 };
 /* harmony default export */ __webpack_exports__["default"] = (IndexerEditModal);
 
@@ -755,21 +794,40 @@ var IndexerEditModalContent = /*#__PURE__*/function (_Component) {
 
   var _super = _createSuper(IndexerEditModalContent);
 
-  function IndexerEditModalContent() {
+  function IndexerEditModalContent(props) {
+    var _this;
+
     _classCallCheck(this, IndexerEditModalContent);
 
-    return _super.apply(this, arguments);
+    _this = _super.call(this, props);
+    _this.state = {//implementation: props.implementation || props.indexer.schema || {}
+    };
+    return _this;
   }
 
   _createClass(IndexerEditModalContent, [{
     key: "render",
     value: function render() {
       var _this$props = this.props,
-          implementation = _this$props.implementation,
-          formRef = _this$props.formRef;
-      var enableSearch = implementation.enableSearch,
-          fields = implementation.fields;
-      var name = "";
+          formRef = _this$props.formRef,
+          indexer = _this$props.indexer;
+      var schema = null;
+
+      if (indexer) {
+        schema = this.props.indexer.schema; //Populate default values
+
+        schema.name = indexer.name;
+        schema.fields.forEach(function (item, index) {
+          schema.fields[index].value = indexer.settings[item.name];
+        });
+      } else {
+        schema = this.props.implementation;
+      }
+
+      var _schema = schema,
+          enableSearch = _schema.enableSearch,
+          fields = _schema.fields,
+          name = _schema.name;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Form"], {
         onSubmit: this.onFormSubmit,
         id: "addForm",
@@ -799,7 +857,8 @@ var IndexerEditModalContent = /*#__PURE__*/function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 IndexerEditModalContent.propTypes = {
-  implementation: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired,
+  implementation: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object,
+  indexer: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object,
   formRef: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired
 };
 /* harmony default export */ __webpack_exports__["default"] = (IndexerEditModalContent);
@@ -817,11 +876,13 @@ IndexerEditModalContent.propTypes = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
-/* harmony import */ var _IndexerEditModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./IndexerEditModal */ "./resources/js/Settings/Indexers/IndexerEditModal.js");
-/* harmony import */ var _IndexerAddModal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./IndexerAddModal */ "./resources/js/Settings/Indexers/IndexerAddModal.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
+/* harmony import */ var _IndexerEditModal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./IndexerEditModal */ "./resources/js/Settings/Indexers/IndexerEditModal.js");
+/* harmony import */ var _IndexerAddModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./IndexerAddModal */ "./resources/js/Settings/Indexers/IndexerAddModal.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -843,6 +904,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -864,7 +926,7 @@ var IndexerEmptyItem = /*#__PURE__*/function (_Component) {
     _this.state = {
       addModal: false,
       schema: [],
-      implementation: {}
+      implementation: null
     };
     _this.toggleAddModal = _this.toggleAddModal.bind(_assertThisInitialized(_this));
     _this.toggleEditModal = _this.toggleEditModal.bind(_assertThisInitialized(_this));
@@ -883,7 +945,11 @@ var IndexerEmptyItem = /*#__PURE__*/function (_Component) {
     }
   }, {
     key: "toggleEditModal",
-    value: function toggleEditModal() {
+    value: function toggleEditModal(refresh) {
+      if (refresh) {
+        this.props.refreshCallback();
+      }
+
       this.setState({
         editModal: !this.state.editModal
       });
@@ -892,12 +958,12 @@ var IndexerEmptyItem = /*#__PURE__*/function (_Component) {
     key: "onAddModalClosed",
     value: function onAddModalClosed() {
       var indexerSelected = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-      var implementation = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      var modelType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       this.setState({
         addModal: false,
         editModal: indexerSelected,
         implementation: this.state.schema.find(function (indexer) {
-          return indexer.type === implementation;
+          return indexer.type === modelType;
         })
       });
     }
@@ -914,7 +980,7 @@ var IndexerEmptyItem = /*#__PURE__*/function (_Component) {
       var _this2 = this;
 
       if (!this.state.schema.length) {
-        axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/indexer/schema').then(function (response) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/indexer/schema').then(function (response) {
           _this2.setState({
             schema: response.data
           }, _this2.toggleAddModal());
@@ -931,18 +997,19 @@ var IndexerEmptyItem = /*#__PURE__*/function (_Component) {
           editModal = _this$state.editModal,
           implementation = _this$state.implementation,
           schema = _this$state.schema;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Card"], {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Card"], {
         onClick: this.openAddModal,
         className: "indexer-item shadow p-3 m-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["CardTitle"], null, "Add New Indexer"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IndexerAddModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["CardTitle"], null, "Add New Indexer"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["CardText"], null, "\xA0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IndexerAddModal__WEBPACK_IMPORTED_MODULE_5__["default"], {
         isOpen: addModal,
         toggleModal: this.toggleAddModal,
         schema: schema,
         onModalClose: this.onAddModalClosed
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IndexerEditModal__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IndexerEditModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
         isOpen: editModal,
         toggleModal: this.toggleEditModal,
-        implementation: implementation
+        implementation: implementation,
+        existingIndexer: false
       }));
     }
   }]);
@@ -950,6 +1017,9 @@ var IndexerEmptyItem = /*#__PURE__*/function (_Component) {
   return IndexerEmptyItem;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
+IndexerEmptyItem.propTypes = {
+  refreshCallback: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
+};
 /* harmony default export */ __webpack_exports__["default"] = (IndexerEmptyItem);
 
 /***/ }),
@@ -967,7 +1037,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
+/* harmony import */ var _IndexerEditModal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./IndexerEditModal */ "./resources/js/Settings/Indexers/IndexerEditModal.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -994,6 +1067,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
+
 var IndexerItem = /*#__PURE__*/function (_Component) {
   _inherits(IndexerItem, _Component);
 
@@ -1006,18 +1081,62 @@ var IndexerItem = /*#__PURE__*/function (_Component) {
 
     _this = _super.call(this);
     _this.state = {
-      editModal: false
+      editModal: false,
+      schema: {},
+      implementation: {}
     };
+    _this.toggleEditModal = _this.toggleEditModal.bind(_assertThisInitialized(_this));
+    _this.openEditModal = _this.openEditModal.bind(_assertThisInitialized(_this));
+    _this.onEditModalClosed = _this.onEditModalClosed.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(IndexerItem, [{
+    key: "toggleEditModal",
+    value: function toggleEditModal() {
+      var refresh = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+      if (refresh) {
+        this.props.refreshCallback();
+      }
+
+      this.setState({
+        editModal: !this.state.editModal
+      });
+    }
+  }, {
+    key: "onEditModalClosed",
+    value: function onEditModalClosed() {
+      this.setState({
+        editModal: false
+      });
+    }
+  }, {
+    key: "openEditModal",
+    value: function openEditModal() {
+      this.toggleEditModal();
+    }
+  }, {
     key: "render",
     value: function render() {
-      var name = this.props.indexer.name;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Card"], {
-        className: "indexer-item"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["CardTitle"], null, name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["CardText"], null, "Info here"));
+      var _this$state = this.state,
+          editModal = _this$state.editModal,
+          implementation = _this$state.implementation;
+      var _this$props$indexer = this.props.indexer,
+          name = _this$props$indexer.name,
+          enableSearch = _this$props$indexer.enableSearch;
+      console.log(this.props.indexer);
+      var searchBadgeColor = enableSearch ? "success" : "danger";
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Card"], {
+        onClick: this.openEditModal,
+        className: "indexer-item shadow p-3 m-3"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["CardTitle"], null, name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["CardText"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Badge"], {
+        color: searchBadgeColor
+      }, "Search")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IndexerEditModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        isOpen: editModal,
+        toggleModal: this.toggleEditModal,
+        indexer: this.props.indexer
+      }));
     }
   }]);
 
@@ -1092,12 +1211,18 @@ var IndexerList = /*#__PURE__*/function (_Component) {
       indexers: [],
       loading: true
     };
+    _this.getIndexers = _this.getIndexers.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(IndexerList, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      this.getIndexers();
+    }
+  }, {
+    key: "getIndexers",
+    value: function getIndexers() {
       var _this2 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/indexer').then(function (response) {
@@ -1110,6 +1235,8 @@ var IndexerList = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       if (this.state.loading) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_3__["default"], null);
       }
@@ -1117,12 +1244,14 @@ var IndexerList = /*#__PURE__*/function (_Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Page_PageRow__WEBPACK_IMPORTED_MODULE_2__["default"], {
         className: "indexers-list"
       }, this.state.indexers.map(function (indexer) {
-        /*#__PURE__*/
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IndexerItem__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IndexerItem__WEBPACK_IMPORTED_MODULE_4__["default"], {
           key: indexer.id,
-          indexer: indexer
+          indexer: indexer,
+          refreshCallback: _this3.getIndexers
         });
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IndexerEmptyItem__WEBPACK_IMPORTED_MODULE_5__["default"], null));
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IndexerEmptyItem__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        refreshCallback: this.getIndexers
+      }));
     }
   }]);
 

@@ -13,9 +13,15 @@ class IndexerList extends Component
             indexers: [],
             loading: true,
         }
+
+        this.getIndexers = this.getIndexers.bind(this);
     }
 
     componentDidMount() {
+        this.getIndexers();
+    }
+
+    getIndexers() {
         axios.get('/api/indexer')
         .then(response => {
             this.setState({indexers: response.data.data, loading: false});
@@ -29,10 +35,10 @@ class IndexerList extends Component
 
         return (
             <PageRow className="indexers-list">
-                {this.state.indexers.map((indexer) => {
-                    <IndexerItem key={indexer.id} indexer={indexer} />
-                })}
-                    <IndexerEmptyItem /> 
+                {this.state.indexers.map(indexer => 
+                    <IndexerItem key={indexer.id} indexer={indexer} refreshCallback={this.getIndexers}/>
+                )}
+                    <IndexerEmptyItem refreshCallback={this.getIndexers}/> 
             </PageRow>
         );
     }

@@ -16,12 +16,17 @@ class IndexerEditModal extends Component
         this.formRef = React.createRef();
         this.onClickTest = this.onClickTest.bind(this);
         this.onClickSave = this.onClickSave.bind(this);
+        this.onClickDelete = this.onClickDelete.bind(this);
     }
     
     prepareData()
     {
         let data = serialize(this.formRef.current, {hash:true});
-        data.type = this.props.implementation.type;
+        if (this.props.indexer !== undefined) {
+            data.type = this.props.indexer.schema.type;
+        } else {
+            data.type = this.props.implementation.type;
+        }
         data.enableSearch = data.enableSearch === "on";
 
         return data;
@@ -40,9 +45,24 @@ class IndexerEditModal extends Component
 
     onClickSave() {
         let data = this.prepareData();
-        axios.post('/api/indexer', data)
+        let url = '/api/indexer';
+        let method = 'post';
+        const indexer = this.props.indexer;
+        if (indexer) {
+            url += '/' + indexer.id;
+            method = 'put'
+        }
+
+        axios[method](url, data)
             .then(response => {
-                console.log(response);
+                this.props.toggleModal(true);
+            });
+    }
+
+    onClickDelete() {
+        axios.delete('/api/indexer/' + this.props.indexer.id)
+            .then(response => {
+                this.props.toggleModal(true);
             });
     }
 
@@ -50,19 +70,28 @@ class IndexerEditModal extends Component
     {
         const {
             toggleModal,
+            name,
+            implementation,
+            indexer,
         } = this.props;
 
         return (
-            <Modal isOpen={this.props.isOpen} toggle={this.props.toggleModal} className="indexerModal" size="lg">
-                <ModalHeader toggle={this.props.toggleModal}>{this.props.name}</ModalHeader>
+            <Modal isOpen={this.props.isOpen} toggle={toggleModal} className="indexerModal" size="lg">
+                <ModalHeader toggle={this.props.toggleModal}>{name}</ModalHeader>
                 <ModalBody>
-                    <IndexerEditModalContent implementation={this.props.implementation} toggleModal={toggleModal} formRef={this.formRef}/>
+                    <IndexerEditModalContent indexer={indexer} implementation={implementation} toggleModal={toggleModal} formRef={this.formRef}/>
                 </ModalBody>
                 <ModalFooter>
                     { this.state.testSuccess ?
                         <span>Test Successful</span>
                         : ""
                     }
+                    { indexer ? 
+                        <Button color="danger mr-auto" onClick={this.onClickDelete} >Delete</Button>
+                        :
+                        <Button color="secondary mr-auto" onClick={toggleModal} >Close</Button>
+                    }
+
                     <Button color="secondary" onClick={this.onClickTest} >Test</Button>
                     <Button color="secondary" onClick={toggleModal}>Cancel</Button>
                     <Button color="primary" onClick={this.onClickSave}>Save</Button>
@@ -77,6 +106,7 @@ IndexerEditModal.propTypes = {
     isOpen: PropTypes.bool,
     name: PropTypes.string,
     implementation: PropTypes.object,
+    existingIndexer: PropTypes.bool,
 }
 
 export default IndexerEditModal;
