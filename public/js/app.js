@@ -103750,13 +103750,13 @@ __webpack_require__.r(__webpack_exports__);
  //const IndexerList = lazy(() => import('./IndexerList'));
 
 var ComicIndex = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["lazy"])(function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(7), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! @/Comic/Index/ComicIndex */ "./resources/js/Comic/Index/ComicIndex.js"));
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! @/Comic/Index/ComicIndex */ "./resources/js/Comic/Index/ComicIndex.js"));
 });
 var AddNewComic = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["lazy"])(function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(7), __webpack_require__.e(6), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! @/AddComic/AddNewComic/AddNewComic */ "./resources/js/AddComic/AddNewComic/AddNewComic.js"));
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(6), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! @/AddComic/AddNewComic/AddNewComic */ "./resources/js/AddComic/AddNewComic/AddNewComic.js"));
 });
 var ComicDetails = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["lazy"])(function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(7), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! @/Comic/Details/ComicDetails */ "./resources/js/Comic/Details/ComicDetails.js"));
+  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! @/Comic/Details/ComicDetails */ "./resources/js/Comic/Details/ComicDetails.js"));
 });
 var IndexerSettings = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["lazy"])(function () {
   return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! @/Settings/Indexers/IndexerSettings */ "./resources/js/Settings/Indexers/IndexerSettings.js"));

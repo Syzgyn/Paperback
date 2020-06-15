@@ -14,6 +14,20 @@ class Newznab extends Indexer
 
     public $repository;
 
+    protected $appends = [
+        'apikey',
+        'url',
+    ];
+
+    protected $fillable = [
+        'name',
+        'class',
+        'settings',
+        'settings.apikey' => 'apikey',
+        'settings.url' => 'url',
+        'enable_search' => 'enableSearch',
+    ];
+
     protected static $singleTableType = self::class;
 
     protected $schema = [
@@ -44,5 +58,15 @@ class Newznab extends Indexer
             $indexer->repository = new NewznabRepository($indexer);
             $indexer->class = self::class;
         });
+    }
+
+    public function test()
+    {
+        //Manually create the repo if we're working with an unsaved model
+        if (! $this->repository) {
+            $this->repository = new NewznabRepository($this);
+        }
+
+        return $this->repository->test();
     }
 }

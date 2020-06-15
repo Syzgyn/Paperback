@@ -91,7 +91,10 @@ class IndexerController extends Controller
     public function schema(Request $request, $name = null)
     {
         if ($name) {
-            //TODO: Validation
+            if (! array_key_exists($name, Indexer::INDEXER_TYPES)) {
+                return response()->json(['error' => "No indexer found of type: '$name'"], 404);
+            }
+
             $className = Indexer::INDEXER_TYPES[$name];
             $indexer = new $className();
 
@@ -99,5 +102,12 @@ class IndexerController extends Controller
         }
 
         return Indexer::buildSchemas();
+    }
+
+    public function test(IndexerRequest $request)
+    {
+        $indexer = Indexer::createChild($request->validated(), false);
+
+        return $indexer->test();
     }
 }

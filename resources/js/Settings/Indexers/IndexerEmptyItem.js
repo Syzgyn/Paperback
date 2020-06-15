@@ -42,12 +42,11 @@ class IndexerEmptyItem extends Component
     }
 
     openAddModal() {
-        console.log("opening");
         if (!this.state.schema.length) {
-        axios.get('/api/indexer/schema')
-            .then(response => {
-                this.setState({schema: response.data}, this.toggleAddModal());
-            });
+            axios.get('/api/indexer/schema')
+                .then(response => {
+                    this.setState({schema: response.data}, this.toggleAddModal());
+                });
         } else {
             this.toggleAddModal();
         }

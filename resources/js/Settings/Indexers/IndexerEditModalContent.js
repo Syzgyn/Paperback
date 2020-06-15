@@ -11,10 +11,11 @@ class IndexerEditModalContent extends Component
         } = this.props;
 
         const {
-            name,
             enableSearch,
             fields,
         } = implementation;
+
+        const name = "";
 
         return (
             <Form onSubmit={this.onFormSubmit} id="addForm" innerRef={formRef}>

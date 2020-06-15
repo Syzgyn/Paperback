@@ -26,7 +26,7 @@ class Indexer extends Model
         'name',
         'class',
         'settings',
-        'enable_search',
+        'enable_search' => 'enableSearch',
     ];
 
     protected $baseSchema = [
@@ -34,18 +34,78 @@ class Indexer extends Model
             'url' => [
                 'label' => 'Base URL',
                 'type' => 'text',
-                'validation' => 'string',
+                'validation' => ['required', 'string'],
                 'validationField' => 'settings.url',
             ],
         ],
     ];
 
-    public static function createChild($attrs)
+    public function fill(array $attributes)
+    {
+        parent::fill($attributes);
+        $this->moveAttributes();
+    }
+
+    protected function moveAttributes()
+    {
+        foreach ($this->fillable as $key => $val) {
+            if (! isset($this->attributes[$val])) {
+                continue;
+            }
+
+            if (is_numeric($key) || $key === $val) {
+                //attribute doesn't move, dont do anything
+                continue;
+            }
+
+            $keys = explode('.', $key);
+            $base = array_shift($keys);
+
+            if (empty($keys)) {
+                //Not a nested attribute, set and move on
+                $this->attributes[$base] = $this->attributes[$val];
+                continue;
+            }
+
+            //Nested attribute
+            $root = &$this->attributes[$base];
+            while (count($keys) > 1) {
+                $branch = array_shift($path);
+
+                $root = &$root[$branch];
+            }
+
+            $root[$keys[0]] = $this->attributes[$val];
+        }
+
+        //This is to cast the array to JSON data
+        //TODO: Put this somewhere else
+        $this->settings = $this->settings;
+    }
+
+    protected function castAttribute($key, $value)
+    {
+        $type = $this->getCastType($key);
+        if (gettype($value) === $type) {
+            return $value;
+        }
+
+        return parent::castAttribute($key, $value);
+    }
+
+    public static function createChild($attrs, $save = true)
     {
         $type = $attrs['type'];
         $class = self::getClass($type);
 
-        return $class::create($attrs);
+        if ($save) {
+            return $class::create($attrs);
+        } else {
+            $obj = new $class();
+            $obj->fill($attrs);
+
+            return $obj;
+        }
     }
 
     public static function getClass(String $type)
@@ -79,7 +139,7 @@ class Indexer extends Model
                 'label' => $field['label'],
                 'type' => $field['type'],
                 'value' => '',
-                'required' => in_array('required', $field['validation']),
+                'required' => in_array('required', is_array($field['validation']) ?$field['validation'] : [$field['validation']]),
             ];
         }
 
