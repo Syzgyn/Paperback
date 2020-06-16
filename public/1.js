@@ -300,6 +300,9 @@ PageRow.propTypes = {
   children: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.node,
   className: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
 };
+PageRow.defaultProps = {
+  className: ""
+};
 /* harmony default export */ __webpack_exports__["default"] = (PageRow);
 
 /***/ }),
@@ -716,13 +719,13 @@ var IndexerEditModal = /*#__PURE__*/function (_Component) {
         implementation: implementation,
         toggleModal: toggleModal,
         formRef: this.formRef
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["ModalFooter"], null, this.state.testSuccess ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Test Successful") : "", indexer ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["Button"], {
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["ModalFooter"], null, indexer ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["Button"], {
         color: "danger mr-auto",
         onClick: this.onClickDelete
       }, "Delete") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["Button"], {
         color: "secondary mr-auto",
         onClick: toggleModal
-      }, "Close"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["Button"], {
+      }, "Close"), this.state.testSuccess ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Test Successful") : "", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["Button"], {
         color: "secondary",
         onClick: this.onClickTest
       }, "Test"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_4__["Button"], {

@@ -76,13 +76,16 @@ class IndexerController extends Controller
         return response()->json(['status' => 'OK']);
     }
 
-    public function search(String $query, Int $offset = 0)
+    public function search(Request $request)
     {
+        $cvid = $request->input('cvid');
+        $offset = $request->input('offset') || 0;
+
         $indexers = Indexer::all();
 
         $results = [];
         foreach ($indexers as $indexer) {
-            $results = array_merge($results, $indexer->search($query, $offset));
+            $results = array_merge($results, $indexer->searchCvid($cvid, $offset));
         }
 
         return new NewznabCollection($results);

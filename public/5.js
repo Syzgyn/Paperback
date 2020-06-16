@@ -29,6 +29,9 @@ PageRow.propTypes = {
   children: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.node,
   className: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
 };
+PageRow.defaultProps = {
+  className: ""
+};
 /* harmony default export */ __webpack_exports__["default"] = (PageRow);
 
 /***/ }),

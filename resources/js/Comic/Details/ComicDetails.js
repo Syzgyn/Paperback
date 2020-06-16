@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 import ComicItem from './ComicItem'
 import IssueList from './IssueList';
-import IssueModal from './IssueModal';
+import IssueModal from './IssueModal/IssueModal';
 
 class ComicDetails extends Component
 {
@@ -14,6 +14,8 @@ class ComicDetails extends Component
             comic: null,
             loading: true,
             modal: false,
+            activeTab: "description",
+            triggerEvent: null,
         }
 
         this.toggleModal = this.toggleModal.bind(this);
@@ -26,12 +28,12 @@ class ComicDetails extends Component
         });
     }
 
-    toggleModal(issue) {
-        this.setState({modal: !this.state.modal, issue: issue});
+    toggleModal(issue, tab="description", triggerEvent=null) {
+        this.setState({modal: !this.state.modal, issue: issue, activeTab: tab, triggerEvent: triggerEvent});
     }
 
     render() {
-        const {comic, loading} = this.state;
+        const {comic, loading, activeTab, triggerEvent} = this.state;
         
         if (loading) {
             return(<span>Loading...</span>);
@@ -40,11 +42,12 @@ class ComicDetails extends Component
         if (comic) {
             const issues = comic.issues;
 
+            //TODO:  This works for now, but later convert to more like Sonarr
             return (
                 <>
                     <ComicItem singleView={true} classes="pb-3" {...comic} /> 
                     <IssueList issues={issues} clickCallback={this.toggleModal}/>
-                    <IssueModal isOpen={this.state.modal} issue={this.state.issue} toggleModal={this.toggleModal} />
+                    <IssueModal isOpen={this.state.modal} issue={this.state.issue} toggleModal={this.toggleModal} activeTab={activeTab} triggerEvent={triggerEvent} />
                 </>
             );
         }

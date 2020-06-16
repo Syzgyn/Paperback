@@ -8,7 +8,7 @@ use App\Indexers\Newznab;
 
 class NewznabRepository
 {
-    const CATEGORY = 7030;
+    const CATEGORY = 7000;
 
     protected $indexer;
     protected $client;

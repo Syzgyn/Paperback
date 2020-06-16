@@ -8,27 +8,38 @@ class IssueItem extends Component
     constructor() {
         super()
         this.clickName = this.clickName.bind(this);
+        this.onSearchClick = this.onSearchClick.bind(this);
     }
 
     clickName() {
         this.props.clickCallback(this.props.issue);
     }
 
+    onSearchClick(type, trigger = null) {
+        this.props.clickCallback(this.props.issue, type, trigger);
+    }
+
     render() {
+        const {
+            clickCallback,
+            issue,
+        } = this.props;
+
         const {
             issue_num,
             displayName,
             status,
             release_date,
             cvid,
-        } = this.props.issue;
+        } = issue;
+
         return (
             <tr>
                 <td className="issue-number-cell">{issue_num}</td>
-                <td className="issue-name-cell"><a href="#" onClick={this.clickName}>{displayName}</a></td>
+                <td className="issue-name-cell"><span className="btn-link cursor-pointer" onClick={this.clickName}>{displayName}</span></td>
                 <td className="issue-release-date-cell">{release_date}</td>
                 <td className="issue-status-cell"><IssueStatus status={status} cvid={cvid}/></td>
-                <td className="issue-search-cell"><IssueSearchButtons cvid={cvid} /></td> 
+                <td className="issue-search-cell"><IssueSearchButtons cvid={cvid} clickCallback={this.onSearchClick}/></td> 
             </tr>
         );
     }

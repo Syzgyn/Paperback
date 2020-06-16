@@ -1,18 +1,34 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import PropTypes from 'prop-types'
 import { Search, User } from 'react-feather'
 import {UncontrolledTooltip} from 'reactstrap'
 
 class IssueSearchButtons extends Component
 {
+    constructor() {
+        super();
+
+        this.onAutoClick = this.onAutoClick.bind(this);
+        this.onManualClick = this.onManualClick.bind(this);
+    }
+
+    onAutoClick() {
+        this.props.clickCallback('search', 'automatic');
+    }
+
+    onManualClick() {
+        this.props.clickCallback('search', 'manual');
+    }
+
     render()
     {
         let {cvid} = this.props;
 
         return (
             <>
-                <Search id={"btn-auto-" + cvid} />
-                <User id={"btn-manual-" + cvid} />
+                <Search onClick={this.onAutoClick} id={"btn-auto-" + cvid} />
+                <User onClick={this.onManualClick} id={"btn-manual-" + cvid} />
                 <UncontrolledTooltip placement="top" target={"btn-auto-" + cvid}>
                     Automatic Search
                 </UncontrolledTooltip>
@@ -25,7 +41,8 @@ class IssueSearchButtons extends Component
 }
 
 IssueSearchButtons.propTypes = {
-    cvid: PropTypes.number.isRequired
+    cvid: PropTypes.number.isRequired,
+    clickCallback: PropTypes.func.isRequired,
 }
 
 export default IssueSearchButtons

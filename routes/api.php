@@ -26,7 +26,7 @@ Route::apiResource('issue', 'IssueController');
 Route::get('indexer/schema/{class}', 'IndexerController@schema');
 Route::get('indexer/schema', 'IndexerController@schema');
 Route::post('indexer/test', 'IndexerController@test');
-Route::get('indexer/search/{query}/{offset?}', 'IndexerController@search');
+Route::get('indexer/search', 'IndexerController@search');
 Route::apiResource('indexer', 'IndexerController');
 
 Route::apiResource('downloader', 'DownloaderController');

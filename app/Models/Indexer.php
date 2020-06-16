@@ -161,4 +161,15 @@ class Indexer extends Model
 
         return $schemas;
     }
+
+    public function buildSearchQuery(int $cvid)
+    {
+        $comicvine = resolve('ComicVineRepository');
+        $issue = $comicvine->issue($cvid);
+
+        $releaseDate = $issue['release_date'];
+        $year = date('Y', strtotime($releaseDate));
+
+        return sprintf('%s %02d %d', $issue['volume']->name, $issue['issue_num'], $year);
+    }
 }

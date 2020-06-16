@@ -20,4 +20,8 @@ PageRow.propTypes = {
     className: PropTypes.string,
 }
 
+PageRow.defaultProps = {
+    className: "",
+}
+
 export default PageRow

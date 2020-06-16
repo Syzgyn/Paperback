@@ -82,16 +82,16 @@ class IndexerEditModal extends Component
                     <IndexerEditModalContent indexer={indexer} implementation={implementation} toggleModal={toggleModal} formRef={this.formRef}/>
                 </ModalBody>
                 <ModalFooter>
-                    { this.state.testSuccess ?
-                        <span>Test Successful</span>
-                        : ""
-                    }
                     { indexer ? 
                         <Button color="danger mr-auto" onClick={this.onClickDelete} >Delete</Button>
                         :
                         <Button color="secondary mr-auto" onClick={toggleModal} >Close</Button>
                     }
 
+                    { this.state.testSuccess ?
+                        <span>Test Successful</span>
+                        : ""
+                    }
                     <Button color="secondary" onClick={this.onClickTest} >Test</Button>
                     <Button color="secondary" onClick={toggleModal}>Cancel</Button>
                     <Button color="primary" onClick={this.onClickSave}>Save</Button>
