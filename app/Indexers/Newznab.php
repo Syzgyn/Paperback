@@ -47,7 +47,15 @@ class Newznab extends Indexer
     {
         $query = $this->buildSearchQuery($cvid);
 
-        return $this->repository->search($query, $offset);
+        $result = $this->repository->search($query, $offset);
+        $source = $this->schema['protocol'] == 'usenet' ? 'nzb' : 'torrent';
+
+        array_walk($result, function (&$item, $key) use ($source) {
+            $item['indexer'] = $this->name;
+            $item['source'] = $source;
+        });
+
+        return $result;
     }
 
     protected static function booted()

@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {Button} from 'reactstrap';
+import axios from 'axios'
 import PageRow from '@/Components/Page/PageRow'
+import IndexerSearchResultsList from '@/Comic/Details/IndexerSearchResults/IndexerSearchResultsList'
 
 class SearchTab extends Component
 {
@@ -9,6 +11,7 @@ class SearchTab extends Component
         super(props);
         this.state = {
             triggerEvent: this.props.triggerEvent,
+            results: [],
         };
 
         this.onManualClick = this.onManualClick.bind(this);
@@ -16,14 +19,16 @@ class SearchTab extends Component
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log("state", prevState, this.state, "props", prevProps, this.props);
         if(prevProps.triggerEvent !== this.props.triggerEvent) {
             this.setState({triggerEvent: this.props.triggerEvent});
         }
     }
 
     onManualClick() {
-        this.setState({triggerEvent: "manual"});
+        axios.get('/api/indexer/search', {params:{cvid: this.props.cvid}})
+            .then(response => {
+                this.setState({results: response.data.data, triggerEvent: "manual"});
+            });
     }
 
     onAutomaticClick() {
@@ -40,13 +45,14 @@ class SearchTab extends Component
     }
 
     results() {
-        return this.props.triggerEvent;
+        const {results} = this.state;
+        
+        return <IndexerSearchResultsList results={results} />
     }
 
     render()
     {
         const {triggerEvent} = this.state;
-        console.log(this.state);
 
         return (
             <PageRow>

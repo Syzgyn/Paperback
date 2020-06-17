@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import {Download} from 'react-feather'
 import IssueItem from './IssueItem'
 
 class IssueList extends Component

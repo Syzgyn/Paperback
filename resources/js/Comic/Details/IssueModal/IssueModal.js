@@ -45,7 +45,7 @@ class IssueModal extends Component
                 return <DescriptionTab description={description} />
             case "search":
                 const {triggerEvent} = this.props;
-                return <SearchTab triggerEvent={triggerEvent} />
+                return <SearchTab triggerEvent={triggerEvent} cvid={this.props.issue.cvid} />
             default:
                 return null
         }

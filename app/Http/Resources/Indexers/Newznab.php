@@ -18,8 +18,11 @@ class Newznab extends JsonResource
             'displayTitle' => $this->cleanupTitle($this->resource['title']),
             'title' => $this->resource['title'],
             'date' => $this->resource['pubDate'],
+            'ago' => $this->getTimeAgo($this->resource['pubDate']),
             'size' => $this->formatSize($this->resource['enclosure']['@attributes']['length']),
             'link' => $this->resource['link'],
+            'indexer' => $this->resource['indexer'],
+            'source' => $this->resource['source'],
         ];
     }
 
@@ -49,5 +52,14 @@ class Newznab extends JsonResource
         }
 
         return $title;
+    }
+
+    protected function getTimeAgo($dateString)
+    {
+        $datetime1 = new \DateTime($dateString);
+        $datetime2 = new \DateTime();
+        $interval = $datetime1->diff($datetime2);
+
+        return $interval->format('%a days');
     }
 }

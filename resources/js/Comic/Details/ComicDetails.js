@@ -5,6 +5,7 @@ import axios from 'axios'
 import ComicItem from './ComicItem'
 import IssueList from './IssueList';
 import IssueModal from './IssueModal/IssueModal';
+import LoadingIndicator from '@/Components/Loading/LoadingIndicator';
 
 class ComicDetails extends Component
 {
@@ -36,7 +37,7 @@ class ComicDetails extends Component
         const {comic, loading, activeTab, triggerEvent} = this.state;
         
         if (loading) {
-            return(<span>Loading...</span>);
+            return(<LoadingIndicator />);
         }
 
         if (comic) {
