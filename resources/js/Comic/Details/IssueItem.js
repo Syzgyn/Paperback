@@ -12,11 +12,11 @@ class IssueItem extends Component
     }
 
     clickName() {
-        this.props.clickCallback(this.props.issue);
+        this.props.clickCallback(this.props.issue, "description");
     }
 
-    onSearchClick(type, trigger = null) {
-        this.props.clickCallback(this.props.issue, type, trigger);
+    onSearchClick(type) {
+        this.props.clickCallback(this.props.issue, type);
     }
 
     render() {

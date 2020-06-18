@@ -8,51 +8,6 @@ import ComicBadge from '@/Components/ComicBadge'
 import { Plus as PlusIcon, Search as SearchIcon, Loader as LoaderIcon } from 'react-feather'
 
 class ComicItem extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            addLoading: false,
-            searchLoading: false,
-        }
-        this.addComic = this.addComic.bind(this);
-        this.addAndSearchComic = this.addAndSearchComic.bind(this);
-    }
-
-    componentDidMount() {
-        $('[data-toggle="tooltip"]').tooltip();
-    }
-
-    addComic() {
-        this.setState({
-            addLoading: true,
-        });
-
-        axios.post('/api/comic/', {
-            cvid: this.props.cvid,
-        }).then(response => {
-            this.setState({
-                addLoading: false,
-            });
-            this.props.history.push("/comic/" + response.data.data.cvid); 
-        });
-    }
-
-    addAndSearchComic() {
-        this.setState({
-            searchLoading: true,
-        });
-
-        axios.post('/api/comic/', {
-            cvid: this.props.cvid,
-            search: true,
-        }).then(response => {
-            this.setState({
-                searchLoading: false,
-            });
-            this.props.history.push("/comic/" + response.data.data.cvid); 
-        });
-    }
-
     render() {
         const { cvid, 
                 numIssues, 
@@ -82,6 +37,7 @@ class ComicItem extends Component {
                     <div className="row">
                         <div className="col-2">
                             <ComicBadge><Pluralize singular={'issue'} count={numIssues} /></ComicBadge>
+                            <ComicBadge>{publisher}</ComicBadge>
                         </div>
                     </div>
                 </div>

@@ -16,10 +16,10 @@ class ComicDetails extends Component
             loading: true,
             modal: false,
             activeTab: "description",
-            triggerEvent: null,
         }
 
         this.toggleModal = this.toggleModal.bind(this);
+        this.changeModalTab = this.changeModalTab.bind(this);
     }
     
     componentDidMount() {
@@ -29,8 +29,13 @@ class ComicDetails extends Component
         });
     }
 
-    toggleModal(issue, tab="description", triggerEvent=null) {
-        this.setState({modal: !this.state.modal, issue: issue, activeTab: tab, triggerEvent: triggerEvent});
+    toggleModal(issue, tab="description") {
+        console.log("toggleModal", tab);
+        this.setState({modal: !this.state.modal, issue: issue, activeTab: tab});
+    }
+
+    changeModalTab(tab) {
+        this.setState({activeTab: tab});
     }
 
     render() {
@@ -46,9 +51,9 @@ class ComicDetails extends Component
             //TODO:  This works for now, but later convert to more like Sonarr
             return (
                 <>
-                    <ComicItem singleView={true} classes="pb-3" {...comic} /> 
+                    <ComicItem classes="pb-3" {...comic} /> 
                     <IssueList issues={issues} clickCallback={this.toggleModal}/>
-                    <IssueModal isOpen={this.state.modal} issue={this.state.issue} toggleModal={this.toggleModal} activeTab={activeTab} triggerEvent={triggerEvent} />
+                    <IssueModal isOpen={this.state.modal} issue={this.state.issue} toggleModal={this.toggleModal} activeTab={activeTab} changeTab={this.changeModalTab} />
                 </>
             );
         }

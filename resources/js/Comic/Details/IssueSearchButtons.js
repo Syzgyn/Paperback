@@ -14,11 +14,11 @@ class IssueSearchButtons extends Component
     }
 
     onAutoClick() {
-        this.props.clickCallback('search', 'automatic');
+        this.props.clickCallback('searchAutomatic');
     }
 
     onManualClick() {
-        this.props.clickCallback('search', 'manual');
+        this.props.clickCallback('searchManual');
     }
 
     render()

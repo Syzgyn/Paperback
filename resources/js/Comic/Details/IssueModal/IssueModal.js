@@ -11,21 +11,29 @@ class IssueModal extends Component
     constructor(props) {
         super(props);
         this.state = {
-            issue: {
-                name: "",
-                description: "",
-            },
             modal: false,
-            activeTab: props.activeTab, 
+            searchResultsLoading: false,
+            searchResults: [],
+            didSearch: false,
         }
 
         this.close = this.close.bind(this);
+        this.clearResults = this.clearResults.bind(this);
         this.onNavButtonClick = this.onNavButtonClick.bind(this);
+        this.onManualSearchClick = this.onManualSearchClick.bind(this);
+        this.onAutomaticSearchClick = this.onAutomaticSearchClick.bind(this);
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps, prevState) {
         if(prevProps.activeTab !== this.props.activeTab) {
-            this.setState({activeTab: this.props.activeTab});
+            switch (this.props.activeTab) {
+                case "searchManual":
+                    this.onManualSearchClick();
+                    break;
+                case "searchAutomatic":
+                    this.onAutomaticSearchClick();
+                    break;
+            }
         }
     }
 
@@ -33,19 +41,49 @@ class IssueModal extends Component
         this.props.toggleModal();
     }
 
+    clearResults() {
+        console.log("clearing results");
+        this.setState({searchResults: [], didSearch: false});
+    }
+
+    onManualSearchClick() {
+        if (!this.state.didSearch) {
+            this.setState({searchResultsLoading: true, didSearch:true}, this.props.changeTab('search'));
+            axios.get('/api/indexer/search', {params:{cvid: this.props.issue.cvid}})
+                .then(response => {
+                    this.setState({searchResults: response.data.data, searchResultsLoading: false});
+                });
+        }
+    }
+
+    onAutomaticSearchClick() {
+        if (!this.state.didSearch) {
+            this.setState({searchResultsLoading: true, didSearch:true}, this.props.changeTab('search'));
+            axios.get('/api/indexer/search', {params:{cvid: this.props.issue.cvid}})
+                .then(response => {
+                    this.setState({searchResults: response.data.data, searchResultsLoading: false});
+                });
+        }
+    }
+
     onNavButtonClick(event) {
         event.preventDefault();
-        this.setState({activeTab: event.target.dataset.tabname});
+        this.props.changeTab(event.target.dataset.tabname);
     }
     
     getContent() {
-        switch (this.state.activeTab) {
+        console.log("getContent " + this.props.activeTab);
+        switch (this.props.activeTab) {
             case "description":
                 const description = this.props.issue ? this.props.issue.description : "";
                 return <DescriptionTab description={description} />
             case "search":
-                const {triggerEvent} = this.props;
-                return <SearchTab triggerEvent={triggerEvent} cvid={this.props.issue.cvid} />
+                return <SearchTab
+                    loading={this.state.searchResultsLoading}
+                    results={this.state.searchResults}
+                    automaticClick={this.onAutomaticSearchClick}
+                    manualClick={this.onManualSearchClick}
+                />
             default:
                 return null
         }
@@ -53,14 +91,12 @@ class IssueModal extends Component
 
     render()
     {
-        const name = this.props.issue ? this.props.issue.displayName : "";
-        const description = this.props.issue ? this.props.issue.description : "";
         const {
             activeTab,
-        } = this.state;
+        } = this.props;
 
         return (
-            <Modal isOpen={this.props.isOpen} toggle={this.props.toggleModal} className="issueModal" size="lg">
+            <Modal isOpen={this.props.isOpen} onClosed={this.clearResults} toggle={this.props.toggleModal} className="issueModal" size="lg">
                 <ModalHeader toggle={this.props.toggleModal}>{name}</ModalHeader>
                 <ModalBody> 
                     <IssueModalMenuBar activeTab={activeTab} onClickCallback={this.onNavButtonClick} />
