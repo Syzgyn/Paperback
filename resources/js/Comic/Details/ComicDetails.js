@@ -39,7 +39,7 @@ class ComicDetails extends Component
     }
 
     render() {
-        const {comic, loading, activeTab, triggerEvent} = this.state;
+        const {comic, loading, activeTab} = this.state;
         
         if (loading) {
             return(<LoadingIndicator />);
@@ -53,7 +53,7 @@ class ComicDetails extends Component
                 <>
                     <ComicItem classes="pb-3" {...comic} /> 
                     <IssueList issues={issues} clickCallback={this.toggleModal}/>
-                    <IssueModal isOpen={this.state.modal} issue={this.state.issue} toggleModal={this.toggleModal} activeTab={activeTab} changeTab={this.changeModalTab} />
+                    <IssueModal isOpen={this.state.modal} issue={this.state.issue} toggleModal={this.toggleModal} activeTab={activeTab} changeActiveTab={this.changeModalTab} />
                 </>
             );
         }

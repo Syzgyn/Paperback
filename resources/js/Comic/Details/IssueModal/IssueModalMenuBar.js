@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import PageRow from '@/Components/Page/PageRow'
 
 function IssueModalMenuBar(props) {
@@ -28,7 +29,10 @@ function IssueModalMenuBar(props) {
     );
 }
 
-IssueModalMenuBar.propTypes = {}
+IssueModalMenuBar.propTypes = {
+    activeTab: PropTypes.string,
+    onClickCallback: PropTypes.func.isRequired,
+}
 
 export default IssueModalMenuBar;
 

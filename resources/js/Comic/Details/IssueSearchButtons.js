@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 import PropTypes from 'prop-types'
 import { Search, User } from 'react-feather'
 import {UncontrolledTooltip} from 'reactstrap'

@@ -21,7 +21,6 @@ class IssueItem extends Component
 
     render() {
         const {
-            clickCallback,
             issue,
         } = this.props;
 

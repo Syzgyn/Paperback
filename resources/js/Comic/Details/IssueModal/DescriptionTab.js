@@ -17,4 +17,8 @@ class DescriptionTab extends Component
     }
 }
 
+DescriptionTab.propTypes = {
+    description: PropTypes.string,
+}
+
 export default DescriptionTab

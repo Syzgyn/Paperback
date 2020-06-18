@@ -1,23 +1,19 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Link, withRouter } from 'react-router-dom'
-import axios from 'axios'
+import { withRouter } from 'react-router-dom'
 import DOMPurify from 'dompurify'
 import Pluralize from 'react-pluralize'
 import ComicBadge from '@/Components/ComicBadge'
-import { Plus as PlusIcon, Search as SearchIcon, Loader as LoaderIcon } from 'react-feather'
 
 class ComicItem extends Component {
     render() {
-        const { cvid, 
+        const {
                 numIssues, 
                 startYear,
                 publisher,
                 image,
                 name,
                 description,
-                inLibrary,
-                singleView,
                 classes,
             } = this.props;
 
@@ -28,6 +24,9 @@ class ComicItem extends Component {
                 </div>
                 <div className="col-md-10 col-sm-9">
                     <div className="row">
+                        <div className="col-12 pb-1">
+                            <span className="h2 mr-2">{name} <span className="comic-year">({startYear})</span></span>
+                        </div>
                         <div className="col-12">
                             <div className="comic-description" 
                                 dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(description, { ADD_ATTR: ['target'] })}} >

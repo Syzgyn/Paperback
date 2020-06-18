@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import axios from 'axios'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import DOMPurify from 'dompurify'
 import IssueModalMenuBar from './IssueModalMenuBar'
 import DescriptionTab from './DescriptionTab'
 import SearchTab from './SearchTab'
@@ -24,7 +24,7 @@ class IssueModal extends Component
         this.onAutomaticSearchClick = this.onAutomaticSearchClick.bind(this);
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
         if(prevProps.activeTab !== this.props.activeTab) {
             switch (this.props.activeTab) {
                 case "searchManual":
@@ -48,7 +48,7 @@ class IssueModal extends Component
 
     onManualSearchClick() {
         if (!this.state.didSearch) {
-            this.setState({searchResultsLoading: true, didSearch:true}, this.props.changeTab('search'));
+            this.setState({searchResultsLoading: true, didSearch:true}, this.props.changeActiveTab('search'));
             axios.get('/api/indexer/search', {params:{cvid: this.props.issue.cvid}})
                 .then(response => {
                     this.setState({searchResults: response.data.data, searchResultsLoading: false});
@@ -58,7 +58,7 @@ class IssueModal extends Component
 
     onAutomaticSearchClick() {
         if (!this.state.didSearch) {
-            this.setState({searchResultsLoading: true, didSearch:true}, this.props.changeTab('search'));
+            this.setState({searchResultsLoading: true, didSearch:true}, this.props.changeActiveTab('search'));
             axios.get('/api/indexer/search', {params:{cvid: this.props.issue.cvid}})
                 .then(response => {
                     this.setState({searchResults: response.data.data, searchResultsLoading: false});
@@ -68,14 +68,13 @@ class IssueModal extends Component
 
     onNavButtonClick(event) {
         event.preventDefault();
-        this.props.changeTab(event.target.dataset.tabname);
+        this.props.changeActiveTab(event.target.dataset.tabname);
     }
     
     getContent() {
-        console.log("getContent " + this.props.activeTab);
+        let description = this.props.issue ? this.props.issue.description : "";
         switch (this.props.activeTab) {
             case "description":
-                const description = this.props.issue ? this.props.issue.description : "";
                 return <DescriptionTab description={description} />
             case "search":
                 return <SearchTab
@@ -111,12 +110,17 @@ class IssueModal extends Component
 }
 
 IssueModal.propTypes = {
+    activeTab: PropTypes.string.isRequired,
+    changeActiveTab: PropTypes.func.isRequired,
     toggleModal: PropTypes.func,
     isOpen: PropTypes.bool,
     issue: PropTypes.shape({
         displayName: PropTypes.string,
-        description: PropTypes.string
+        description: PropTypes.string,
+        cvid: PropTypes.number,
     }),
+
+
 }
 
 export default IssueModal;

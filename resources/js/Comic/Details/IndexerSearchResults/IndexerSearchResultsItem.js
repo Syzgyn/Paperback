@@ -9,7 +9,6 @@ class IndexerSearchResultsItem extends Component
             displayTitle,
             ago,
             size,
-            link,
             indexer,
             source,
         } = this.props.item;
@@ -28,7 +27,13 @@ class IndexerSearchResultsItem extends Component
 }
 
 IndexerSearchResultsItem.propTypes = {
-    results: PropTypes.array,
+    item: PropTypes.shape({
+        displayTitle: PropTypes.string,
+        ago: PropTypes.string,
+        size: PropTypes.string,
+        indexer: PropTypes.string,
+        source: PropTypes.string,
+    }),
 }
 
 export default IndexerSearchResultsItem

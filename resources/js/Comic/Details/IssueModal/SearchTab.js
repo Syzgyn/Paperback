@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {Button} from 'reactstrap';
-import axios from 'axios'
 import PageRow from '@/Components/Page/PageRow'
 import IndexerSearchResultsList from '@/Comic/Details/IndexerSearchResults/IndexerSearchResultsList'
 import LoadingIndicator from '@/Components/Loading/LoadingIndicator'
@@ -35,6 +34,13 @@ class SearchTab extends Component
             </PageRow>
         );
     }
+}
+
+SearchTab.propTypes = {
+    automaticClick: PropTypes.func.isRequired,
+    manualClick: PropTypes.func.isRequired,
+    loading: PropTypes.bool,
+    results: PropTypes.array,
 }
 
 export default SearchTab

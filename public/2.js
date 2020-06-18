@@ -674,8 +674,6 @@ var IndexerEditModal = /*#__PURE__*/function (_Component) {
   }, {
     key: "onClickSave",
     value: function onClickSave() {
-      var _this3 = this;
-
       var data = this.prepareData();
       var url = '/api/indexer';
       var method = 'post';
@@ -686,18 +684,12 @@ var IndexerEditModal = /*#__PURE__*/function (_Component) {
         method = 'put';
       }
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a[method](url, data).then(function (response) {
-        _this3.props.toggleModal(true);
-      });
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a[method](url, data).then(this.props.toggleModal(true));
     }
   }, {
     key: "onClickDelete",
     value: function onClickDelete() {
-      var _this4 = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]('/api/indexer/' + this.props.indexer.id).then(function (response) {
-        _this4.props.toggleModal(true);
-      });
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]('/api/indexer/' + this.props.indexer.id).then(this.props.toggleModal(true));
     }
   }, {
     key: "render",
@@ -746,7 +738,13 @@ IndexerEditModal.propTypes = {
   isOpen: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.bool,
   name: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
   implementation: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.object,
-  existingIndexer: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.bool
+  existingIndexer: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.bool,
+  indexer: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.shape({
+    schema: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.shape({
+      type: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string
+    }),
+    id: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.number
+  })
 };
 /* harmony default export */ __webpack_exports__["default"] = (IndexerEditModal);
 
@@ -1040,10 +1038,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
-/* harmony import */ var _IndexerEditModal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./IndexerEditModal */ "./resources/js/Settings/Indexers/IndexerEditModal.js");
+/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
+/* harmony import */ var _IndexerEditModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./IndexerEditModal */ "./resources/js/Settings/Indexers/IndexerEditModal.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1071,7 +1067,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-
 var IndexerItem = /*#__PURE__*/function (_Component) {
   _inherits(IndexerItem, _Component);
 
@@ -1085,8 +1080,7 @@ var IndexerItem = /*#__PURE__*/function (_Component) {
     _this = _super.call(this);
     _this.state = {
       editModal: false,
-      schema: {},
-      implementation: {}
+      schema: {}
     };
     _this.toggleEditModal = _this.toggleEditModal.bind(_assertThisInitialized(_this));
     _this.openEditModal = _this.openEditModal.bind(_assertThisInitialized(_this));
@@ -1122,20 +1116,18 @@ var IndexerItem = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$state = this.state,
-          editModal = _this$state.editModal,
-          implementation = _this$state.implementation;
+      var editModal = this.state.editModal;
       var _this$props$indexer = this.props.indexer,
           name = _this$props$indexer.name,
           enableSearch = _this$props$indexer.enableSearch;
       console.log(this.props.indexer);
       var searchBadgeColor = enableSearch ? "success" : "danger";
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Card"], {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Card"], {
         onClick: this.openEditModal,
         className: "indexer-item shadow p-3 m-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["CardTitle"], null, name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["CardText"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Badge"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["CardTitle"], null, name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["CardText"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Badge"], {
         color: searchBadgeColor
-      }, "Search")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IndexerEditModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      }, "Search")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IndexerEditModal__WEBPACK_IMPORTED_MODULE_3__["default"], {
         isOpen: editModal,
         toggleModal: this.toggleEditModal,
         indexer: this.props.indexer
@@ -1147,7 +1139,8 @@ var IndexerItem = /*#__PURE__*/function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 IndexerItem.propTypes = {
-  indexer: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired
+  indexer: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired,
+  refreshCallback: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
 };
 /* harmony default export */ __webpack_exports__["default"] = (IndexerItem);
 

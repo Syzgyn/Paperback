@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import axios from 'axios'
 import {Badge, Card, CardTitle, CardText} from 'reactstrap'
 import IndexerEditModal from './IndexerEditModal'
 
@@ -11,7 +10,6 @@ class IndexerItem extends Component
         this.state = {
             editModal: false,
             schema: {},
-            implementation: {},
         }
 
         this.toggleEditModal = this.toggleEditModal.bind(this);
@@ -38,7 +36,6 @@ class IndexerItem extends Component
     render() {
         const {
             editModal,
-            implementation,
         } = this.state;
 
         const {
@@ -61,6 +58,7 @@ class IndexerItem extends Component
 
 IndexerItem.propTypes = {
     indexer: PropTypes.object.isRequired,
+    refreshCallback: PropTypes.func.isRequired,
 }
 
 export default IndexerItem

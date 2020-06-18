@@ -54,16 +54,12 @@ class IndexerEditModal extends Component
         }
 
         axios[method](url, data)
-            .then(response => {
-                this.props.toggleModal(true);
-            });
+            .then(this.props.toggleModal(true));
     }
 
     onClickDelete() {
         axios.delete('/api/indexer/' + this.props.indexer.id)
-            .then(response => {
-                this.props.toggleModal(true);
-            });
+            .then(this.props.toggleModal(true));
     }
 
     render()
@@ -107,6 +103,12 @@ IndexerEditModal.propTypes = {
     name: PropTypes.string,
     implementation: PropTypes.object,
     existingIndexer: PropTypes.bool,
+    indexer: PropTypes.shape({
+        schema: PropTypes.shape({
+            type: PropTypes.string,
+        }),
+        id: PropTypes.number,
+    }),
 }
 
 export default IndexerEditModal;
