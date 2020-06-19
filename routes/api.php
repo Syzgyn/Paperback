@@ -33,6 +33,11 @@ Route::apiResource('downloader', 'DownloaderController');
 Route::post('downloader/download', 'DownloaderController@download');
 Route::post('downloader/test', 'DownloaderController@test');
 
+Route::get('settings/{category}/{property}', 'SettingsController@property');
+Route::get('settings/{category}', 'SettingsController@category');
+Route::get('settings', 'SettingsController@index');
+Route::post('settings', 'SettingsController@update');
+
 Route::fallback(function () {
     return response()->json([
         'message' => 'Page Not Found.'], 404);
