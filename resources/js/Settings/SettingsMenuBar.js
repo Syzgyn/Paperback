@@ -5,6 +5,10 @@ import PageRow from '@/Components/Page/PageRow'
 function SettingsMenuBar() {
     const links = [
         {
+            to: '/settings/general',
+            text: 'General',
+        },
+        {
             to: '/settings/indexers',
             text: 'Indexers',
         },

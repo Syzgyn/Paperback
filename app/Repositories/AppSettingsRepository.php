@@ -116,6 +116,12 @@ class AppSettingsRepository
         foreach ($this->config as $section => $properties) {
             $sectionArray = array_map(
                 function ($value, $key) {
+                    if (is_bool($value)) {
+                        $value = $value ? 'true' : 'false';
+
+                        return "$key = $value";
+                    }
+
                     return "$key = '$value'";
                 },
                 array_values($properties),

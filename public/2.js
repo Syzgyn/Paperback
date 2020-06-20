@@ -1365,6 +1365,9 @@ __webpack_require__.r(__webpack_exports__);
 
 function SettingsMenuBar() {
   var links = [{
+    to: '/settings/general',
+    text: 'General'
+  }, {
     to: '/settings/indexers',
     text: 'Indexers'
   }, {

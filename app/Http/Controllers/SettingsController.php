@@ -29,18 +29,13 @@ class SettingsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function category(Request $request)
+    public function category(Request $request, string $category)
     {
-        $category = $request->input('category');
-
         return $this->settings->get($category);
     }
 
-    public function property(Request $request)
+    public function property(Request $request, string $category, string $property)
     {
-        $category = $request->input('category');
-        $property = $request->input('property');
-
         return $this->settings->get($category, $property);
     }
 

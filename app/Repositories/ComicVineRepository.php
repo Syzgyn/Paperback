@@ -17,10 +17,15 @@ class ComicVineRepository
     const CACHE_TIME = 86400; //1 Day
 
     protected $client;
+    protected $apikey;
+    protected $bypassCache;
 
     public function __construct()
     {
         $this->client = resolve("Guzzle\ComicVine");
+        $settings = resolve('AppSettings');
+        $this->apikey = $settings->get('general', 'comicvine_apikey');
+        $this->bypassCache = $settings->get('general', 'bypass_cache');
     }
 
     public function volumes($name)
@@ -53,20 +58,22 @@ class ComicVineRepository
 
     protected function makeRequest($url, $cacheKey, $params = [])
     {
-        $data = Cache::remember(
+        if ($this->bypassCache) {
+            return $this->getResponse($url, $params);
+        }
+
+        return Cache::remember(
             self::CACHE_PREFIX . '.' . $cacheKey,
             self::CACHE_TIME,
             function () use ($url, $params) {
-            return $this->getResponse($url, $params);
-        }
+                return $this->getResponse($url, $params);
+            }
         );
-
-        return $data;
     }
 
     protected function getResponse($url, $params = [])
     {
-        $params['api_key'] = config('paperback.comicvine_apikey');
+        $params['api_key'] = $this->apikey;
         $params['format'] = 'json';
         try {
             $response = $this->client->request('GET', $url, ['query' => $params]);
