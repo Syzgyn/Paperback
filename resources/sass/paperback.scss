@@ -126,7 +126,7 @@ a.hideLink {
     transition: width .6s ease;
 }
 
-.indexer-item {
+.settings-connector-item {
     width: 290px;
     height: 90px;
     display: inline-block;
@@ -139,4 +139,8 @@ a.hideLink {
 
 .Toastify__progress-bar--dark {
     background: #3490dc;
+}
+
+.modal-title {
+    text-transform: capitalize;
 }

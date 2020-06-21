@@ -9,12 +9,13 @@ class GeneralSettings extends Component
     constructor()
     {
         super();
+        this.generalForm = React.createRef();
 
         this.onSavePress = this.onSavePress.bind(this);
     }
 
     onSavePress() {
-        this.refs.generalForm.formRef.current.submitForm();
+        this.generalForm.current.formRef.current.submitForm();
     }
 
     render() {
@@ -25,7 +26,7 @@ class GeneralSettings extends Component
                 <PageRow>
                     <h2>General</h2>
                 </PageRow>
-                <GeneralSettingsForm ref="generalForm" onSavePress={this.onSavePress}/>
+                <GeneralSettingsForm ref={this.generalForm} onSavePress={this.onSavePress}/>
             </>
         )
     }

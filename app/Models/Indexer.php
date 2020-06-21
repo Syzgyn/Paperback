@@ -2,16 +2,21 @@
 
 namespace App\Models;
 
+use App\Traits\BuildSchema;
+use App\Traits\CreateChild;
+use App\Traits\MoveAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Nanigans\SingleTableInheritance\SingleTableInheritanceTrait;
 
 class Indexer extends Model
 {
     use SingleTableInheritanceTrait;
+    use MoveAttributes;
+    use BuildSchema;
+    use CreateChild;
 
-    //TODO: Move other submodels to correct folder under /Models
     const INDEXER_TYPES = [
-        'newznab' => \App\Indexers\Newznab::class,
+        'newznab' => \App\Models\Indexers\Newznab::class,
     ];
 
     protected $table = 'indexers';
@@ -21,13 +26,6 @@ class Indexer extends Model
     protected static $persisted = ['name', 'settings', 'enable_search'];
 
     protected $casts = ['settings' => 'array'];
-
-    protected $fillable = [
-        'name',
-        'class',
-        'settings',
-        'enable_search' => 'enableSearch',
-    ];
 
     protected $baseSchema = [
         'fields' => [
@@ -40,82 +38,14 @@ class Indexer extends Model
         ],
     ];
 
-    public function fill(array $attributes)
-    {
-        parent::fill($attributes);
-        if (count($attributes)) {
-            $this->moveAttributes();
-        }
-    }
-
-    protected function moveAttributes()
-    {
-        foreach ($this->fillable as $key => $val) {
-            if (! isset($this->attributes[$val])) {
-                continue;
-            }
-
-            if (is_numeric($key) || $key === $val) {
-                //attribute doesn't move, dont do anything
-                continue;
-            }
-
-            $keys = explode('.', $key);
-            $base = array_shift($keys);
-
-            if (empty($keys)) {
-                //Not a nested attribute, set and move on
-                $this->attributes[$base] = $this->attributes[$val];
-                continue;
-            }
-
-            //Nested attribute
-            $root = &$this->attributes[$base];
-            if (! is_array($root)) {
-                $root = json_decode($root, true);
-            }
-            while (count($keys) > 1) {
-                $branch = array_shift($path);
-
-                $root = &$root[$branch];
-            }
-
-            $root[$keys[0]] = $this->attributes[$val];
-        }
-
-        //This is to cast the array to JSON data
-        //TODO: Put this somewhere else
-        $this->settings = $this->settings;
-    }
-
-    protected function castAttribute($key, $value)
-    {
-        $type = $this->getCastType($key);
-        if (gettype($value) === $type) {
-            return $value;
-        }
-
-        return parent::castAttribute($key, $value);
-    }
-
-    public static function createChild($attrs, $save = true)
-    {
-        $type = $attrs['type'];
-        $class = self::getClass($type);
-
-        if ($save) {
-            return $class::create($attrs);
-        } else {
-            $obj = new $class();
-            $obj->fill($attrs);
-
-            return $obj;
-        }
-    }
-
     public static function getClass(String $type)
     {
         return self::INDEXER_TYPES[$type];
+    }
+
+    protected static function getChildTypes()
+    {
+        return self::INDEXER_TYPES;
     }
 
     protected static function booted()
@@ -125,41 +55,6 @@ class Indexer extends Model
                 throw new \Exception('Cannot save base indexer class');
             }
         });
-    }
-
-    public function getSchemaAttribute()
-    {
-        $schema = array_merge_recursive($this->baseSchema, $this->modelSchema);
-        $output = [
-            'protocol' => $schema['protocol'],
-            'name' => $schema['name'],
-            'type' => array_search(static::class, self::INDEXER_TYPES),
-            'enableSearch' => isset($this->enable_search) ? (bool)$this->enable_search : true,
-            'fields' => [],
-        ];
-
-        foreach ($schema['fields'] as $name => $field) {
-            $output['fields'][] = [
-                'name' => $name,
-                'label' => $field['label'],
-                'type' => $field['type'],
-                'value' => '',
-                'required' => in_array('required', is_array($field['validation']) ?$field['validation'] : [$field['validation']]),
-            ];
-        }
-
-        return $output;
-    }
-
-    public static function buildSchemas()
-    {
-        $schemas = [];
-        foreach (self::INDEXER_TYPES as $key => $class) {
-            $indexer = new $class();
-            $schemas[] = $indexer->schema;
-        }
-
-        return $schemas;
     }
 
     public function buildSearchQuery(int $cvid)

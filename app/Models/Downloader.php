@@ -2,15 +2,21 @@
 
 namespace App\Models;
 
+use App\Traits\BuildSchema;
+use App\Traits\CreateChild;
+use App\Traits\MoveAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Nanigans\SingleTableInheritance\SingleTableInheritanceTrait;
 
 class Downloader extends Model
 {
     use SingleTableInheritanceTrait;
+    use MoveAttributes;
+    use BuildSchema;
+    use CreateChild;
 
     const DOWNLOADER_TYPES = [
-        'sabnzbd' => \App\Downloaders\Usenet\Sabnzbd::class,
+        'sabnzbd' => \App\Models\Downloaders\Usenet\Sabnzbd::class,
     ];
 
     protected $table = 'downloaders';
@@ -28,19 +34,25 @@ class Downloader extends Model
         'enable',
     ];
 
-    public static function createChild($attrs)
-    {
-        $type = $attrs['type'];
-        $class = self::getClass($type);
-
-        $model = new $class;
-
-        return $model->fill($attrs);
-    }
+    protected $baseSchema = [
+        'fields' => [
+            'url' => [
+                'label' => 'Base URL',
+                'type' => 'text',
+                'validation' => ['required', 'string'],
+                'validationField' => 'settings.url',
+            ],
+        ],
+    ];
 
     public static function getClass(String $type)
     {
         return self::DOWNLOADER_TYPES[$type];
+    }
+
+    protected static function getChildTypes()
+    {
+        return self::DOWNLOADER_TYPES;
     }
 
     protected static function booted()

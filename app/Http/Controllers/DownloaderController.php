@@ -33,7 +33,6 @@ class DownloaderController extends Controller
     public function store(DownloaderRequest $request)
     {
         $downloader = Downloader::createChild($request->validated());
-        $downloader->save();
 
         return new DownloaderResource($downloader);
     }
@@ -58,7 +57,7 @@ class DownloaderController extends Controller
      */
     public function update(Request $request, Downloader $downloader)
     {
-        $downloader->fill($request->validated());
+        $downloader->fill($request->all());
         $downloader->save();
 
         return new DownloaderResource($downloader);
@@ -102,5 +101,21 @@ class DownloaderController extends Controller
         $result = $downloader->test();
 
         return response()->json($result);
+    }
+
+    public function schema(Request $request, $name = null)
+    {
+        if ($name) {
+            if (! array_key_exists($name, Downloader::DOWNLOADER_TYPES)) {
+                return response()->json(['error' => "No downloader found of type: '$name'"], 404);
+            }
+
+            $className = Downloader::DOWNLOADER_TYPES[$name];
+            $downloader = new $className();
+
+            return $downloader->schema;
+        }
+
+        return Downloader::buildSchemas();
     }
 }

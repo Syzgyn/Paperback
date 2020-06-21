@@ -4,7 +4,7 @@ namespace App\Repositories\Indexers;
 
 use GuzzleHttp\Client;
 
-use App\Indexers\Newznab;
+use App\Models\Indexers\Newznab;
 
 class NewznabRepository
 {

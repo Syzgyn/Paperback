@@ -29,9 +29,12 @@ Route::post('indexer/test', 'IndexerController@test');
 Route::get('indexer/search', 'IndexerController@search');
 Route::apiResource('indexer', 'IndexerController');
 
-Route::apiResource('downloader', 'DownloaderController');
+
+Route::get('downloader/schema/{class}', 'DownloaderController@schema');
+Route::get('downloader/schema', 'DownloaderController@schema');
 Route::post('downloader/download', 'DownloaderController@download');
 Route::post('downloader/test', 'DownloaderController@test');
+Route::apiResource('downloader', 'DownloaderController');
 
 Route::get('settings/{category}/{property}', 'SettingsController@property');
 Route::get('settings/{category}', 'SettingsController@category');

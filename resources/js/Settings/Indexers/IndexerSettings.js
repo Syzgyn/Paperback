@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import SettingsMenuBar from '@/Settings/SettingsMenuBar'
 import SettingsToolbar from '@/Settings/SettingsToolbar'
-import IndexerList from './IndexerList'
+import ConnectorList from '@/Components/SettingsConnectors/ConnectorList'
 
 class IndexerSettings extends Component
 {
@@ -11,6 +11,9 @@ class IndexerSettings extends Component
             editModal: true,
             indexer: {},
         }
+
+        this.url = "/api/indexer";
+
         this.onSavePress = this.onSavePress.bind(this);
         this.toggleEditModal = this.toggleEditModal.bind(this);
     }
@@ -29,7 +32,7 @@ class IndexerSettings extends Component
                 <SettingsMenuBar />
                 <SettingsToolbar onSavePress={this.onSavePress}/>
                 <h2>Indexers</h2>
-                <IndexerList />
+                <ConnectorList url={this.url}/>
             </>
         )
     }
