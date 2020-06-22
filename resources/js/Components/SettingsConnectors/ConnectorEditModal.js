@@ -72,7 +72,7 @@ class ConnectorEditModal extends Component
         const name = item ? item.schema.type : implementation ? implementation.type : ""
 
         return (
-            <Modal isOpen={this.props.isOpen} toggle={toggleModal} className="itemModal" size="lg">
+            <Modal isOpen={this.props.isOpen} toggle={toggleModal} className="itemModal" size="xl">
                 <ModalHeader toggle={this.props.toggleModal}>{"Edit - " + name}</ModalHeader>
                 <ModalBody>
                     <PageRow>

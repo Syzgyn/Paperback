@@ -82,6 +82,7 @@ class IssueModal extends Component
                     results={this.state.searchResults}
                     automaticClick={this.onAutomaticSearchClick}
                     manualClick={this.onManualSearchClick}
+                    toggleModal={this.props.toggleModal}
                 />
             default:
                 return null
@@ -95,7 +96,7 @@ class IssueModal extends Component
         } = this.props;
 
         return (
-            <Modal isOpen={this.props.isOpen} onClosed={this.clearResults} toggle={this.props.toggleModal} className="issueModal" size="lg">
+            <Modal isOpen={this.props.isOpen} onClosed={this.clearResults} toggle={this.props.toggleModal} className="issueModal" size="xl">
                 <ModalHeader toggle={this.props.toggleModal}>{name}</ModalHeader>
                 <ModalBody> 
                     <IssueModalMenuBar activeTab={activeTab} onClickCallback={this.onNavButtonClick} />

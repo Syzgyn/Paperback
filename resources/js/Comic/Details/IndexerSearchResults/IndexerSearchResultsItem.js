@@ -1,9 +1,21 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import PropTypes from 'prop-types'
 import {Download} from 'react-feather'
 
 class IndexerSearchResultsItem extends Component
 {
+    constructor() {
+        super();
+
+        this.onDownloadClick = this.onDownloadClick.bind(this);
+    }
+
+    onDownloadClick() {
+        axios.post('/api/downloader/download', {link: this.props.item.link})
+            .then(this.props.toggleModal());
+    }
+
     render() {
         const {
             displayTitle,
@@ -20,7 +32,7 @@ class IndexerSearchResultsItem extends Component
                 <td className="">{displayTitle}</td>
                 <td className="">{indexer}</td>
                 <td className="">{size}</td>
-                <td className=""><Download /></td>
+                <td className=""><Download onClick={this.onDownloadClick} /></td>
             </tr>
         );
     }

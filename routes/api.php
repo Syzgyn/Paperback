@@ -30,8 +30,9 @@ Route::get('indexer/search', 'IndexerController@search');
 Route::apiResource('indexer', 'IndexerController');
 
 
-Route::get('downloader/schema/{class}', 'DownloaderController@schema');
+Route::get('downloader/schema/{class?}', 'DownloaderController@schema');
 Route::get('downloader/schema', 'DownloaderController@schema');
+Route::get('downloader/status/{downloadId}', 'DownloaderController@status');
 Route::post('downloader/download', 'DownloaderController@download');
 Route::post('downloader/test', 'DownloaderController@test');
 Route::apiResource('downloader', 'DownloaderController');

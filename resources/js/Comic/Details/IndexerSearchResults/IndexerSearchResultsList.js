@@ -25,7 +25,7 @@ class IndexerSearchResultsList extends Component
                 </thead>
                 <tbody>
                     {results.map((result, index) => (
-                        <IndexerSearchResultsItem key={index} item={result} />
+                        <IndexerSearchResultsItem key={index} item={result} toggleModal={this.props.toggleModal} />
                     ))}
                 </tbody>
             </table>

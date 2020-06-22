@@ -79,16 +79,14 @@ class DownloaderController extends Controller
     public function download(DownloaderDownloadRequest $request)
     {
         $link = $request->validated()['link'];
-        $downloaders = Downloader::all();
+        $downloaders = Downloader::where('enable', true)->get();
 
         foreach ($downloaders as $downloader) {
-            if ($downloader->enable) {
-                try {
-                    $response = $downloader->download($link);
+            try {
+                $response = $downloader->download($link);
 
-                    return $response;
-                } catch (\Exception $e) {
-                }
+                return $response;
+            } catch (\Exception $e) {
             }
         }
 
@@ -117,5 +115,22 @@ class DownloaderController extends Controller
         }
 
         return Downloader::buildSchemas();
+    }
+
+    public function status(Request $request, $downloadId)
+    {
+        $downloaders = Downloader::all();
+
+        foreach ($downloaders as $downloader) {
+            $result = $downloader->getDownloadStatus($downloadId);
+
+            if (! $result) {
+                continue;
+            }
+
+            return $result;
+        }
+
+        return [];
     }
 }

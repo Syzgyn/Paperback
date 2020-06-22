@@ -19,7 +19,7 @@ class SearchTab extends Component
     results() {
         const {results} = this.props;
         
-        return <IndexerSearchResultsList results={results} />
+        return <IndexerSearchResultsList results={results} toggleModal={this.props.toggleModal} />
     }
 
     render()

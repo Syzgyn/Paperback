@@ -95,24 +95,24 @@ class SabnzbdRepository
         return $this->makeRequest('queue', $params);
     }
 
-    public function getDownloadStatus($nzo_id)
+    public function getDownloadStatus($nzoId)
     {
         $queue = $this->queue();
 
-        foreach ($queue->slots as $slot) {
-            if ($slot->nzo_id == $nzo_id) {
+        foreach ($queue['queue']['slots'] as $slot) {
+            if ($slot['nzo_id'] == $nzoId) {
                 return $slot;
             }
         }
 
         $history = $this->history();
 
-        foreach ($history->slots as $slot) {
-            if ($slot->nzo_id == $nzo_id) {
+        foreach ($history['history']['slots'] as $slot) {
+            if ($slot['nzo_id'] == $nzoId) {
                 return $slot;
             }
         }
 
-        return [];
+        return false;
     }
 }

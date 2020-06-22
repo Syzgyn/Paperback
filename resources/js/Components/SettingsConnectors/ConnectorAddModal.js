@@ -8,7 +8,7 @@ class ConnectorAddModal extends Component
     render()
     {
         return (
-            <Modal isOpen={this.props.isOpen} toggle={this.props.toggleModal} className="settingsItemModal" size="lg">
+            <Modal isOpen={this.props.isOpen} toggle={this.props.toggleModal} className="settingsItemModal" size="xl">
                 <ModalHeader toggle={this.props.toggleModal}>Add Connector</ModalHeader>
                 <ModalBody>
                     <ConnectorAddModalContent schema={this.props.schema} onModalClose={this.props.onModalClose}/>

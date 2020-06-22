@@ -291,9 +291,11 @@ ComicItem.propTypes = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_feather__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-feather */ "./node_modules/react-feather/dist/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_feather__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-feather */ "./node_modules/react-feather/dist/index.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -320,18 +322,30 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var IndexerSearchResultsItem = /*#__PURE__*/function (_Component) {
   _inherits(IndexerSearchResultsItem, _Component);
 
   var _super = _createSuper(IndexerSearchResultsItem);
 
   function IndexerSearchResultsItem() {
+    var _this;
+
     _classCallCheck(this, IndexerSearchResultsItem);
 
-    return _super.apply(this, arguments);
+    _this = _super.call(this);
+    _this.onDownloadClick = _this.onDownloadClick.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(IndexerSearchResultsItem, [{
+    key: "onDownloadClick",
+    value: function onDownloadClick() {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/downloader/download', {
+        link: this.props.item.link
+      }).then(this.props.toggleModal());
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this$props$item = this.props.item,
@@ -352,7 +366,9 @@ var IndexerSearchResultsItem = /*#__PURE__*/function (_Component) {
         className: ""
       }, size), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: ""
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_2__["Download"], null)));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_3__["Download"], {
+        onClick: this.onDownloadClick
+      })));
     }
   }]);
 
@@ -360,12 +376,12 @@ var IndexerSearchResultsItem = /*#__PURE__*/function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 IndexerSearchResultsItem.propTypes = {
-  item: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({
-    displayTitle: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-    ago: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-    size: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-    indexer: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-    source: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+  item: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.shape({
+    displayTitle: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
+    ago: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
+    size: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
+    indexer: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
+    source: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string
   })
 };
 /* harmony default export */ __webpack_exports__["default"] = (IndexerSearchResultsItem);
@@ -426,6 +442,8 @@ var IndexerSearchResultsList = /*#__PURE__*/function (_Component) {
   _createClass(IndexerSearchResultsList, [{
     key: "render",
     value: function render() {
+      var _this = this;
+
       var results = this.props.results;
 
       if (results.length == 0) {
@@ -437,7 +455,8 @@ var IndexerSearchResultsList = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Source"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Age"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Indexer"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Size"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, results.map(function (result, index) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IndexerSearchResultsItem__WEBPACK_IMPORTED_MODULE_2__["default"], {
           key: index,
-          item: result
+          item: result,
+          toggleModal: _this.props.toggleModal
         });
       })));
     }
@@ -897,7 +916,8 @@ var IssueModal = /*#__PURE__*/function (_Component) {
             didSearch: this.state.didSearch,
             results: this.state.searchResults,
             automaticClick: this.onAutomaticSearchClick,
-            manualClick: this.onManualSearchClick
+            manualClick: this.onManualSearchClick,
+            toggleModal: this.props.toggleModal
           });
 
         default:
@@ -913,7 +933,7 @@ var IssueModal = /*#__PURE__*/function (_Component) {
         onClosed: this.clearResults,
         toggle: this.props.toggleModal,
         className: "issueModal",
-        size: "lg"
+        size: "xl"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["ModalHeader"], {
         toggle: this.props.toggleModal
       }, name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["ModalBody"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IssueModalMenuBar__WEBPACK_IMPORTED_MODULE_4__["default"], {
@@ -1071,7 +1091,8 @@ var SearchTab = /*#__PURE__*/function (_Component) {
     value: function results() {
       var results = this.props.results;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Comic_Details_IndexerSearchResults_IndexerSearchResultsList__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        results: results
+        results: results,
+        toggleModal: this.props.toggleModal
       });
     }
   }, {

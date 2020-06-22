@@ -96,7 +96,7 @@ var ConnectorAddModal = /*#__PURE__*/function (_Component) {
         isOpen: this.props.isOpen,
         toggle: this.props.toggleModal,
         className: "settingsItemModal",
-        size: "lg"
+        size: "xl"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["ModalHeader"], {
         toggle: this.props.toggleModal
       }, "Add Connector"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["ModalBody"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorAddModalContent__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -468,7 +468,7 @@ var ConnectorEditModal = /*#__PURE__*/function (_Component) {
         isOpen: this.props.isOpen,
         toggle: toggleModal,
         className: "itemModal",
-        size: "lg"
+        size: "xl"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["ModalHeader"], {
         toggle: this.props.toggleModal
       }, "Edit - " + name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["ModalBody"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Page_PageRow__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorEditModalContent__WEBPACK_IMPORTED_MODULE_4__["default"], {

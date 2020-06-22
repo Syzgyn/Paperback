@@ -78,6 +78,11 @@ class Sabnzbd extends Downloader
         return $this->repository->addUrl($link);
     }
 
+    public function getDownloadStatus($nzoId)
+    {
+        return $this->repository->getDownloadStatus($nzoId);
+    }
+
     public function getRepository()
     {
         if (! isset($this->repository)) {
