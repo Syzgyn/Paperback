@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 import {Formik, Form, Field, ErrorMessage} from 'formik'
+import {FormGroup} from 'reactstrap'
 import {toast} from 'react-toastify'
 import PageRow from '@/Components/Page/PageRow'
 import LoadingIndicator from '@/Components/Loading/LoadingIndicator'
@@ -50,12 +51,21 @@ class GeneralSettingsForm extends Component
                     onSubmit={this.onSubmit}
                 >
                     <Form>
-                        <label htmlFor="comicvine_apikey">ComicVine API Key</label>
-                        <Field name="comicvine_apikey" type="text" className="form-control" />
-                        <ErrorMessage name="comicvine_apikey" />
-                        <label>Bypass Cache?</label>
-                        <Field type="checkbox" name="bypass_cache" />
-                        <ErrorMessage name="bypass_cache" />
+                        <FormGroup>
+                            <label htmlFor="comicvine_apikey">ComicVine API Key</label>
+                            <Field name="comicvine_apikey" type="text" className="form-control" />
+                            <ErrorMessage name="comicvine_apikey" />
+                        </FormGroup>
+                        <FormGroup>
+                            <label>Bypass Cache?</label>
+                            <Field type="checkbox" name="bypass_cache" />
+                            <ErrorMessage name="bypass_cache" />
+                        </FormGroup>
+                        <FormGroup>
+                            <label>Destination Directory</label>
+                            <Field type="text" name="destination_dir" className="form-control" />
+                            <ErrorMessage name="destination_dir" />
+                        </FormGroup>
                     </Form>
                 </Formik>
             </PageRow>
