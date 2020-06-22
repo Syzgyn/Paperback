@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
-import serialize from 'form-serialize'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import ConnectorEditModalContent from './ConnectorEditModalContent'
+import PageRow from '@/Components/Page/PageRow'
 
 class ConnectorEditModal extends Component
 {
@@ -21,13 +21,12 @@ class ConnectorEditModal extends Component
     
     prepareData()
     {
-        let data = serialize(this.formRef.current, {hash:true});
+        let data = this.formRef.current.values;
         if (this.props.item !== undefined) {
             data.type = this.props.item.schema.type;
         } else {
             data.type = this.props.implementation.type;
         }
-        data.enableSearch = data.enableSearch === "on";
 
         return data;
     }
@@ -76,7 +75,9 @@ class ConnectorEditModal extends Component
             <Modal isOpen={this.props.isOpen} toggle={toggleModal} className="itemModal" size="lg">
                 <ModalHeader toggle={this.props.toggleModal}>{"Edit - " + name}</ModalHeader>
                 <ModalBody>
-                    <ConnectorEditModalContent item={item} implementation={implementation} toggleModal={toggleModal} formRef={this.formRef}/>
+                    <PageRow>
+                        <ConnectorEditModalContent item={item} implementation={implementation} toggleModal={toggleModal} formRef={this.formRef}/>
+                    </PageRow>
                 </ModalBody>
                 <ModalFooter>
                     { item ? 

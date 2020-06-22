@@ -17,6 +17,7 @@ class Sabnzbd extends Downloader
     protected $appends = [
         'apikey',
         'url',
+        'username',
     ];
 
     protected $fillable = [
@@ -26,6 +27,7 @@ class Sabnzbd extends Downloader
         'settings',
         'settings.apikey' => 'apikey',
         'settings.url' => 'url',
+        'settings.username' => 'username',
     ];
 
     protected $modelSchema = [

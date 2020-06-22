@@ -21,7 +21,6 @@ trait BuildSchema
             'protocol' => $schema['protocol'],
             'name' => $schema['name'],
             'type' => array_search(static::class, self::getChildTypes()),
-            'enableSearch' => isset($this->enable_search) ? (bool)$this->enable_search : true,
             'fields' => [],
         ];
 
@@ -30,8 +29,8 @@ trait BuildSchema
                 'name' => $name,
                 'label' => $field['label'],
                 'type' => $field['type'],
-                'value' => '',
-                'required' => in_array('required', is_array($field['validation']) ?$field['validation'] : [$field['validation']]),
+                'value' => $this->getSchemaFieldValue($name, $field),
+                'required' => in_array('required', is_array($field['validation']) ? $field['validation'] : [$field['validation']]),
             ];
         }
 
@@ -47,5 +46,56 @@ trait BuildSchema
         }
 
         return $schemas;
+    }
+
+    protected function getSchemaFieldValue(string $name, array $field = [])
+    {
+        $key = array_search($name, $this->fillable);
+        if (is_numeric($key)) {
+            $key = $name;
+        }
+
+        $keys = explode('.', $key);
+        $base = array_shift($keys);
+
+        //Single attribute
+        if (empty($keys)) {
+            if (isset($this->$base)) {
+                return $this->castFieldValue($this->$base, $field);
+            }
+
+            //Default these fields to true
+            if ($base === 'enable' || $base === 'enable_search') {
+                return true;
+            }
+
+            return '';
+        }
+
+        //Nested attribute
+        $root = $this->$base;
+        if (! is_array($root)) {
+            $root = json_decode($root, true);
+        }
+        while (count($keys)) {
+            $branch = array_shift($keys);
+
+            $root = $root[$branch];
+        }
+
+        return $this->castFieldValue($root, $field);
+    }
+
+    protected function castFieldValue($value, $field = [])
+    {
+        if (empty($field) || ! isset($field['type'])) {
+            return $value;
+        }
+
+        if ($field['type'] === 'checkbox') {
+            return $value ? true : false;
+        }
+
+        return $value;
     }
 }

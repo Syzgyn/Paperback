@@ -29,11 +29,20 @@ class Indexer extends Model
 
     protected $baseSchema = [
         'fields' => [
+            'name' => [
+                'label' => 'Name',
+                'type' => 'text',
+                'validation' => ['required', 'string'],
+            ],
+            'enableSearch' => [
+                'label' => 'Enable Search',
+                'type' => 'checkbox',
+                'validation' => ['required', 'bool'],
+            ],
             'url' => [
                 'label' => 'Base URL',
                 'type' => 'text',
                 'validation' => ['required', 'string'],
-                'validationField' => 'settings.url',
             ],
         ],
     ];

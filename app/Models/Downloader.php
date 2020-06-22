@@ -36,6 +36,16 @@ class Downloader extends Model
 
     protected $baseSchema = [
         'fields' => [
+            'name' => [
+                'label' => 'Name',
+                'type' => 'text',
+                'validation' => ['required', 'string'],
+            ],
+            'enable' => [
+                'label' => 'Enable',
+                'type' => 'checkbox',
+                'validation' => ['required', 'bool'],
+            ],
             'url' => [
                 'label' => 'Base URL',
                 'type' => 'text',

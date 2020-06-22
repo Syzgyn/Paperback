@@ -1,16 +1,10 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import { Form, FormGroup, Label, Input } from 'reactstrap';
+import { FormGroup, Label} from 'reactstrap';
+import {Formik, Form, Field, ErrorMessage} from 'formik'
 
 class ConnectorEditModalContent extends Component
 {
-    constructor(props) {
-        super(props);
-        this.state = {
-            //implementation: props.implementation || props.item.schema || {}
-        };
-    }
-
     render() {
         const {
             formRef,
@@ -21,14 +15,15 @@ class ConnectorEditModalContent extends Component
         if (item) {
             schema = this.props.item.schema;
 
-            //Populate default values
-            schema.name = item.name;
-            schema.fields.forEach((field, index) => {
-                schema.fields[index].value = item.settings[field.name];
-            });
         } else {
             schema = this.props.implementation;
         }
+
+        let initialValues = {};
+
+        schema.fields.forEach((field, index) => {
+            initialValues[field.name] = field.value; 
+        });
 
         const {
             enableSearch,
@@ -37,22 +32,22 @@ class ConnectorEditModalContent extends Component
         } = schema;
 
         return (
-            <Form onSubmit={this.onFormSubmit} id="addForm" innerRef={formRef}>
-                <FormGroup>
-                    <Label>Name</Label>
-                    <Input type="text" name="name" placeholder="Connector Name" defaultValue={name} />
-                </FormGroup>
-                <FormGroup>
-                    <Label>Enable Search</Label>
-                    <Input type="checkbox" name="enableSearch" defaultChecked={enableSearch} />
-                </FormGroup>
+            <Formik
+                initialValues={initialValues}
+                innerRef={formRef}
+            >
+            <Form id="editForm" className="horizontal-form">
                 {fields.map((field) => 
-                    <FormGroup key={field.name}>
-                        <Label>{field.label}</Label>
-                        <Input type={field.type} name={field.name} defaultValue={field.value}/> 
+                    <FormGroup className="row" key={field.name}>
+                        <Label className="col-sm-3">{field.label}</Label>
+                        <div className="col-sm-5">
+                            <Field type={field.type} name={field.name} className="form-control"/> 
+                            <ErrorMessage name={field.name} />
+                        </div>
                     </FormGroup>
                 )}
             </Form>
+            </Formik>
         );
     }
 }

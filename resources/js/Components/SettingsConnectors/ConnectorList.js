@@ -23,10 +23,11 @@ class ConnectorList extends Component
     }
 
     getItems() {
+        setTimeout(() => {
         axios.get(this.props.url)
         .then(response => {
             this.setState({items: response.data.data, loading: false});
-        });
+        })}, 100);
     }
 
     render() {
