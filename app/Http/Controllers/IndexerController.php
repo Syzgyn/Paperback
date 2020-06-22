@@ -81,7 +81,7 @@ class IndexerController extends Controller
         $cvid = $request->input('cvid');
         $offset = $request->input('offset') || 0;
 
-        $indexers = Indexer::all();
+        $indexers = Indexer::where('enable_search', true)->get();
 
         $results = [];
         foreach ($indexers as $indexer) {

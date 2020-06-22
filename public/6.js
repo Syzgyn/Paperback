@@ -192,7 +192,6 @@ var ComicIndexItem = /*#__PURE__*/function (_Component) {
           name = _this$props.name,
           description = _this$props.description,
           classes = _this$props.classes;
-      console.log(this.props);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comic-item row pb-5 " + classes
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

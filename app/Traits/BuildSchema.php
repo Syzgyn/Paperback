@@ -77,8 +77,13 @@ trait BuildSchema
         if (! is_array($root)) {
             $root = json_decode($root, true);
         }
+
         while (count($keys)) {
             $branch = array_shift($keys);
+
+            if (! isset($root[$branch])) {
+                return '';
+            }
 
             $root = $root[$branch];
         }

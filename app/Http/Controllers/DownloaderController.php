@@ -97,7 +97,7 @@ class DownloaderController extends Controller
 
     public function test(DownloaderRequest $request)
     {
-        $downloader = Downloader::createChild($request->validated());
+        $downloader = Downloader::createChild($request->validated(), false);
         $result = $downloader->test();
 
         return response()->json($result);

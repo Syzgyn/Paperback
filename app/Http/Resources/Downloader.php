@@ -18,7 +18,7 @@ class Downloader extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'class' => $this->class,
-            'enable' => (bool)$this->enable_search,
+            'enable' => (bool)$this->enable,
             'schema' => $this->schema,
         ];
     }

@@ -30,7 +30,6 @@ class ComicDetails extends Component
     }
 
     toggleModal(issue, tab="description") {
-        console.log("toggleModal", tab);
         this.setState({modal: !this.state.modal, issue: issue, activeTab: tab});
     }
 

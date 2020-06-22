@@ -42,7 +42,6 @@ class IssueModal extends Component
     }
 
     clearResults() {
-        console.log("clearing results");
         this.setState({searchResults: [], didSearch: false});
     }
 
@@ -79,6 +78,7 @@ class IssueModal extends Component
             case "search":
                 return <SearchTab
                     loading={this.state.searchResultsLoading}
+                    didSearch={this.state.didSearch}
                     results={this.state.searchResults}
                     automaticClick={this.onAutomaticSearchClick}
                     manualClick={this.onManualSearchClick}

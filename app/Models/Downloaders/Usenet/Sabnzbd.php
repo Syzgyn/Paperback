@@ -18,6 +18,7 @@ class Sabnzbd extends Downloader
         'apikey',
         'url',
         'username',
+        'port',
     ];
 
     protected $fillable = [
@@ -28,23 +29,27 @@ class Sabnzbd extends Downloader
         'settings.apikey' => 'apikey',
         'settings.url' => 'url',
         'settings.username' => 'username',
+        'settings.port' => 'port',
     ];
 
     protected $modelSchema = [
         'protocol' => 'usenet',
         'name' => 'SabNZBd',
         'fields' => [
+            'port' => [
+                'label' => 'Port',
+                'type' => 'text',
+                'validation' => ['required', 'numeric'],
+            ],
             'apikey' => [
                 'label' => 'API Key',
                 'type' => 'text',
                 'validation' => ['required', 'alpha_num'],
-                'validationField' => 'settings.apikey',
             ],
             'username' => [
                 'label' => 'Username',
                 'type' => 'text',
                 'validation' => [],
-                'validationField' => 'settings.username',
             ],
         ],
     ];
@@ -65,7 +70,7 @@ class Sabnzbd extends Downloader
 
     public function test()
     {
-        return $response = $this->getRepository()->getCats();
+        return $response = $this->getRepository()->test();
     }
 
     public function download($link)

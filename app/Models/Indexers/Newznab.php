@@ -38,7 +38,6 @@ class Newznab extends Indexer
                 'label' => 'API Key',
                 'type' => 'text',
                 'validation' => ['required', 'alpha_num'],
-                'validationField' => 'settings.apikey',
             ],
         ],
     ];

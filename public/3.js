@@ -91,7 +91,6 @@ var ComicDetails = /*#__PURE__*/function (_Component) {
     key: "toggleModal",
     value: function toggleModal(issue) {
       var tab = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "description";
-      console.log("toggleModal", tab);
       this.setState({
         modal: !this.state.modal,
         issue: issue,
@@ -428,6 +427,11 @@ var IndexerSearchResultsList = /*#__PURE__*/function (_Component) {
     key: "render",
     value: function render() {
       var results = this.props.results;
+
+      if (results.length == 0) {
+        return "No results found";
+      }
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: "table"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Source"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Age"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Indexer"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Size"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, results.map(function (result, index) {
@@ -821,7 +825,6 @@ var IssueModal = /*#__PURE__*/function (_Component) {
   }, {
     key: "clearResults",
     value: function clearResults() {
-      console.log("clearing results");
       this.setState({
         searchResults: [],
         didSearch: false
@@ -891,6 +894,7 @@ var IssueModal = /*#__PURE__*/function (_Component) {
         case "search":
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SearchTab__WEBPACK_IMPORTED_MODULE_6__["default"], {
             loading: this.state.searchResultsLoading,
+            didSearch: this.state.didSearch,
             results: this.state.searchResults,
             automaticClick: this.onAutomaticSearchClick,
             manualClick: this.onManualSearchClick
@@ -1077,7 +1081,7 @@ var SearchTab = /*#__PURE__*/function (_Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_5__["default"], null);
       }
 
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Page_PageRow__WEBPACK_IMPORTED_MODULE_3__["default"], null, !this.props.results.length ? this.defaultButtons() : this.results());
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Page_PageRow__WEBPACK_IMPORTED_MODULE_3__["default"], null, this.props.didSearch ? this.results() : this.defaultButtons());
     }
   }]);
 
@@ -1088,7 +1092,8 @@ SearchTab.propTypes = {
   automaticClick: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired,
   manualClick: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired,
   loading: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
-  results: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array
+  results: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array,
+  didSearch: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool
 };
 /* harmony default export */ __webpack_exports__["default"] = (SearchTab);
 

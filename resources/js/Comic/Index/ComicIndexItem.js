@@ -18,8 +18,6 @@ class ComicIndexItem extends Component {
                 classes,
             } = this.props;
 
-            console.log(this.props);
-
         return (
             <div className={"comic-item row pb-5 " + classes}>
                 <div className="col-md-2 col-sm-3">

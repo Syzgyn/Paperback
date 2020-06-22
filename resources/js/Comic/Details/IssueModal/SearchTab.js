@@ -30,7 +30,7 @@ class SearchTab extends Component
 
         return (
             <PageRow>
-                {! this.props.results.length ? this.defaultButtons() : this.results() }
+                {this.props.didSearch ? this.results() : this.defaultButtons()}
             </PageRow>
         );
     }
@@ -41,6 +41,7 @@ SearchTab.propTypes = {
     manualClick: PropTypes.func.isRequired,
     loading: PropTypes.bool,
     results: PropTypes.array,
+    didSearch: PropTypes.bool,
 }
 
 export default SearchTab

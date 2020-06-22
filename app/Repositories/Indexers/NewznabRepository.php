@@ -34,6 +34,12 @@ class NewznabRepository
         ];
 
         $results = $this->makeRequest('', $params);
+
+        if (isset($results['error'])) {
+            //TODO: Error handling
+            return [];
+        }
+
         $items = $results['channel']['item'];
 
         //If there's only one result, enclose it.

@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Badge, Card, CardTitle, CardText} from 'reactstrap'
+import {Card, CardTitle, CardText} from 'reactstrap'
 import ConnectorEditModal from './ConnectorEditModal'
+import ConnectorBadge from './ConnectorBadge'
 
 class ConnectorItem extends Component
 {
@@ -40,15 +41,19 @@ class ConnectorItem extends Component
 
         const {
             name,
+            enableRss,
             enableSearch,
+            enable,
         } = this.props.item;
-
-        const searchBadgeColor = enableSearch ? "success" : "danger";
 
         return (
             <Card onClick={this.openEditModal} className="settings-connector-item shadow p-3 m-3">
                 <CardTitle>{name}</CardTitle>
-                <CardText><Badge color={searchBadgeColor}>Search</Badge></CardText>
+                <CardText>
+                    <ConnectorBadge enabled={enableRss} text="RSS" /> 
+                    <ConnectorBadge enabled={enableSearch} text="Search" /> 
+                    <ConnectorBadge enabled={enable} text="Enabled" /> 
+                </CardText>
                 <ConnectorEditModal isOpen={editModal} toggleModal={this.toggleEditModal} item={this.props.item} url={this.props.url}/>
             </Card>
         );

@@ -21,14 +21,12 @@ class ConnectorEditModalContent extends Component
 
         let initialValues = {};
 
-        schema.fields.forEach((field, index) => {
+        schema.fields.forEach((field) => {
             initialValues[field.name] = field.value; 
         });
 
         const {
-            enableSearch,
             fields,
-            name,
         } = schema;
 
         return (

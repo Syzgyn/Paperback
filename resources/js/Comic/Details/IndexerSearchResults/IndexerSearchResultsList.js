@@ -7,6 +7,10 @@ class IndexerSearchResultsList extends Component
     render() {
         const {results} = this.props;
 
+        if (results.length == 0) {
+            return "No results found";
+        }
+
         return (
             <table className="table">
                 <thead>
