@@ -25,7 +25,7 @@ class IndexerSearchResultsList extends Component
                 </thead>
                 <tbody>
                     {results.map((result, index) => (
-                        <IndexerSearchResultsItem key={index} item={result} toggleModal={this.props.toggleModal} />
+                        <IndexerSearchResultsItem key={index} item={result} downloadClick={this.props.downloadClick} /> 
                     ))}
                 </tbody>
             </table>
@@ -35,6 +35,7 @@ class IndexerSearchResultsList extends Component
 
 IndexerSearchResultsList.propTypes = {
     results: PropTypes.array,
+    downloadClick: PropTypes.func.isRequired,
 }
 
 export default IndexerSearchResultsList

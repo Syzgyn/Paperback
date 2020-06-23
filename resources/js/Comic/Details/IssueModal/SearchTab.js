@@ -19,7 +19,7 @@ class SearchTab extends Component
     results() {
         const {results} = this.props;
         
-        return <IndexerSearchResultsList results={results} toggleModal={this.props.toggleModal} />
+        return <IndexerSearchResultsList results={results} downloadClick={this.props.downloadClick} /> 
     }
 
     render()
@@ -39,6 +39,7 @@ class SearchTab extends Component
 SearchTab.propTypes = {
     automaticClick: PropTypes.func.isRequired,
     manualClick: PropTypes.func.isRequired,
+    downloadClick: PropTypes.func.isRequired,
     loading: PropTypes.bool,
     results: PropTypes.array,
     didSearch: PropTypes.bool,

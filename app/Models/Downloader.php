@@ -4,14 +4,12 @@ namespace App\Models;
 
 use App\Traits\BuildSchema;
 use App\Traits\CreateChild;
-use App\Traits\MoveAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Nanigans\SingleTableInheritance\SingleTableInheritanceTrait;
 
 class Downloader extends Model
 {
     use SingleTableInheritanceTrait;
-    use MoveAttributes;
     use BuildSchema;
     use CreateChild;
 
@@ -54,6 +52,11 @@ class Downloader extends Model
             ],
         ],
     ];
+
+    public function issueDownloads()
+    {
+        return $this->hasMany('App\Models\IssueDownload');
+    }
 
     public static function getClass(String $type)
     {

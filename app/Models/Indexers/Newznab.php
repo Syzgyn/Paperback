@@ -22,10 +22,12 @@ class Newznab extends Indexer
     protected $fillable = [
         'name',
         'class',
-        'settings',
-        'settings.apikey' => 'apikey',
-        'settings.url' => 'url',
-        'enable_search' => 'enableSearch',
+        'enable_search',
+    ];
+
+    protected $fillableMap = [
+        'apikey' => 'settings.apikey',
+        'url' => 'settings.url',
     ];
 
     protected static $singleTableType = self::class;

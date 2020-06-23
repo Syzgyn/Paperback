@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 import PropTypes from 'prop-types'
 import {Download} from 'react-feather'
 
@@ -12,8 +11,7 @@ class IndexerSearchResultsItem extends Component
     }
 
     onDownloadClick() {
-        axios.post('/api/downloader/download', {link: this.props.item.link})
-            .then(this.props.toggleModal());
+        this.props.downloadClick(this.props.item.link); 
     }
 
     render() {
@@ -45,7 +43,9 @@ IndexerSearchResultsItem.propTypes = {
         size: PropTypes.string,
         indexer: PropTypes.string,
         source: PropTypes.string,
+        link: PropTypes.string,
     }),
+    downloadClick: PropTypes.func.isRequired,
 }
 
 export default IndexerSearchResultsItem

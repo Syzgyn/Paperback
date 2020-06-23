@@ -55,6 +55,10 @@ trait BuildSchema
             $key = $name;
         }
 
+        if ($key === false && isset($this->fillableMap)) {
+            $key = $name;
+        }
+
         $keys = explode('.', $key);
         $base = array_shift($keys);
 

@@ -4,6 +4,8 @@ namespace App\Traits;
 
 trait MoveAttributes
 {
+    protected $mappedAttributes;
+
     protected function castAttribute($key, $value)
     {
         $type = $this->getCastType($key);
@@ -14,51 +16,109 @@ trait MoveAttributes
         return parent::castAttribute($key, $value);
     }
 
+    public function __isset($key)
+    {
+        if (! is_null($this->getMapAttribute($key))) {
+            return true;
+        }
+
+        return parent::__isset($key);
+    }
+
+    public function __get($key)
+    {
+        if (! is_null($this->getMapAttribute($key))) {
+            return $this->getMapAttribute($key);
+        }
+
+        return parent::__get($key);
+    }
+
+    protected function getMapAttribute($key)
+    {
+        if (isset($this->mappedAttributes[$key])) {
+            return $this->mappedAttributes[$key];
+        }
+
+        if (array_key_exists($key, $this->fillableMap)) {
+            $path = $this->fillableMap[$key];
+            $paths = explode('.', $path);
+            $base = array_shift($paths);
+
+            if (empty($paths)) {
+                return $this->attributes[$base];
+            }
+
+            //Nested attribute
+            $arrayAttrs[$base] = true;
+            $root = $this->attributes[$base];
+            if (! is_array($root)) {
+                $root = json_decode($root, true);
+            }
+            while (count($paths) > 1) {
+                $branch = array_shift($path);
+
+                $root = $root[$branch];
+            }
+
+            if (isset($root[$paths[0]])) {
+                $this->mappedAttributes[$key] = $root[$paths[0]];
+
+                return $this->mappedAttributes[$key];
+            }
+        }
+
+        return null;
+    }
+
     public function fill(array $attributes)
     {
         parent::fill($attributes);
-        if (count($attributes)) {
-            $this->moveAttributes();
-        }
+        $this->mapAttributes($attributes);
     }
 
-    protected function moveAttributes()
+    protected function mapAttributes(array $attributes = [])
     {
-        foreach ($this->fillable as $key => $val) {
-            if (! isset($this->attributes[$val])) {
+        $arrayAttrs = [];
+
+        if (! isset($this->fillableMap)) {
+            return;
+        }
+
+        foreach ($attributes as $key => $value) {
+            if (! isset($this->fillableMap[$key])) {
                 continue;
             }
 
-            if (is_numeric($key) || $key === $val) {
-                //attribute doesn't move, dont do anything
-                continue;
-            }
+            $path = $this->fillableMap[$key];
+            $paths = explode('.', $path);
+            $base = array_shift($paths);
 
-            $keys = explode('.', $key);
-            $base = array_shift($keys);
-
-            if (empty($keys)) {
+            if (empty($paths)) {
                 //Not a nested attribute, set and move on
-                $this->attributes[$base] = $this->attributes[$val];
+                $this->attributes[$base] = $attributes[$key];
                 continue;
             }
 
             //Nested attribute
+            $arrayAttrs[$base] = true;
             $root = &$this->attributes[$base];
             if (! is_array($root)) {
                 $root = json_decode($root, true);
             }
-            while (count($keys) > 1) {
+            while (count($paths) > 1) {
                 $branch = array_shift($path);
 
                 $root = &$root[$branch];
             }
 
-            $root[$keys[0]] = $this->attributes[$val];
+            $root[$paths[0]] = $attributes[$key];
         }
 
         //This is to cast the array to JSON data
         //TODO: Put this somewhere else
-        $this->settings = $this->settings;
+        foreach ($arrayAttrs as $attr => $v) {
+            $this->$attr = $this->$attr;
+        }
     }
 }

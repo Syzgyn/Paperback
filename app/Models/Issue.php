@@ -31,6 +31,7 @@ class Issue extends Model
     protected $casts = [
         'issue_num' => 'integer',
         'cvid' => 'integer',
+        'comic_id' => 'integer',
     ];
 
     public function comic()

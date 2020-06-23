@@ -291,11 +291,9 @@ ComicItem.propTypes = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react_feather__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-feather */ "./node_modules/react-feather/dist/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_feather__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-feather */ "./node_modules/react-feather/dist/index.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -322,7 +320,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-
 var IndexerSearchResultsItem = /*#__PURE__*/function (_Component) {
   _inherits(IndexerSearchResultsItem, _Component);
 
@@ -341,9 +338,7 @@ var IndexerSearchResultsItem = /*#__PURE__*/function (_Component) {
   _createClass(IndexerSearchResultsItem, [{
     key: "onDownloadClick",
     value: function onDownloadClick() {
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/downloader/download', {
-        link: this.props.item.link
-      }).then(this.props.toggleModal());
+      this.props.downloadClick(this.props.item.link);
     }
   }, {
     key: "render",
@@ -366,7 +361,7 @@ var IndexerSearchResultsItem = /*#__PURE__*/function (_Component) {
         className: ""
       }, size), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: ""
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_3__["Download"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_2__["Download"], {
         onClick: this.onDownloadClick
       })));
     }
@@ -376,13 +371,15 @@ var IndexerSearchResultsItem = /*#__PURE__*/function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 IndexerSearchResultsItem.propTypes = {
-  item: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.shape({
-    displayTitle: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
-    ago: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
-    size: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
-    indexer: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
-    source: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string
-  })
+  item: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({
+    displayTitle: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+    ago: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+    size: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+    indexer: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+    source: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+    link: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+  }),
+  downloadClick: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
 };
 /* harmony default export */ __webpack_exports__["default"] = (IndexerSearchResultsItem);
 
@@ -456,7 +453,7 @@ var IndexerSearchResultsList = /*#__PURE__*/function (_Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IndexerSearchResultsItem__WEBPACK_IMPORTED_MODULE_2__["default"], {
           key: index,
           item: result,
-          toggleModal: _this.props.toggleModal
+          downloadClick: _this.props.downloadClick
         });
       })));
     }
@@ -466,7 +463,8 @@ var IndexerSearchResultsList = /*#__PURE__*/function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 IndexerSearchResultsList.propTypes = {
-  results: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array
+  results: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array,
+  downloadClick: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
 };
 /* harmony default export */ __webpack_exports__["default"] = (IndexerSearchResultsList);
 
@@ -818,6 +816,7 @@ var IssueModal = /*#__PURE__*/function (_Component) {
     _this.onNavButtonClick = _this.onNavButtonClick.bind(_assertThisInitialized(_this));
     _this.onManualSearchClick = _this.onManualSearchClick.bind(_assertThisInitialized(_this));
     _this.onAutomaticSearchClick = _this.onAutomaticSearchClick.bind(_assertThisInitialized(_this));
+    _this.onDownloadClick = _this.onDownloadClick.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -894,6 +893,15 @@ var IssueModal = /*#__PURE__*/function (_Component) {
       }
     }
   }, {
+    key: "onDownloadClick",
+    value: function onDownloadClick(url) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/issuedownload', {
+        url: url,
+        comic_id: this.props.issue.comic_id,
+        issue_id: this.props.issue.cvid
+      }).then(this.props.toggleModal());
+    }
+  }, {
     key: "onNavButtonClick",
     value: function onNavButtonClick(event) {
       event.preventDefault();
@@ -917,7 +925,7 @@ var IssueModal = /*#__PURE__*/function (_Component) {
             results: this.state.searchResults,
             automaticClick: this.onAutomaticSearchClick,
             manualClick: this.onManualSearchClick,
-            toggleModal: this.props.toggleModal
+            downloadClick: this.onDownloadClick
           });
 
         default:
@@ -957,7 +965,8 @@ IssueModal.propTypes = {
   issue: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({
     displayName: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
     description: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-    cvid: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number
+    cvid: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number,
+    comic_id: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number
   })
 };
 /* harmony default export */ __webpack_exports__["default"] = (IssueModal);
@@ -1092,7 +1101,7 @@ var SearchTab = /*#__PURE__*/function (_Component) {
       var results = this.props.results;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Comic_Details_IndexerSearchResults_IndexerSearchResultsList__WEBPACK_IMPORTED_MODULE_4__["default"], {
         results: results,
-        toggleModal: this.props.toggleModal
+        downloadClick: this.props.downloadClick
       });
     }
   }, {
@@ -1112,6 +1121,7 @@ var SearchTab = /*#__PURE__*/function (_Component) {
 SearchTab.propTypes = {
   automaticClick: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired,
   manualClick: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired,
+  downloadClick: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired,
   loading: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
   results: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array,
   didSearch: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool

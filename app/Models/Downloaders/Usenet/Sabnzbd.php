@@ -2,6 +2,7 @@
 namespace App\Models\Downloaders\Usenet;
 
 use App\Models\Downloader;
+use App\Traits\MoveAttributes;
 use App\Repositories\Downloaders\SabnzbdRepository;
 
 use Nanigans\SingleTableInheritance\SingleTableInheritanceTrait;
@@ -9,6 +10,7 @@ use Nanigans\SingleTableInheritance\SingleTableInheritanceTrait;
 class Sabnzbd extends Downloader
 {
     use SingleTableInheritanceTrait;
+    use MoveAttributes;
 
     const URL_ENDPOINT_BASE = '/api/';
 
@@ -25,11 +27,13 @@ class Sabnzbd extends Downloader
         'name',
         'class',
         'enable',
-        'settings',
-        'settings.apikey' => 'apikey',
-        'settings.url' => 'url',
-        'settings.username' => 'username',
-        'settings.port' => 'port',
+    ];
+
+    protected $fillableMap = [
+        'apikey' => 'settings.apikey',
+        'url' => 'settings.url',
+        'username' => 'settings.username',
+        'port' => 'settings.port',
     ];
 
     protected $modelSchema = [
@@ -75,7 +79,9 @@ class Sabnzbd extends Downloader
 
     public function download($link)
     {
-        return $this->repository->addUrl($link);
+        $response = $this->repository->addUrl($link);
+
+        return $response['nzo_ids'][0];
     }
 
     public function getDownloadStatus($nzoId)

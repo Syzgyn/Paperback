@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DownloaderDownloadRequest extends FormRequest
+class IssueDownloadRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,9 @@ class DownloaderDownloadRequest extends FormRequest
     public function rules()
     {
         return [
-            'link' => 'required|url',
+            'url' => 'required|url',
+            'comic_id' => 'required|numeric',
+            'issue_id' => 'required|numeric',
         ];
     }
 }

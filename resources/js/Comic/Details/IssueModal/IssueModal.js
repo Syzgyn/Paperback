@@ -22,6 +22,7 @@ class IssueModal extends Component
         this.onNavButtonClick = this.onNavButtonClick.bind(this);
         this.onManualSearchClick = this.onManualSearchClick.bind(this);
         this.onAutomaticSearchClick = this.onAutomaticSearchClick.bind(this);
+        this.onDownloadClick = this.onDownloadClick.bind(this);
     }
 
     componentDidUpdate(prevProps) {
@@ -65,6 +66,11 @@ class IssueModal extends Component
         }
     }
 
+    onDownloadClick(url) {
+        axios.post('/api/issuedownload', {url: url, comic_id: this.props.issue.comic_id, issue_id: this.props.issue.cvid})
+            .then(this.props.toggleModal());
+    }
+
     onNavButtonClick(event) {
         event.preventDefault();
         this.props.changeActiveTab(event.target.dataset.tabname);
@@ -82,7 +88,7 @@ class IssueModal extends Component
                     results={this.state.searchResults}
                     automaticClick={this.onAutomaticSearchClick}
                     manualClick={this.onManualSearchClick}
-                    toggleModal={this.props.toggleModal}
+                    downloadClick={this.onDownloadClick}
                 />
             default:
                 return null
@@ -119,6 +125,7 @@ IssueModal.propTypes = {
         displayName: PropTypes.string,
         description: PropTypes.string,
         cvid: PropTypes.number,
+        comic_id: PropTypes.number,
     }),
 
 

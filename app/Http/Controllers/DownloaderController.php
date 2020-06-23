@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests\DownloaderRequest;
 use App\Http\Resources\DownloaderCollection;
-use App\Http\Requests\DownloaderDownloadRequest;
 use App\Http\Resources\Downloader as DownloaderResource;
 
 class DownloaderController extends Controller
@@ -74,23 +73,6 @@ class DownloaderController extends Controller
         $downloader->delete();
 
         return response()->json(['status' => 'OK']);
-    }
-
-    public function download(DownloaderDownloadRequest $request)
-    {
-        $link = $request->validated()['link'];
-        $downloaders = Downloader::where('enable', true)->get();
-
-        foreach ($downloaders as $downloader) {
-            try {
-                $response = $downloader->download($link);
-
-                return $response;
-            } catch (\Exception $e) {
-            }
-        }
-
-        throw new \Exception('No downloader was available');
     }
 
     public function test(DownloaderRequest $request)
