@@ -2,7 +2,6 @@
 namespace App\Models\Downloaders\Usenet;
 
 use App\Models\Downloader;
-use App\Traits\MoveAttributes;
 use App\Repositories\Downloaders\SabnzbdRepository;
 
 use Nanigans\SingleTableInheritance\SingleTableInheritanceTrait;
@@ -10,7 +9,6 @@ use Nanigans\SingleTableInheritance\SingleTableInheritanceTrait;
 class Sabnzbd extends Downloader
 {
     use SingleTableInheritanceTrait;
-    use MoveAttributes;
 
     const URL_ENDPOINT_BASE = '/api/';
 

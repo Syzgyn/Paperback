@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\BuildSchema;
 use App\Traits\CreateChild;
+use App\Traits\MoveAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Nanigans\SingleTableInheritance\SingleTableInheritanceTrait;
 
@@ -12,6 +13,7 @@ class Downloader extends Model
     use SingleTableInheritanceTrait;
     use BuildSchema;
     use CreateChild;
+    use MoveAttributes;
 
     const DOWNLOADER_TYPES = [
         'sabnzbd' => \App\Models\Downloaders\Usenet\Sabnzbd::class,
