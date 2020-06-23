@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import {Card, CardTitle, CardText} from 'reactstrap'
+import {Card} from 'reactstrap'
 import {Plus} from 'react-feather'
 import ConnectorEditModal from './ConnectorEditModal'
 import ConnectorAddModal from './ConnectorAddModal'
