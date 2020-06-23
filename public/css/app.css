@@ -11058,6 +11058,7 @@ a.hideLink {
   height: 90px;
   display: inline-block;
   cursor: pointer;
+  vertical-align: top;
 }
 
 .cursor-pointer {

@@ -49,7 +49,7 @@ class ConnectorItem extends Component
         return (
             <Card onClick={this.openEditModal} className="settings-connector-item shadow p-3 m-3">
                 <CardTitle>{name}</CardTitle>
-                <CardText>
+                <CardText className="mt-2">
                     <ConnectorBadge enabled={enableRss} text="RSS" /> 
                     <ConnectorBadge enabled={enableSearch} text="Search" /> 
                     <ConnectorBadge enabled={enable} text="Enabled" /> 

@@ -641,8 +641,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
-/* harmony import */ var _ConnectorEditModal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ConnectorEditModal */ "./resources/js/Components/SettingsConnectors/ConnectorEditModal.js");
-/* harmony import */ var _ConnectorAddModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ConnectorAddModal */ "./resources/js/Components/SettingsConnectors/ConnectorAddModal.js");
+/* harmony import */ var react_feather__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-feather */ "./node_modules/react-feather/dist/index.js");
+/* harmony import */ var _ConnectorEditModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ConnectorEditModal */ "./resources/js/Components/SettingsConnectors/ConnectorEditModal.js");
+/* harmony import */ var _ConnectorAddModal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ConnectorAddModal */ "./resources/js/Components/SettingsConnectors/ConnectorAddModal.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -664,6 +665,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -759,14 +761,16 @@ var ConnectorEmptyItem = /*#__PURE__*/function (_Component) {
           schema = _this$state.schema;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Card"], {
         onClick: this.openAddModal,
-        className: "settings-connector-item shadow p-3 m-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["CardTitle"], null, "Add New Connector"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["CardText"], null, "\xA0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorAddModal__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        className: "settings-connector-item add-item shadow p-3 m-3 text-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_4__["Plus"], {
+        size: 60
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorAddModal__WEBPACK_IMPORTED_MODULE_6__["default"], {
         isOpen: addModal,
         toggleModal: this.toggleAddModal,
         schema: schema,
         onModalClose: this.onAddModalClosed,
         url: this.props.url
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorEditModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorEditModal__WEBPACK_IMPORTED_MODULE_5__["default"], {
         isOpen: editModal,
         toggleModal: this.toggleEditModal,
         implementation: implementation,
@@ -889,7 +893,9 @@ var ConnectorItem = /*#__PURE__*/function (_Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Card"], {
         onClick: this.openEditModal,
         className: "settings-connector-item shadow p-3 m-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["CardTitle"], null, name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["CardText"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorBadge__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["CardTitle"], null, name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["CardText"], {
+        className: "mt-2"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorBadge__WEBPACK_IMPORTED_MODULE_4__["default"], {
         enabled: enableRss,
         text: "RSS"
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorBadge__WEBPACK_IMPORTED_MODULE_4__["default"], {

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import {Card, CardTitle, CardText} from 'reactstrap'
+import {Plus} from 'react-feather'
 import ConnectorEditModal from './ConnectorEditModal'
 import ConnectorAddModal from './ConnectorAddModal'
 
@@ -66,9 +67,8 @@ class ConnectorEmptyItem extends Component
         } = this.state;
 
         return (
-            <Card onClick={this.openAddModal} className="settings-connector-item shadow p-3 m-3">
-                <CardTitle>Add New Connector</CardTitle>
-                <CardText>&nbsp;</CardText>
+            <Card onClick={this.openAddModal} className="settings-connector-item add-item shadow p-3 m-3 text-center">
+                <Plus size={60}/>
                 <ConnectorAddModal isOpen={addModal} toggleModal={this.toggleAddModal} schema={schema} onModalClose={this.onAddModalClosed} url={this.props.url} />
                 <ConnectorEditModal isOpen={editModal} toggleModal={this.toggleEditModal} implementation={implementation} existingConnector={false} url={this.props.url} />
             </Card>
