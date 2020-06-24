@@ -36,6 +36,10 @@ trait MoveAttributes
 
     protected function getMapAttribute($key)
     {
+        if (! isset($this->fillableMap)) {
+            return null;
+        }
+
         if (isset($this->mappedAttributes[$key])) {
             return $this->mappedAttributes[$key];
         }
