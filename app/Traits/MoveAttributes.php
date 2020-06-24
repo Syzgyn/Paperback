@@ -5,7 +5,6 @@ namespace App\Traits;
 trait MoveAttributes
 {
     protected $mappedAttributes;
-    protected $fillableMap;
 
     protected function castAttribute($key, $value)
     {
@@ -80,6 +79,10 @@ trait MoveAttributes
 
     protected function mapAttributes(array $attributes = [])
     {
+        if (! isset($this->fillableMap)) {
+            return;
+        }
+
         $arrayAttrs = [];
 
         foreach ($attributes as $key => $value) {

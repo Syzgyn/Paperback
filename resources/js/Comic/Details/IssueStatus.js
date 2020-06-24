@@ -6,7 +6,7 @@ import {UncontrolledTooltip} from 'reactstrap'
 class IssueStatus extends Component
 {
     renderMissing() {
-        let id = "status-" + this.props.cvid;
+        let id = "status-" + this.props.issue.cvid;
         return (
             <>
                 <AlertTriangle id={id} />
@@ -18,7 +18,7 @@ class IssueStatus extends Component
     }
 
     renderDownloaded() {
-        let id = "status-" + this.props.cvid;
+        let id = "status-" + this.props.issue.cvid;
         return (
             <>
                 <span id={id}>Downloaded</span>
@@ -43,7 +43,9 @@ class IssueStatus extends Component
 }
 
 IssueStatus.propTypes = {
-    cvid: PropTypes.number.isRequired,
+    issue: PropTypes.shape({
+        cvid: PropTypes.number.isRequired,
+    }).isRequired,
     status: PropTypes.string
 }
 

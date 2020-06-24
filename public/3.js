@@ -559,8 +559,7 @@ var IssueItem = /*#__PURE__*/function (_Component) {
       }, release_date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "issue-status-cell"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IssueStatus__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        status: status,
-        cvid: cvid
+        issue: issue
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "issue-search-cell"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IssueSearchButtons__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -1285,7 +1284,7 @@ var IssueStatus = /*#__PURE__*/function (_Component) {
   _createClass(IssueStatus, [{
     key: "renderMissing",
     value: function renderMissing() {
-      var id = "status-" + this.props.cvid;
+      var id = "status-" + this.props.issue.cvid;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_2__["AlertTriangle"], {
         id: id
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["UncontrolledTooltip"], {
@@ -1296,7 +1295,7 @@ var IssueStatus = /*#__PURE__*/function (_Component) {
   }, {
     key: "renderDownloaded",
     value: function renderDownloaded() {
-      var id = "status-" + this.props.cvid;
+      var id = "status-" + this.props.issue.cvid;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         id: id
       }, "Downloaded"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["UncontrolledTooltip"], {
@@ -1325,7 +1324,9 @@ var IssueStatus = /*#__PURE__*/function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 IssueStatus.propTypes = {
-  cvid: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number.isRequired,
+  issue: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({
+    cvid: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number.isRequired
+  }).isRequired,
   status: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
 };
 /* harmony default export */ __webpack_exports__["default"] = (IssueStatus);

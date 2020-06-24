@@ -22,6 +22,7 @@ class Issue extends JsonResource
             'issue_num' => $this->issue_num,
             'url' => $this->url,
             'cvid' => $this->cvid,
+            'downloadStatus' => $this->downloadStatus,
         ];
     }
 
