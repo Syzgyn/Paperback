@@ -256,7 +256,7 @@ ComicIndexItem.propTypes = {
   publisher: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   image: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   name: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  description: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  displayDescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   inLibrary: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
   singleView: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
   classes: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
