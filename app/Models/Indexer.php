@@ -4,14 +4,14 @@ namespace App\Models;
 
 use App\Traits\BuildSchema;
 use App\Traits\CreateChild;
-use App\Traits\MoveAttributes;
+use App\Traits\FillCastArray;
 use Illuminate\Database\Eloquent\Model;
 use Nanigans\SingleTableInheritance\SingleTableInheritanceTrait;
 
 class Indexer extends Model
 {
     use SingleTableInheritanceTrait;
-    use MoveAttributes;
+    use FillCastArray;
     use BuildSchema;
     use CreateChild;
 
@@ -25,8 +25,6 @@ class Indexer extends Model
     protected static $singleTableSubclasses = self::INDEXER_TYPES;
     protected static $persisted = ['name', 'settings', 'enable_search'];
 
-    protected $casts = ['settings' => 'array'];
-
     protected $baseSchema = [
         'fields' => [
             'name' => [
@@ -39,7 +37,7 @@ class Indexer extends Model
                 'type' => 'checkbox',
                 'validation' => ['required', 'bool'],
             ],
-            'url' => [
+            'settings.url' => [
                 'label' => 'Base URL',
                 'type' => 'text',
                 'validation' => ['required', 'string'],
@@ -64,6 +62,16 @@ class Indexer extends Model
                 throw new \Exception('Cannot save base indexer class');
             }
         });
+    }
+
+    public function getEnableSearchAttribute()
+    {
+        return $this->attributes['enable_search'];
+    }
+
+    public function setEnableSearchAttribute($value)
+    {
+        $this->attributes['enable_search'] = $value;
     }
 
     public function buildSearchQuery(int $cvid)

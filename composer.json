@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "nanigans/single-table-inheritance": "0.8.*",
+        "spatie/data-transfer-object": "^1.13",
         "tiben/crontab-manager": "^1.3"
     },
     "require-dev": {

@@ -14,17 +14,14 @@ class Sabnzbd extends Downloader
 
     public $repository;
 
-    protected $appends = [
-        'apikey',
-        'url',
-        'username',
-        'port',
-    ];
-
     protected $fillable = [
         'name',
         'class',
         'enable',
+        'settings.apikey',
+        'settings.url',
+        'settings.port',
+        'settings.username',
     ];
 
     protected $fillableMap = [

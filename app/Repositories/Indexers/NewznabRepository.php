@@ -19,9 +19,9 @@ class NewznabRepository
         $this->indexer = $indexer;
 
         $this->client = new Client([
-            'base_uri' => $indexer->settings['url'] . $indexer::URL_ENDPOINT_BASE,
+            'base_uri' => $indexer->settings->url . $indexer::URL_ENDPOINT_BASE,
         ]);
-        $this->apikey = $indexer->settings['apikey'];
+        $this->apikey = $indexer->settings->apikey;
     }
 
     public function search(String $query, Int $offset = 0)

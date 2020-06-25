@@ -22,6 +22,7 @@ trait BuildSchema
             'name' => $schema['name'],
             'type' => array_search(static::class, self::getChildTypes()),
             'fields' => [],
+            'initialValues' => [],
         ];
 
         foreach ($schema['fields'] as $name => $field) {
@@ -29,9 +30,13 @@ trait BuildSchema
                 'name' => $name,
                 'label' => $field['label'],
                 'type' => $field['type'],
-                'value' => $this->getSchemaFieldValue($name, $field),
+                //'value' => $this->getSchemaFieldValue($name, $field),
                 'required' => in_array('required', is_array($field['validation']) ? $field['validation'] : [$field['validation']]),
             ];
+
+            $path = explode('.', $name);
+            $basePath = array_shift($path);
+            $output['initialValues'][$basePath] = $this->castFieldValue($this->$basePath, $field);
         }
 
         return $output;
@@ -50,6 +55,31 @@ trait BuildSchema
 
     protected function getSchemaFieldValue(string $name, array $field = [])
     {
+        $path = explode('.', $name);
+        $base = array_shift($path);
+
+        if (empty($path)) {
+            if (isset($this->$base)) {
+                return $this->castFieldValue($this->$base, $field);
+            }
+
+            //Default these fields to true
+            if ($base === 'enable' || $base === 'enable_search') {
+                return true;
+            }
+
+            return '';
+        }
+
+        $root = $this->$base;
+        while (count($path)) {
+            $branch = array_shift($path);
+            $root = $root->$branch;
+        }
+
+        return $this->castFieldValue($root, $field);
+
+        $root->{$path[0]} = $value;
         $key = array_search($name, $this->fillable);
         if (is_numeric($key)) {
             $key = $name;

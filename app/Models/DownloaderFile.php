@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use App\Traits\MoveAttributes;
 use Illuminate\Database\Eloquent\Model;
 
-class IssueDownload extends Model
+class DownloaderFile extends Model
 {
     use MoveAttributes;
 
@@ -26,22 +25,7 @@ class IssueDownload extends Model
         'url',
     ];
 
-    protected $fillableMap = [
-        'status' => 'data.status',
-        'percentComplete' => 'data.percentComplete',
-        'timeLeft' => 'data.timeLeft',
-    ];
-
-    protected $appends = [
-        'status',
-        'percentComplete',
-        'timeLeft',
-    ];
-
     protected $casts = [
-        'data' => 'array',
-        'status' => 'integer',
-        'percentComplete' => 'integer',
         'comic_id' => 'integer',
         'issue_id' => 'integer',
         'download_client_id' => 'integer',

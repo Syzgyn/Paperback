@@ -582,12 +582,10 @@ var ConnectorEditModalContent = /*#__PURE__*/function (_Component) {
         schema = this.props.implementation;
       }
 
-      var initialValues = {};
-      schema.fields.forEach(function (field) {
-        initialValues[field.name] = field.value;
-      });
       var _schema = schema,
-          fields = _schema.fields;
+          fields = _schema.fields,
+          initialValues = _schema.initialValues;
+      console.log(initialValues);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(formik__WEBPACK_IMPORTED_MODULE_3__["Formik"], {
         initialValues: initialValues,
         innerRef: formRef
@@ -602,7 +600,7 @@ var ConnectorEditModalContent = /*#__PURE__*/function (_Component) {
           className: "col-sm-3"
         }, field.label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "col-sm-5"
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(formik__WEBPACK_IMPORTED_MODULE_3__["Field"], {
+        }, console.log(field.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(formik__WEBPACK_IMPORTED_MODULE_3__["Field"], {
           type: field.type,
           name: field.name,
           className: "form-control"

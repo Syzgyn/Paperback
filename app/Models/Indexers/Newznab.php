@@ -2,6 +2,7 @@
 namespace App\Models\Indexers;
 
 use App\Models\Indexer;
+use App\Dto\Indexers\NewznabSettings;
 use App\Repositories\Indexers\NewznabRepository;
 
 use Nanigans\SingleTableInheritance\SingleTableInheritanceTrait;
@@ -14,20 +15,16 @@ class Newznab extends Indexer
 
     public $repository;
 
-    protected $appends = [
-        'apikey',
-        'url',
+    protected $casts = [
+        'settings' => NewznabSettings::class,
     ];
 
     protected $fillable = [
         'name',
         'class',
-        'enable_search',
-    ];
-
-    protected $fillableMap = [
-        'apikey' => 'settings.apikey',
-        'url' => 'settings.url',
+        'enableSearch',
+        'settings.url',
+        'settings.apikey',
     ];
 
     protected static $singleTableType = self::class;
@@ -36,7 +33,7 @@ class Newznab extends Indexer
         'protocol' => 'usenet',
         'name' => 'Newznab',
         'fields' => [
-            'apikey' => [
+            'settings.apikey' => [
                 'label' => 'API Key',
                 'type' => 'text',
                 'validation' => ['required', 'alpha_num'],

@@ -19,6 +19,7 @@ class Indexer extends JsonResource
             'name' => $this->name,
             'class' => $this->class,
             'enableSearch' => (bool)$this->enable_search,
+            'settings' => $this->settings,
             'schema' => $this->schema,
         ];
     }

@@ -35,7 +35,7 @@ Route::get('downloader/schema', 'DownloaderController@schema');
 Route::post('downloader/test', 'DownloaderController@test');
 Route::apiResource('downloader', 'DownloaderController');
 
-Route::apiResource('issuedownload', 'IssueDownloadController');
+Route::apiResource('downloaderfile', 'DownloaderFileController');
 
 Route::get('settings/{category}/{property}', 'SettingsController@property');
 Route::get('settings/{category}', 'SettingsController@category');

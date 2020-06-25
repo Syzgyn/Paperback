@@ -4,16 +4,16 @@ namespace App\Models;
 
 use App\Traits\BuildSchema;
 use App\Traits\CreateChild;
-use App\Traits\MoveAttributes;
+use App\Traits\FillCastArray;
 use Illuminate\Database\Eloquent\Model;
 use Nanigans\SingleTableInheritance\SingleTableInheritanceTrait;
 
 class Downloader extends Model
 {
     use SingleTableInheritanceTrait;
+    use FillCastArray;
     use BuildSchema;
     use CreateChild;
-    use MoveAttributes;
 
     const DOWNLOADER_TYPES = [
         'sabnzbd' => \App\Models\Downloaders\Usenet\Sabnzbd::class,
@@ -24,15 +24,6 @@ class Downloader extends Model
     protected static $singleTableTypeField = 'class';
     protected static $singleTableSubclasses = self::DOWNLOADER_TYPES;
     protected static $persisted = ['name', 'settings', 'enable'];
-
-    protected $casts = ['settings' => 'array'];
-
-    protected $fillable = [
-        'name',
-        'class',
-        'settings',
-        'enable',
-    ];
 
     protected $baseSchema = [
         'fields' => [
@@ -55,9 +46,9 @@ class Downloader extends Model
         ],
     ];
 
-    public function issueDownloads()
+    public function files()
     {
-        return $this->hasMany('App\Models\IssueDownload');
+        return $this->hasMany('App\Models\DownloaderFile');
     }
 
     public static function getClass(String $type)

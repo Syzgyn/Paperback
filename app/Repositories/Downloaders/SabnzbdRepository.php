@@ -14,9 +14,9 @@ class SabnzbdRepository
     public function __construct(Sabnzbd $downloader)
     {
         $settings = $downloader->settings;
-        $uriParts = explode('/', $settings['url']);
-        if (isset($settings['port'])) {
-            $uriParts[0] .= ':' . $settings['port'];
+        $uriParts = explode('/', $settings->url);
+        if (isset($settings->port)) {
+            $uriParts[0] .= ':' . $settings->port;
         }
 
         $uriParts[] = $downloader::URL_ENDPOINT_BASE;
@@ -26,7 +26,7 @@ class SabnzbdRepository
         $this->client = new Client([
             'base_uri' => $uri,
         ]);
-        $this->apikey = $downloader->settings['apikey'];
+        $this->apikey = $settings->apikey;
     }
 
     protected function makeRequest($mode, $queryParams = [], $requestParams = [])

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateIssueDownloadsTable extends Migration
+class CreateHistoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateIssueDownloadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('issue_downloads', function (Blueprint $table) {
+        Schema::create('histories', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->foreignId('comic_id')->references('cvid')->on('comics')->onDelete('cascade');
             $table->foreignId('issue_id')->references('cvid')->on('issues')->onDelete('cascade');
-            $table->foreignId('download_client_id')->nullable()->references('id')->on('downloaders');
-            $table->string('download_id')->nullable();
-            $table->string('url');
-            $table->json('data')->default('{}');
+            $table->timestamp('date');
+            $table->string("file_name");
+            $table->string("download_id");
+            $table->integer("event_type");
+            $table->json("data");
         });
     }
 
@@ -32,6 +32,6 @@ class CreateIssueDownloadsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('issue_downloads');
+        Schema::dropIfExists('histories');
     }
 }

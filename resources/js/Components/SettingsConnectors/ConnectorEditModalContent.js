@@ -19,15 +19,12 @@ class ConnectorEditModalContent extends Component
             schema = this.props.implementation;
         }
 
-        let initialValues = {};
-
-        schema.fields.forEach((field) => {
-            initialValues[field.name] = field.value; 
-        });
-
         const {
             fields,
+            initialValues,
         } = schema;
+
+        console.log(initialValues);
 
         return (
             <Formik
@@ -39,6 +36,7 @@ class ConnectorEditModalContent extends Component
                     <FormGroup className="row" key={field.name}>
                         <Label className="col-sm-3">{field.label}</Label>
                         <div className="col-sm-5">
+                            {console.log(field.name)}
                             <Field type={field.type} name={field.name} className="form-control"/> 
                             <ErrorMessage name={field.name} />
                         </div>
