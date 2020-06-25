@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Events\DownloadStarted;
+use Illuminate\Database\Eloquent\Model;
 
 class DownloaderFile extends Model
 {
@@ -68,7 +68,7 @@ class DownloaderFile extends Model
         foreach ($downloaders as $downloader) {
             try {
                 //$download_id = $downloader->download($this->url);
-                $download_id = "abc123";
+                $download_id = 'abc123';
 
                 $params = [
                     'download_client_id' => $downloader->id,
@@ -81,6 +81,7 @@ class DownloaderFile extends Model
                 //$this->updateFromClient();
             } catch (\Exception $e) {
             }
+
             return;
         }
     }

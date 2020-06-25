@@ -7,21 +7,18 @@ trait FillCastArray
     public function fill(array $attributes)
     {
         parent::fill($attributes);
-        $this->createDto(!empty($attributes));
+        $this->createDto(! empty($attributes));
         $this->fillArray($attributes);
     }
 
     protected function createDto($hasAttributes)
     {
-        if (!$hasAttributes)
-        {
+        if (! $hasAttributes) {
             return;
         }
 
-        foreach ($this->casts as $key => $value)
-        {
-            if (is_null($this->$key))
-            {
+        foreach ($this->casts as $key => $value) {
+            if (is_null($this->$key)) {
                 $this->$key = new $value();
             }
         }
