@@ -14,7 +14,7 @@ class TrackedDownload extends Model
         3 => 'Completed',
     ];
 
-    protected $table = 'downloader_files';
+    protected $table = 'tracked_downloads';
     public $timestamps = false;
 
     protected $fillable = [
@@ -67,8 +67,7 @@ class TrackedDownload extends Model
         $downloaders = Downloader::where('enable', true)->get();
         foreach ($downloaders as $downloader) {
             try {
-                //$download_id = $downloader->download($this->url);
-                $download_id = 'abc123';
+                $download_id = $downloader->download($this->url);
 
                 $params = [
                     'download_client_id' => $downloader->id,

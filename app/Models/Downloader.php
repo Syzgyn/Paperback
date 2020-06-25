@@ -61,6 +61,11 @@ class Downloader extends Model
         return self::DOWNLOADER_TYPES;
     }
 
+    public function getEnableAttribute()
+    {
+        return isset($this->attributes['enable']) ? $this->attributes['enable'] : true;
+    }
+
     protected static function booted()
     {
         static::saving(function ($downloader) {
