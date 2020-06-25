@@ -66,7 +66,7 @@ class Indexer extends Model
 
     public function getEnableSearchAttribute()
     {
-        return $this->attributes['enable_search'];
+        return isset($this->attributes['enable_search']) ? $this->attributes['enable_search'] : true;
     }
 
     public function setEnableSearchAttribute($value)

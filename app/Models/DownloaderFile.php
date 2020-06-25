@@ -3,11 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Events\DownloadStarted;
 
 class DownloaderFile extends Model
 {
-    use MoveAttributes;
-
     const STATUS_TEXT = [
         0 => 'Sending to Client',
         1 => 'Downloading',
@@ -15,7 +14,8 @@ class DownloaderFile extends Model
         3 => 'Completed',
     ];
 
-    protected $table = 'issue_downloads';
+    protected $table = 'downloader_files';
+    public $timestamps = false;
 
     protected $fillable = [
         'comic_id',
@@ -34,7 +34,7 @@ class DownloaderFile extends Model
     protected static function booted()
     {
         static::creating(function ($issueDownload) {
-            $issueDownload->data = ['status' => 0];
+            $issueDownload->date = now();
         });
 
         static::created(function ($issueDownload) {
@@ -57,38 +57,6 @@ class DownloaderFile extends Model
         return $this->belongsTo('App\Models\Issue', 'cvid', 'issue_id');
     }
 
-    /*
-        public function getStatusAttribute()
-        {
-            if (!isset($this->data['status']))
-            {
-                return false;
-            }
-
-            return $this->data['status'];
-        }
-
-        public function getPercentCompleteAttribute()
-        {
-            if (!isset($this->data['percentComplete']))
-            {
-                return false;
-            }
-
-            return $this->data['percentComplete'];
-        }
-
-        public function getTimeLeftAttribute()
-        {
-            if (!isset($this->data['timeLeft']))
-            {
-                return false;
-            }
-
-            return $this->data['timeLeft'];
-        }
-        */
-
     public function updateFromClient()
     {
         $client = $this->downloadClient;
@@ -99,20 +67,21 @@ class DownloaderFile extends Model
         $downloaders = Downloader::where('enable', true)->get();
         foreach ($downloaders as $downloader) {
             try {
-                $download_id = $downloader->download($this->url);
+                //$download_id = $downloader->download($this->url);
+                $download_id = "abc123";
 
                 $params = [
                     'download_client_id' => $downloader->id,
                     'download_id' => $download_id,
-                    'status' => 1,
                 ];
 
                 $this->fill($params);
                 $this->save();
+                event(new DownloadStarted($params));
                 //$this->updateFromClient();
             } catch (\Exception $e) {
             }
-            break;
+            return;
         }
     }
 }

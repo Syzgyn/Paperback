@@ -1,4 +1,5 @@
 <?php
+//Found at https://sandulat.com/mapping-json-columns-to-dtos-with-laravels-new-custom-casts/
 
 namespace App\Casts;
 

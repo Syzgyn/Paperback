@@ -2,6 +2,7 @@
 namespace App\Models\Downloaders\Usenet;
 
 use App\Models\Downloader;
+use App\Dto\Downloaders\SabnzbdSettings;
 use App\Repositories\Downloaders\SabnzbdRepository;
 
 use Nanigans\SingleTableInheritance\SingleTableInheritanceTrait;
@@ -24,28 +25,25 @@ class Sabnzbd extends Downloader
         'settings.username',
     ];
 
-    protected $fillableMap = [
-        'apikey' => 'settings.apikey',
-        'url' => 'settings.url',
-        'username' => 'settings.username',
-        'port' => 'settings.port',
+    protected $casts = [
+        'settings' => SabnzbdSettings::class,
     ];
 
     protected $modelSchema = [
         'protocol' => 'usenet',
         'name' => 'SabNZBd',
         'fields' => [
-            'port' => [
+            'settings.port' => [
                 'label' => 'Port',
                 'type' => 'text',
                 'validation' => ['required', 'numeric'],
             ],
-            'apikey' => [
+            'settings.apikey' => [
                 'label' => 'API Key',
                 'type' => 'text',
                 'validation' => ['required', 'alpha_num'],
             ],
-            'username' => [
+            'settings.username' => [
                 'label' => 'Username',
                 'type' => 'text',
                 'validation' => [],

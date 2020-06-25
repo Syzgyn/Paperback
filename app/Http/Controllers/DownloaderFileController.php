@@ -30,7 +30,6 @@ class DownloaderFileController extends Controller
      */
     public function store(DownloaderFileRequest $request)
     {
-        $attrs = $request->validated();
         $downloaderFile = DownloaderFile::create($request->validated());
 
         return new DownloaderFileResource($downloaderFile);

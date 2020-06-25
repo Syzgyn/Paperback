@@ -37,7 +37,7 @@ class Downloader extends Model
                 'type' => 'checkbox',
                 'validation' => ['required', 'bool'],
             ],
-            'url' => [
+            'settings.url' => [
                 'label' => 'Base URL',
                 'type' => 'text',
                 'validation' => ['required', 'string'],
