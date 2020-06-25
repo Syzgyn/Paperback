@@ -3,9 +3,37 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import DOMPurify from 'dompurify'
 import Pluralize from 'react-pluralize'
+import {Button} from 'reactstrap'
 import ComicBadge from '@/Components/ComicBadge'
+import ComicDescriptionModal from './ComicDescriptionModal'
 
 class ComicItem extends Component {
+    constructor() {
+        super();
+        this.state = {
+            modal: false,
+        }
+        this.toggleModal = this.toggleModal.bind(this);
+    }
+
+    toggleModal() {
+        this.setState({modal: !this.state.modal});
+    }
+
+    descriptionModal()
+    {
+        if (this.props.descriptionIsTruncated) {
+            return (
+                <>
+                    <Button onClick={this.toggleModal}>Read More</Button>
+                    <ComicDescriptionModal name={this.props.name} description={this.props.description} toggleModal={this.toggleModal} modal={this.state.modal}/>
+                </>
+            );
+        }
+
+        return null;
+    }
+
     render() {
         const {
                 numIssues, 
@@ -13,7 +41,7 @@ class ComicItem extends Component {
                 publisher,
                 image,
                 name,
-                description,
+                displayDescription,
                 classes,
             } = this.props;
 
@@ -29,8 +57,8 @@ class ComicItem extends Component {
                         </div>
                         <div className="col-12">
                             <div className="comic-description" 
-                                dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(description, { ADD_ATTR: ['target'] })}} >
-                            </div>
+                                dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(displayDescription, { ADD_ATTR: ['target'] })}} />
+                            {this.descriptionModal()}
                         </div>
                     </div>
                     <div className="row">
@@ -56,6 +84,8 @@ ComicItem.propTypes = {
     image: PropTypes.string,
     name: PropTypes.string,
     description: PropTypes.string,
+    displayDescription: PropTypes.string,
+    descriptionIsTruncated: PropTypes.bool,
     inLibrary: PropTypes.bool,
     singleView: PropTypes.bool,
     classes: PropTypes.string,

@@ -31,8 +31,8 @@ class ComicList extends Component {
         if (!comics.length) {
             return(
             <div className="row">
-                <div className="col-md-12">
-                    <h3>There are no comics in your library yet.  <Link to='/add/new'>Add some</Link></h3>
+                <div className="col-md-12 text-center">
+                    <h3>There are no comics in your library yet.  <Link to='/add/new'>Add some</Link>.</h3>
                 </div>
             </div>
             );

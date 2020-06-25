@@ -19,7 +19,7 @@ class CreateHistoriesTable extends Migration
             $table->foreignId('issue_id')->references('cvid')->on('issues')->onDelete('cascade');
             $table->timestamp('date');
             $table->string("file_name");
-            $table->string("download_id");
+            $table->string("download_id")->nullable();
             $table->integer("event_type");
             $table->json("data");
         });

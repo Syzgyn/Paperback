@@ -8,6 +8,10 @@ trait TruncateHtml
     //Slightly modified from https://stackoverflow.com/a/1193598
     public function printTruncated($html, $maxLength, $closingString = '', $isUtf8 = true)
     {
+        if (strlen($html) <= $maxLength) {
+            return $html;
+        }
+
         $output = '';
         $printedLength = 0;
         $position = 0;
@@ -24,7 +28,7 @@ trait TruncateHtml
             // Print text leading up to the tag.
             $str = substr($html, $position, $tagPosition - $position);
             if ($printedLength + strlen($str) > $maxLength) {
-                //$output .= substr($str, 0, $maxLength - $printedLength);
+                $output .= substr($str, 0, $maxLength - $printedLength);
                 $printedLength = $maxLength;
                 break;
             }
@@ -68,13 +72,13 @@ trait TruncateHtml
             $output .= substr($html, $position, $maxLength - $printedLength);
         }
 
+        if ($printedLength == $maxLength) {
+            $output .= $closingString;
+        }
+
         // Close any open tags.
         while (! empty($tags)) {
             $output .= sprintf('</%s>', array_pop($tags));
-        }
-
-        if ($printedLength == $maxLength) {
-            $output .= $closingString;
         }
 
         return $output;

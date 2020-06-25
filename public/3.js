@@ -1,5 +1,99 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[3],{
 
+/***/ "./resources/js/Comic/Details/ComicDescriptionModal.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/Comic/Details/ComicDescriptionModal.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var dompurify__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! dompurify */ "./node_modules/dompurify/dist/purify.js");
+/* harmony import */ var dompurify__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(dompurify__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+
+var ComicDescriptionModal = /*#__PURE__*/function (_Component) {
+  _inherits(ComicDescriptionModal, _Component);
+
+  var _super = _createSuper(ComicDescriptionModal);
+
+  function ComicDescriptionModal() {
+    _classCallCheck(this, ComicDescriptionModal);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(ComicDescriptionModal, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          name = _this$props.name,
+          description = _this$props.description,
+          toggleModal = _this$props.toggleModal,
+          modal = _this$props.modal;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Modal"], {
+        isOpen: modal,
+        toggle: toggleModal,
+        className: "comicDescriptionModal",
+        size: "lg"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["ModalHeader"], null, name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["ModalBody"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "comic-description",
+        dangerouslySetInnerHTML: {
+          __html: dompurify__WEBPACK_IMPORTED_MODULE_2___default.a.sanitize(description, {
+            ADD_ATTR: ['target']
+          })
+        }
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["ModalFooter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
+        color: "secondary",
+        onClick: this.toggleModal
+      }, "Close")));
+    }
+  }]);
+
+  return ComicDescriptionModal;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+ComicDescriptionModal.propTypes = {
+  name: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  description: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  modal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
+  toggleModal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func
+};
+/* harmony default export */ __webpack_exports__["default"] = (ComicDescriptionModal);
+
+/***/ }),
+
 /***/ "./resources/js/Comic/Details/ComicDetails.js":
 /*!****************************************************!*\
   !*** ./resources/js/Comic/Details/ComicDetails.js ***!
@@ -169,7 +263,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var dompurify__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(dompurify__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var react_pluralize__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-pluralize */ "./node_modules/react-pluralize/dist/index.js");
 /* harmony import */ var react_pluralize__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_pluralize__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Components_ComicBadge__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Components/ComicBadge */ "./resources/js/Components/ComicBadge.js");
+/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
+/* harmony import */ var _Components_ComicBadge__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Components/ComicBadge */ "./resources/js/Components/ComicBadge.js");
+/* harmony import */ var _ComicDescriptionModal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ComicDescriptionModal */ "./resources/js/Comic/Details/ComicDescriptionModal.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -199,18 +295,50 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
+
 var ComicItem = /*#__PURE__*/function (_Component) {
   _inherits(ComicItem, _Component);
 
   var _super = _createSuper(ComicItem);
 
   function ComicItem() {
+    var _this;
+
     _classCallCheck(this, ComicItem);
 
-    return _super.apply(this, arguments);
+    _this = _super.call(this);
+    _this.state = {
+      modal: false
+    };
+    _this.toggleModal = _this.toggleModal.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(ComicItem, [{
+    key: "toggleModal",
+    value: function toggleModal() {
+      this.setState({
+        modal: !this.state.modal
+      });
+    }
+  }, {
+    key: "descriptionModal",
+    value: function descriptionModal() {
+      if (this.props.descriptionIsTruncated) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_5__["Button"], {
+          onClick: this.toggleModal
+        }, "Read More"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ComicDescriptionModal__WEBPACK_IMPORTED_MODULE_7__["default"], {
+          name: this.props.name,
+          description: this.props.description,
+          toggleModal: this.toggleModal,
+          modal: this.state.modal
+        }));
+      }
+
+      return null;
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this$props = this.props,
@@ -219,7 +347,7 @@ var ComicItem = /*#__PURE__*/function (_Component) {
           publisher = _this$props.publisher,
           image = _this$props.image,
           name = _this$props.name,
-          description = _this$props.description,
+          displayDescription = _this$props.displayDescription,
           classes = _this$props.classes;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row pb-5 " + classes
@@ -243,18 +371,18 @@ var ComicItem = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comic-description",
         dangerouslySetInnerHTML: {
-          __html: dompurify__WEBPACK_IMPORTED_MODULE_3___default.a.sanitize(description, {
+          __html: dompurify__WEBPACK_IMPORTED_MODULE_3___default.a.sanitize(displayDescription, {
             ADD_ATTR: ['target']
           })
         }
-      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), this.descriptionModal())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-2"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_ComicBadge__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_pluralize__WEBPACK_IMPORTED_MODULE_4___default.a, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_ComicBadge__WEBPACK_IMPORTED_MODULE_6__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_pluralize__WEBPACK_IMPORTED_MODULE_4___default.a, {
         singular: 'issue',
         count: numIssues
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_ComicBadge__WEBPACK_IMPORTED_MODULE_5__["default"], null, publisher)))));
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_ComicBadge__WEBPACK_IMPORTED_MODULE_6__["default"], null, publisher)))));
     }
   }]);
 
@@ -272,6 +400,8 @@ ComicItem.propTypes = {
   image: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   name: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   description: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  displayDescription: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  descriptionIsTruncated: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
   inLibrary: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
   singleView: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
   classes: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
@@ -544,7 +674,6 @@ var IssueItem = /*#__PURE__*/function (_Component) {
       var issue = this.props.issue;
       var issue_num = issue.issue_num,
           displayName = issue.displayName,
-          status = issue.status,
           release_date = issue.release_date,
           cvid = issue.cvid;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {

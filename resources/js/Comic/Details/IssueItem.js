@@ -27,7 +27,6 @@ class IssueItem extends Component
         const {
             issue_num,
             displayName,
-            status,
             release_date,
             cvid,
         } = issue;
