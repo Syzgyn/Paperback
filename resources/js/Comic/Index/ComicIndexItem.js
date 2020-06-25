@@ -14,7 +14,7 @@ class ComicIndexItem extends Component {
                 startYear,
                 image,
                 name,
-                description,
+                displayDescription,
                 classes,
             } = this.props;
 
@@ -35,7 +35,7 @@ class ComicIndexItem extends Component {
                         <div className="col-12">
                             <Link to={"/comic/" + cvid} className="hideLink">
                                 <div className="comic-description" 
-                                    dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(description, { ADD_ATTR: ['target'] })}} >
+                                    dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(displayDescription, { ADD_ATTR: ['target'] })}} >
                                 </div>
                             </Link>
                         </div>

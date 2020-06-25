@@ -190,7 +190,7 @@ var ComicIndexItem = /*#__PURE__*/function (_Component) {
           startYear = _this$props.startYear,
           image = _this$props.image,
           name = _this$props.name,
-          description = _this$props.description,
+          displayDescription = _this$props.displayDescription,
           classes = _this$props.classes;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comic-item row pb-5 " + classes
@@ -222,7 +222,7 @@ var ComicIndexItem = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comic-description",
         dangerouslySetInnerHTML: {
-          __html: dompurify__WEBPACK_IMPORTED_MODULE_3___default.a.sanitize(description, {
+          __html: dompurify__WEBPACK_IMPORTED_MODULE_3___default.a.sanitize(displayDescription, {
             ADD_ATTR: ['target']
           })
         }
