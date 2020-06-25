@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Events\DownloadStarted;
 use Illuminate\Database\Eloquent\Model;
 
-class DownloaderFile extends Model
+class TrackedDownload extends Model
 {
     const STATUS_TEXT = [
         0 => 'Sending to Client',
@@ -33,12 +33,12 @@ class DownloaderFile extends Model
 
     protected static function booted()
     {
-        static::creating(function ($issueDownload) {
-            $issueDownload->date = now();
+        static::creating(function ($trackedDownload) {
+            $trackedDownload->date = now();
         });
 
-        static::created(function ($issueDownload) {
-            $issueDownload->startDownload();
+        static::created(function ($trackedDownload) {
+            $trackedDownload->startDownload();
         });
     }
 

@@ -21,6 +21,7 @@ class CreateDownloaderFilesTable extends Migration
             $table->foreignId('download_client_id')->nullable()->references('id')->on('downloaders');
             $table->string('download_id')->nullable();
             $table->string('url');
+            $table->integer('status')->default(0);
         });
     }
 

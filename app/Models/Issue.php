@@ -39,9 +39,9 @@ class Issue extends Model
         return $this->belongsTo('App\Models\Comic', 'cvid', 'comic_id');
     }
 
-    public function downloadFiles()
+    public function trackedDownloads()
     {
-        return $this->hasMany('App\Models\DownloaderFile', 'issue_id', 'cvid');
+        return $this->hasMany('App\Models\TrackedDownload', 'issue_id', 'cvid');
     }
 
     public function getReleaseDateAttribute()

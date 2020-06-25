@@ -35,8 +35,8 @@ Route::get('downloader/schema', 'DownloaderController@schema');
 Route::post('downloader/test', 'DownloaderController@test');
 Route::apiResource('downloader', 'DownloaderController');
 
-Route::apiResource('downloaderfile', 'DownloaderFileController')->parameters([
-    'downloaderfile' => 'downloaderFile',
+Route::apiResource('trackeddownload', 'TrackedDownloadController')->parameters([
+    'trackeddownload' => 'trackedDownload',
 ]);
 
 Route::get('settings/{category}/{property}', 'SettingsController@property');

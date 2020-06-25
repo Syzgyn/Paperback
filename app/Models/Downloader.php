@@ -46,9 +46,9 @@ class Downloader extends Model
         ],
     ];
 
-    public function files()
+    public function trackedDownloads()
     {
-        return $this->hasMany('App\Models\DownloaderFile');
+        return $this->hasMany('App\Models\TrackedDownload');
     }
 
     public static function getClass(String $type)

@@ -1023,7 +1023,7 @@ var IssueModal = /*#__PURE__*/function (_Component) {
   }, {
     key: "onDownloadClick",
     value: function onDownloadClick(url) {
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/downloaderfile', {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/trackeddownload', {
         url: url,
         comic_id: this.props.issue.comic_id,
         issue_id: this.props.issue.cvid
