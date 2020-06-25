@@ -37,15 +37,15 @@ class DownloaderRequest extends FormRequest
             ],
             'enable' => 'required|boolean',
             'name' => 'required',
-            'apikey' => 'alpha_num',
-            'url' => 'string',
-            'port' => 'numeric',
+            'settings.apikey' => 'alpha_num',
+            'settings.url' => 'string',
+            'settings.port' => 'numeric',
         ];
     }
 
     public function withValidator(Validator $validator)
     {
-        $validator->sometimes(['apikey', 'url', 'port'], 'required', function ($input) {
+        $validator->sometimes(['settings.apikey', 'settings.url', 'settings.port'], 'required', function ($input) {
             return $input->type == 'sabnzbd';
         });
     }

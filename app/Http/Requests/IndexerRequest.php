@@ -36,14 +36,14 @@ class IndexerRequest extends FormRequest
             ],
             'enableSearch' => 'required|boolean',
             'name' => 'required',
-            'apikey' => 'alpha_num',
-            'url' => 'string',
+            'settings.apikey' => 'alpha_num',
+            'settings.url' => 'string',
         ];
     }
 
     public function withValidator($validator)
     {
-        $validator->sometimes(['apikey', 'url'], 'required', function ($input) {
+        $validator->sometimes(['settings.apikey', 'settings.url'], 'required', function ($input) {
             return $input->type == 'newznab';
         });
     }

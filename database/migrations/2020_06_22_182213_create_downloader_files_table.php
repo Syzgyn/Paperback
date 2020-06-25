@@ -15,7 +15,7 @@ class CreateDownloaderFilesTable extends Migration
     {
         Schema::create('downloader_files', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('date');
+            $table->timestamp('date')->useCurrent();
             $table->foreignId('comic_id')->references('cvid')->on('comics')->onDelete('cascade');
             $table->foreignId('issue_id')->references('cvid')->on('issues')->onDelete('cascade');
             $table->foreignId('download_client_id')->nullable()->references('id')->on('downloaders');
