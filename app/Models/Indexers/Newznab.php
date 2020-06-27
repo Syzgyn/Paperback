@@ -4,6 +4,7 @@ namespace App\Models\Indexers;
 use App\Models\Indexer;
 use App\Dto\Indexers\NewznabSettings;
 use App\Repositories\Indexers\NewznabRepository;
+use App\Http\Resources\Indexers\NewznabCollection;
 
 use Nanigans\SingleTableInheritance\SingleTableInheritanceTrait;
 
@@ -56,7 +57,7 @@ class Newznab extends Indexer
             $item['comic_id'] = $comic['cvid'];
         });
 
-        return $result;
+        return new NewznabCollection($result);
     }
 
     protected static function booted()

@@ -8,13 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class TrackedDownload extends Model
 {
-    const STATUS_TEXT = [
-        0 => 'Sending to Client',
-        1 => 'Downloading',
-        2 => 'Processing',
-        3 => 'Completed',
-    ];
-
     protected $table = 'tracked_downloads';
     public $timestamps = false;
 

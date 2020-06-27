@@ -31,6 +31,7 @@ class Newznab extends JsonResource
             'comic_id' => $this->resource['comic_id'],
         ];
 
+        //Cache results for downloading later
         Cache::put(
             Indexer::CACHE_PREFIX . '.' . $guid,
             $arr,

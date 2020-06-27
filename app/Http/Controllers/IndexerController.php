@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests\IndexerRequest;
 use App\Http\Resources\IndexerCollection;
+use App\Http\Resources\IndexerResultCollection;
 use App\Http\Resources\Indexer as IndexerResource;
-use App\Http\Resources\Indexers\NewznabCollection;
 
 class IndexerController extends Controller
 {
@@ -85,10 +85,11 @@ class IndexerController extends Controller
 
         $results = [];
         foreach ($indexers as $indexer) {
-            $results = array_merge($results, $indexer->searchCvid($cvid, $offset));
+            $result = $indexer->searchCvid($cvid, $offset);
+            $results = array_merge($results, $result->resolve());
         }
 
-        return new NewznabCollection($results);
+        return new IndexerResultCollection($results);
     }
 
     public function schema(Request $request, $name = null)
