@@ -35,7 +35,7 @@ class NewznabRepository
 
         $results = $this->makeRequest('', $params);
 
-        if (isset($results['error'])) {
+        if (isset($results['error']) || ! isset($results['channel']['item'])) {
             //TODO: Error handling
             return [];
         }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\DownloadStarted;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 
 class TrackedDownload extends Model
@@ -23,6 +24,11 @@ class TrackedDownload extends Model
         'download_id',
         'download_client_id',
         'url',
+        'source_title',
+    ];
+
+    protected $append = [
+        'source_title',
     ];
 
     protected $casts = [
@@ -40,6 +46,17 @@ class TrackedDownload extends Model
         static::created(function ($trackedDownload) {
             $trackedDownload->startDownload();
         });
+    }
+
+    public static function createFromGuid(array $attrs)
+    {
+        $data = Cache::get(Indexer::CACHE_PREFIX . '.' . $attrs['guid']);
+
+        if ($data) {
+            return self::create($data);
+        }
+
+        return null;
     }
 
     public function downloadClient()
@@ -76,12 +93,14 @@ class TrackedDownload extends Model
 
                 $this->fill($params);
                 $this->save();
-                event(new DownloadStarted($params));
+                event(new DownloadStarted($this));
                 //$this->updateFromClient();
+                return true;
             } catch (\Exception $e) {
+                //TODO: Error handling
             }
-
-            return;
         }
+
+        return false;
     }
 }

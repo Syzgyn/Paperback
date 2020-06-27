@@ -44,13 +44,16 @@ class Newznab extends Indexer
     public function searchCvid($cvid, $offset = 0)
     {
         $query = $this->buildSearchQuery($cvid);
+        $comic = $this->getComic($cvid);
 
         $result = $this->repository->search($query, $offset);
         $source = $this->schema['protocol'] == 'usenet' ? 'nzb' : 'torrent';
 
-        array_walk($result, function (&$item, $key) use ($source) {
+        array_walk($result, function (&$item, $key) use ($source, $cvid, $comic) {
             $item['indexer'] = $this->name;
             $item['source'] = $source;
+            $item['issue_id'] = (int)$cvid;
+            $item['comic_id'] = $comic['cvid'];
         });
 
         return $result;

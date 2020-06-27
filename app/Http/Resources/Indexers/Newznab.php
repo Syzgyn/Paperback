@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\Indexers;
 
+use App\Models\Indexer;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Newznab extends JsonResource
@@ -14,16 +16,35 @@ class Newznab extends JsonResource
      */
     public function toArray($request)
     {
-        return [
+        $guid = $this->getGuidString($this->resource['guid']);
+        $arr = [
+            'guid' => $guid,
             'displayTitle' => $this->cleanupTitle($this->resource['title']),
             'title' => $this->resource['title'],
             'date' => $this->resource['pubDate'],
             'ago' => $this->getTimeAgo($this->resource['pubDate']),
             'size' => $this->formatSize($this->resource['enclosure']['@attributes']['length']),
-            'link' => $this->resource['link'],
+            'url' => $this->resource['link'],
             'indexer' => $this->resource['indexer'],
             'source' => $this->resource['source'],
+            'issue_id' => $this->resource['issue_id'],
+            'comic_id' => $this->resource['comic_id'],
         ];
+
+        Cache::put(
+            Indexer::CACHE_PREFIX . '.' . $guid,
+            $arr,
+            Indexer::CACHE_TIME,
+        );
+
+        return $arr;
+    }
+
+    protected function getGuidString($guidField)
+    {
+        $parts = explode('/', trim($guidField, '/'));
+
+        return array_pop($parts);
     }
 
     protected function formatSize(Int $bytes, $precision = 2)

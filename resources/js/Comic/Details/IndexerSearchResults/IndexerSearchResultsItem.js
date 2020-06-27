@@ -11,7 +11,7 @@ class IndexerSearchResultsItem extends Component
     }
 
     onDownloadClick() {
-        this.props.downloadClick(this.props.item.link); 
+        this.props.downloadClick(this.props.item.guid);
     }
 
     render() {

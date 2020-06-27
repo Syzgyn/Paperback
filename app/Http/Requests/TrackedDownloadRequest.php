@@ -24,9 +24,7 @@ class TrackedDownloadRequest extends FormRequest
     public function rules()
     {
         return [
-            'url' => 'required|url',
-            'comic_id' => 'required|numeric',
-            'issue_id' => 'required|numeric',
+            'guid' => 'required|string',
         ];
     }
 }

@@ -13,7 +13,7 @@ class ComicVineRepository
     const VOLUME_PREFIX = '4050-';
     const ISSUE_PREFIX = '4000-';
 
-    const CACHE_PREFIX = 'comicvine';
+    const CACHE_PREFIX = '.comicvine';
     const CACHE_TIME = 86400; //1 Day
 
     protected $client;

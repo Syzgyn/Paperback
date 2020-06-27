@@ -17,8 +17,8 @@ class CreateHistoryTable extends Migration
             $table->id();
             $table->foreignId('comic_id')->references('cvid')->on('comics')->onDelete('cascade');
             $table->foreignId('issue_id')->references('cvid')->on('issues')->onDelete('cascade');
-            $table->timestamp('date');
-            $table->string("file_name");
+            $table->timestamp('date')->useCurrent();
+            $table->string("source_title");
             $table->string("download_id")->nullable();
             $table->integer("event_type");
             $table->json("data");

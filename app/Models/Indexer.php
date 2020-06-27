@@ -19,6 +19,9 @@ class Indexer extends Model
         'newznab' => \App\Models\Indexers\Newznab::class,
     ];
 
+    const CACHE_PREFIX = '.indexer';
+    const CACHE_TIME = 1800; //30 Min
+
     protected $table = 'indexers';
 
     protected static $singleTableTypeField = 'class';
@@ -83,5 +86,14 @@ class Indexer extends Model
         $year = date('Y', strtotime($releaseDate));
 
         return sprintf('%s %02d %d', $issue['volume']->name, $issue['issue_num'], $year);
+    }
+
+    public function getComic(int $cvid)
+    {
+        $comicvine = resolve('ComicVineRepository');
+        $issue = $comicvine->issue($cvid);
+        $comic = $comicvine->volume($issue['volume']->id);
+
+        return $comic;
     }
 }

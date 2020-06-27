@@ -19,7 +19,7 @@ class History extends Model
         'comic_id',
         'issue_id',
         'date',
-        'file_name',
+        'source_title',
         'download_id',
         'event_type',
     ];

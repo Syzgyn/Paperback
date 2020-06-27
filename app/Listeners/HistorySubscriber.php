@@ -2,6 +2,10 @@
 
 namespace App\Listeners;
 
+use App\Events\DownloadFailed;
+use App\Events\DownloadStarted;
+use App\Events\DownloadImported;
+
 class HistorySubscriber
 {
     /**
@@ -14,21 +18,15 @@ class HistorySubscriber
         //
     }
 
-    /**
-     * Handle the event.
-     *
-     * @param  object  $event
-     * @return void
-     */
-    public function handleDownloadStarted(\App\Events\DownloadStarted $event)
+    public function handleDownloadStarted(DownloadStarted $event)
     {
     }
 
-    public function handleDownloadImported(\App\Events\DownloadImported $event)
+    public function handleDownloadImported(DownloadImported $event)
     {
     }
 
-    public function handleDownloadFailed(\App\Events\DownloadFailed $event)
+    public function handleDownloadFailed(DownloadFailed $event)
     {
     }
 

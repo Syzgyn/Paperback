@@ -30,7 +30,7 @@ class TrackedDownloadController extends Controller
      */
     public function store(TrackedDownloadRequest $request)
     {
-        $trackedDownload = TrackedDownload::create($request->validated());
+        $trackedDownload = TrackedDownload::createFromGuid($request->validated());
 
         return new TrackedDownloadResource($trackedDownload);
     }
