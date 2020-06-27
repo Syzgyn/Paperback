@@ -44,6 +44,8 @@ Route::get('settings/{category}', 'SettingsController@category');
 Route::get('settings', 'SettingsController@index');
 Route::post('settings', 'SettingsController@update');
 
+Route::get('history/issue/{id}', 'HistoryController@issue');
+
 Route::fallback(function () {
     return response()->json([
         'message' => 'Page Not Found.'], 404);

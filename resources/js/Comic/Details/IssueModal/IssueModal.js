@@ -5,6 +5,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import IssueModalMenuBar from './IssueModalMenuBar'
 import DescriptionTab from './DescriptionTab'
 import SearchTab from './SearchTab'
+import HistoryTab from './History/HistoryTab'
 
 class IssueModal extends Component
 {
@@ -90,6 +91,8 @@ class IssueModal extends Component
                     manualClick={this.onManualSearchClick}
                     downloadClick={this.onDownloadClick}
                 />
+            case "history":
+                return <HistoryTab issue={this.props.issue} />
             default:
                 return null
         }

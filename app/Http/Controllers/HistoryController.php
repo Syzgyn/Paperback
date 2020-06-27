@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\History;
 use Illuminate\Http\Request;
+use App\Http\Resources\HistoryCollection;
 
 class HistoryController extends Controller
 {
@@ -14,17 +15,7 @@ class HistoryController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return new HistoryCollection(History::all());
     }
 
     /**
@@ -33,53 +24,10 @@ class HistoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function issue(int $cvid)
     {
-        //
-    }
+        $data = History::where('issue_id', $cvid)->orderBy('date', 'desc')->get();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\History  $history
-     * @return \Illuminate\Http\Response
-     */
-    public function show(History $history)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\History  $history
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(History $history)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\History  $history
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, History $history)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\History  $history
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(History $history)
-    {
-        //
+        return new HistoryCollection($data);
     }
 }

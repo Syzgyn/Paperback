@@ -9,6 +9,10 @@ function IssueModalMenuBar(props) {
             tabName: 'description',
         },
         {
+            text: 'History',
+            tabName: 'history',
+        },
+        {
             text: 'Search',
             tabName: 'search',
         },

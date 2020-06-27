@@ -39,5 +39,10 @@ class History extends Model
 
     protected $casts = [
         'data' => HistoryData::class,
+        'event_type' => 'integer',
+        'comic_id' => 'integer',
+        'issue_id' => 'integer',
+        'date' => 'datetime',
+
     ];
 }
