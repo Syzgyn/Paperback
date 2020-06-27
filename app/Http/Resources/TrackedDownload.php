@@ -17,7 +17,7 @@ class TrackedDownload extends JsonResource
         return [
             'id' => $this->id,
             'date' => $this->date,
-            'url' => $this->url,
+            'guid' => $this->guid,
             'download_id' => $this->download_id,
             'comic_id' => $this->comic_id,
             'issue_id' => $this->issue_id,

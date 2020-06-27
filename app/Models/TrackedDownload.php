@@ -11,14 +11,14 @@ class TrackedDownload extends Model
     protected $table = 'tracked_downloads';
     public $timestamps = false;
 
-    public $guid = null;
+    public $url = null;
 
     protected $fillable = [
         'comic_id',
         'issue_id',
         'download_id',
         'download_client_id',
-        'url',
+        'guid',
     ];
     protected $casts = [
         'comic_id' => 'integer',
@@ -44,7 +44,7 @@ class TrackedDownload extends Model
         if ($data) {
             $model = new self(); 
             $model->fill($data);
-            $model->guid = $guid;
+            $model->url = $data['url'];
             $model->save();
 
             return $model;

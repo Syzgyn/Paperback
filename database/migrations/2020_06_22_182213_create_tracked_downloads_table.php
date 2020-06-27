@@ -20,7 +20,7 @@ class CreateTrackedDownloadsTable extends Migration
             $table->foreignId('issue_id')->references('cvid')->on('issues')->onDelete('cascade');
             $table->foreignId('download_client_id')->nullable()->references('id')->on('downloaders');
             $table->string('download_id')->nullable();
-            $table->string('url');
+            $table->string('guid');
             $table->integer('status')->default(0);
         });
     }
