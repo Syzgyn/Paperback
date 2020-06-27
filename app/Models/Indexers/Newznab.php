@@ -52,6 +52,7 @@ class Newznab extends Indexer
 
         array_walk($result, function (&$item, $key) use ($source, $cvid, $comic) {
             $item['indexer'] = $this->name;
+            $item['indexer_id'] = $this->id;
             $item['source'] = $source;
             $item['issue_id'] = (int)$cvid;
             $item['comic_id'] = $comic['cvid'];

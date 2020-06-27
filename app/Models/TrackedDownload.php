@@ -11,19 +11,15 @@ class TrackedDownload extends Model
     protected $table = 'tracked_downloads';
     public $timestamps = false;
 
+    public $guid = null;
+
     protected $fillable = [
         'comic_id',
         'issue_id',
         'download_id',
         'download_client_id',
         'url',
-        'source_title',
     ];
-
-    protected $append = [
-        'source_title',
-    ];
-
     protected $casts = [
         'comic_id' => 'integer',
         'issue_id' => 'integer',
@@ -41,12 +37,17 @@ class TrackedDownload extends Model
         });
     }
 
-    public static function createFromGuid(array $attrs)
+    public static function createFromGuid(string $guid)
     {
-        $data = Cache::get(Indexer::CACHE_PREFIX . '.' . $attrs['guid']);
+        $data = Cache::get(Indexer::CACHE_PREFIX . '.' . $guid);
 
         if ($data) {
-            return self::create($data);
+            $model = new self(); 
+            $model->fill($data);
+            $model->guid = $guid;
+            $model->save();
+
+            return $model;
         }
 
         return null;
@@ -86,12 +87,12 @@ class TrackedDownload extends Model
 
                 $this->fill($params);
                 $this->save();
-                event(new DownloadStarted($this));
-                //$this->updateFromClient();
-                return true;
             } catch (\Exception $e) {
                 //TODO: Error handling
+                continue;
             }
+            event(new DownloadStarted($this));
+            return true;
         }
 
         return false;

@@ -30,7 +30,14 @@ class TrackedDownloadController extends Controller
      */
     public function store(TrackedDownloadRequest $request)
     {
-        $trackedDownload = TrackedDownload::createFromGuid($request->validated());
+        $attrs = $request->validated();
+
+        $trackedDownload = TrackedDownload::createFromGuid($attrs['guid']);
+
+        if (!$trackedDownload)
+        {
+            return response()->json(['error' => true, 'message' => 'Search results invalidated, please search again']);
+        }
 
         return new TrackedDownloadResource($trackedDownload);
     }

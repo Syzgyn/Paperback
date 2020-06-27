@@ -10,7 +10,7 @@ class DownloadStarted
     public $issue_id;
     public $download_client_id;
     public $download_id;
-    public $source_title;
+    public $guid;
 
     /**
      * Create a new event instance.
@@ -19,6 +19,10 @@ class DownloadStarted
      */
     public function __construct(TrackedDownload $download)
     {
-        $status = $download->downloadClient->getDownloadStatus($download->download_id);
+        $this->comic_id = $download->comic_id;
+        $this->issue_id = $download->issue_id;
+        $this->download_client_id = $download->download_client_id;
+        $this->download_id = $download->download_id;
+        $this->guid = $download->guid;
     }
 }
