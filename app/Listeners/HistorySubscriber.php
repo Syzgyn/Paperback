@@ -2,12 +2,12 @@
 
 namespace App\Listeners;
 
+use App\Models\History;
+use App\Models\Indexer;
 use App\Events\DownloadFailed;
 use App\Events\DownloadStarted;
 use App\Events\DownloadImported;
 use Illuminate\Support\Facades\Cache;
-use App\Models\Indexer;
-use App\Models\History;
 
 class HistorySubscriber
 {
@@ -33,11 +33,11 @@ class HistorySubscriber
             'data' => [
                 'download_client_id' => $event->download_client_id,
                 'indexer' => $indexerResult['indexer'],
-                'indexer_id' =>$indexerResult['indexer_id'],
+                'indexer_id' => $indexerResult['indexer_id'],
                 'publish_date' => $indexerResult['date'],
                 'source' => $indexerResult['source'],
                 'download_url' => $indexerResult['url'],
-                'size' =>$indexerResult['size'],
+                'size' => $indexerResult['size'],
                 'guid' => $event->guid,
             ],
         ];

@@ -2,7 +2,6 @@
 
 namespace App\Casts;
 
-use App\Casts\DTOCast;
 use App\Dto\HistoryData;
 
 final class HistoryDataCast extends DTOCast
@@ -12,4 +11,3 @@ final class HistoryDataCast extends DTOCast
         return HistoryData::class;
     }
 }
-

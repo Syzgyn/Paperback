@@ -42,7 +42,7 @@ class TrackedDownload extends Model
         $data = Cache::get(Indexer::CACHE_PREFIX . '.' . $guid);
 
         if ($data) {
-            $model = new self(); 
+            $model = new self();
             $model->fill($data);
             $model->url = $data['url'];
             $model->save();
@@ -92,6 +92,7 @@ class TrackedDownload extends Model
                 continue;
             }
             event(new DownloadStarted($this));
+
             return true;
         }
 

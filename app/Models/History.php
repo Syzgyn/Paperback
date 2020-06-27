@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Dto\HistoryData;
 use App\Traits\FillCastArray;
+use Illuminate\Database\Eloquent\Model;
 
 class History extends Model
 {

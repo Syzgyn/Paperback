@@ -34,8 +34,7 @@ class TrackedDownloadController extends Controller
 
         $trackedDownload = TrackedDownload::createFromGuid($attrs['guid']);
 
-        if (!$trackedDownload)
-        {
+        if (! $trackedDownload) {
             return response()->json(['error' => true, 'message' => 'Search results invalidated, please search again']);
         }
 

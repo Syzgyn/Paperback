@@ -25,6 +25,7 @@ class History extends JsonResource
     protected function formatDate($datetime)
     {
         $dt = new \DateTime($datetime);
+
         return $dt->format('l, F jS g:ia');
     }
 
@@ -38,7 +39,7 @@ class History extends JsonResource
         $diff->w = floor($diff->d / 7);
         $diff->d -= $diff->w * 7;
 
-        $string = array(
+        $string = [
             'y' => 'year',
             'm' => 'month',
             'w' => 'week',
@@ -46,7 +47,7 @@ class History extends JsonResource
             'h' => 'hour',
             'i' => 'minute',
             's' => 'second',
-        );
+        ];
         foreach ($string as $k => &$v) {
             if ($diff->$k) {
                 $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
@@ -56,6 +57,7 @@ class History extends JsonResource
         }
 
         $string = array_slice($string, 0, 1);
+
         return $string ? implode(', ', $string) . ' ago' : 'just now';
     }
 }

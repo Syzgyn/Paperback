@@ -22,4 +22,3 @@ final class HistoryData extends DataTransferObject implements Castable
         return HistoryDataCast::class;
     }
 }
-
