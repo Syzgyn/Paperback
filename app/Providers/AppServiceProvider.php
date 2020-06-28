@@ -3,10 +3,10 @@
 namespace App\Providers;
 
 use GuzzleHttp\Client;
+use App\Services\FileManager;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\ComicVineRepository;
 use App\Repositories\AppSettingsRepository;
-use App\Services\FileManager;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
     public $singletons = [
         'ComicVineRepository' => ComicVineRepository::class,
         'AppSettings' => AppSettingsRepository::class,
-        'FileManager' => FileManager::class, 
+        'FileManager' => FileManager::class,
     ];
 
     /**

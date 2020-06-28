@@ -90,8 +90,7 @@ class SabnzbdRepository
 
     public function history($params = [], $force = false)
     {
-        if (!isset($this->history) || $force)
-        {
+        if (! isset($this->history) || $force) {
             $this->history = $this->makeRequest('history', $params);
         }
 
@@ -100,8 +99,7 @@ class SabnzbdRepository
 
     public function queue($params = [], $force = false)
     {
-        if (!isset($this->queue) || $force)
-        {
+        if (! isset($this->queue) || $force) {
             $this->queue = $this->makeRequest('queue', $params);
         }
 

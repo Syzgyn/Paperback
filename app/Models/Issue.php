@@ -89,7 +89,7 @@ class Issue extends Model
 
     public function getFileNameAttribute()
     {
-        return sprintf("%s %03d", $this->comic->name, $this->issue_num);
+        return sprintf('%s %03d', $this->comic->name, $this->issue_num);
     }
 
     public function getFullFileNameAttribute()
@@ -99,13 +99,11 @@ class Issue extends Model
 
     public function getStatusAttribute()
     {
-        if ($this->downloadedFile)
-        {
+        if ($this->downloadedFile) {
             return 'downloaded';
         }
 
-        if (count($this->activeDownloads) > 0)
-        {
+        if (count($this->activeDownloads) > 0) {
             'downloading';
         }
 

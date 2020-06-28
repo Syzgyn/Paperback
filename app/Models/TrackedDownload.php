@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Events\DownloadStarted;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
 
 class TrackedDownload extends Model
@@ -81,8 +80,7 @@ class TrackedDownload extends Model
 
     public function getDownloadDataAttribute()
     {
-        if (!isset($this->pulledDownloadData))
-        {
+        if (! isset($this->pulledDownloadData)) {
             $this->pulledDownloadData = $this->downloadClient->getDownload($this->download_id);
         }
 
@@ -93,8 +91,7 @@ class TrackedDownload extends Model
     {
         $status = $this->downloadData['status'];
 
-        if (array_key_exists($status, self::DOWNLOAD_STATUS))
-        {
+        if (array_key_exists($status, self::DOWNLOAD_STATUS)) {
             $this->status = self::DOWNLOAD_STATUS[$status];
             $this->save();
         }
@@ -102,11 +99,10 @@ class TrackedDownload extends Model
 
     public function getCompletedFilePath()
     {
-        if ($this->status !== self::DOWNLOAD_STATUS["Completed"])
-        {
+        if ($this->status !== self::DOWNLOAD_STATUS['Completed']) {
             return null;
         }
-        
+
         return $this->downloadData['storage'];
     }
 

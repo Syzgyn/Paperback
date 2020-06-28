@@ -47,7 +47,7 @@ class Comic extends Model
 
     public function getDirectoryNameAttribute()
     {
-        return sprintf("%s (%d)", $this->name, $this->start_year);
+        return sprintf('%s (%d)', $this->name, $this->start_year);
     }
 
     public function getFullDirectoryNameAttribute()
