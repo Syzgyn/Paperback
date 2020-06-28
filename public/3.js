@@ -673,7 +673,7 @@ var IssueItem = /*#__PURE__*/function (_Component) {
     value: function render() {
       var issue = this.props.issue;
       var issue_num = issue.issue_num,
-          displayName = issue.displayName,
+          display_name = issue.display_name,
           release_date = issue.release_date,
           cvid = issue.cvid;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
@@ -683,7 +683,7 @@ var IssueItem = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "btn-link cursor-pointer",
         onClick: this.clickName
-      }, displayName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+      }, display_name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "issue-release-date-cell"
       }, release_date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "issue-status-cell"
@@ -1770,23 +1770,37 @@ var IssueStatus = /*#__PURE__*/function (_Component) {
       }, "Issue missing from disk"));
     }
   }, {
+    key: "renderDownloading",
+    value: function renderDownloading() {
+      var id = 'status-' + this.props.issue.cvid;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_2__["DownloadCloud"], {
+        id: id
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["UncontrolledTooltip"], {
+        placement: "top",
+        target: id
+      }, "Downloading (Replace with Status bar)"));
+    }
+  }, {
     key: "renderDownloaded",
     value: function renderDownloaded() {
       var id = "status-" + this.props.issue.cvid;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_2__["File"], {
         id: id
-      }, "Downloaded"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["UncontrolledTooltip"], {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["UncontrolledTooltip"], {
         placement: "top",
         target: id
-      }, "Issue Downloaded"));
+      }, "Issue Downloaded - ", this.props.issue.downloaded_file.readable_size));
     }
   }, {
     key: "render",
     value: function render() {
-      switch (this.props.status) {
+      switch (this.props.issue.status) {
         case null:
         case 'missing':
           return this.renderMissing();
+
+        case 'downloading':
+          return this.renderDownloading();
 
         case 'downloaded':
           return this.renderDownloaded();

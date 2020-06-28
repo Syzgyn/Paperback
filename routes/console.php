@@ -21,8 +21,9 @@ Artisan::command('inspire', function () {
 })->describe('Display an inspiring quote');
 
 Artisan::command('paperback:check-downloads', function() {
-    foreach(TrackedDownload::all() as $download)
+    foreach(TrackedDownload::where('status', '!=', TrackedDownload::DOWNLOAD_STATUS['Completed'])->get() as $download)
     {
         $download->updateFromClient();
     }
+    resolve('FileManager')->moveCompletedDownloads();
 })->describe('Check for recently completed downloads');

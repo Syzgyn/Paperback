@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { AlertTriangle } from 'react-feather'
+import { File, AlertTriangle, DownloadCloud } from 'react-feather'
 import {UncontrolledTooltip} from 'reactstrap'
 
 class IssueStatus extends Component
@@ -17,23 +17,37 @@ class IssueStatus extends Component
         )
     }
 
+    renderDownloading() {
+        let id = 'status-' + this.props.issue.cvid;
+        return (
+            <>
+                <DownloadCloud id={id} />
+                <UncontrolledTooltip placement="top" target={id}>
+                    Downloading (Replace with Status bar)
+                </UncontrolledTooltip>
+            </>
+        );
+    }
+
     renderDownloaded() {
         let id = "status-" + this.props.issue.cvid;
         return (
             <>
-                <span id={id}>Downloaded</span>
+                <File id={id} />
                 <UncontrolledTooltip placement="top" target={id}>
-                    Issue Downloaded 
+                    Issue Downloaded - {this.props.issue.downloaded_file.readable_size}
                 </UncontrolledTooltip>
             </>
         );
     }
 
     render() {
-        switch(this.props.status) {
+        switch(this.props.issue.status) {
             case null:
             case 'missing':
                 return this.renderMissing();
+            case 'downloading':
+                return this.renderDownloading();
             case 'downloaded':
                 return this.renderDownloaded();
             default:

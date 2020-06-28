@@ -30,6 +30,11 @@ class Comic extends Model
         return $this->hasMany('App\Models\Issue', 'comic_id', 'cvid')->orderBy('issue_num', 'DESC');
     }
 
+    public function issueFiles()
+    {
+        return $this->hasMany('App\Models\IssueFile', 'comic_id', 'cvid');
+    }
+
     public function getDownloadedIssuesCountAttribute()
     {
         return $this->issues()->where('status', 'downloaded')->count();
@@ -38,6 +43,18 @@ class Comic extends Model
     public function getImageAttribute()
     {
         return asset('/storage/covers/' . $this->cvid . '.jpg');
+    }
+
+    public function getDirectoryNameAttribute()
+    {
+        return sprintf("%s (%d)", $this->name, $this->start_year);
+    }
+
+    public function getFullDirectoryNameAttribute()
+    {
+        $baseDir = resolve('AppSettings')->get('general', 'destination_dir');
+
+        return $baseDir . DIRECTORY_SEPARATOR . $this->folderName;
     }
 
     public static function createFromCvid($cvid, $grabImage = true, $searchIssues = false)

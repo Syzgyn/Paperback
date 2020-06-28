@@ -26,7 +26,7 @@ class IssueItem extends Component
 
         const {
             issue_num,
-            displayName,
+            display_name,
             release_date,
             cvid,
         } = issue;
@@ -34,7 +34,7 @@ class IssueItem extends Component
         return (
             <tr>
                 <td className="issue-number-cell">{issue_num}</td>
-                <td className="issue-name-cell"><span className="btn-link cursor-pointer" onClick={this.clickName}>{displayName}</span></td>
+                <td className="issue-name-cell"><span className="btn-link cursor-pointer" onClick={this.clickName}>{display_name}</span></td>
                 <td className="issue-release-date-cell">{release_date}</td>
                 <td className="issue-status-cell"><IssueStatus issue={issue} /></td>
                 <td className="issue-search-cell"><IssueSearchButtons cvid={cvid} clickCallback={this.onSearchClick}/></td> 

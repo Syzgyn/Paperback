@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class TrackedDownload extends Model
 {
+    const DOWNLOAD_STATUS = [
+        'Pending' => 0,
+        'Downloading' => 1,
+        'Completed' => 2,
+        'Failed' => 3,
+    ];
+
     protected $table = 'tracked_downloads';
     public $timestamps = false;
 
@@ -26,12 +33,14 @@ class TrackedDownload extends Model
         'comic_id' => 'integer',
         'issue_id' => 'integer',
         'download_client_id' => 'integer',
+        'status' => 'integer',
     ];
 
     protected static function booted()
     {
         static::creating(function ($trackedDownload) {
             $trackedDownload->date = now();
+            $trackedDownload->status = static::DOWNLOAD_STATUS['Pending'];
         });
 
         static::created(function ($trackedDownload) {
@@ -62,12 +71,12 @@ class TrackedDownload extends Model
 
     public function comic()
     {
-        return $this->belongsTo('App\Models\Comic', 'cvid', 'comic_id');
+        return $this->belongsTo('App\Models\Comic', 'comic_id', 'cvid');
     }
 
     public function issue()
     {
-        return $this->belongsTo('App\Models\Issue', 'cvid', 'issue_id');
+        return $this->belongsTo('App\Models\Issue', 'issue_id', 'cvid');
     }
 
     public function getDownloadDataAttribute()
@@ -82,16 +91,23 @@ class TrackedDownload extends Model
 
     public function updateFromClient()
     {
-        if ($this->downloadData['status'] === 'Completed')
+        $status = $this->downloadData['status'];
+
+        if (array_key_exists($status, self::DOWNLOAD_STATUS))
         {
-            //Log::info("{$this->download_id} found as completed download");
-            $this->complete();
+            $this->status = self::DOWNLOAD_STATUS[$status];
+            $this->save();
         }
     }
 
-    protected function complete()
+    public function getCompletedFilePath()
     {
-        //Log::debug($this->downloadData);
+        if ($this->status !== self::DOWNLOAD_STATUS["Completed"])
+        {
+            return null;
+        }
+        
+        return $this->downloadData['storage'];
     }
 
     public function startDownload()

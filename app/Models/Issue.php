@@ -24,24 +24,44 @@ class Issue extends Model
         'name',
     ];
 
-    protected $appends = [
-        'displayName',
-    ];
-
     protected $casts = [
         'issue_num' => 'integer',
         'cvid' => 'integer',
         'comic_id' => 'integer',
     ];
 
+    protected $appends = [
+        'display_name',
+    ];
+
+    protected $with = [
+        'comic',
+        'downloadedFile',
+        'trackedDownloads',
+    ];
+
     public function comic()
     {
-        return $this->belongsTo('App\Models\Comic', 'cvid', 'comic_id');
+        return $this->belongsTo('App\Models\Comic', 'comic_id', 'cvid');
+    }
+
+    public function downloadedFile()
+    {
+        return $this->hasOne('App\Models\IssueFile', 'issue_id', 'cvid');
     }
 
     public function trackedDownloads()
     {
         return $this->hasMany('App\Models\TrackedDownload', 'issue_id', 'cvid');
+    }
+
+    public function getActiveDownloadsAttribute()
+    {
+        return $this->trackedDownloads()
+            ->whereIn('status', [
+                TrackedDownload::DOWNLOAD_STATUS['Pending'],
+                TrackedDownload::DOWNLOAD_STATUS['Downloading'],
+            ])->get();
     }
 
     public function getReleaseDateAttribute()
@@ -65,6 +85,31 @@ class Issue extends Model
             'target="_blank" href="' . self::CV_URL_BASE,
             $this->attributes['description']
         );
+    }
+
+    public function getFileNameAttribute()
+    {
+        return sprintf("%s %03d", $this->comic->name, $this->issue_num);
+    }
+
+    public function getFullFileNameAttribute()
+    {
+        return $this->comic->fullDirectoryName . DIRECTORY_SEPARATOR . $this->fileName;
+    }
+
+    public function getStatusAttribute()
+    {
+        if ($this->downloadedFile)
+        {
+            return 'downloaded';
+        }
+
+        if (count($this->activeDownloads) > 0)
+        {
+            'downloading';
+        }
+
+        return 'missing';
     }
 
     public static function createFromCvid()

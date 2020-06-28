@@ -22,7 +22,6 @@ class CreateIssuesTable extends Migration
             $table->string('name')->nullable();
             $table->text('description');
             $table->string('url');
-            $table->string('status')->nullable();
 
             $table->primary('cvid');
         });
