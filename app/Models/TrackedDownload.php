@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Events\DownloadStarted;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
 
 class TrackedDownload extends Model
@@ -12,6 +13,7 @@ class TrackedDownload extends Model
     public $timestamps = false;
 
     public $url = null;
+    protected $pulledDownloadData;
 
     protected $fillable = [
         'comic_id',
@@ -68,9 +70,28 @@ class TrackedDownload extends Model
         return $this->belongsTo('App\Models\Issue', 'cvid', 'issue_id');
     }
 
+    public function getDownloadDataAttribute()
+    {
+        if (!isset($this->pulledDownloadData))
+        {
+            $this->pulledDownloadData = $this->downloadClient->getDownload($this->download_id);
+        }
+
+        return $this->pulledDownloadData;
+    }
+
     public function updateFromClient()
     {
-        $client = $this->downloadClient;
+        if ($this->downloadData['status'] === 'Completed')
+        {
+            //Log::info("{$this->download_id} found as completed download");
+            $this->complete();
+        }
+    }
+
+    protected function complete()
+    {
+        //Log::debug($this->downloadData);
     }
 
     public function startDownload()

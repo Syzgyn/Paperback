@@ -11,6 +11,9 @@ class SabnzbdRepository
     protected $client;
     protected $apikey;
 
+    protected $queue;
+    protected $history;
+
     public function __construct(Sabnzbd $downloader)
     {
         $settings = $downloader->settings;
@@ -85,17 +88,27 @@ class SabnzbdRepository
         return $this->makeRequest('addurl', ['name' => $link]);
     }
 
-    public function history($params = [])
+    public function history($params = [], $force = false)
     {
-        return $this->makeRequest('history', $params);
+        if (!isset($this->history) || $force)
+        {
+            $this->history = $this->makeRequest('history', $params);
+        }
+
+        return $this->history;
     }
 
-    public function queue($params = [])
+    public function queue($params = [], $force = false)
     {
-        return $this->makeRequest('queue', $params);
+        if (!isset($this->queue) || $force)
+        {
+            $this->queue = $this->makeRequest('queue', $params);
+        }
+
+        return $this->queue;
     }
 
-    public function getDownloadStatus($nzoId)
+    public function getDownloadInfo($nzoId)
     {
         $queue = $this->queue();
 

@@ -77,9 +77,9 @@ class Sabnzbd extends Downloader
         return $response['nzo_ids'][0];
     }
 
-    public function getDownloadStatus($nzoId)
+    public function getDownload($nzoId)
     {
-        return $this->repository->getDownloadStatus($nzoId);
+        return $this->repository->getDownloadInfo($nzoId);
     }
 
     public function getRepository()
