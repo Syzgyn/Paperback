@@ -11,6 +11,7 @@ class IssueList extends Component
             <table className="table">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>#</th>
                         <th>Name</th>
                         <th>Release Date</th>

@@ -23,6 +23,7 @@ class Issue extends JsonResource
             'url' => $this->url,
             'cvid' => $this->cvid,
             'trackedDownloads' => $this->trackedDownloads,
+            'monitored' => $this->monitored,
         ];
     }
 

@@ -60,8 +60,10 @@ class ComicController extends Controller
      */
     public function update(Request $request, Comic $comic)
     {
-        $comic->fill($request->validate());
-        $comic - save();
+        $comic->fill($request->validate([
+            'monitored' => 'boolean',
+        ]));
+        $comic->save();
 
         return new ComicResource($comic);
     }

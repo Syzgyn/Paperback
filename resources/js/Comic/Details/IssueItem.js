@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import IssueStatus from './IssueStatus'
 import IssueSearchButtons from './IssueSearchButtons'
+import MonitoredIcon from '@/Components/MonitoredIcon'
 
 class IssueItem extends Component
 {
@@ -29,10 +30,12 @@ class IssueItem extends Component
             display_name,
             release_date,
             cvid,
+            monitored,
         } = issue;
 
         return (
             <tr>
+                <td className="issue-monitor-cell"><MonitoredIcon itemType='issue' cvid={cvid} isMonitored={monitored} /></td>
                 <td className="issue-number-cell">{issue_num}</td>
                 <td className="issue-name-cell"><span className="btn-link cursor-pointer" onClick={this.clickName}>{display_name}</span></td>
                 <td className="issue-release-date-cell">{release_date}</td>

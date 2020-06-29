@@ -10978,6 +10978,10 @@ span.comic-publisher {
   font-size: 1em;
 }
 
+td.issue-monitor-cell {
+  width: 40px;
+}
+
 td.issue-number-cell {
   width: 40px;
 }

@@ -18,6 +18,7 @@ class Issue extends Model
         'release_date',
         'url',
         'cvid',
+        'monitored',
     ];
 
     protected $hidden = [
@@ -28,6 +29,7 @@ class Issue extends Model
         'issue_num' => 'integer',
         'cvid' => 'integer',
         'comic_id' => 'integer',
+        'monitored' => 'boolean',
     ];
 
     protected $appends = [

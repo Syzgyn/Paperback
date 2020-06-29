@@ -17,12 +17,14 @@ class Comic extends Model
         'start_year',
         'url',
         'cvid',
+        'monitored',
     ];
 
     protected $casts = [
         'cvid' => 'integer',
         'start_year' => 'integer',
         'downloadedIssuesCount' => 'integer',
+        'monitored' => 'boolean',
     ];
 
     public function issues()
@@ -117,6 +119,12 @@ class Comic extends Model
     {
         static::created(function ($comic) {
             $comic->fetchIssues();
+        });
+
+        static::saving(function ($comic) {
+            if ($comic->isDirty('monitored')) {
+                $comic->issues()->update(['monitored' => $comic->monitored]);
+            }
         });
     }
 }

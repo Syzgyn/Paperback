@@ -34,6 +34,7 @@ class Comic extends JsonResource
             'issues' => $this->issues,
             'numIssues' => count($this->issues),
             'downloadedIssues' => $this->downloadedIssuesCount,
+            'monitored' => $this->monitored,
         ];
     }
 

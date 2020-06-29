@@ -55,8 +55,10 @@ class IssueController extends Controller
      */
     public function update(Request $request, Issue $issue)
     {
-        $issue->fill($request->validate());
-        $issue - save();
+        $issue->fill($request->validate([
+            'monitored' => 'boolean',
+        ]));
+        $issue->save();
 
         return new IssueResource($issue);
     }

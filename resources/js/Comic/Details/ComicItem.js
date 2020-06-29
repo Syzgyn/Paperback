@@ -6,6 +6,7 @@ import Pluralize from 'react-pluralize'
 import {Button} from 'reactstrap'
 import ComicBadge from '@/Components/ComicBadge'
 import ComicDescriptionModal from './ComicDescriptionModal'
+import MonitoredIcon from '@/Components/MonitoredIcon'
 
 class ComicItem extends Component {
     constructor() {
@@ -53,7 +54,10 @@ class ComicItem extends Component {
                 <div className="col-md-10 col-sm-9">
                     <div className="row">
                         <div className="col-12 pb-1">
-                            <span className="h2 mr-2">{name} <span className="comic-year">({startYear})</span></span>
+                            <span>
+                                <MonitoredIcon itemType='comic' cvid={this.props.cvid} isMonitored={this.props.monitored} />
+                                <span className="h2 mr-2">{name} <span className="comic-year">({startYear})</span></span>
+                            </span>
                         </div>
                         <div className="col-12">
                             <div className="comic-description" 
