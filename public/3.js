@@ -76,7 +76,7 @@ var ComicDescriptionModal = /*#__PURE__*/function (_Component) {
         }
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["ModalFooter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
         color: "secondary",
-        onClick: this.toggleModal
+        onClick: toggleModal
       }, "Close")));
     }
   }]);

@@ -21,7 +21,7 @@ class ComicDescriptionModal extends Component
                         dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(description, { ADD_ATTR: ['target'] })}} />
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="secondary" onClick={this.toggleModal}>Close</Button>
+                    <Button color="secondary" onClick={toggleModal}>Close</Button>
                 </ModalFooter>
             </Modal>
         );
