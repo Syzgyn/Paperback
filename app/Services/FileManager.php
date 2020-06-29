@@ -37,9 +37,9 @@ class FileManager
 
         if (count($files) === 0) {
             if (! is_dir($downloadPath)) {
-                Log::error("Attmpted to look for files in $downloadPath, but no such directory exists");
+                Log::error("Attmpted to look for files in $downloadPath, but it doesn't exist");
             } else {
-                Log::debug("No files found in $downloadPath");
+                Log::debug("No comic archives found in $downloadPath");
             }
 
             $download->delete();
@@ -62,13 +62,22 @@ class FileManager
             'original_file_path' => $downloadedFile,
         ]);
 
-        $this->removeDir($downloadPath);
+        if (is_dir($downloadPath))
+        {
+            $this->removeDir($downloadPath);
+        }
         $download->delete();
     }
 
     protected function getComicsInFolder($path)
     {
         if (! is_dir($path)) {
+            //Check if path is the file itself
+            if ($this->checkFileType($path))
+            {
+                return [$path];
+            }
+
             return [];
         }
 
@@ -80,14 +89,23 @@ class FileManager
                 continue;
             }
 
-            $info = pathinfo($path . DIRECTORY_SEPARATOR . $file);
-            $extension = pathinfo($path . DIRECTORY_SEPARATOR . $file, PATHINFO_EXTENSION);
-            if (in_array($extension, self::FILETYPES)) {
-                $results[] = $path . DIRECTORY_SEPARATOR . $file;
+            if ($goodPath = $this->checkFileType($path . DIRECTORY_SEPARATOR . $file))
+            {
+                $results[] = $goodPath;
             }
         }
 
         return $results;
+    }
+
+    protected function checkFileType($path)
+    {
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
+        if (in_array($extension, self::FILETYPES) && file_exists($path)) {
+            return $path;
+        }
+
+        return null;
     }
 
     protected function getOrCreateComicDir(Comic $comic)

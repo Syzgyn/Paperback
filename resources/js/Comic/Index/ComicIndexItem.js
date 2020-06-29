@@ -21,7 +21,9 @@ class ComicIndexItem extends Component {
         return (
             <div className={"comic-item row pb-5 " + classes}>
                 <div className="col-md-2 col-sm-3">
-                    <img className="cover-image" src={image} />
+                    <Link to={"/comic/" + cvid} className="hideLink">
+                        <img className="cover-image" src={image} />
+                    </Link>
                 </div>
                 <div className="col-md-10 col-sm-9">
                     <div className="row">

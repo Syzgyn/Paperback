@@ -56,7 +56,7 @@ class Comic extends Model
     {
         $baseDir = resolve('AppSettings')->get('general', 'destination_dir');
 
-        return $baseDir . DIRECTORY_SEPARATOR . $this->folderName;
+        return $baseDir . DIRECTORY_SEPARATOR . $this->directoryName;
     }
 
     public static function createFromCvid($cvid, $grabImage = true, $searchIssues = false)

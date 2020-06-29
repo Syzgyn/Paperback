@@ -85,7 +85,14 @@ class Indexer extends Model
         $releaseDate = $issue['release_date'];
         $year = date('Y', strtotime($releaseDate));
 
-        return sprintf('%s %02d %d', $issue['volume']->name, $issue['issue_num'], $year);
+        $formatString = '%s %02d %d';
+
+        if ($issue['issue_num'] === 0)
+        {
+            $formatString = '%s %03d %d';
+        }
+
+        return sprintf($formatString, $issue['volume']->name, $issue['issue_num'], $year);
     }
 
     public function getComic(int $cvid)
