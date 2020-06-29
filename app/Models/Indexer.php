@@ -87,8 +87,7 @@ class Indexer extends Model
 
         $formatString = '%s %02d %d';
 
-        if ($issue['issue_num'] === 0)
-        {
+        if ($issue['issue_num'] === 0) {
             $formatString = '%s %03d %d';
         }
 

@@ -20,13 +20,11 @@ class Comic extends JsonResource
      */
     public function toArray($request)
     {
-        $shortDesc = $this->processDescription($this->description);
-
         return [
             'name' => $this->name,
-            'displayDescription' => $shortDesc,
+            'displayDescription' => $this->truncatedDescription,
             'description' => $this->description,
-            'descriptionIsTruncated' => $this->description !== $shortDesc,
+            'descriptionIsTruncated' => $this->description !== $this->truncatedDescription,
             'startYear' => $this->start_year,
             'url' => $this->url,
             'cvid' => $this->cvid,
@@ -36,18 +34,5 @@ class Comic extends JsonResource
             'downloadedIssues' => $this->downloadedIssuesCount,
             'monitored' => $this->monitored,
         ];
-    }
-
-    protected function processDescription($text)
-    {
-        $text = $this->printTruncated($text, self::MAX_LENGTH, '...');
-
-        $text = preg_replace(
-            '/href\=\"\//',
-            'target="_blank" href="' . self::URL_BASE,
-            $text
-        );
-
-        return $text;
     }
 }

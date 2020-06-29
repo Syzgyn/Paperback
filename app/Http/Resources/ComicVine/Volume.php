@@ -4,11 +4,13 @@ namespace App\Http\Resources\ComicVine;
 
 use App\Models\Comic;
 use App\Traits\TruncateHtml;
+use App\Traits\ChangeComicLinks;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Volume extends JsonResource
 {
     use TruncateHtml;
+    use ChangeComicLinks;
 
     const URL_BASE = 'https://comicvine.gamespot.com/';
     const MAX_LENGTH = 600;
@@ -37,13 +39,9 @@ class Volume extends JsonResource
 
     protected function processDescription($text)
     {
-        $text = $this->printTruncated($text, self::MAX_LENGTH, "... <a target=\"_blank\" href='" . $this->resource->site_detail_url . "'>Read More</a>");
+        $text = $this->truncateHtml($text, self::MAX_LENGTH, "... <a target=\"_blank\" href='" . $this->resource->site_detail_url . "'>Read More</a>");
 
-        $text = preg_replace(
-            '/href\=\"\//',
-            'target="_blank" href="' . self::URL_BASE,
-            $text
-        );
+        $text = $this->changeComicLinks($text);
 
         return $text;
     }

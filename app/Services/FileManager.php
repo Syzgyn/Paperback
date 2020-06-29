@@ -62,8 +62,7 @@ class FileManager
             'original_file_path' => $downloadedFile,
         ]);
 
-        if (is_dir($downloadPath))
-        {
+        if (is_dir($downloadPath)) {
             $this->removeDir($downloadPath);
         }
         $download->delete();
@@ -73,8 +72,7 @@ class FileManager
     {
         if (! is_dir($path)) {
             //Check if path is the file itself
-            if ($this->checkFileType($path))
-            {
+            if ($this->checkFileType($path)) {
                 return [$path];
             }
 
@@ -89,8 +87,7 @@ class FileManager
                 continue;
             }
 
-            if ($goodPath = $this->checkFileType($path . DIRECTORY_SEPARATOR . $file))
-            {
+            if ($goodPath = $this->checkFileType($path . DIRECTORY_SEPARATOR . $file)) {
                 $results[] = $goodPath;
             }
         }

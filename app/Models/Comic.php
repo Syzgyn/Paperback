@@ -2,12 +2,18 @@
 
 namespace App\Models;
 
+use App\Traits\TruncateHtml;
+use App\Traits\ChangeComicLinks;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class Comic extends Model
 {
+    use TruncateHtml;
+    use ChangeComicLinks;
+
     const IMAGE_KEY = 'small_url';
+    const TRUNCATE_LENGTH = 600;
 
     public $primaryKey = 'cvid';
     public $incrementing = false;
@@ -126,5 +132,15 @@ class Comic extends Model
                 $comic->issues()->update(['monitored' => $comic->monitored]);
             }
         });
+    }
+
+    public function getDescriptionAttribute()
+    {
+        return $this->changeComicLinks($this->attributes['description']);
+    }
+
+    public function getTruncatedDescriptionAttribute()
+    {
+        return $this->truncateHtml($this->description, self::TRUNCATE_LENGTH, '...');
     }
 }

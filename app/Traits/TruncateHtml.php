@@ -6,7 +6,7 @@ trait TruncateHtml
 {
 
     //Slightly modified from https://stackoverflow.com/a/1193598
-    public function printTruncated($html, $maxLength, $closingString = '', $isUtf8 = true)
+    public function truncateHtml($html, $maxLength, $closingString = '', $isUtf8 = true)
     {
         if (strlen($html) <= $maxLength) {
             return $html;
