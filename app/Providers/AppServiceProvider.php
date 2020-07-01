@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use GuzzleHttp\Client;
 use App\Services\FileManager;
+use App\Services\ParserService;
+use App\Services\DownloadService;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\ComicVineRepository;
 use App\Repositories\AppSettingsRepository;
@@ -16,6 +18,8 @@ class AppServiceProvider extends ServiceProvider
         'ComicVineRepository' => ComicVineRepository::class,
         'AppSettings' => AppSettingsRepository::class,
         'FileManager' => FileManager::class,
+        'DownloadService' => DownloadService::class,
+        'ParserService' => ParserService::class,
     ];
 
     /**

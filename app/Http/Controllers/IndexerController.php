@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Indexer;
 use Illuminate\Http\Request;
-
 use App\Http\Requests\IndexerRequest;
 use App\Http\Resources\IndexerCollection;
 use App\Http\Resources\IndexerResultCollection;
 use App\Http\Resources\Indexer as IndexerResource;
+use App\Http\Resources\TrackedDownload as TrackedDownloadResource;
 
 class IndexerController extends Controller
 {
@@ -79,17 +79,23 @@ class IndexerController extends Controller
     public function search(Request $request)
     {
         $cvid = $request->input('cvid');
-        $offset = $request->input('offset') || 0;
 
-        $indexers = Indexer::where('enable_search', true)->get();
-
-        $results = [];
-        foreach ($indexers as $indexer) {
-            $result = $indexer->searchCvid($cvid, $offset);
-            $results = array_merge($results, $result->resolve());
-        }
+        $results = resolve('DownloadService')->searchIssue($cvid);
 
         return new IndexerResultCollection($results);
+    }
+
+    public function autosearch(Request $request)
+    {
+        $cvid = $request->input('cvid');
+
+        $trackedDownload = resolve('DownloadService')->downloadIssue($cvid);
+
+        if (! $trackedDownload) {
+            return response()->json(['error' => true, 'message' => 'Search results invalidated, please search again']);
+        }
+
+        return new TrackedDownloadResource($trackedDownload);
     }
 
     public function schema(Request $request, $name = null)

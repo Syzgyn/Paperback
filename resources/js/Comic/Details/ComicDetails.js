@@ -30,7 +30,14 @@ class ComicDetails extends Component
     }
 
     toggleModal(issue, tab="description") {
-        this.setState({modal: !this.state.modal, issue: issue, activeTab: tab});
+        if (tab == "searchAutomatic") {
+            axios.get('/api/indexer/autosearch', {params:{ cvid: issue.cvid}})
+                .then(response => {
+                    console.log(response);
+                });
+        } else {
+            this.setState({modal: !this.state.modal, issue: issue, activeTab: tab});
+        }
     }
 
     changeModalTab(tab) {

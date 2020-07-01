@@ -24,6 +24,7 @@ class Newznab extends JsonResource
             'date' => $this->resource['pubDate'],
             'ago' => $this->getTimeAgo($this->resource['pubDate']),
             'size' => $this->formatSize($this->resource['enclosure']['@attributes']['length']),
+            'raw_size' => $this->resource['enclosure']['@attributes']['length'],
             'url' => $this->resource['link'],
             'indexer' => $this->resource['indexer'],
             'indexer_id' => $this->resource['indexer_id'],

@@ -63,6 +63,7 @@ class Issue extends Model
             ->whereIn('status', [
                 TrackedDownload::DOWNLOAD_STATUS['Pending'],
                 TrackedDownload::DOWNLOAD_STATUS['Downloading'],
+                TrackedDownload::DOWNLOAD_STATUS['Completed'],
             ])->get();
     }
 
@@ -106,7 +107,7 @@ class Issue extends Model
         }
 
         if (count($this->activeDownloads) > 0) {
-            'downloading';
+            return 'downloading';
         }
 
         return 'missing';

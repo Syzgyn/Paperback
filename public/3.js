@@ -185,11 +185,22 @@ var ComicDetails = /*#__PURE__*/function (_Component) {
     key: "toggleModal",
     value: function toggleModal(issue) {
       var tab = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "description";
-      this.setState({
-        modal: !this.state.modal,
-        issue: issue,
-        activeTab: tab
-      });
+
+      if (tab == "searchAutomatic") {
+        axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/indexer/autosearch', {
+          params: {
+            cvid: issue.cvid
+          }
+        }).then(function (response) {
+          console.log(response);
+        });
+      } else {
+        this.setState({
+          modal: !this.state.modal,
+          issue: issue,
+          activeTab: tab
+        });
+      }
     }
   }, {
     key: "changeModalTab",

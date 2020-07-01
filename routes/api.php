@@ -27,12 +27,14 @@ Route::get('indexer/schema/{class}', 'IndexerController@schema');
 Route::get('indexer/schema', 'IndexerController@schema');
 Route::post('indexer/test', 'IndexerController@test');
 Route::get('indexer/search', 'IndexerController@search');
+Route::get('indexer/autosearch', 'IndexerController@autosearch');
 Route::apiResource('indexer', 'IndexerController');
 
 
 Route::get('downloader/schema/{class?}', 'DownloaderController@schema');
 Route::get('downloader/schema', 'DownloaderController@schema');
 Route::post('downloader/test', 'DownloaderController@test');
+Route::get('testdownload', 'DownloaderController@testdownload');
 Route::apiResource('downloader', 'DownloaderController');
 
 Route::apiResource('trackeddownload', 'TrackedDownloadController')->parameters([
