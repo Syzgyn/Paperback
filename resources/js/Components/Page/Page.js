@@ -1,19 +1,22 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import PageHeader from '@/Components/Page/PageHeader'
+import { useDispatch } from 'react-redux'
+import {fetchComics } from '@/Store/Slices/comics'
 
-class Page extends Component
-{
-    render() {
-        return (
-            <>
-                <PageHeader />
-                <div className="page container bg-light rounded-lg py-3 mt-2">
-                    {this.props.children}
-                </div>
-            </>
-        );
-    }
+const Page = (props) => { 
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchComics());
+    }, [dispatch]);
+    return (
+        <>
+            <PageHeader />
+            <div className="page container bg-light rounded-lg py-3 mt-2">
+                {props.children}
+            </div>
+        </>
+    );
 }
 
 Page.propTypes = {

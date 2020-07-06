@@ -12,7 +12,7 @@
     "jslintwatch": "esw resources/js -w"
   },
   "devDependencies": {
-    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-react": "^7.10.4",
     "axios": "^0.19",
     "bootstrap": "^4.0.0",
     "cross-env": "^7.0",
@@ -28,19 +28,27 @@
     "react-overflow": "^0.2.1",
     "react-pluralize": "^1.6.3",
     "react-router-dom": "^5.2.0",
-    "reactstrap": "^8.4.1",
+    "reactstrap": "^8.5.1",
     "resolve-url-loader": "^3.1.0",
-    "sass": "^1.15.2",
+    "sass": "^1.26.9",
     "sass-loader": "^8.0.0"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.4.0",
     "babel-eslint": "^10.1.0",
-    "dompurify": "^2.0.11",
-    "eslint": "^7.2.0",
-    "eslint-plugin-react": "^7.20.0",
-    "eslint-plugin-react-hooks": "^4.0.4",
+    "connected-react-router": "^6.8.0",
+    "dompurify": "^2.0.12",
+    "eslint": "^7.4.0",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^4.0.5",
     "formik": "^2.1.4",
-    "react-toastify": "^6.0.5",
+    "history": "^4.10.1",
+    "react-redux": "^7.2.0",
+    "react-toastify": "^6.0.8",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "redux-toolkit": "^1.1.2",
+    "reselect": "^4.0.0",
     "yargs-parser": "^13.1.2"
   }
 }

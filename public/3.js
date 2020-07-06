@@ -114,29 +114,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _IssueList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./IssueList */ "./resources/js/Comic/Details/IssueList.js");
 /* harmony import */ var _IssueModal_IssueModal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./IssueModal/IssueModal */ "./resources/js/Comic/Details/IssueModal/IssueModal.js");
 /* harmony import */ var _Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Components/Loading/LoadingIndicator */ "./resources/js/Components/Loading/LoadingIndicator.js");
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Store_Slices_comics__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/Store/Slices/comics */ "./resources/js/Store/Slices/comics.js");
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
 
@@ -147,103 +128,51 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-var ComicDetails = /*#__PURE__*/function (_Component) {
-  _inherits(ComicDetails, _Component);
 
-  var _super = _createSuper(ComicDetails);
+var ComicDetails = function ComicDetails(_ref) {
+  var match = _ref.match;
 
-  function ComicDetails() {
-    var _this;
+  function toggleModal(issue) {
+    var tab = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "description";
 
-    _classCallCheck(this, ComicDetails);
-
-    _this = _super.call(this);
-    _this.state = {
-      comic: null,
-      loading: true,
-      modal: false,
-      activeTab: "description"
-    };
-    _this.toggleModal = _this.toggleModal.bind(_assertThisInitialized(_this));
-    _this.changeModalTab = _this.changeModalTab.bind(_assertThisInitialized(_this));
-    return _this;
-  }
-
-  _createClass(ComicDetails, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/comic/' + this.props.match.params.cvid).then(function (response) {
-        _this2.setState({
-          comic: response.data.data,
-          loading: false
-        });
+    if (tab == "searchAutomatic") {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/indexer/autosearch', {
+        params: {
+          cvid: issue.cvid
+        }
+      }).then(function (response) {
+        console.log(response);
       });
-    }
-  }, {
-    key: "toggleModal",
-    value: function toggleModal(issue) {
-      var tab = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "description";
-
-      if (tab == "searchAutomatic") {
-        axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/indexer/autosearch', {
-          params: {
-            cvid: issue.cvid
-          }
-        }).then(function (response) {
-          console.log(response);
-        });
-      } else {
-        this.setState({
-          modal: !this.state.modal,
-          issue: issue,
-          activeTab: tab
-        });
-      }
-    }
-  }, {
-    key: "changeModalTab",
-    value: function changeModalTab(tab) {
+    } else {
       this.setState({
+        modal: !this.state.modal,
+        issue: issue,
         activeTab: tab
       });
     }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this$state = this.state,
-          comic = _this$state.comic,
-          loading = _this$state.loading,
-          activeTab = _this$state.activeTab;
+  }
 
-      if (loading) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_7__["default"], null);
-      }
+  function changeModalTab(tab) {
+    this.setState({
+      activeTab: tab
+    });
+  }
 
-      if (comic) {
-        var issues = comic.issues; //TODO:  This works for now, but later convert to more like Sonarr
+  var comic = Object(react_redux__WEBPACK_IMPORTED_MODULE_8__["useSelector"])(_Store_Slices_comics__WEBPACK_IMPORTED_MODULE_9__["currentComicSelector"]);
 
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ComicItem__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({
-          classes: "pb-3"
-        }, comic)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IssueList__WEBPACK_IMPORTED_MODULE_5__["default"], {
-          issues: issues,
-          clickCallback: this.toggleModal
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IssueModal_IssueModal__WEBPACK_IMPORTED_MODULE_6__["default"], {
-          isOpen: this.state.modal,
-          issue: this.state.issue,
-          toggleModal: this.toggleModal,
-          activeTab: activeTab,
-          changeActiveTab: this.changeModalTab
-        }));
-      }
+  if (comic) {
+    var issues = comic.issues; //TODO:  This works for now, but later convert to more like Sonarr
 
-      return "Something went wrong...";
-    }
-  }]);
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ComicItem__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({
+      classes: "pb-3"
+    }, comic)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IssueList__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      issues: issues,
+      clickCallback: toggleModal
+    }));
+  }
 
-  return ComicDetails;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+  return "Something went wrong...";
+};
 
 ComicDetails.propTypes = {
   match: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({
@@ -633,6 +562,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _IssueStatus__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./IssueStatus */ "./resources/js/Comic/Details/IssueStatus.js");
 /* harmony import */ var _IssueSearchButtons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./IssueSearchButtons */ "./resources/js/Comic/Details/IssueSearchButtons.js");
 /* harmony import */ var _Components_MonitoredIcon__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Components/MonitoredIcon */ "./resources/js/Components/MonitoredIcon.js");
+/* harmony import */ var _IssueModal_IssueModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./IssueModal/IssueModal */ "./resources/js/Comic/Details/IssueModal/IssueModal.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -661,6 +591,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var IssueItem = /*#__PURE__*/function (_Component) {
   _inherits(IssueItem, _Component);
 
@@ -672,20 +603,42 @@ var IssueItem = /*#__PURE__*/function (_Component) {
     _classCallCheck(this, IssueItem);
 
     _this = _super.call(this);
+    _this.state = {
+      modal: false,
+      modalTab: 'description'
+    };
     _this.clickName = _this.clickName.bind(_assertThisInitialized(_this));
     _this.onSearchClick = _this.onSearchClick.bind(_assertThisInitialized(_this));
+    _this.toggleModal = _this.toggleModal.bind(_assertThisInitialized(_this));
+    _this.changeModalTab = _this.changeModalTab.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(IssueItem, [{
+    key: "toggleModal",
+    value: function toggleModal() {
+      this.setState({
+        modal: !this.state.modal
+      }); //, modalTab: tab});
+    }
+  }, {
+    key: "changeModalTab",
+    value: function changeModalTab(tab) {
+      this.setState({
+        modalTab: tab
+      });
+    }
+  }, {
     key: "clickName",
     value: function clickName() {
-      this.props.clickCallback(this.props.issue, "description");
+      this.changeModalTab('description');
+      this.toggleModal();
     }
   }, {
     key: "onSearchClick",
     value: function onSearchClick(type) {
-      this.props.clickCallback(this.props.issue, type);
+      this.changeModalTab('search');
+      this.toggleModal();
     }
   }, {
     key: "render",
@@ -696,6 +649,7 @@ var IssueItem = /*#__PURE__*/function (_Component) {
           release_date = issue.release_date,
           cvid = issue.cvid,
           monitored = issue.monitored;
+      console.log("II", this.state);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "issue-monitor-cell"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_MonitoredIcon__WEBPACK_IMPORTED_MODULE_4__["default"], {
@@ -720,7 +674,13 @@ var IssueItem = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IssueSearchButtons__WEBPACK_IMPORTED_MODULE_3__["default"], {
         cvid: cvid,
         clickCallback: this.onSearchClick
-      })));
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IssueModal_IssueModal__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        isOpen: this.state.modal,
+        issue: issue,
+        toggleModal: this.toggleModal,
+        activeTab: this.state.modalTab,
+        changeActiveTab: this.changeModalTab
+      }));
     }
   }]);
 
@@ -1435,6 +1395,7 @@ var IssueModal = /*#__PURE__*/function (_Component) {
     key: "render",
     value: function render() {
       var activeTab = this.props.activeTab;
+      console.log(activeTab);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Modal"], {
         isOpen: this.props.isOpen,
         onClosed: this.clearResults,

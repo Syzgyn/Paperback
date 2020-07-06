@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
@@ -6,30 +6,12 @@ import ComicItem from './ComicItem'
 import IssueList from './IssueList';
 import IssueModal from './IssueModal/IssueModal';
 import LoadingIndicator from '@/Components/Loading/LoadingIndicator';
+import { useDispatch, useSelector } from 'react-redux'
+import {fetchComics, currentComicSelector} from '@/Store/Slices/comics'
 
-class ComicDetails extends Component
-{
-    constructor() {
-        super();
-        this.state = {
-            comic: null,
-            loading: true,
-            modal: false,
-            activeTab: "description",
-        }
+const ComicDetails = ({match}) => { 
 
-        this.toggleModal = this.toggleModal.bind(this);
-        this.changeModalTab = this.changeModalTab.bind(this);
-    }
-    
-    componentDidMount() {
-        axios.get('/api/comic/' + this.props.match.params.cvid)
-        .then(response => {
-            this.setState({comic: response.data.data, loading: false});
-        });
-    }
-
-    toggleModal(issue, tab="description") {
+    function toggleModal(issue, tab="description") {
         if (tab == "searchAutomatic") {
             axios.get('/api/indexer/autosearch', {params:{ cvid: issue.cvid}})
                 .then(response => {
@@ -40,32 +22,25 @@ class ComicDetails extends Component
         }
     }
 
-    changeModalTab(tab) {
+    function changeModalTab(tab) {
         this.setState({activeTab: tab});
     }
 
-    render() {
-        const {comic, loading, activeTab} = this.state;
-        
-        if (loading) {
-            return(<LoadingIndicator />);
-        }
+    const comic = useSelector(currentComicSelector)
+    
+    if (comic) {
+        const issues = comic.issues;
 
-        if (comic) {
-            const issues = comic.issues;
-
-            //TODO:  This works for now, but later convert to more like Sonarr
-            return (
-                <>
-                    <ComicItem classes="pb-3" {...comic} /> 
-                    <IssueList issues={issues} clickCallback={this.toggleModal}/>
-                    <IssueModal isOpen={this.state.modal} issue={this.state.issue} toggleModal={this.toggleModal} activeTab={activeTab} changeActiveTab={this.changeModalTab} />
-                </>
-            );
-        }
-
-        return ("Something went wrong...")
+        //TODO:  This works for now, but later convert to more like Sonarr
+        return (
+            <>
+                <ComicItem classes="pb-3" {...comic} /> 
+                <IssueList issues={issues} clickCallback={toggleModal}/>
+            </>
+        );
     }
+
+    return ("Something went wrong...")
 }
 
 ComicDetails.propTypes = {
