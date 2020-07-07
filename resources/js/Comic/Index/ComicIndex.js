@@ -10,10 +10,6 @@ const ComicIndex = () => {
     const dispatch = useDispatch();
     const {items: comics, isFetching, isPopulated} = useSelector(comicsSelector);
 
-    useEffect(() => {
-        dispatch(fetchComics())
-    }, [dispatch]);
-
     if (!isPopulated) {
         return <LoadingIndicator />
     }

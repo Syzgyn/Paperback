@@ -129,7 +129,7 @@ class Comic extends Model
 
         static::saving(function ($comic) {
             if ($comic->isDirty('monitored')) {
-                $comic->issues()->update(['monitored' => $comic->monitored]);
+                //$comic->issues()->update(['monitored' => $comic->monitored]);
             }
         });
     }

@@ -116,7 +116,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Components/Loading/LoadingIndicator */ "./resources/js/Components/Loading/LoadingIndicator.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _Store_Slices_comics__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/Store/Slices/comics */ "./resources/js/Store/Slices/comics.js");
+/* harmony import */ var _Store_Slices_issues__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/Store/Slices/issues */ "./resources/js/Store/Slices/issues.js");
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 
 
 
@@ -158,15 +160,28 @@ var ComicDetails = function ComicDetails(_ref) {
     });
   }
 
+  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_8__["useDispatch"])();
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    dispatch(Object(_Store_Slices_issues__WEBPACK_IMPORTED_MODULE_10__["fetchIssues"])(match.params.cvid));
+    return function cleanup() {
+      dispatch(Object(_Store_Slices_issues__WEBPACK_IMPORTED_MODULE_10__["removeIssues"])());
+    };
+  }, [dispatch]);
+  var comics = Object(react_redux__WEBPACK_IMPORTED_MODULE_8__["useSelector"])(_Store_Slices_comics__WEBPACK_IMPORTED_MODULE_9__["comicsSelector"]);
+  var issues = Object(react_redux__WEBPACK_IMPORTED_MODULE_8__["useSelector"])(_Store_Slices_issues__WEBPACK_IMPORTED_MODULE_10__["issuesSelector"]);
   var comic = Object(react_redux__WEBPACK_IMPORTED_MODULE_8__["useSelector"])(_Store_Slices_comics__WEBPACK_IMPORTED_MODULE_9__["currentComicSelector"]);
 
-  if (comic) {
-    var issues = comic.issues; //TODO:  This works for now, but later convert to more like Sonarr
+  if (comics.isLoading) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_7__["default"], null);
+  }
 
+  if (comics.isPopulated) {
+    //TODO:  This works for now, but later convert to more like Sonarr
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ComicItem__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({
       classes: "pb-3"
     }, comic)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IssueList__WEBPACK_IMPORTED_MODULE_5__["default"], {
       issues: issues,
+      comicMonitored: comic.monitored,
       clickCallback: toggleModal
     }));
   }
@@ -643,17 +658,19 @@ var IssueItem = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var issue = this.props.issue;
+      var _this$props = this.props,
+          issue = _this$props.issue,
+          comicMonitored = _this$props.comicMonitored;
       var issue_num = issue.issue_num,
-          display_name = issue.display_name,
+          displayName = issue.displayName,
           release_date = issue.release_date,
           cvid = issue.cvid,
           monitored = issue.monitored;
-      console.log("II", this.state);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "issue-monitor-cell"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_MonitoredIcon__WEBPACK_IMPORTED_MODULE_4__["default"], {
         itemType: "issue",
+        isDisabled: !comicMonitored,
         cvid: cvid,
         isMonitored: monitored
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
@@ -663,7 +680,7 @@ var IssueItem = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "btn-link cursor-pointer",
         onClick: this.clickName
-      }, display_name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+      }, displayName)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "issue-release-date-cell"
       }, release_date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
         className: "issue-status-cell"
@@ -715,6 +732,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _IssueItem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./IssueItem */ "./resources/js/Comic/Details/IssueItem.js");
+/* harmony import */ var _Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Components/Loading/LoadingIndicator */ "./resources/js/Components/Loading/LoadingIndicator.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -741,6 +759,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var IssueList = /*#__PURE__*/function (_Component) {
   _inherits(IssueList, _Component);
 
@@ -757,12 +776,23 @@ var IssueList = /*#__PURE__*/function (_Component) {
     value: function render() {
       var _this = this;
 
-      var issues = this.props.issues;
+      var _this$props = this.props,
+          issues = _this$props.issues,
+          comicMonitored = _this$props.comicMonitored;
+      var isLoading = issues.isLoading,
+          isPopulated = issues.isPopulated,
+          items = issues.items;
+
+      if (isLoading) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_3__["default"], null);
+      }
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: "table"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Release Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, issues.map(function (issue) {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Release Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, items.map(function (issue) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_IssueItem__WEBPACK_IMPORTED_MODULE_2__["default"], {
           key: issue.cvid,
+          comicMonitored: comicMonitored,
           clickCallback: _this.props.clickCallback,
           issue: issue
         });
@@ -774,7 +804,11 @@ var IssueList = /*#__PURE__*/function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 IssueList.propTypes = {
-  issues: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array,
+  issues: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({
+    isLoading: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
+    isPopulated: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
+    items: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array
+  }),
   clickCallback: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func
 };
 /* harmony default export */ __webpack_exports__["default"] = (IssueList);
@@ -1395,7 +1429,6 @@ var IssueModal = /*#__PURE__*/function (_Component) {
     key: "render",
     value: function render() {
       var activeTab = this.props.activeTab;
-      console.log(activeTab);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Modal"], {
         isOpen: this.props.isOpen,
         onClosed: this.clearResults,
@@ -1776,7 +1809,7 @@ var IssueStatus = /*#__PURE__*/function (_Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["UncontrolledTooltip"], {
         placement: "top",
         target: id
-      }, "Issue Downloaded - ", this.props.issue.downloaded_file.readable_size));
+      }, "Issue Downloaded - ", this.props.issue.downloadedFile.readable_size));
     }
   }, {
     key: "render",
@@ -1902,6 +1935,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var react_feather__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-feather */ "./node_modules/react-feather/dist/index.js");
 /* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
+/* harmony import */ var _Store_Slices_comics__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Store/Slices/comics */ "./resources/js/Store/Slices/comics.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1923,6 +1958,8 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
 
 
 
@@ -1968,6 +2005,15 @@ var MonitoredIcon = /*#__PURE__*/function (_Component) {
           isMonitored: response.data.data.monitored,
           isLoading: false
         });
+
+        console.log("dispatch");
+
+        if (itemType == 'comic') {
+          _this2.props.dispatch(Object(_Store_Slices_comics__WEBPACK_IMPORTED_MODULE_5__["toggleComicMonitored"])({
+            cvid: cvid,
+            monitored: response.data.data.monitored
+          }));
+        }
       });
     }
   }, {
@@ -1988,6 +2034,18 @@ var MonitoredIcon = /*#__PURE__*/function (_Component) {
         text += " for all Issues";
       }
 
+      if (this.props.isDisabled) {
+        if (fill == 'solid') {
+          fill = '#7A7A7A';
+        }
+
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_3__["Bookmark"], {
+          fill: fill,
+          id: id,
+          color: "#7A7A7A"
+        });
+      }
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_3__["Bookmark"], {
         fill: fill,
         onClick: this.onIconClick,
@@ -2005,9 +2063,10 @@ var MonitoredIcon = /*#__PURE__*/function (_Component) {
 MonitoredIcon.propTypes = {
   itemType: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string.isRequired,
   cvid: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.number.isRequired,
-  isMonitored: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.bool.isRequired
+  isMonitored: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.bool.isRequired,
+  isDisabled: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.bool
 };
-/* harmony default export */ __webpack_exports__["default"] = (MonitoredIcon);
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_6__["connect"])()(MonitoredIcon));
 
 /***/ }),
 

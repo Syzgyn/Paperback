@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice, createSelector} from '@reduxjs/toolkit'
+import {current, createAction, createAsyncThunk, createSlice, createSelector} from '@reduxjs/toolkit'
 import {getCurrentCvidSelector} from '@/Store/Slices/router'
 
 const defaultState = {
@@ -15,11 +15,24 @@ export const fetchComics = createAsyncThunk(
     },
 );
 
+export const toggleComicMonitored = createAction('comics/toggleComicMonitored');
+
 const slice = createSlice({
     name: 'comics',
     initialState: defaultState,
-    reducers: {},
+    reducers: {
+    },
     extraReducers: {
+        [toggleComicMonitored]: (state, {payload}) => {
+        console.log("inside")
+            const {
+                cvid,
+                monitored,
+            } = payload;
+
+            const index = state.items.findIndex(item => item.cvid == cvid);
+            state.items[index].monitored = monitored;
+        },
         [fetchComics.pending]: (state, actions) => {
             state.isLoading = true
         },

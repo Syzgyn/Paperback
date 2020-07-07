@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('comic/search', 'ComicController@search');
 Route::resource('comic', 'ComicController');
 
+Route::get('issue/byComic/{cvid}', 'IssueController@byComic');
 Route::apiResource('issue', 'IssueController');
 
 Route::get('indexer/schema/{class}', 'IndexerController@schema');

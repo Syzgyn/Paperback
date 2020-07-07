@@ -21,6 +21,13 @@ class IssueController extends Controller
         return new IssueCollection($issues);
     }
 
+    public function byComic(Request $request, Int $cvid)
+    {
+        $issues = Issue::where('comic_id', $cvid)->orderBy('issue_num', 'DESC')->get();
+
+        return new IssueCollection($issues);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

@@ -36,10 +36,6 @@ var ComicIndex = function ComicIndex() {
       isFetching = _useSelector.isFetching,
       isPopulated = _useSelector.isPopulated;
 
-  Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
-    dispatch(Object(_Store_Slices_comics__WEBPACK_IMPORTED_MODULE_6__["fetchComics"])());
-  }, [dispatch]);
-
   if (!isPopulated) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_3__["default"], null);
   }

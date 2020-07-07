@@ -103,7 +103,6 @@ class IssueModal extends Component
         const {
             activeTab,
         } = this.props;
-        console.log(activeTab);
 
         return (
             <Modal isOpen={this.props.isOpen} onClosed={this.clearResults} toggle={this.props.toggleModal} className="issueModal" size="xl">

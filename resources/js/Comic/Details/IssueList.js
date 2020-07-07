@@ -1,11 +1,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import IssueItem from './IssueItem'
+import LoadingIndicator from '@/Components/Loading/LoadingIndicator'
 
 class IssueList extends Component
 {
     render() {
-        const {issues} = this.props;
+        const {issues, comicMonitored} = this.props;
+        const {isLoading, isPopulated, items} = issues;
+
+        if (isLoading) {
+            return <LoadingIndicator />
+        }
 
         return (
             <table className="table">
@@ -20,8 +26,8 @@ class IssueList extends Component
                     </tr>
                 </thead>
                 <tbody>
-                    {issues.map(issue => (
-                        <IssueItem key={issue.cvid} clickCallback={this.props.clickCallback} issue={issue}/> 
+                    {items.map(issue => (
+                        <IssueItem key={issue.cvid} comicMonitored={comicMonitored} clickCallback={this.props.clickCallback} issue={issue}/> 
                     ))}
                 </tbody>
             </table>
@@ -30,7 +36,11 @@ class IssueList extends Component
 }
 
 IssueList.propTypes = {
-    issues: PropTypes.array,
+    issues: PropTypes.shape({
+        isLoading: PropTypes.bool,
+        isPopulated: PropTypes.bool,
+        items: PropTypes.array,
+    }),
     clickCallback: PropTypes.func,
 }
 

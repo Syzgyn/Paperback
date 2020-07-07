@@ -35,7 +35,7 @@ class IssueStatus extends Component
             <>
                 <File id={id} />
                 <UncontrolledTooltip placement="top" target={id}>
-                    Issue Downloaded - {this.props.issue.downloaded_file.readable_size}
+                    Issue Downloaded - {this.props.issue.downloadedFile.readable_size}
                 </UncontrolledTooltip>
             </>
         );

@@ -7,7 +7,8 @@ import IssueList from './IssueList';
 import IssueModal from './IssueModal/IssueModal';
 import LoadingIndicator from '@/Components/Loading/LoadingIndicator';
 import { useDispatch, useSelector } from 'react-redux'
-import {fetchComics, currentComicSelector} from '@/Store/Slices/comics'
+import {comicsSelector, currentComicSelector} from '@/Store/Slices/comics'
+import {fetchIssues, removeIssues, issuesSelector} from '@/Store/Slices/issues'
 
 const ComicDetails = ({match}) => { 
 
@@ -26,16 +27,29 @@ const ComicDetails = ({match}) => {
         this.setState({activeTab: tab});
     }
 
-    const comic = useSelector(currentComicSelector)
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchIssues(match.params.cvid));
+        
+        return function cleanup() { dispatch(removeIssues())}
+    }, [dispatch]);
+
+    const comics = useSelector(comicsSelector)
+    const issues = useSelector(issuesSelector)
+    const comic = useSelector(currentComicSelector);
     
-    if (comic) {
-        const issues = comic.issues;
+    if (comics.isLoading) { 
+        return <LoadingIndicator />
+    }
+    
+    if (comics.isPopulated) { 
 
         //TODO:  This works for now, but later convert to more like Sonarr
         return (
             <>
                 <ComicItem classes="pb-3" {...comic} /> 
-                <IssueList issues={issues} clickCallback={toggleModal}/>
+                <IssueList issues={issues} comicMonitored={comic.monitored} clickCallback={toggleModal}/>
             </>
         );
     }
