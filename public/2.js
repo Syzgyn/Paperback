@@ -428,7 +428,7 @@ var ConnectorEditModal = /*#__PURE__*/function (_Component) {
         testSuccess: false
       });
       var data = this.prepareData();
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(this.props.url + '/test', data).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(this.props.url + "/test", data).then(function (response) {
         if (response.data.result) {
           _this2.setState({
             testSuccess: true
@@ -441,12 +441,12 @@ var ConnectorEditModal = /*#__PURE__*/function (_Component) {
     value: function onClickSave() {
       var data = this.prepareData();
       var url = this.props.url;
-      var method = 'post';
+      var method = "post";
       var item = this.props.item;
 
       if (item) {
-        url += '/' + item.id;
-        method = 'put';
+        url += "/" + item.id;
+        method = "put";
       }
 
       axios__WEBPACK_IMPORTED_MODULE_1___default.a[method](url, data).then(this.props.toggleModal(true));
@@ -740,7 +740,7 @@ var ConnectorEmptyItem = /*#__PURE__*/function (_Component) {
       var _this2 = this;
 
       if (!this.state.schema.length) {
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(this.props.url + '/schema').then(function (response) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(this.props.url + "/schema").then(function (response) {
           _this2.setState({
             schema: response.data
           }, _this2.toggleAddModal());
@@ -1064,14 +1064,14 @@ __webpack_require__.r(__webpack_exports__);
 
 function SettingsMenuBar() {
   var links = [{
-    to: '/settings/general',
-    text: 'General'
+    to: "/settings/general",
+    text: "General"
   }, {
-    to: '/settings/indexers',
-    text: 'Indexers'
+    to: "/settings/indexers",
+    text: "Indexers"
   }, {
-    to: '/settings/downloaders',
-    text: 'Download Clients'
+    to: "/settings/downloaders",
+    text: "Download Clients"
   }];
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Page_PageRow__WEBPACK_IMPORTED_MODULE_2__["default"], {
     className: "mb-3"

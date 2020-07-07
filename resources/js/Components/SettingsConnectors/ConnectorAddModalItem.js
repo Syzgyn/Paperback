@@ -1,12 +1,11 @@
-import React, {Component} from 'react'
-import PropTypes from 'prop-types'
-import {Card, CardTitle} from 'reactstrap'
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Card, CardTitle } from "reactstrap";
 
-class ConnectorAddModalItem extends Component
-{
+class ConnectorAddModalItem extends Component {
     constructor() {
         super();
-        
+
         this.selectConnector = this.selectConnector.bind(this);
     }
 
@@ -15,12 +14,13 @@ class ConnectorAddModalItem extends Component
     }
 
     render() {
-        const {
-            name,
-        } = this.props;
+        const { name } = this.props;
 
         return (
-            <Card onClick={this.selectConnector} className="settings-connector-item shadow p-3 m-3">
+            <Card
+                onClick={this.selectConnector}
+                className="settings-connector-item shadow p-3 m-3"
+            >
                 <CardTitle>{name}</CardTitle>
             </Card>
         );
@@ -31,6 +31,6 @@ ConnectorAddModalItem.propTypes = {
     name: PropTypes.string,
     type: PropTypes.string,
     onConnectorSelect: PropTypes.func.isRequired,
-}
+};
 
-export default ConnectorAddModalItem
+export default ConnectorAddModalItem;

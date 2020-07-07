@@ -1,28 +1,23 @@
-import React, {Component} from 'react'
-import PropTypes from 'prop-types'
-import {Button} from 'reactstrap'
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Button } from "reactstrap";
 
-class SettingsToolbar extends Component
-{
+class SettingsToolbar extends Component {
     constructor() {
-        super()
+        super();
         this.saveSettings = this.saveSettings.bind(this);
     }
 
     saveSettings(event) {
         event.preventDefault();
 
-        const {
-            onSavePress,
-        } = this.props;
+        const { onSavePress } = this.props;
 
         onSavePress();
     }
 
     render() {
-        const {
-            onSavePress,
-        } = this.props;
+        const { onSavePress } = this.props;
 
         return (
             <div className="row">
@@ -36,6 +31,6 @@ class SettingsToolbar extends Component
 
 SettingsToolbar.propTypes = {
     onSavePress: PropTypes.func.isRequired,
-}
+};
 
-export default SettingsToolbar
+export default SettingsToolbar;

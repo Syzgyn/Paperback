@@ -191,7 +191,7 @@ var GeneralSettingsForm = /*#__PURE__*/function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/settings/general').then(function (results) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/settings/general").then(function (results) {
         _this2.setState({
           loading: false,
           settings: results.data
@@ -201,7 +201,7 @@ var GeneralSettingsForm = /*#__PURE__*/function (_Component) {
   }, {
     key: "onSubmit",
     value: function onSubmit(values) {
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/settings', {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/api/settings", {
         general: values
       }).then(function (results) {
         if (results.data === 1) {
@@ -271,14 +271,14 @@ __webpack_require__.r(__webpack_exports__);
 
 function SettingsMenuBar() {
   var links = [{
-    to: '/settings/general',
-    text: 'General'
+    to: "/settings/general",
+    text: "General"
   }, {
-    to: '/settings/indexers',
-    text: 'Indexers'
+    to: "/settings/indexers",
+    text: "Indexers"
   }, {
-    to: '/settings/downloaders',
-    text: 'Download Clients'
+    to: "/settings/downloaders",
+    text: "Download Clients"
   }];
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Page_PageRow__WEBPACK_IMPORTED_MODULE_2__["default"], {
     className: "mb-3"

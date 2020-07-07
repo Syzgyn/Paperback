@@ -44,7 +44,7 @@ var ComicIndex = function ComicIndex() {
       className: "row"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "col-md-12 text-center"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "There are no comics in your library yet.  ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "There are no comics in your library yet.", " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["Link"], {
       to: "/add/new"
     }, "Add some"), ".")));
   }
@@ -174,7 +174,7 @@ var ComicIndexItem = /*#__PURE__*/function (_Component) {
         className: "comic-description",
         dangerouslySetInnerHTML: {
           __html: dompurify__WEBPACK_IMPORTED_MODULE_3___default.a.sanitize(displayDescription, {
-            ADD_ATTR: ['target']
+            ADD_ATTR: ["target"]
           })
         }
       })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -182,7 +182,7 @@ var ComicIndexItem = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_ComicBadge__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_pluralize__WEBPACK_IMPORTED_MODULE_4___default.a, {
-        singular: 'issue',
+        singular: "issue",
         count: numIssues
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-2 offset-md-8"
@@ -328,7 +328,7 @@ var ComicBadge = /*#__PURE__*/function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 ComicBadge.defaultProps = {
-  color: 'primary'
+  color: "primary"
 };
 ComicBadge.propTypes = {
   children: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.node,

@@ -1,13 +1,11 @@
-import React, {Component} from 'react'
-import SettingsMenuBar from '@/Settings/SettingsMenuBar'
-import SettingsToolbar from '@/Settings/SettingsToolbar'
-import PageRow from '@/Components/Page/PageRow'
-import GeneralSettingsForm from '@/Settings/General/GeneralSettingsForm'
+import React, { Component } from "react";
+import SettingsMenuBar from "@/Settings/SettingsMenuBar";
+import SettingsToolbar from "@/Settings/SettingsToolbar";
+import PageRow from "@/Components/Page/PageRow";
+import GeneralSettingsForm from "@/Settings/General/GeneralSettingsForm";
 
-class GeneralSettings extends Component
-{
-    constructor()
-    {
+class GeneralSettings extends Component {
+    constructor() {
         super();
         this.generalForm = React.createRef();
 
@@ -22,14 +20,17 @@ class GeneralSettings extends Component
         return (
             <>
                 <SettingsMenuBar />
-                <SettingsToolbar onSavePress={this.onSavePress}/>
+                <SettingsToolbar onSavePress={this.onSavePress} />
                 <PageRow>
                     <h2>General</h2>
                 </PageRow>
-                <GeneralSettingsForm ref={this.generalForm} onSavePress={this.onSavePress}/>
+                <GeneralSettingsForm
+                    ref={this.generalForm}
+                    onSavePress={this.onSavePress}
+                />
             </>
-        )
+        );
     }
 }
 
-export default GeneralSettings
+export default GeneralSettings;

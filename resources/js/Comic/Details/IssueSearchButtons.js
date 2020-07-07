@@ -1,10 +1,9 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Search, User } from 'react-feather'
-import {UncontrolledTooltip} from 'reactstrap'
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Search, User } from "react-feather";
+import { UncontrolledTooltip } from "reactstrap";
 
-class IssueSearchButtons extends Component
-{
+class IssueSearchButtons extends Component {
     constructor() {
         super();
 
@@ -13,25 +12,30 @@ class IssueSearchButtons extends Component
     }
 
     onAutoClick() {
-        this.props.clickCallback('searchAutomatic');
+        this.props.clickCallback("searchAutomatic");
     }
 
     onManualClick() {
-        this.props.clickCallback('searchManual');
+        this.props.clickCallback("searchManual");
     }
 
-    render()
-    {
-        let {cvid} = this.props;
+    render() {
+        let { cvid } = this.props;
 
         return (
             <>
                 <Search onClick={this.onAutoClick} id={"btn-auto-" + cvid} />
                 <User onClick={this.onManualClick} id={"btn-manual-" + cvid} />
-                <UncontrolledTooltip placement="top" target={"btn-auto-" + cvid}>
+                <UncontrolledTooltip
+                    placement="top"
+                    target={"btn-auto-" + cvid}
+                >
                     Automatic Search
                 </UncontrolledTooltip>
-                <UncontrolledTooltip placement="top" target={"btn-manual-" + cvid}>
+                <UncontrolledTooltip
+                    placement="top"
+                    target={"btn-manual-" + cvid}
+                >
                     Manual Search
                 </UncontrolledTooltip>
             </>
@@ -42,6 +46,6 @@ class IssueSearchButtons extends Component
 IssueSearchButtons.propTypes = {
     cvid: PropTypes.number.isRequired,
     clickCallback: PropTypes.func.isRequired,
-}
+};
 
-export default IssueSearchButtons
+export default IssueSearchButtons;

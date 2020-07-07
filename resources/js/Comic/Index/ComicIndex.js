@@ -1,15 +1,17 @@
-import React from 'react'
-import ComicIndexItem from './ComicIndexItem'
-import LoadingIndicator from '@/Components/Loading/LoadingIndicator'
-import { Link } from 'react-router-dom'
-import {useSelector } from 'react-redux'
-import {comicsSelector} from '@/Store/Slices/comics'
+import React from "react";
+import ComicIndexItem from "./ComicIndexItem";
+import LoadingIndicator from "@/Components/Loading/LoadingIndicator";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { comicsSelector } from "@/Store/Slices/comics";
 
-const ComicIndex = () => { 
-    const {items: comics, isFetching, isPopulated} = useSelector(comicsSelector);
+const ComicIndex = () => {
+    const { items: comics, isFetching, isPopulated } = useSelector(
+        comicsSelector
+    );
 
     if (isFetching) {
-        return <LoadingIndicator />
+        return <LoadingIndicator />;
     }
 
     if (!isPopulated) {
@@ -17,26 +19,33 @@ const ComicIndex = () => {
     }
 
     if (!comics.length) {
-        return(
-        <div className="row">
-            <div className="col-md-12 text-center">
-                <h3>There are no comics in your library yet.  <Link to='/add/new'>Add some</Link>.</h3>
+        return (
+            <div className="row">
+                <div className="col-md-12 text-center">
+                    <h3>
+                        There are no comics in your library yet.{" "}
+                        <Link to="/add/new">Add some</Link>.
+                    </h3>
+                </div>
             </div>
-        </div>
         );
     }
 
     return (
         <div className="row">
             <div className="col-md-12">
-                <div id="comic-list"> 
-                    {comics.map(comic => (
-                        <ComicIndexItem {...comic} key={comic.cvid} indexView={true}/> 
+                <div id="comic-list">
+                    {comics.map((comic) => (
+                        <ComicIndexItem
+                            {...comic}
+                            key={comic.cvid}
+                            indexView={true}
+                        />
                     ))}
                 </div>
             </div>
         </div>
     );
-}
+};
 
-export default ComicIndex 
+export default ComicIndex;

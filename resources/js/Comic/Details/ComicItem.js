@@ -1,33 +1,37 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
-import DOMPurify from 'dompurify'
-import Pluralize from 'react-pluralize'
-import {Button} from 'reactstrap'
-import ComicBadge from '@/Components/ComicBadge'
-import ComicDescriptionModal from './ComicDescriptionModal'
-import MonitoredIcon from '@/Components/MonitoredIcon'
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
+import DOMPurify from "dompurify";
+import Pluralize from "react-pluralize";
+import { Button } from "reactstrap";
+import ComicBadge from "@/Components/ComicBadge";
+import ComicDescriptionModal from "./ComicDescriptionModal";
+import MonitoredIcon from "@/Components/MonitoredIcon";
 
 class ComicItem extends Component {
     constructor() {
         super();
         this.state = {
             modal: false,
-        }
+        };
         this.toggleModal = this.toggleModal.bind(this);
     }
 
     toggleModal() {
-        this.setState({modal: !this.state.modal});
+        this.setState({ modal: !this.state.modal });
     }
 
-    descriptionModal()
-    {
+    descriptionModal() {
         if (this.props.descriptionIsTruncated) {
             return (
                 <>
                     <Button onClick={this.toggleModal}>Read More</Button>
-                    <ComicDescriptionModal name={this.props.name} description={this.props.description} toggleModal={this.toggleModal} modal={this.state.modal}/>
+                    <ComicDescriptionModal
+                        name={this.props.name}
+                        description={this.props.description}
+                        toggleModal={this.toggleModal}
+                        modal={this.state.modal}
+                    />
                 </>
             );
         }
@@ -37,14 +41,14 @@ class ComicItem extends Component {
 
     render() {
         const {
-                numIssues, 
-                startYear,
-                publisher,
-                image,
-                name,
-                displayDescription,
-                classes,
-            } = this.props;
+            numIssues,
+            startYear,
+            publisher,
+            image,
+            name,
+            displayDescription,
+            classes,
+        } = this.props;
 
         return (
             <div className={"row pb-5 " + classes}>
@@ -55,19 +59,40 @@ class ComicItem extends Component {
                     <div className="row">
                         <div className="col-12 pb-1">
                             <span>
-                                <MonitoredIcon itemType='comic' cvid={this.props.cvid} isMonitored={this.props.monitored} />
-                                <span className="h2 mr-2">{name} <span className="comic-year">({startYear})</span></span>
+                                <MonitoredIcon
+                                    itemType="comic"
+                                    cvid={this.props.cvid}
+                                    isMonitored={this.props.monitored}
+                                />
+                                <span className="h2 mr-2">
+                                    {name}{" "}
+                                    <span className="comic-year">
+                                        ({startYear})
+                                    </span>
+                                </span>
                             </span>
                         </div>
                         <div className="col-12">
-                            <div className="comic-description" 
-                                dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(displayDescription, { ADD_ATTR: ['target'] })}} />
+                            <div
+                                className="comic-description"
+                                dangerouslySetInnerHTML={{
+                                    __html: DOMPurify.sanitize(
+                                        displayDescription,
+                                        { ADD_ATTR: ["target"] }
+                                    ),
+                                }}
+                            />
                             {this.descriptionModal()}
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-2">
-                            <ComicBadge><Pluralize singular={'issue'} count={numIssues} /></ComicBadge>
+                            <ComicBadge>
+                                <Pluralize
+                                    singular={"issue"}
+                                    count={numIssues}
+                                />
+                            </ComicBadge>
                             <ComicBadge>{publisher}</ComicBadge>
                         </div>
                     </div>
@@ -94,6 +119,6 @@ ComicItem.propTypes = {
     singleView: PropTypes.bool,
     classes: PropTypes.string,
     monitored: PropTypes.bool,
-}
+};
 
 export default withRouter(ComicItem);

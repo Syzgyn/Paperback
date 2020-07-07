@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
-import PropTypes from 'prop-types'
-import PageHeader from '@/Components/Page/PageHeader'
-import { useDispatch } from 'react-redux'
-import {fetchComics } from '@/Store/Slices/comics'
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
+import PageHeader from "@/Components/Page/PageHeader";
+import { useDispatch } from "react-redux";
+import { fetchComics } from "@/Store/Slices/comics";
 
-const Page = (props) => { 
+const Page = (props) => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchComics());
@@ -17,12 +17,12 @@ const Page = (props) => {
             </div>
         </>
     );
-}
+};
 
 Page.propTypes = {
     hasError: PropTypes.bool,
     isPopulated: PropTypes.bool,
     children: PropTypes.node,
-}
+};
 
 export default Page;

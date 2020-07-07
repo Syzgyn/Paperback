@@ -1,20 +1,19 @@
-import React, {Component} from 'react'
-import PropTypes from 'prop-types'
-import axios from 'axios'
-import {Card} from 'reactstrap'
-import {Plus} from 'react-feather'
-import ConnectorEditModal from './ConnectorEditModal'
-import ConnectorAddModal from './ConnectorAddModal'
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import axios from "axios";
+import { Card } from "reactstrap";
+import { Plus } from "react-feather";
+import ConnectorEditModal from "./ConnectorEditModal";
+import ConnectorAddModal from "./ConnectorAddModal";
 
-class ConnectorEmptyItem extends Component
-{
+class ConnectorEmptyItem extends Component {
     constructor() {
         super();
         this.state = {
             addModal: false,
             schema: [],
             implementation: null,
-        }
+        };
 
         this.toggleAddModal = this.toggleAddModal.bind(this);
         this.toggleEditModal = this.toggleEditModal.bind(this);
@@ -24,7 +23,7 @@ class ConnectorEmptyItem extends Component
     }
 
     toggleAddModal() {
-        this.setState({addModal: !this.state.addModal});
+        this.setState({ addModal: !this.state.addModal });
     }
 
     toggleEditModal(refresh) {
@@ -32,45 +31,56 @@ class ConnectorEmptyItem extends Component
             this.props.refreshCallback();
         }
 
-        this.setState({editModal: !this.state.editModal});
+        this.setState({ editModal: !this.state.editModal });
     }
 
     onAddModalClosed(itemSelected = false, modelType = null) {
         this.setState({
             addModal: false,
             editModal: itemSelected,
-            implementation: this.state.schema.find(item => item.type === modelType), 
+            implementation: this.state.schema.find(
+                (item) => item.type === modelType
+            ),
         });
     }
 
     onEditModalClosed() {
-        this.setState({editModal: false});
+        this.setState({ editModal: false });
     }
 
     openAddModal() {
         if (!this.state.schema.length) {
-            axios.get(this.props.url + '/schema')
-                .then(response => {
-                    this.setState({schema: response.data}, this.toggleAddModal());
-                });
+            axios.get(this.props.url + "/schema").then((response) => {
+                this.setState({ schema: response.data }, this.toggleAddModal());
+            });
         } else {
             this.toggleAddModal();
         }
     }
 
     render() {
-        const {
-            addModal,
-            editModal,
-            implementation,
-            schema,
-        } = this.state;
+        const { addModal, editModal, implementation, schema } = this.state;
 
         return (
-            <Card onClick={this.openAddModal} className="settings-connector-item add-item shadow p-3 m-3 text-center">
-                <Plus size={60}/>
-                <ConnectorAddModal isOpen={addModal} toggleModal={this.toggleAddModal} schema={schema} onModalClose={this.onAddModalClosed} url={this.props.url} />
-                <ConnectorEditModal isOpen={editModal} toggleModal={this.toggleEditModal} implementation={implementation} existingConnector={false} url={this.props.url} />
+            <Card
+                onClick={this.openAddModal}
+                className="settings-connector-item add-item shadow p-3 m-3 text-center"
+            >
+                <Plus size={60} />
+                <ConnectorAddModal
+                    isOpen={addModal}
+                    toggleModal={this.toggleAddModal}
+                    schema={schema}
+                    onModalClose={this.onAddModalClosed}
+                    url={this.props.url}
+                />
+                <ConnectorEditModal
+                    isOpen={editModal}
+                    toggleModal={this.toggleEditModal}
+                    implementation={implementation}
+                    existingConnector={false}
+                    url={this.props.url}
+                />
             </Card>
         );
     }
@@ -79,6 +89,6 @@ class ConnectorEmptyItem extends Component
 ConnectorEmptyItem.propTypes = {
     refreshCallback: PropTypes.func.isRequired,
     url: PropTypes.string,
-}
+};
 
-export default ConnectorEmptyItem
+export default ConnectorEmptyItem;

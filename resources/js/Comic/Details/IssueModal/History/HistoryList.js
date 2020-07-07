@@ -1,15 +1,14 @@
-import React, { Component } from 'react'
-import HistoryItem from './HistoryItem'
-import PropTypes from 'prop-types'
+import React, { Component } from "react";
+import HistoryItem from "./HistoryItem";
+import PropTypes from "prop-types";
 
-class HistoryList extends Component
-{
+class HistoryList extends Component {
     render() {
-        const {items} = this.props;
+        const { items } = this.props;
 
         return (
-            <div className='table-responsive'>
-                <table className='table table-sm history-table'>
+            <div className="table-responsive">
+                <table className="table table-sm history-table">
                     <thead>
                         <tr>
                             <th></th>
@@ -18,9 +17,9 @@ class HistoryList extends Component
                         </tr>
                     </thead>
                     <tbody>
-                    {items.map(item=> (
-                        <HistoryItem key={item.id} item={item} />
-                    ))}
+                        {items.map((item) => (
+                            <HistoryItem key={item.id} item={item} />
+                        ))}
                     </tbody>
                 </table>
             </div>
@@ -30,6 +29,6 @@ class HistoryList extends Component
 
 HistoryList.propTypes = {
     items: PropTypes.array,
-}
+};
 
-export default HistoryList
+export default HistoryList;

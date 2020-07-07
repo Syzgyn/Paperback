@@ -1,16 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from "react";
+import PropTypes from "prop-types";
 
 function PageRow(props) {
-    const {
-        className,
-    } = props;
+    const { className } = props;
 
     return (
         <div className={"row " + className}>
-            <div className="col-md-12">
-                {props.children}
-            </div>
+            <div className="col-md-12">{props.children}</div>
         </div>
     );
 }
@@ -18,10 +14,10 @@ function PageRow(props) {
 PageRow.propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
-}
+};
 
 PageRow.defaultProps = {
     className: "",
-}
+};
 
-export default PageRow
+export default PageRow;

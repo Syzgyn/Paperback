@@ -1,46 +1,41 @@
-import React, {Component} from 'react'
-import axios from 'axios'
-import {Formik, Form, Field, ErrorMessage} from 'formik'
-import {FormGroup} from 'reactstrap'
-import {toast} from 'react-toastify'
-import PageRow from '@/Components/Page/PageRow'
-import LoadingIndicator from '@/Components/Loading/LoadingIndicator'
+import React, { Component } from "react";
+import axios from "axios";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { FormGroup } from "reactstrap";
+import { toast } from "react-toastify";
+import PageRow from "@/Components/Page/PageRow";
+import LoadingIndicator from "@/Components/Loading/LoadingIndicator";
 
-class GeneralSettingsForm extends Component
-{
+class GeneralSettingsForm extends Component {
     constructor() {
         super();
         this.state = {
             loading: true,
             settings: {},
-        }
+        };
 
         this.formRef = React.createRef();
     }
 
     componentDidMount() {
-        axios.get('/api/settings/general')
-            .then(results => {
-                this.setState({loading: false, settings: results.data})
-            });
+        axios.get("/api/settings/general").then((results) => {
+            this.setState({ loading: false, settings: results.data });
+        });
     }
 
     onSubmit(values) {
-        axios.post('/api/settings', {general: values})
-            .then(results => {
-                if (results.data === 1) {
-                    toast.dark("Settings Saved");
-                }
-                else
-                {
-                    toast.dark("Error saving settings");
-                }
-            });
+        axios.post("/api/settings", { general: values }).then((results) => {
+            if (results.data === 1) {
+                toast.dark("Settings Saved");
+            } else {
+                toast.dark("Error saving settings");
+            }
+        });
     }
 
     render() {
         if (this.state.loading) {
-            return <LoadingIndicator />
+            return <LoadingIndicator />;
         }
 
         return (
@@ -52,8 +47,14 @@ class GeneralSettingsForm extends Component
                 >
                     <Form>
                         <FormGroup>
-                            <label htmlFor="comicvine_apikey">ComicVine API Key</label>
-                            <Field name="comicvine_apikey" type="text" className="form-control" />
+                            <label htmlFor="comicvine_apikey">
+                                ComicVine API Key
+                            </label>
+                            <Field
+                                name="comicvine_apikey"
+                                type="text"
+                                className="form-control"
+                            />
                             <ErrorMessage name="comicvine_apikey" />
                         </FormGroup>
                         <FormGroup>
@@ -63,15 +64,18 @@ class GeneralSettingsForm extends Component
                         </FormGroup>
                         <FormGroup>
                             <label>Destination Directory</label>
-                            <Field type="text" name="destination_dir" className="form-control" />
+                            <Field
+                                type="text"
+                                name="destination_dir"
+                                className="form-control"
+                            />
                             <ErrorMessage name="destination_dir" />
                         </FormGroup>
                     </Form>
                 </Formik>
             </PageRow>
-        )
+        );
     }
 }
 
-export default GeneralSettingsForm
-
+export default GeneralSettingsForm;

@@ -1,10 +1,9 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { File, AlertTriangle, DownloadCloud } from 'react-feather'
-import {UncontrolledTooltip} from 'reactstrap'
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { File, AlertTriangle, DownloadCloud } from "react-feather";
+import { UncontrolledTooltip } from "reactstrap";
 
-class IssueStatus extends Component
-{
+class IssueStatus extends Component {
     renderMissing() {
         let id = "status-" + this.props.issue.cvid;
         return (
@@ -14,11 +13,11 @@ class IssueStatus extends Component
                     Issue missing from disk
                 </UncontrolledTooltip>
             </>
-        )
+        );
     }
 
     renderDownloading() {
-        let id = 'status-' + this.props.issue.cvid;
+        let id = "status-" + this.props.issue.cvid;
         return (
             <>
                 <DownloadCloud id={id} />
@@ -35,23 +34,24 @@ class IssueStatus extends Component
             <>
                 <File id={id} />
                 <UncontrolledTooltip placement="top" target={id}>
-                    Issue Downloaded - {this.props.issue.downloadedFile.readable_size}
+                    Issue Downloaded -{" "}
+                    {this.props.issue.downloadedFile.readable_size}
                 </UncontrolledTooltip>
             </>
         );
     }
 
     render() {
-        switch(this.props.issue.status) {
+        switch (this.props.issue.status) {
             case null:
-            case 'missing':
+            case "missing":
                 return this.renderMissing();
-            case 'downloading':
+            case "downloading":
                 return this.renderDownloading();
-            case 'downloaded':
+            case "downloaded":
                 return this.renderDownloaded();
             default:
-                return ("Unknown...");
+                return "Unknown...";
         }
     }
 }
@@ -64,6 +64,6 @@ IssueStatus.propTypes = {
         }),
         status: PropTypes.string,
     }).isRequired,
-}
+};
 
-export default IssueStatus
+export default IssueStatus;

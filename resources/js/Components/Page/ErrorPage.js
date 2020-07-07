@@ -1,12 +1,8 @@
-import React from 'react'
-import PageContent from './PageContent'
+import React from "react";
+import PageContent from "./PageContent";
 
 function ErrorPage() {
-    return (
-        <PageContent>
-            An error has occured...
-        </PageContent>
-    );
+    return <PageContent>An error has occured...</PageContent>;
 }
 
-export default ErrorPage
+export default ErrorPage;

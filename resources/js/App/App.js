@@ -1,14 +1,14 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-import { ToastContainer } from 'react-toastify'
-import AppRoutes from './AppRoutes'
-import Page from '@/Components/Page/Page'
-import store, {history} from '@/Store/createStore'
-import {Provider} from 'react-redux'
-import { ConnectedRouter } from 'connected-react-router'
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import { ToastContainer } from "react-toastify";
+import AppRoutes from "./AppRoutes";
+import Page from "@/Components/Page/Page";
+import store, { history } from "@/Store/createStore";
+import { Provider } from "react-redux";
+import { ConnectedRouter } from "connected-react-router";
 
 class App extends Component {
-    render () {
+    render() {
         return (
             <Provider store={store}>
                 <ConnectedRouter history={history}>
@@ -32,4 +32,4 @@ class App extends Component {
     }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'))
+ReactDOM.render(<App />, document.getElementById("app"));

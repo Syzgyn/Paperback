@@ -4,9 +4,9 @@
  * building robust, powerful web applications using React + Laravel.
  */
 
-require('./bootstrap');
+require("./bootstrap");
 
-const feather = require('feather-icons')
+const feather = require("feather-icons");
 feather.replace();
 
 /**
@@ -15,4 +15,4 @@ feather.replace();
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-require('./App/App');
+require("./App/App");

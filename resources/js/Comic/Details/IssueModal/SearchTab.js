@@ -1,31 +1,38 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import {Button} from 'reactstrap';
-import PageRow from '@/Components/Page/PageRow'
-import IndexerSearchResultsList from '@/Comic/Details/IndexerSearchResults/IndexerSearchResultsList'
-import LoadingIndicator from '@/Components/Loading/LoadingIndicator'
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Button } from "reactstrap";
+import PageRow from "@/Components/Page/PageRow";
+import IndexerSearchResultsList from "@/Comic/Details/IndexerSearchResults/IndexerSearchResultsList";
+import LoadingIndicator from "@/Components/Loading/LoadingIndicator";
 
-class SearchTab extends Component
-{
+class SearchTab extends Component {
     defaultButtons() {
         return (
             <>
-                <Button onClick={this.props.automaticClick} color="secondary">Automatic Search</Button>
-                <Button onClick={this.props.manualClick} color="primary">Manual Search</Button>
+                <Button onClick={this.props.automaticClick} color="secondary">
+                    Automatic Search
+                </Button>
+                <Button onClick={this.props.manualClick} color="primary">
+                    Manual Search
+                </Button>
             </>
-        )
+        );
     }
 
     results() {
-        const {results} = this.props;
-        
-        return <IndexerSearchResultsList results={results} downloadClick={this.props.downloadClick} /> 
+        const { results } = this.props;
+
+        return (
+            <IndexerSearchResultsList
+                results={results}
+                downloadClick={this.props.downloadClick}
+            />
+        );
     }
 
-    render()
-    {
+    render() {
         if (this.props.loading) {
-            return <LoadingIndicator />
+            return <LoadingIndicator />;
         }
 
         return (
@@ -43,6 +50,6 @@ SearchTab.propTypes = {
     loading: PropTypes.bool,
     results: PropTypes.array,
     didSearch: PropTypes.bool,
-}
+};
 
-export default SearchTab
+export default SearchTab;

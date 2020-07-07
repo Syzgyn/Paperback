@@ -1,53 +1,64 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Book, Plus, Clock, AlertTriangle, Settings } from 'react-feather'
+import React from "react";
+import { Link } from "react-router-dom";
+import { Book, Plus, Clock, AlertTriangle, Settings } from "react-feather";
 
 const PageHeader = () => (
     <div className="container mt-3">
         <div className="row header">
-          <div className="col">
-            <nav className="paperback-navbar navbar navbar-expand-lg navbar-dark bg-dark">
-              <Link to="/" className="navbar-brand">
-                <img src="/storage/logo.png" className="logo"/>
-              </Link>
-              <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span className="navbar-toggler-icon"></span>
-              </button>
+            <div className="col">
+                <nav className="paperback-navbar navbar navbar-expand-lg navbar-dark bg-dark">
+                    <Link to="/" className="navbar-brand">
+                        <img src="/storage/logo.png" className="logo" />
+                    </Link>
+                    <button
+                        className="navbar-toggler"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                    >
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
 
-              <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul className="navbar-nav mr-auto">
-                  <li className="nav-item">
-                    <Link to="/" className="nav-link">
-                        <Book className="navbar-icon" />
-                        Comics
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/add/new" className="nav-link">
-                        <Plus className="navbar-icon" />
-                        Add Comic
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/activity" className="nav-link">
-                        <Clock className="navbar-icon" />
-                        Activity
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/wanted" className="nav-link">
-                        <AlertTriangle className="navbar-icon" />
-                        Wanted
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/settings" className="nav-link">
-                        <Settings className="navbar-icon" />
-                        Settings
-                    </Link>
-                  </li>
-                </ul>
-                {/*
+                    <div
+                        className="collapse navbar-collapse"
+                        id="navbarSupportedContent"
+                    >
+                        <ul className="navbar-nav mr-auto">
+                            <li className="nav-item">
+                                <Link to="/" className="nav-link">
+                                    <Book className="navbar-icon" />
+                                    Comics
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="/add/new" className="nav-link">
+                                    <Plus className="navbar-icon" />
+                                    Add Comic
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="/activity" className="nav-link">
+                                    <Clock className="navbar-icon" />
+                                    Activity
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="/wanted" className="nav-link">
+                                    <AlertTriangle className="navbar-icon" />
+                                    Wanted
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="/settings" className="nav-link">
+                                    <Settings className="navbar-icon" />
+                                    Settings
+                                </Link>
+                            </li>
+                        </ul>
+                        {/*
                 <form className="form-inline my-2 my-lg-0">
                     <div className="input-group">
                         <input className="form-control" type="search" placeholder="Search" aria-label="Search" />
@@ -59,11 +70,11 @@ const PageHeader = () => (
                     </div>
                 </form>
                 */}
-              </div>
-            </nav>
-          </div>
+                    </div>
+                </nav>
+            </div>
         </div>
     </div>
-)
+);
 
-export default PageHeader
+export default PageHeader;

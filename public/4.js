@@ -102,7 +102,7 @@ var AddNewComic = /*#__PURE__*/function (_Component) {
                   loading: true
                 });
                 _context.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/comic/search/', {
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/comic/search/", {
                   params: {
                     query: value
                   }
@@ -244,7 +244,7 @@ var ComicItemTemplate = /*#__PURE__*/function (_Component) {
       this.setState({
         addLoading: true
       });
-      axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/comic/', {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.post("/api/comic/", {
         cvid: this.props.cvid
       }).then(function (response) {
         _this2.setState({
@@ -262,7 +262,7 @@ var ComicItemTemplate = /*#__PURE__*/function (_Component) {
       this.setState({
         searchLoading: true
       });
-      axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/comic/', {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.post("/api/comic/", {
         cvid: this.props.cvid,
         search: true
       }).then(function (response) {
@@ -316,7 +316,7 @@ var ComicItemTemplate = /*#__PURE__*/function (_Component) {
         className: "comic-description",
         dangerouslySetInnerHTML: {
           __html: dompurify__WEBPACK_IMPORTED_MODULE_4___default.a.sanitize(displayDescription, {
-            ADD_ATTR: ['target']
+            ADD_ATTR: ["target"]
           })
         }
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -324,7 +324,7 @@ var ComicItemTemplate = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_ComicBadge__WEBPACK_IMPORTED_MODULE_6__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_pluralize__WEBPACK_IMPORTED_MODULE_5___default.a, {
-        singular: 'issue',
+        singular: "issue",
         count: numIssues
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-3 offset-md-7"
@@ -559,7 +559,7 @@ var ComicBadge = /*#__PURE__*/function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 ComicBadge.defaultProps = {
-  color: 'primary'
+  color: "primary"
 };
 ComicBadge.propTypes = {
   children: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.node,

@@ -71,7 +71,7 @@ var ComicDescriptionModal = /*#__PURE__*/function (_Component) {
         className: "comic-description",
         dangerouslySetInnerHTML: {
           __html: dompurify__WEBPACK_IMPORTED_MODULE_2___default.a.sanitize(description, {
-            ADD_ATTR: ['target']
+            ADD_ATTR: ["target"]
           })
         }
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["ModalFooter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
@@ -136,7 +136,7 @@ var ComicDetails = function ComicDetails(_ref) {
     var tab = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "description";
 
     if (tab == "searchAutomatic") {
-      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/indexer/autosearch', {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/api/indexer/autosearch", {
         params: {
           cvid: issue.cvid
         }
@@ -325,7 +325,7 @@ var ComicItem = /*#__PURE__*/function (_Component) {
         className: "comic-description",
         dangerouslySetInnerHTML: {
           __html: dompurify__WEBPACK_IMPORTED_MODULE_3___default.a.sanitize(displayDescription, {
-            ADD_ATTR: ['target']
+            ADD_ATTR: ["target"]
           })
         }
       }), this.descriptionModal())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -333,7 +333,7 @@ var ComicItem = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-2"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_ComicBadge__WEBPACK_IMPORTED_MODULE_6__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_pluralize__WEBPACK_IMPORTED_MODULE_4___default.a, {
-        singular: 'issue',
+        singular: "issue",
         count: numIssues
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_ComicBadge__WEBPACK_IMPORTED_MODULE_6__["default"], null, publisher)))));
     }
@@ -614,7 +614,7 @@ var IssueItem = /*#__PURE__*/function (_Component) {
     _this = _super.call(this);
     _this.state = {
       modal: false,
-      modalTab: 'description'
+      modalTab: "description"
     };
     _this.clickName = _this.clickName.bind(_assertThisInitialized(_this));
     _this.onSearchClick = _this.onSearchClick.bind(_assertThisInitialized(_this));
@@ -640,13 +640,13 @@ var IssueItem = /*#__PURE__*/function (_Component) {
   }, {
     key: "clickName",
     value: function clickName() {
-      this.changeModalTab('description');
+      this.changeModalTab("description");
       this.toggleModal();
     }
   }, {
     key: "onSearchClick",
     value: function onSearchClick() {
-      this.changeModalTab('search');
+      this.changeModalTab("search");
       this.toggleModal();
     }
   }, {
@@ -877,7 +877,7 @@ var DescriptionTab = /*#__PURE__*/function (_Component) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Page_PageRow__WEBPACK_IMPORTED_MODULE_3__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         dangerouslySetInnerHTML: {
           __html: dompurify__WEBPACK_IMPORTED_MODULE_2___default.a.sanitize(description, {
-            ADD_ATTR: ['target']
+            ADD_ATTR: ["target"]
           })
         }
       }));
@@ -960,10 +960,10 @@ var HistoryIcon = /*#__PURE__*/function (_Component) {
         case 1:
           //Download started
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_2__["DownloadCloud"], {
-            id: 'history-icon-' + id
+            id: "history-icon-" + id
           }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["UncontrolledTooltip"], {
             placement: "right",
-            target: 'history-icon-' + id
+            target: "history-icon-" + id
           }, "Issue Grabbed from ", indexer, " and sent to download client"));
       }
     }
@@ -1045,10 +1045,10 @@ var HistoryItem = /*#__PURE__*/function (_Component) {
           date_elapsed = _this$props$item.date_elapsed,
           display_date = _this$props$item.display_date;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_HistoryIcon__WEBPACK_IMPORTED_MODULE_2__["default"], this.props.item)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, source_title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        id: 'history-date-' + id
+        id: "history-date-" + id
       }, date_elapsed)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["UncontrolledTooltip"], {
         placement: "left",
-        target: 'history-date-' + id
+        target: "history-date-" + id
       }, display_date));
     }
   }]);
@@ -1213,7 +1213,7 @@ var HistoryTab = /*#__PURE__*/function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/history/issue/' + this.props.issue.cvid).then(function (results) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/history/issue/" + this.props.issue.cvid).then(function (results) {
         _this2.setState({
           history: results.data.data
         });
@@ -1355,8 +1355,8 @@ var IssueModal = /*#__PURE__*/function (_Component) {
         this.setState({
           searchResultsLoading: true,
           didSearch: true
-        }, this.props.changeActiveTab('search'));
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/indexer/search', {
+        }, this.props.changeActiveTab("search"));
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/indexer/search", {
           params: {
             cvid: this.props.issue.cvid
           }
@@ -1377,8 +1377,8 @@ var IssueModal = /*#__PURE__*/function (_Component) {
         this.setState({
           searchResultsLoading: true,
           didSearch: true
-        }, this.props.changeActiveTab('search'));
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/indexer/search', {
+        }, this.props.changeActiveTab("search"));
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/indexer/search", {
           params: {
             cvid: this.props.issue.cvid
           }
@@ -1393,7 +1393,7 @@ var IssueModal = /*#__PURE__*/function (_Component) {
   }, {
     key: "onDownloadClick",
     value: function onDownloadClick(guid) {
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/trackeddownload', {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/trackeddownload", {
         guid: guid
       }).then(this.props.toggleModal());
     }
@@ -1494,14 +1494,14 @@ __webpack_require__.r(__webpack_exports__);
 
 function IssueModalMenuBar(props) {
   var links = [{
-    text: 'Description',
-    tabName: 'description'
+    text: "Description",
+    tabName: "description"
   }, {
-    text: 'History',
-    tabName: 'history'
+    text: "History",
+    tabName: "history"
   }, {
-    text: 'Search',
-    tabName: 'search'
+    text: "Search",
+    tabName: "search"
   }];
   var activeTab = props.activeTab,
       onClickCallback = props.onClickCallback;
@@ -1695,12 +1695,12 @@ var IssueSearchButtons = /*#__PURE__*/function (_Component) {
   _createClass(IssueSearchButtons, [{
     key: "onAutoClick",
     value: function onAutoClick() {
-      this.props.clickCallback('searchAutomatic');
+      this.props.clickCallback("searchAutomatic");
     }
   }, {
     key: "onManualClick",
     value: function onManualClick() {
-      this.props.clickCallback('searchManual');
+      this.props.clickCallback("searchManual");
     }
   }, {
     key: "render",
@@ -1800,7 +1800,7 @@ var IssueStatus = /*#__PURE__*/function (_Component) {
   }, {
     key: "renderDownloading",
     value: function renderDownloading() {
-      var id = 'status-' + this.props.issue.cvid;
+      var id = "status-" + this.props.issue.cvid;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_2__["DownloadCloud"], {
         id: id
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["UncontrolledTooltip"], {
@@ -1817,20 +1817,20 @@ var IssueStatus = /*#__PURE__*/function (_Component) {
       }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["UncontrolledTooltip"], {
         placement: "top",
         target: id
-      }, "Issue Downloaded - ", this.props.issue.downloadedFile.readable_size));
+      }, "Issue Downloaded -", " ", this.props.issue.downloadedFile.readable_size));
     }
   }, {
     key: "render",
     value: function render() {
       switch (this.props.issue.status) {
         case null:
-        case 'missing':
+        case "missing":
           return this.renderMissing();
 
-        case 'downloading':
+        case "downloading":
           return this.renderDownloading();
 
-        case 'downloaded':
+        case "downloaded":
           return this.renderDownloaded();
 
         default:
@@ -1919,7 +1919,7 @@ var ComicBadge = /*#__PURE__*/function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 ComicBadge.defaultProps = {
-  color: 'primary'
+  color: "primary"
 };
 ComicBadge.propTypes = {
   children: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.node,
@@ -2009,7 +2009,7 @@ var MonitoredIcon = /*#__PURE__*/function (_Component) {
       var _this$props = this.props,
           itemType = _this$props.itemType,
           cvid = _this$props.cvid;
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.put('/api/' + itemType + '/' + cvid, {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.put("/api/" + itemType + "/" + cvid, {
         monitored: !this.state.isMonitored
       }).then(function (response) {
         _this2.setState({
@@ -2019,7 +2019,7 @@ var MonitoredIcon = /*#__PURE__*/function (_Component) {
 
         console.log("dispatch");
 
-        if (itemType == 'comic') {
+        if (itemType == "comic") {
           _this2.props.dispatch(Object(_Store_Slices_comics__WEBPACK_IMPORTED_MODULE_5__["toggleComicMonitored"])({
             cvid: cvid,
             monitored: response.data.data.monitored
@@ -2037,17 +2037,17 @@ var MonitoredIcon = /*#__PURE__*/function (_Component) {
         });
       }
 
-      var fill = this.state.isMonitored ? 'solid' : 'none';
-      var id = this.props.itemType + '-' + this.props.cvid;
+      var fill = this.state.isMonitored ? "solid" : "none";
+      var id = this.props.itemType + "-" + this.props.cvid;
       var text = "Toggle Monitored Status";
 
-      if (this.props.itemType == 'comic') {
+      if (this.props.itemType == "comic") {
         text += " for all Issues";
       }
 
       if (this.props.isDisabled) {
-        if (fill == 'solid') {
-          fill = '#7A7A7A';
+        if (fill == "solid") {
+          fill = "#7A7A7A";
         }
 
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_3__["Bookmark"], {

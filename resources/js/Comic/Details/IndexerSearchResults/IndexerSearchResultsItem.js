@@ -1,9 +1,8 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import {Download} from 'react-feather'
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Download } from "react-feather";
 
-class IndexerSearchResultsItem extends Component
-{
+class IndexerSearchResultsItem extends Component {
     constructor() {
         super();
 
@@ -15,13 +14,7 @@ class IndexerSearchResultsItem extends Component
     }
 
     render() {
-        const {
-            displayTitle,
-            ago,
-            size,
-            indexer,
-            source,
-        } = this.props.item;
+        const { displayTitle, ago, size, indexer, source } = this.props.item;
 
         return (
             <tr>
@@ -30,7 +23,9 @@ class IndexerSearchResultsItem extends Component
                 <td className="">{displayTitle}</td>
                 <td className="">{indexer}</td>
                 <td className="">{size}</td>
-                <td className=""><Download onClick={this.onDownloadClick} /></td>
+                <td className="">
+                    <Download onClick={this.onDownloadClick} />
+                </td>
             </tr>
         );
     }
@@ -47,6 +42,6 @@ IndexerSearchResultsItem.propTypes = {
         guid: PropTypes.string,
     }),
     downloadClick: PropTypes.func.isRequired,
-}
+};
 
-export default IndexerSearchResultsItem
+export default IndexerSearchResultsItem;

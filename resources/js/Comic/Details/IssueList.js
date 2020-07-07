@@ -1,20 +1,19 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import IssueItem from './IssueItem'
-import LoadingIndicator from '@/Components/Loading/LoadingIndicator'
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import IssueItem from "./IssueItem";
+import LoadingIndicator from "@/Components/Loading/LoadingIndicator";
 
-class IssueList extends Component
-{
+class IssueList extends Component {
     render() {
-        const {issues, comicMonitored} = this.props;
-        const {isLoading, isPopulated, items} = issues;
+        const { issues, comicMonitored } = this.props;
+        const { isLoading, isPopulated, items } = issues;
 
         if (isLoading) {
-            return <LoadingIndicator />
+            return <LoadingIndicator />;
         }
 
         if (!isPopulated) {
-            return "Something went wrong..."
+            return "Something went wrong...";
         }
 
         return (
@@ -30,8 +29,13 @@ class IssueList extends Component
                     </tr>
                 </thead>
                 <tbody>
-                    {items.map(issue => (
-                        <IssueItem key={issue.cvid} comicMonitored={comicMonitored} clickCallback={this.props.clickCallback} issue={issue}/> 
+                    {items.map((issue) => (
+                        <IssueItem
+                            key={issue.cvid}
+                            comicMonitored={comicMonitored}
+                            clickCallback={this.props.clickCallback}
+                            issue={issue}
+                        />
                     ))}
                 </tbody>
             </table>
@@ -47,7 +51,6 @@ IssueList.propTypes = {
     }),
     clickCallback: PropTypes.func,
     comicMonitored: PropTypes.bool,
-}
+};
 
-export default IssueList
-
+export default IssueList;

@@ -1,12 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import {Badge} from 'reactstrap'
+import React from "react";
+import PropTypes from "prop-types";
+import { Badge } from "reactstrap";
 
 function ConnectorBadge(props) {
-    const {
-        text,
-        enabled,
-    } = props;
+    const { text, enabled } = props;
 
     const color = enabled ? "success" : "danger";
 
@@ -14,14 +11,12 @@ function ConnectorBadge(props) {
         return null;
     }
 
-    return (
-        <Badge color={color}>{text}</Badge>
-    );
+    return <Badge color={color}>{text}</Badge>;
 }
 
 ConnectorBadge.propTypes = {
     text: PropTypes.string.isRequired,
     enabled: PropTypes.bool,
-}
+};
 
 export default ConnectorBadge;
