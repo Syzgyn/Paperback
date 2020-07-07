@@ -112,13 +112,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _ComicItem__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ComicItem */ "./resources/js/Comic/Details/ComicItem.js");
 /* harmony import */ var _IssueList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./IssueList */ "./resources/js/Comic/Details/IssueList.js");
-/* harmony import */ var _IssueModal_IssueModal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./IssueModal/IssueModal */ "./resources/js/Comic/Details/IssueModal/IssueModal.js");
-/* harmony import */ var _Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Components/Loading/LoadingIndicator */ "./resources/js/Components/Loading/LoadingIndicator.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _Store_Slices_comics__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/Store/Slices/comics */ "./resources/js/Store/Slices/comics.js");
-/* harmony import */ var _Store_Slices_issues__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/Store/Slices/issues */ "./resources/js/Store/Slices/issues.js");
+/* harmony import */ var _Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Components/Loading/LoadingIndicator */ "./resources/js/Components/Loading/LoadingIndicator.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Store_Slices_comics__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/Store/Slices/comics */ "./resources/js/Store/Slices/comics.js");
+/* harmony import */ var _Store_Slices_issues__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/Store/Slices/issues */ "./resources/js/Store/Slices/issues.js");
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 
 
 
@@ -154,25 +152,19 @@ var ComicDetails = function ComicDetails(_ref) {
     }
   }
 
-  function changeModalTab(tab) {
-    this.setState({
-      activeTab: tab
-    });
-  }
-
-  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_8__["useDispatch"])();
+  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_7__["useDispatch"])();
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    dispatch(Object(_Store_Slices_issues__WEBPACK_IMPORTED_MODULE_10__["fetchIssues"])(match.params.cvid));
+    dispatch(Object(_Store_Slices_issues__WEBPACK_IMPORTED_MODULE_9__["fetchIssues"])(match.params.cvid));
     return function cleanup() {
-      dispatch(Object(_Store_Slices_issues__WEBPACK_IMPORTED_MODULE_10__["removeIssues"])());
+      dispatch(Object(_Store_Slices_issues__WEBPACK_IMPORTED_MODULE_9__["removeIssues"])());
     };
-  }, [dispatch]);
-  var comics = Object(react_redux__WEBPACK_IMPORTED_MODULE_8__["useSelector"])(_Store_Slices_comics__WEBPACK_IMPORTED_MODULE_9__["comicsSelector"]);
-  var issues = Object(react_redux__WEBPACK_IMPORTED_MODULE_8__["useSelector"])(_Store_Slices_issues__WEBPACK_IMPORTED_MODULE_10__["issuesSelector"]);
-  var comic = Object(react_redux__WEBPACK_IMPORTED_MODULE_8__["useSelector"])(_Store_Slices_comics__WEBPACK_IMPORTED_MODULE_9__["currentComicSelector"]);
+  }, [dispatch, match.params.cvid]);
+  var comics = Object(react_redux__WEBPACK_IMPORTED_MODULE_7__["useSelector"])(_Store_Slices_comics__WEBPACK_IMPORTED_MODULE_8__["comicsSelector"]);
+  var issues = Object(react_redux__WEBPACK_IMPORTED_MODULE_7__["useSelector"])(_Store_Slices_issues__WEBPACK_IMPORTED_MODULE_9__["issuesSelector"]);
+  var comic = Object(react_redux__WEBPACK_IMPORTED_MODULE_7__["useSelector"])(_Store_Slices_comics__WEBPACK_IMPORTED_MODULE_8__["currentComicSelector"]);
 
   if (comics.isLoading) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_7__["default"], null);
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_6__["default"], null);
   }
 
   if (comics.isPopulated) {
@@ -365,7 +357,8 @@ ComicItem.propTypes = {
   descriptionIsTruncated: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
   inLibrary: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
   singleView: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
-  classes: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+  classes: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  monitored: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool
 };
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(ComicItem));
 
@@ -468,7 +461,8 @@ IndexerSearchResultsItem.propTypes = {
     size: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
     indexer: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
     source: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-    link: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+    link: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+    guid: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
   }),
   downloadClick: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
 };
@@ -651,7 +645,7 @@ var IssueItem = /*#__PURE__*/function (_Component) {
     }
   }, {
     key: "onSearchClick",
-    value: function onSearchClick(type) {
+    value: function onSearchClick() {
       this.changeModalTab('search');
       this.toggleModal();
     }
@@ -710,9 +704,11 @@ IssueItem.propTypes = {
     displayName: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
     status: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
     release_date: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-    cvid: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number
+    cvid: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number,
+    monitored: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool
   }),
-  clickCallback: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func
+  clickCallback: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func,
+  comicMonitored: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool
 };
 /* harmony default export */ __webpack_exports__["default"] = (IssueItem);
 
@@ -787,6 +783,10 @@ var IssueList = /*#__PURE__*/function (_Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_3__["default"], null);
       }
 
+      if (!isPopulated) {
+        return "Something went wrong...";
+      }
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
         className: "table"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Release Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, items.map(function (issue) {
@@ -809,7 +809,8 @@ IssueList.propTypes = {
     isPopulated: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
     items: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array
   }),
-  clickCallback: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func
+  clickCallback: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func,
+  comicMonitored: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool
 };
 /* harmony default export */ __webpack_exports__["default"] = (IssueList);
 
@@ -953,11 +954,11 @@ var HistoryIcon = /*#__PURE__*/function (_Component) {
           event_type = _this$props.event_type,
           id = _this$props.id,
           data = _this$props.data;
+      var indexer = data.indexer;
 
       switch (event_type) {
         case 1:
           //Download started
-          var indexer = data.indexer;
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_2__["DownloadCloud"], {
             id: 'history-icon-' + id
           }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["UncontrolledTooltip"], {
@@ -972,7 +973,11 @@ var HistoryIcon = /*#__PURE__*/function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 HistoryIcon.propTypes = {
-  event_type: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number
+  event_type: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number,
+  id: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number,
+  data: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({
+    indexer: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+  })
 };
 /* harmony default export */ __webpack_exports__["default"] = (HistoryIcon);
 
@@ -1052,7 +1057,12 @@ var HistoryItem = /*#__PURE__*/function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 HistoryItem.propTypes = {
-  item: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({})
+  item: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({
+    id: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number,
+    source_title: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+    date_elapsed: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+    display_date: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+  })
 };
 /* harmony default export */ __webpack_exports__["default"] = (HistoryItem);
 
@@ -1130,9 +1140,7 @@ var HistoryList = /*#__PURE__*/function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 HistoryList.propTypes = {
-  item: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.shape({
-    id: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.number
-  })
+  items: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.array
 };
 /* harmony default export */ __webpack_exports__["default"] = (HistoryList);
 
@@ -1836,9 +1844,12 @@ var IssueStatus = /*#__PURE__*/function (_Component) {
 
 IssueStatus.propTypes = {
   issue: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({
-    cvid: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number.isRequired
-  }).isRequired,
-  status: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+    cvid: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number.isRequired,
+    downloadedFile: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({
+      readable_size: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number
+    }),
+    status: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
+  }).isRequired
 };
 /* harmony default export */ __webpack_exports__["default"] = (IssueStatus);
 
@@ -2064,7 +2075,8 @@ MonitoredIcon.propTypes = {
   itemType: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string.isRequired,
   cvid: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.number.isRequired,
   isMonitored: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.bool.isRequired,
-  isDisabled: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.bool
+  isDisabled: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.bool,
+  dispatch: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func
 };
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_6__["connect"])()(MonitoredIcon));
 

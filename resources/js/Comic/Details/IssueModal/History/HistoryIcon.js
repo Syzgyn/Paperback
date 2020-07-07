@@ -13,14 +13,13 @@ class HistoryIcon extends Component
             data
         } = this.props;
 
+        const {
+            indexer,
+        } = data;
 
         switch (event_type)
         {
             case 1: //Download started
-                const {
-                    indexer,
-                } = data;
-
                 return (
                     <>
                         <DownloadCloud id={'history-icon-' + id}/>
@@ -36,6 +35,10 @@ class HistoryIcon extends Component
 
 HistoryIcon.propTypes = {
     event_type: PropTypes.number,
+    id: PropTypes.number,
+    data: PropTypes.shape({
+        indexer: PropTypes.string,
+    }),
 }
 
 export default HistoryIcon

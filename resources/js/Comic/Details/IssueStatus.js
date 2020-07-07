@@ -59,8 +59,11 @@ class IssueStatus extends Component
 IssueStatus.propTypes = {
     issue: PropTypes.shape({
         cvid: PropTypes.number.isRequired,
+        downloadedFile: PropTypes.shape({
+            readable_size: PropTypes.number,
+        }),
+        status: PropTypes.string,
     }).isRequired,
-    status: PropTypes.string
 }
 
 export default IssueStatus

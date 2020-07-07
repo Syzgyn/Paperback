@@ -1,5 +1,5 @@
-import {current, createAsyncThunk, createSlice, createSelector, createAction} from '@reduxjs/toolkit'
-import {getCurrentCvidSelector} from '@/Store/Slices/router'
+import {current, createAsyncThunk, createSlice} from '@reduxjs/toolkit'
+import axios from 'axios'
 
 const defaultState = {
     isLoading: false,
@@ -20,13 +20,13 @@ const slice = createSlice({
     name: 'issues',
     initialState: defaultState,
     reducers: {
-        removeIssues(state, action) {
+        removeIssues(state) {
             state.items = [];
             state.isPopulated = false;
         }
     },
     extraReducers: {
-        [fetchIssues.pending]: (state, action) => {
+        [fetchIssues.pending]: (state) => {
             state.isLoading = true
         },
         [fetchIssues.fulfilled]: (state, action) => {
@@ -35,7 +35,7 @@ const slice = createSlice({
             state.isLoading = false
 console.log(current(state));
         },
-        [fetchIssues.rejected]: (state, action) => {
+        [fetchIssues.rejected]: (state) => {
             state.isLoading = false
         },
     },

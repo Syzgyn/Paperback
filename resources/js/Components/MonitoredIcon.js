@@ -1,4 +1,4 @@
-import React, { Component, useCallback } from 'react'
+import React, { Component} from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
 import {Bookmark} from 'react-feather'
@@ -73,6 +73,7 @@ MonitoredIcon.propTypes = {
     cvid: PropTypes.number.isRequired,
     isMonitored: PropTypes.bool.isRequired,
     isDisabled: PropTypes.bool,
+    dispatch: PropTypes.func,
 }
 
 export default connect()(MonitoredIcon);

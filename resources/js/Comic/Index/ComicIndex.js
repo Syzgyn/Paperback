@@ -1,17 +1,19 @@
-import axios from 'axios'
-import React, { useEffect } from 'react'
+import React from 'react'
 import ComicIndexItem from './ComicIndexItem'
 import LoadingIndicator from '@/Components/Loading/LoadingIndicator'
 import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import {fetchComics, comicsSelector} from '@/Store/Slices/comics'
+import {useSelector } from 'react-redux'
+import {comicsSelector} from '@/Store/Slices/comics'
 
 const ComicIndex = () => { 
-    const dispatch = useDispatch();
     const {items: comics, isFetching, isPopulated} = useSelector(comicsSelector);
 
-    if (!isPopulated) {
+    if (isFetching) {
         return <LoadingIndicator />
+    }
+
+    if (!isPopulated) {
+        return "Something went wrong";
     }
 
     if (!comics.length) {

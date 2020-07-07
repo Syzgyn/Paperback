@@ -29,9 +29,7 @@ class HistoryList extends Component
 }
 
 HistoryList.propTypes = {
-    item: PropTypes.shape({
-        id: PropTypes.number,
-    }),
+    items: PropTypes.array,
 }
 
 export default HistoryList

@@ -1,5 +1,6 @@
-import {current, createAction, createAsyncThunk, createSlice, createSelector} from '@reduxjs/toolkit'
+import {createAction, createAsyncThunk, createSlice, createSelector} from '@reduxjs/toolkit'
 import {getCurrentCvidSelector} from '@/Store/Slices/router'
+import axios from 'axios'
 
 const defaultState = {
     isLoading: false,
@@ -33,7 +34,7 @@ const slice = createSlice({
             const index = state.items.findIndex(item => item.cvid == cvid);
             state.items[index].monitored = monitored;
         },
-        [fetchComics.pending]: (state, actions) => {
+        [fetchComics.pending]: (state) => {
             state.isLoading = true
         },
         [fetchComics.fulfilled]: (state, action) => {
@@ -41,7 +42,7 @@ const slice = createSlice({
             state.isPopulated = true
             state.isLoading = false
         },
-        [fetchComics.rejected]: (state, action) => {
+        [fetchComics.rejected]: (state) => {
             state.isLoading = false
         },
     },

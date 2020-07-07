@@ -31,6 +31,10 @@ class HistoryItem extends Component
 
 HistoryItem.propTypes = {
     item: PropTypes.shape({
+        id: PropTypes.number,
+        source_title: PropTypes.string,
+        date_elapsed: PropTypes.string,
+        display_date: PropTypes.string,
     }),
 }
 

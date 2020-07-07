@@ -44,6 +44,7 @@ IndexerSearchResultsItem.propTypes = {
         indexer: PropTypes.string,
         source: PropTypes.string,
         link: PropTypes.string,
+        guid: PropTypes.string,
     }),
     downloadClick: PropTypes.func.isRequired,
 }

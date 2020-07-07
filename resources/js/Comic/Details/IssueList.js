@@ -13,6 +13,10 @@ class IssueList extends Component
             return <LoadingIndicator />
         }
 
+        if (!isPopulated) {
+            return "Something went wrong..."
+        }
+
         return (
             <table className="table">
                 <thead>
@@ -42,6 +46,7 @@ IssueList.propTypes = {
         items: PropTypes.array,
     }),
     clickCallback: PropTypes.func,
+    comicMonitored: PropTypes.bool,
 }
 
 export default IssueList

@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 import ComicItem from './ComicItem'
 import IssueList from './IssueList';
-import IssueModal from './IssueModal/IssueModal';
 import LoadingIndicator from '@/Components/Loading/LoadingIndicator';
 import { useDispatch, useSelector } from 'react-redux'
 import {comicsSelector, currentComicSelector} from '@/Store/Slices/comics'
@@ -23,17 +22,13 @@ const ComicDetails = ({match}) => {
         }
     }
 
-    function changeModalTab(tab) {
-        this.setState({activeTab: tab});
-    }
-
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(fetchIssues(match.params.cvid));
         
         return function cleanup() { dispatch(removeIssues())}
-    }, [dispatch]);
+    }, [dispatch, match.params.cvid]);
 
     const comics = useSelector(comicsSelector)
     const issues = useSelector(issuesSelector)

@@ -32,7 +32,7 @@ class IssueItem extends Component
         this.toggleModal();
     }
 
-    onSearchClick(type) {
+    onSearchClick() {
         this.changeModalTab('search');
         this.toggleModal();
     }
@@ -72,8 +72,10 @@ IssueItem.propTypes = {
         status: PropTypes.string,
         release_date: PropTypes.string,
         cvid: PropTypes.number,
+        monitored: PropTypes.bool,
     }),
     clickCallback: PropTypes.func,
+    comicMonitored: PropTypes.bool,
 }
 
 export default IssueItem

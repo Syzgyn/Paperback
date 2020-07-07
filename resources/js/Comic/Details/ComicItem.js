@@ -93,6 +93,7 @@ ComicItem.propTypes = {
     inLibrary: PropTypes.bool,
     singleView: PropTypes.bool,
     classes: PropTypes.string,
+    monitored: PropTypes.bool,
 }
 
 export default withRouter(ComicItem);
