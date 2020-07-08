@@ -1,39 +1,79 @@
-import {
-    createAsyncThunk,
-    createSlice,
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { batch } from "react-redux";
+//import { searchForComic } from '@/Store/Slices/indexers';
 
 const defaultState = {
     isLoading: false,
     isPopulated: false,
     items: [],
+    isAdding: false,
+    isAdded: false,
 };
 
-export const searchComics = createAsyncThunk("addComics/search", async (query) => {
-    const response = await axios.get("/api/comic/search", {params: {query: query}});
+export const searchComics = createAsyncThunk(
+    "addComics/search",
+    async (query) => {
+        // eslint-disable-next-line
+        if (!!query.trim()) {
+            const response = await axios.get("/api/comic/search", {
+                params: { query: query },
+            });
+            return response.data.data;
+        }
+
+        return false;
+    }
+);
+
+export const addComic = createAsyncThunk("addComics/add", async (cvid) => {
+    console.log(cvid);
+    const response = await axios.post("/api/comic", { cvid });
     return response.data.data;
 });
 
+export const addComicAndSearch = (cvid) => async (dispatch) => {
+    batch(() => {
+        dispatch(addComic(cvid));
+        //dispatch(searchForComic(cvid));
+    });
+};
+
 const slice = createSlice({
-    name: 'addComics',
+    name: "addComics",
     initialState: defaultState,
-    reducers: {},
+    reducers: {
+        clearAddComics() {
+            return defaultState;
+        },
+    },
     extraReducers: {
         [searchComics.pending]: (state) => {
-            state.isLoading = true
+            state.isLoading = true;
         },
         [searchComics.fulfilled]: (state, action) => {
-            state.items = action.payload;
+            if (action.payload) {
+                state.items = action.payload;
+            }
             state.isPopulated = true;
             state.isLoading = false;
         },
         [searchComics.rejected]: (state) => {
             state.isLoading = false;
         },
+        [addComic.pending]: (state) => {
+            state.isAdding = true;
+        },
+        [addComic.fulfilled]: (state) => {
+            state.isAdded = true;
+            state.isAdding = false;
+        },
+        [addComic.rejected]: (state) => {
+            state.isAdding = false;
+        },
     },
 });
 
-export const addComicsSelector = (state) => state.addComics
-
+export const addComicsSelector = (state) => state.addComics;
+export const { clearAddComics } = slice.actions;
 export default slice.reducer;

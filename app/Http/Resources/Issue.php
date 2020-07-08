@@ -27,7 +27,7 @@ class Issue extends JsonResource
             'status' => $this->status,
             'monitored' => $this->monitored,
             'downloadedFile' => $this->downloadedFile,
-            'displayName' => $this->displayName
+            'displayName' => $this->displayName,
         ];
     }
 

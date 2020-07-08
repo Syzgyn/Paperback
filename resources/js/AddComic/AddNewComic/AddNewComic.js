@@ -1,21 +1,27 @@
-import axios from "axios";
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import ComicItem from "./ComicItem";
 import { Search as Searchbar } from "./Search";
 import LoadingIndicator from "@/Components/Loading/LoadingIndicator";
 import PageRow from "@/Components/Page/PageRow";
 import { useDispatch, useSelector } from "react-redux";
-import { searchComics, addComicsSelector } from '@/Store/Slices/addComics';
+import {
+    searchComics,
+    addComicsSelector,
+    clearAddComics,
+} from "@/Store/Slices/addComics";
 
-const AddNewComic = () => { 
+const AddNewComic = () => {
     const dispatch = useDispatch();
-    const {isLoading, isPopulated, items} = useSelector(addComicsSelector);
+    const { isLoading, isPopulated, items } = useSelector(addComicsSelector);
+
+    useEffect(() => {
+        return () => {
+            dispatch(clearAddComics());
+        };
+    }, [dispatch]);
 
     function onSearchSubmit(value) {
-        if (!!value.trim()) {
-            dispatch(searchComics(value));
-        }
-        return;
+        dispatch(searchComics(value));
     }
 
     return (
@@ -23,8 +29,8 @@ const AddNewComic = () => {
             <Searchbar searchCallback={onSearchSubmit} />
             <PageRow>
                 {isLoading ? (
-                <LoadingIndicator />
-                ) : (isPopulated ? (
+                    <LoadingIndicator />
+                ) : isPopulated ? (
                     <div id="comic-list">
                         {items.map((comic) => (
                             <div
@@ -37,10 +43,10 @@ const AddNewComic = () => {
                     </div>
                 ) : (
                     ""
-                ))}
+                )}
             </PageRow>
         </>
     );
-}
+};
 
 export default AddNewComic;

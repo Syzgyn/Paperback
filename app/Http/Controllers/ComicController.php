@@ -76,7 +76,7 @@ class ComicController extends Controller
      */
     public function destroy(Comic $comic)
     {
-        $indexer->delete();
+        $comic->delete();
 
         return response()->json(['status' => 'OK']);
     }

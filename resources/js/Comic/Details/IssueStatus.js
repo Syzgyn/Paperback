@@ -60,7 +60,7 @@ IssueStatus.propTypes = {
     issue: PropTypes.shape({
         cvid: PropTypes.number.isRequired,
         downloadedFile: PropTypes.shape({
-            readable_size: PropTypes.number,
+            readable_size: PropTypes.string,
         }),
         status: PropTypes.string,
     }).isRequired,

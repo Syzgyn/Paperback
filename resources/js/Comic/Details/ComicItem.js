@@ -7,6 +7,7 @@ import { Button } from "reactstrap";
 import ComicBadge from "@/Components/ComicBadge";
 import ComicDescriptionModal from "./ComicDescriptionModal";
 import MonitoredIcon from "@/Components/MonitoredIcon";
+import ComicSettings from "@/Comic/Details/ComicSettings";
 
 class ComicItem extends Component {
     constructor() {
@@ -56,8 +57,8 @@ class ComicItem extends Component {
                     <img className="cover-image" src={image} />
                 </div>
                 <div className="col-md-10 col-sm-9">
-                    <div className="row">
-                        <div className="col-12 pb-1">
+                    <div className="row justify-content-between">
+                        <div className="col-10 pb-1">
                             <span>
                                 <MonitoredIcon
                                     itemType="comic"
@@ -72,6 +73,11 @@ class ComicItem extends Component {
                                 </span>
                             </span>
                         </div>
+                        <div className="col-1">
+                            <ComicSettings cvid={this.props.cvid} />
+                        </div>
+                    </div>
+                    <div className="row">
                         <div className="col-12">
                             <div
                                 className="comic-description"

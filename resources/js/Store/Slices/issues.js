@@ -1,4 +1,4 @@
-import { current, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const defaultState = {
@@ -32,7 +32,6 @@ const slice = createSlice({
             state.items = action.payload;
             state.isPopulated = true;
             state.isLoading = false;
-            console.log(current(state));
         },
         [fetchIssues.rejected]: (state) => {
             state.isLoading = false;

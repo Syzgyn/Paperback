@@ -50,7 +50,7 @@ const ComicDetails = ({ match }) => {
         return <LoadingIndicator />;
     }
 
-    if (comics.isPopulated) {
+    if (comics.isPopulated && comic) {
         //TODO:  This works for now, but later convert to more like Sonarr
         return (
             <>

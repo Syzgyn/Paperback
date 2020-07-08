@@ -6,6 +6,8 @@ import {
 } from "@reduxjs/toolkit";
 import { getCurrentCvidSelector } from "@/Store/Slices/router";
 import axios from "axios";
+import { push } from "connected-react-router";
+import { batch } from "react-redux";
 
 const defaultState = {
     isLoading: false,
@@ -17,6 +19,24 @@ export const fetchComics = createAsyncThunk("comics/fetchComics", async () => {
     const response = await axios.get("/api/comic");
     return response.data.data;
 });
+
+export const deleteComic = createAsyncThunk(
+    "comics/deleteComic",
+    async (cvid, { dispatch }) => {
+        const response = await axios.delete("/api/comic/" + cvid);
+        if (response.data.status == "OK") {
+            batch(() => {
+                dispatch(push("/"));
+                dispatch(fetchComics());
+            });
+        }
+    },
+    {
+        condition: () => {
+            return confirm("Delete Comic?");
+        },
+    }
+);
 
 export const toggleComicMonitored = createAction("comics/toggleComicMonitored");
 
@@ -42,6 +62,9 @@ const slice = createSlice({
         },
         [fetchComics.rejected]: (state) => {
             state.isLoading = false;
+        },
+        [deleteComic.rejected]: () => {
+            //TODO: Error handling
         },
     },
 });

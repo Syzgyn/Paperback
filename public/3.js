@@ -167,7 +167,7 @@ var ComicDetails = function ComicDetails(_ref) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_6__["default"], null);
   }
 
-  if (comics.isPopulated) {
+  if (comics.isPopulated && comic) {
     //TODO:  This works for now, but later convert to more like Sonarr
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ComicItem__WEBPACK_IMPORTED_MODULE_4__["default"], _extends({
       classes: "pb-3"
@@ -214,6 +214,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_ComicBadge__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Components/ComicBadge */ "./resources/js/Components/ComicBadge.js");
 /* harmony import */ var _ComicDescriptionModal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ComicDescriptionModal */ "./resources/js/Comic/Details/ComicDescriptionModal.js");
 /* harmony import */ var _Components_MonitoredIcon__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/Components/MonitoredIcon */ "./resources/js/Components/MonitoredIcon.js");
+/* harmony import */ var _Comic_Details_ComicSettings__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/Comic/Details/ComicSettings */ "./resources/js/Comic/Details/ComicSettings.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -235,6 +236,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -308,9 +310,9 @@ var ComicItem = /*#__PURE__*/function (_Component) {
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-10 col-sm-9"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row"
+        className: "row justify-content-between"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-12 pb-1"
+        className: "col-10 pb-1"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_MonitoredIcon__WEBPACK_IMPORTED_MODULE_8__["default"], {
         itemType: "comic",
         cvid: this.props.cvid,
@@ -320,6 +322,12 @@ var ComicItem = /*#__PURE__*/function (_Component) {
       }, name, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "comic-year"
       }, "(", startYear, ")")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-1"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Comic_Details_ComicSettings__WEBPACK_IMPORTED_MODULE_9__["default"], {
+        cvid: this.props.cvid
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "comic-description",
@@ -361,6 +369,58 @@ ComicItem.propTypes = {
   monitored: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool
 };
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(ComicItem));
+
+/***/ }),
+
+/***/ "./resources/js/Comic/Details/ComicSettings.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/Comic/Details/ComicSettings.js ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_feather__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-feather */ "./node_modules/react-feather/dist/index.js");
+/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Store_Slices_comics__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Store/Slices/comics */ "./resources/js/Store/Slices/comics.js");
+
+
+
+
+
+
+
+var ComicSettings = function ComicSettings(_ref) {
+  var cvid = _ref.cvid;
+  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["useDispatch"])();
+
+  function onDeleteClick() {
+    dispatch(Object(_Store_Slices_comics__WEBPACK_IMPORTED_MODULE_5__["deleteComic"])(cvid));
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_2__["Sliders"], {
+    id: "comicSettingsButton"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["UncontrolledPopover"], {
+    trigger: "legacy",
+    target: "comicSettingsButton",
+    placement: "bottom"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["PopoverBody"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "button",
+    className: "btn btn-danger",
+    onClick: onDeleteClick
+  }, "Delete"))));
+};
+
+ComicSettings.propTypes = {
+  cvid: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number
+};
+/* harmony default export */ __webpack_exports__["default"] = (ComicSettings);
 
 /***/ }),
 
@@ -1846,7 +1906,7 @@ IssueStatus.propTypes = {
   issue: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({
     cvid: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number.isRequired,
     downloadedFile: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.shape({
-      readable_size: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number
+      readable_size: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
     }),
     status: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
   }).isRequired
