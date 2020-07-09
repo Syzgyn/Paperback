@@ -18,10 +18,11 @@ class CreateComicsTable extends Migration
             $table->unsignedInteger("cvid")->first();
             $table->timestamps();
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->unsignedInteger('start_year');
             $table->string('url');
             $table->string('status')->nullable();
+            $table->boolean('monitored')->default(true);
 
             $table->primary('cvid');
 

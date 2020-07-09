@@ -8,6 +8,7 @@ import { getCurrentCvidSelector } from "@/Store/Slices/router";
 import axios from "axios";
 import { push } from "connected-react-router";
 import { batch } from "react-redux";
+import { toast } from "react-toastify";
 
 const defaultState = {
     isLoading: false,
@@ -25,6 +26,7 @@ export const deleteComic = createAsyncThunk(
     async (cvid, { dispatch }) => {
         const response = await axios.delete("/api/comic/" + cvid);
         if (response.data.status == "OK") {
+            toast("Comic Deleted");
             batch(() => {
                 dispatch(push("/"));
                 dispatch(fetchComics());

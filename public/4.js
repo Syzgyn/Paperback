@@ -72,18 +72,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var dompurify__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! dompurify */ "./node_modules/dompurify/dist/purify.js");
-/* harmony import */ var dompurify__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(dompurify__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react_pluralize__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-pluralize */ "./node_modules/react-pluralize/dist/index.js");
-/* harmony import */ var react_pluralize__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_pluralize__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Components_ComicBadge__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Components/ComicBadge */ "./resources/js/Components/ComicBadge.js");
-/* harmony import */ var react_feather__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-feather */ "./node_modules/react-feather/dist/index.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _Store_Slices_addComics__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/Store/Slices/addComics */ "./resources/js/Store/Slices/addComics.js");
-
-
-
+/* harmony import */ var dompurify__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! dompurify */ "./node_modules/dompurify/dist/purify.js");
+/* harmony import */ var dompurify__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(dompurify__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_pluralize__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-pluralize */ "./node_modules/react-pluralize/dist/index.js");
+/* harmony import */ var react_pluralize__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_pluralize__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _Components_ComicBadge__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Components/ComicBadge */ "./resources/js/Components/ComicBadge.js");
+/* harmony import */ var _AddComic_AddNewComic_ComicItemButtons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/AddComic/AddNewComic/ComicItemButtons */ "./resources/js/AddComic/AddNewComic/ComicItemButtons.js");
 
 
 
@@ -92,12 +86,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var ComicItem = function ComicItem(props) {
-  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_7__["useDispatch"])();
-
-  var _useSelector = Object(react_redux__WEBPACK_IMPORTED_MODULE_7__["useSelector"])(_Store_Slices_addComics__WEBPACK_IMPORTED_MODULE_8__["addComicsSelector"]),
-      isAdding = _useSelector.isAdding,
-      isAdded = _useSelector.isAdded;
-
   var cvid = props.cvid,
       numIssues = props.numIssues,
       startYear = props.startYear,
@@ -108,18 +96,6 @@ var ComicItem = function ComicItem(props) {
       inLibrary = props.inLibrary,
       singleView = props.singleView,
       classes = props.classes;
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-  });
-
-  function clickAddComic() {
-    dispatch(Object(_Store_Slices_addComics__WEBPACK_IMPORTED_MODULE_8__["addComic"])(props.cvid));
-  }
-
-  function clickAddAndSearchComic() {
-    dispatch(Object(_Store_Slices_addComics__WEBPACK_IMPORTED_MODULE_8__["addComicAndSearch"])(props.cvid));
-  }
-
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "row pb-5 " + classes
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -137,7 +113,7 @@ var ComicItem = function ComicItem(props) {
     className: "h2 mr-2"
   }, name, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     className: "comic-year"
-  }, "(", startYear, ")")), !singleView && publisher ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_ComicBadge__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, "(", startYear, ")")), !singleView && publisher ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_ComicBadge__WEBPACK_IMPORTED_MODULE_4__["default"], {
     color: "secondary"
   }, publisher) : null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "row"
@@ -146,7 +122,7 @@ var ComicItem = function ComicItem(props) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "comic-description",
     dangerouslySetInnerHTML: {
-      __html: dompurify__WEBPACK_IMPORTED_MODULE_3___default.a.sanitize(displayDescription, {
+      __html: dompurify__WEBPACK_IMPORTED_MODULE_2___default.a.sanitize(displayDescription, {
         ADD_ATTR: ["target"]
       })
     }
@@ -154,34 +130,15 @@ var ComicItem = function ComicItem(props) {
     className: "row"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-2"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_ComicBadge__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_pluralize__WEBPACK_IMPORTED_MODULE_4___default.a, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_ComicBadge__WEBPACK_IMPORTED_MODULE_4__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_pluralize__WEBPACK_IMPORTED_MODULE_3___default.a, {
     singular: "issue",
     count: numIssues
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-md-3 offset-md-7"
-  }, inLibrary ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
-    to: "/comic/" + cvid
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    type: "button",
-    className: "btn btn-outline-secondary"
-  }, "Already in Library")) : !singleView ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "btn-group"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: clickAddComic,
-    type: "button",
-    className: "btn btn-success",
-    "data-toggle": "tooltip",
-    "data-placement": "top",
-    title: "Add"
-  }, isAdding ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_6__["Loader"], null) : isAdded ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_6__["Check"], null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_6__["Plus"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: clickAddAndSearchComic,
-    type: "button",
-    className: "btn btn-success",
-    "data-toggle": "tooltip",
-    "data-placement": "top",
-    "data-html": "true",
-    title: "Add and search<br>for missing issues"
-  }, isAdding ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_6__["Loader"], null) : isAdded ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_6__["Check"], null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_6__["Search"], null))) : ""))));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AddComic_AddNewComic_ComicItemButtons__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    cvid: cvid,
+    inLibrary: inLibrary
+  })))));
 };
 
 ComicItem.propTypes = {
@@ -200,7 +157,98 @@ ComicItem.propTypes = {
   classes: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   dispatch: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func
 };
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(ComicItem));
+/* harmony default export */ __webpack_exports__["default"] = (ComicItem);
+
+/***/ }),
+
+/***/ "./resources/js/AddComic/AddNewComic/ComicItemButtons.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/AddComic/AddNewComic/ComicItemButtons.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_feather__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-feather */ "./node_modules/react-feather/dist/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Store_Slices_addComics__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Store/Slices/addComics */ "./resources/js/Store/Slices/addComics.js");
+/* harmony import */ var _Store_Slices_comics__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Store/Slices/comics */ "./resources/js/Store/Slices/comics.js");
+
+
+
+
+
+
+
+
+var ComicItemButtons = function ComicItemButtons(props) {
+  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["useDispatch"])();
+
+  var _useSelector = Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["useSelector"])(_Store_Slices_addComics__WEBPACK_IMPORTED_MODULE_5__["addComicsSelector"]),
+      isAdding = _useSelector.isAdding;
+
+  var comics = Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["useSelector"])(_Store_Slices_comics__WEBPACK_IMPORTED_MODULE_6__["comicsSelector"]);
+  var cvid = props.cvid;
+  var inLibrary = comics.items.findIndex(function (comic) {
+    return comic.cvid == cvid;
+  }) > -1;
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+    return function () {
+      $('[data-toggle="tooltip"]').tooltip("hide");
+    };
+  });
+
+  function clickAddComic() {
+    dispatch(Object(_Store_Slices_addComics__WEBPACK_IMPORTED_MODULE_5__["addComic"])(props.cvid));
+  }
+
+  function clickAddAndSearchComic() {
+    dispatch(Object(_Store_Slices_addComics__WEBPACK_IMPORTED_MODULE_5__["addComicAndSearch"])(props.cvid));
+  }
+
+  if (inLibrary) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+      to: "/comic/" + cvid
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      type: "button",
+      className: "btn btn-outline-secondary"
+    }, "Already in Library"));
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "btn-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: clickAddComic,
+    type: "button",
+    className: "btn btn-success",
+    "data-toggle": "tooltip",
+    "data-placement": "top",
+    title: "Add",
+    disabled: isAdding
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_3__["Plus"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: clickAddAndSearchComic,
+    type: "button",
+    className: "btn btn-success",
+    "data-toggle": "tooltip",
+    "data-placement": "top",
+    "data-html": "true",
+    title: "Add and search<br>for missing issues",
+    disabled: isAdding
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_3__["Search"], null))));
+};
+
+ComicItemButtons.propTypes = {
+  cvid: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number,
+  inLibrary: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool
+};
+/* harmony default export */ __webpack_exports__["default"] = (ComicItemButtons);
 
 /***/ }),
 

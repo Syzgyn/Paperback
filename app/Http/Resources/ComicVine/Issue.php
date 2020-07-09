@@ -14,11 +14,12 @@ class Issue extends JsonResource
      */
     public function toArray($request)
     {
+        var_dump($this->resource);
         return [
             'name' => $this->resource->name,
             'comic_id' => (int)$this->resource->volume->id,
             'description' => $this->resource->description,
-            'release_date' => $this->resource->cover_date,
+            'release_date' => $this->resource->store_date ?: $this->resource->cover_date,
             'issue_num' => (int)$this->resource->issue_number,
             'url' => $this->resource->site_detail_url,
             'cvid' => (int)$this->resource->id,

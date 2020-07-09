@@ -16,8 +16,8 @@ class App extends Component {
                         <AppRoutes />
                         <ToastContainer
                             position="bottom-right"
-                            autoClose={5000}
-                            hideProgressBar={false}
+                            autoClose={10000}
+                            hideProgressBar={true}
                             newestOnTop={false}
                             closeOnClick
                             rtl={false}

@@ -142,8 +142,15 @@ a.hideLink {
     cursor: pointer;
 }
 
-.Toastify__progress-bar--dark {
+.Toastify__progress-bar--default {
     background: #3490dc;
+}
+
+.Toastify__toast--default {
+    background: #121212;
+}
+.Toastify__close-button--default {
+    color: #FFF;
 }
 
 .modal-title {

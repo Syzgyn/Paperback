@@ -1,7 +1,11 @@
+import React from "react";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { batch } from "react-redux";
 //import { searchForComic } from '@/Store/Slices/indexers';
+import { fetchComics } from "@/Store/Slices/comics";
+import { toast } from "react-toastify";
+import AddComicMessage from "@/AddComic/AddNewComic/AddComicMessage";
 
 const defaultState = {
     isLoading: false,
@@ -26,11 +30,23 @@ export const searchComics = createAsyncThunk(
     }
 );
 
-export const addComic = createAsyncThunk("addComics/add", async (cvid) => {
-    console.log(cvid);
-    const response = await axios.post("/api/comic", { cvid });
-    return response.data.data;
-});
+export const addComic = createAsyncThunk(
+    "addComics/add",
+    async (cvid, { dispatch }) => {
+        const response = await axios.post("/api/comic", { cvid });
+        if (response.data.data) {
+            toast(
+                <AddComicMessage cvid={cvid} name={response.data.data.name} />
+            );
+            batch(() => {
+                dispatch(fetchComics());
+                dispatch(clearAddComics());
+            });
+        }
+
+        return response.data.data;
+    }
+);
 
 export const addComicAndSearch = (cvid) => async (dispatch) => {
     batch(() => {

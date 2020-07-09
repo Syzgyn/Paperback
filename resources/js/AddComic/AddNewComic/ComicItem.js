@@ -1,25 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { Link, withRouter } from "react-router-dom";
 import DOMPurify from "dompurify";
 import Pluralize from "react-pluralize";
 import ComicBadge from "@/Components/ComicBadge";
-import {
-    Plus as PlusIcon,
-    Search as SearchIcon,
-    Loader as LoaderIcon,
-    Check as CheckIcon,
-} from "react-feather";
-import { useDispatch, useSelector } from "react-redux";
-import {
-    addComicsSelector,
-    addComic,
-    addComicAndSearch,
-} from "@/Store/Slices/addComics";
+import ComicItemButtons from "@/AddComic/AddNewComic/ComicItemButtons";
 
 const ComicItem = (props) => {
-    const dispatch = useDispatch();
-    const { isAdding, isAdded } = useSelector(addComicsSelector);
     const {
         cvid,
         numIssues,
@@ -32,18 +18,6 @@ const ComicItem = (props) => {
         singleView,
         classes,
     } = props;
-
-    useEffect(() => {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-
-    function clickAddComic() {
-        dispatch(addComic(props.cvid));
-    }
-
-    function clickAddAndSearchComic() {
-        dispatch(addComicAndSearch(props.cvid));
-    }
 
     return (
         <div className={"row pb-5 " + classes}>
@@ -83,54 +57,7 @@ const ComicItem = (props) => {
                         </ComicBadge>
                     </div>
                     <div className="col-md-3 offset-md-7">
-                        {inLibrary ? (
-                            <Link to={"/comic/" + cvid}>
-                                <button
-                                    type="button"
-                                    className="btn btn-outline-secondary"
-                                >
-                                    Already in Library
-                                </button>
-                            </Link>
-                        ) : !singleView ? (
-                            <div className="btn-group">
-                                <button
-                                    onClick={clickAddComic}
-                                    type="button"
-                                    className="btn btn-success"
-                                    data-toggle="tooltip"
-                                    data-placement="top"
-                                    title="Add"
-                                >
-                                    {isAdding ? (
-                                        <LoaderIcon />
-                                    ) : isAdded ? (
-                                        <CheckIcon />
-                                    ) : (
-                                        <PlusIcon />
-                                    )}
-                                </button>
-                                <button
-                                    onClick={clickAddAndSearchComic}
-                                    type="button"
-                                    className="btn btn-success"
-                                    data-toggle="tooltip"
-                                    data-placement="top"
-                                    data-html="true"
-                                    title="Add and search<br>for missing issues"
-                                >
-                                    {isAdding ? (
-                                        <LoaderIcon />
-                                    ) : isAdded ? (
-                                        <CheckIcon />
-                                    ) : (
-                                        <SearchIcon />
-                                    )}
-                                </button>
-                            </div>
-                        ) : (
-                            ""
-                        )}
+                        <ComicItemButtons cvid={cvid} inLibrary={inLibrary} />
                     </div>
                 </div>
             </div>
@@ -155,4 +82,4 @@ ComicItem.propTypes = {
     dispatch: PropTypes.func,
 };
 
-export default withRouter(ComicItem);
+export default ComicItem;

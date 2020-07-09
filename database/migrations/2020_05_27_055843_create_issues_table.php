@@ -20,8 +20,9 @@ class CreateIssuesTable extends Migration
             $table->unsignedInteger('issue_num');
             $table->date('release_date');
             $table->string('name')->nullable();
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('url');
+            $table->boolean('monitored')->default(true);
 
             $table->primary('cvid');
         });
