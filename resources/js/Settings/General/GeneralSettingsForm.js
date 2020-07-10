@@ -1,81 +1,73 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { FormGroup } from "reactstrap";
 import { toast } from "react-toastify";
 import PageRow from "@/Components/Page/PageRow";
 import LoadingIndicator from "@/Components/Loading/LoadingIndicator";
+import { useSelector, useDispatch } from "react-redux";
+import {
+    fetchSettings,
+    submitSettings,
+    settingsGeneralSelector,
+} from "@/Store/Slices/Settings/general";
 
-class GeneralSettingsForm extends Component {
-    constructor() {
-        super();
-        this.state = {
-            loading: true,
-            settings: {},
-        };
+const GeneralSettingsForm = React.forwardRef((props, formRef) => {
+    const dispatch = useDispatch();
 
-        this.formRef = React.createRef();
+    useEffect(() => {
+        dispatch(fetchSettings());
+    }, [dispatch]);
+
+    function onSubmit(values) {
+        dispatch(submitSettings(values));
     }
 
-    componentDidMount() {
-        axios.get("/api/settings/general").then((results) => {
-            this.setState({ loading: false, settings: results.data });
-        });
+    const { isLoading, isPopulated, items } = useSelector(
+        settingsGeneralSelector
+    );
+
+    if (isLoading) {
+        return <LoadingIndicator />;
     }
 
-    onSubmit(values) {
-        axios.post("/api/settings", { general: values }).then((results) => {
-            if (results.data === 1) {
-                toast.dark("Settings Saved");
-            } else {
-                toast.dark("Error saving settings");
-            }
-        });
-    }
-
-    render() {
-        if (this.state.loading) {
-            return <LoadingIndicator />;
-        }
-
-        return (
-            <PageRow>
-                <Formik
-                    innerRef={this.formRef}
-                    initialValues={this.state.settings}
-                    onSubmit={this.onSubmit}
-                >
-                    <Form>
-                        <FormGroup>
-                            <label htmlFor="comicvine_apikey">
-                                ComicVine API Key
-                            </label>
-                            <Field
-                                name="comicvine_apikey"
-                                type="text"
-                                className="form-control"
-                            />
-                            <ErrorMessage name="comicvine_apikey" />
-                        </FormGroup>
-                        <FormGroup>
-                            <label>Bypass Cache?</label>
-                            <Field type="checkbox" name="bypass_cache" />
-                            <ErrorMessage name="bypass_cache" />
-                        </FormGroup>
-                        <FormGroup>
-                            <label>Destination Directory</label>
-                            <Field
-                                type="text"
-                                name="destination_dir"
-                                className="form-control"
-                            />
-                            <ErrorMessage name="destination_dir" />
-                        </FormGroup>
-                    </Form>
-                </Formik>
-            </PageRow>
-        );
-    }
-}
+    return (
+        <PageRow>
+            <Formik
+                innerRef={formRef}
+                initialValues={items}
+                onSubmit={onSubmit}
+            >
+                <Form>
+                    <FormGroup>
+                        <label htmlFor="comicvine_apikey">
+                            ComicVine API Key
+                        </label>
+                        <Field
+                            name="comicvine_apikey"
+                            type="text"
+                            className="form-control"
+                        />
+                        <ErrorMessage name="comicvine_apikey" />
+                    </FormGroup>
+                    <FormGroup>
+                        <label>Bypass Cache?</label>
+                        <Field type="checkbox" name="bypass_cache" />
+                        <ErrorMessage name="bypass_cache" />
+                    </FormGroup>
+                    <FormGroup>
+                        <label>Destination Directory</label>
+                        <Field
+                            type="text"
+                            name="destination_dir"
+                            className="form-control"
+                        />
+                        <ErrorMessage name="destination_dir" />
+                    </FormGroup>
+                </Form>
+            </Formik>
+        </PageRow>
+    );
+});
 
 export default GeneralSettingsForm;
