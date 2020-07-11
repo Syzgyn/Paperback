@@ -14,6 +14,7 @@ const defaultState = {
     isSchemaPopulated: false,
     schema: [],
     selectedSchema: null,
+    isTesting: false,
 };
 
 export const selectSchema = createAction("settings/indexers/selectSchema");
@@ -64,6 +65,14 @@ export const fetchSchema = createAsyncThunk(
     }
 );
 
+export const testIndexer = createAsyncThunk(
+    "settings/indexers/testIndexer",
+    async (values) => {
+        const response = await axios.post("/api/indexer/test", {values});
+        return response.data;
+    }
+);
+
 export const slice = createSlice({
     name: "general",
     initialState: defaultState,
@@ -104,6 +113,15 @@ export const slice = createSlice({
         },
         [fetchSchema.rejected]: (state) => {
             state.isSchemaLoading = false;
+        },
+        [testIndexer.pending]: (state) => {
+            state.isTesting = true;
+        },
+        [testIndexer.fulfilled]: (state) => {
+            state.isTesting = false;
+        },
+        [testIndexer.rejected]: (state) => {
+            state.isTesting = false;
         },
     },
 });

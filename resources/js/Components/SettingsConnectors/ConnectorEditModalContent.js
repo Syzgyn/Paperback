@@ -1,45 +1,45 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { FormGroup, Label } from "reactstrap";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useSelector } from "react-redux";
+import { settingsIndexersSelector } from "@/Store/Slices/Settings/indexers";
 
-class ConnectorEditModalContent extends Component {
-    render() {
-        const { formRef, item } = this.props;
+const ConnectorEditModalContent = React.forwardRef((props, formRef) => {
+    const { item } = props;
+    const { schema:allSchema, selectedSchema } = useSelector(settingsIndexersSelector);
 
-        let schema = null;
-        if (item) {
-            schema = this.props.item.schema;
-        } else {
-            schema = this.props.implementation;
-        }
-
-        const { fields, initialValues } = schema;
-
-        console.log(initialValues);
-
-        return (
-            <Formik initialValues={initialValues} innerRef={formRef}>
-                <Form id="editForm" className="horizontal-form">
-                    {fields.map((field) => (
-                        <FormGroup className="row" key={field.name}>
-                            <Label className="col-sm-3">{field.label}</Label>
-                            <div className="col-sm-5">
-                                {console.log(field.name)}
-                                <Field
-                                    type={field.type}
-                                    name={field.name}
-                                    className="form-control"
-                                />
-                                <ErrorMessage name={field.name} />
-                            </div>
-                        </FormGroup>
-                    ))}
-                </Form>
-            </Formik>
-        );
+    let schema = null;
+    if (item) {
+        schema = item.schema;
+    } else {
+        schema = allSchema.find(item => item.type === selectedSchema )
     }
-}
+
+    const { fields, initialValues } = schema;
+
+    return (
+        <Formik initialValues={initialValues} innerRef={formRef}>
+            <Form id="editForm" className="horizontal-form">
+                {fields.map((field) => (
+                    <FormGroup className="row" key={field.name}>
+                        <Label className="col-sm-3">{field.label}</Label>
+                        <div className="col-sm-5">
+                            <Field
+                                type={field.type}
+                                name={field.name}
+                                className="form-control"
+                            />
+                            <ErrorMessage name={field.name} />
+                        </div>
+                    </FormGroup>
+                ))}
+            </Form>
+        </Formik>
+    );
+});
+
+ConnectorEditModalContent.displayName = "ConnectorEditModalContent";
 
 ConnectorEditModalContent.propTypes = {
     implementation: PropTypes.object,

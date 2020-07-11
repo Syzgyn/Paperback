@@ -51,72 +51,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
 /* harmony import */ var _ConnectorAddModalContent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ConnectorAddModalContent */ "./resources/js/Components/SettingsConnectors/ConnectorAddModalContent.js");
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
 
 
 
-
-var ConnectorAddModal = /*#__PURE__*/function (_Component) {
-  _inherits(ConnectorAddModal, _Component);
-
-  var _super = _createSuper(ConnectorAddModal);
-
-  function ConnectorAddModal() {
-    _classCallCheck(this, ConnectorAddModal);
-
-    return _super.apply(this, arguments);
-  }
-
-  _createClass(ConnectorAddModal, [{
-    key: "render",
-    value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Modal"], {
-        isOpen: this.props.isOpen,
-        toggle: this.props.toggleModal,
-        className: "settingsItemModal",
-        size: "xl"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["ModalHeader"], {
-        toggle: this.props.toggleModal
-      }, "Add Connector"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["ModalBody"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorAddModalContent__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        schema: this.props.schema,
-        onModalClose: this.props.onModalClose
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["ModalFooter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
-        color: "secondary",
-        onClick: this.props.toggleModal
-      }, "Close")));
-    }
-  }]);
-
-  return ConnectorAddModal;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+var ConnectorAddModal = function ConnectorAddModal(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Modal"], {
+    isOpen: props.isOpen,
+    toggle: props.toggleModal,
+    className: "settingsItemModal",
+    size: "xl"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["ModalHeader"], {
+    toggle: props.toggleModal
+  }, "Add Connector"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["ModalBody"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorAddModalContent__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    onSchemaSelect: props.onSchemaSelect
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["ModalFooter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+    color: "secondary",
+    onClick: props.toggleModal
+  }, "Close")));
+};
 
 ConnectorAddModal.propTypes = {
   toggleModal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired,
   isOpen: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool.isRequired,
-  schema: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array.isRequired,
-  onModalClose: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
+  onSchemaSelect: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
 };
 /* harmony default export */ __webpack_exports__["default"] = (ConnectorAddModal);
 
@@ -136,80 +95,50 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _ConnectorAddModalItem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ConnectorAddModalItem */ "./resources/js/Components/SettingsConnectors/ConnectorAddModalItem.js");
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
+/* harmony import */ var _Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Components/Loading/LoadingIndicator */ "./resources/js/Components/Loading/LoadingIndicator.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Store/Slices/Settings/indexers */ "./resources/js/Store/Slices/Settings/indexers.js");
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 
 
 
 
-var ConnectorAddModalContent = /*#__PURE__*/function (_Component) {
-  _inherits(ConnectorAddModalContent, _Component);
 
-  var _super = _createSuper(ConnectorAddModalContent);
 
-  function ConnectorAddModalContent() {
-    var _this;
+var ConnectorAddModalContent = function ConnectorAddModalContent(props) {
+  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["useDispatch"])();
 
-    _classCallCheck(this, ConnectorAddModalContent);
+  var _useSelector = Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["useSelector"])(_Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_5__["settingsIndexersSelector"]),
+      isSchemaLoading = _useSelector.isSchemaLoading,
+      isSchemaPopulated = _useSelector.isSchemaPopulated,
+      schema = _useSelector.schema;
 
-    _this = _super.call(this);
-    _this.onConnectorSelect = _this.onConnectorSelect.bind(_assertThisInitialized(_this));
-    return _this;
-  }
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    dispatch(Object(_Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_5__["fetchSchema"])());
+  }, [dispatch]);
 
-  _createClass(ConnectorAddModalContent, [{
-    key: "onConnectorSelect",
-    value: function onConnectorSelect(modelType) {
-      this.props.onModalClose(true, modelType);
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this2 = this;
+  if (isSchemaLoading || !isSchemaPopulated) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_3__["default"], null);
+  } //TODO: Update title from schema
 
-      var schema = this.props.schema;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Usenet"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "settings-item-list"
-      }, schema.filter(function (item) {
-        return item.protocol == "usenet";
-      }).map(function (item) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorAddModalItem__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
-          key: item.name
-        }, item, {
-          onConnectorSelect: _this2.onConnectorSelect
-        }));
-      })));
-    }
-  }]);
 
-  return ConnectorAddModalContent;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Usenet"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "settings-item-list"
+  }, schema.filter(function (item) {
+    return item.protocol == "usenet";
+  }).map(function (item) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorAddModalItem__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
+      key: item.name
+    }, item, {
+      onSchemaSelect: props.onSchemaSelect
+    }));
+  })));
+};
 
 ConnectorAddModalContent.propTypes = {
-  schema: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array.isRequired,
-  onModalClose: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
+  onSchemaSelect: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
 };
 /* harmony default export */ __webpack_exports__["default"] = (ConnectorAddModalContent);
 
@@ -229,70 +158,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Store/Slices/Settings/indexers */ "./resources/js/Store/Slices/Settings/indexers.js");
 
 
 
 
 
-var ConnectorAddModalItem = /*#__PURE__*/function (_Component) {
-  _inherits(ConnectorAddModalItem, _Component);
 
-  var _super = _createSuper(ConnectorAddModalItem);
+var ConnectorAddModalItem = function ConnectorAddModalItem(props) {
+  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["useDispatch"])();
+  var name = props.name;
 
-  function ConnectorAddModalItem() {
-    var _this;
-
-    _classCallCheck(this, ConnectorAddModalItem);
-
-    _this = _super.call(this);
-    _this.selectConnector = _this.selectConnector.bind(_assertThisInitialized(_this));
-    return _this;
+  function selectConnector() {
+    dispatch(Object(_Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_4__["selectSchema"])(props.type));
+    props.onSchemaSelect();
   }
 
-  _createClass(ConnectorAddModalItem, [{
-    key: "selectConnector",
-    value: function selectConnector() {
-      this.props.onConnectorSelect(this.props.type);
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var name = this.props.name;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Card"], {
-        onClick: this.selectConnector,
-        className: "settings-connector-item shadow p-3 m-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["CardTitle"], null, name));
-    }
-  }]);
-
-  return ConnectorAddModalItem;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Card"], {
+    onClick: selectConnector,
+    className: "settings-connector-item shadow p-3 m-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["CardTitle"], null, name));
+};
 
 ConnectorAddModalItem.propTypes = {
   name: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   type: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  onConnectorSelect: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
+  onSchemaSelect: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
 };
 /* harmony default export */ __webpack_exports__["default"] = (ConnectorAddModalItem);
 
@@ -343,33 +235,21 @@ ConnectorBadge.propTypes = {
   !*** ./resources/js/Components/SettingsConnectors/ConnectorEditModal.js ***!
   \**************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /opt/paperback/resources/js/Components/SettingsConnectors/ConnectorEditModal.js: Unexpected token, expected \",\" (55:36)\n\n\u001b[0m \u001b[90m 53 | \u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 54 | \u001b[39m        axios[method](url\u001b[33m,\u001b[39m data)\u001b[33m.\u001b[39mthen(\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 55 | \u001b[39m            \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mprops\u001b[33m.\u001b[39mtoggleModal()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m                                    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 56 | \u001b[39m            \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mprops\u001b[33m.\u001b[39mdispatch(fetchIndexers())\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 57 | \u001b[39m        )\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 58 | \u001b[39m    }\u001b[0m\n    at Object._raise (/opt/paperback/node_modules/@babel/parser/lib/index.js:746:17)\n    at Object.raiseWithData (/opt/paperback/node_modules/@babel/parser/lib/index.js:739:17)\n    at Object.raise (/opt/paperback/node_modules/@babel/parser/lib/index.js:733:17)\n    at Object.unexpected (/opt/paperback/node_modules/@babel/parser/lib/index.js:8807:16)\n    at Object.expect (/opt/paperback/node_modules/@babel/parser/lib/index.js:8793:28)\n    at Object.parseCallExpressionArguments (/opt/paperback/node_modules/@babel/parser/lib/index.js:9830:14)\n    at Object.parseSubscript (/opt/paperback/node_modules/@babel/parser/lib/index.js:9750:31)\n    at Object.parseSubscripts (/opt/paperback/node_modules/@babel/parser/lib/index.js:9679:19)\n    at Object.parseExprSubscripts (/opt/paperback/node_modules/@babel/parser/lib/index.js:9662:17)\n    at Object.parseMaybeUnary (/opt/paperback/node_modules/@babel/parser/lib/index.js:9636:21)\n    at Object.parseExprOps (/opt/paperback/node_modules/@babel/parser/lib/index.js:9506:23)\n    at Object.parseMaybeConditional (/opt/paperback/node_modules/@babel/parser/lib/index.js:9479:23)\n    at Object.parseMaybeAssign (/opt/paperback/node_modules/@babel/parser/lib/index.js:9434:21)\n    at Object.parseExpression (/opt/paperback/node_modules/@babel/parser/lib/index.js:9386:23)\n    at Object.parseStatementContent (/opt/paperback/node_modules/@babel/parser/lib/index.js:11285:23)\n    at Object.parseStatement (/opt/paperback/node_modules/@babel/parser/lib/index.js:11156:17)\n    at Object.parseBlockOrModuleBlockBody (/opt/paperback/node_modules/@babel/parser/lib/index.js:11731:25)\n    at Object.parseBlockBody (/opt/paperback/node_modules/@babel/parser/lib/index.js:11717:10)\n    at Object.parseBlock (/opt/paperback/node_modules/@babel/parser/lib/index.js:11701:10)\n    at Object.parseFunctionBody (/opt/paperback/node_modules/@babel/parser/lib/index.js:10708:24)\n    at Object.parseFunctionBodyAndFinish (/opt/paperback/node_modules/@babel/parser/lib/index.js:10691:10)\n    at Object.parseMethod (/opt/paperback/node_modules/@babel/parser/lib/index.js:10653:10)\n    at Object.pushClassMethod (/opt/paperback/node_modules/@babel/parser/lib/index.js:12156:30)\n    at Object.parseClassMemberWithIsStatic (/opt/paperback/node_modules/@babel/parser/lib/index.js:12073:12)\n    at Object.parseClassMember (/opt/paperback/node_modules/@babel/parser/lib/index.js:12015:10)\n    at /opt/paperback/node_modules/@babel/parser/lib/index.js:11960:14\n    at Object.withTopicForbiddingContext (/opt/paperback/node_modules/@babel/parser/lib/index.js:11031:14)\n    at Object.parseClassBody (/opt/paperback/node_modules/@babel/parser/lib/index.js:11937:10)\n    at Object.parseClass (/opt/paperback/node_modules/@babel/parser/lib/index.js:11911:22)\n    at Object.parseStatementContent (/opt/paperback/node_modules/@babel/parser/lib/index.js:11198:21)\n    at Object.parseStatement (/opt/paperback/node_modules/@babel/parser/lib/index.js:11156:17)\n    at Object.parseBlockOrModuleBlockBody (/opt/paperback/node_modules/@babel/parser/lib/index.js:11731:25)\n    at Object.parseBlockBody (/opt/paperback/node_modules/@babel/parser/lib/index.js:11717:10)\n    at Object.parseTopLevel (/opt/paperback/node_modules/@babel/parser/lib/index.js:11087:10)\n    at Object.parse (/opt/paperback/node_modules/@babel/parser/lib/index.js:12768:10)\n    at parse (/opt/paperback/node_modules/@babel/parser/lib/index.js:12821:38)");
-
-/***/ }),
-
-/***/ "./resources/js/Components/SettingsConnectors/ConnectorEmptyItem.js":
-/*!**************************************************************************!*\
-  !*** ./resources/js/Components/SettingsConnectors/ConnectorEmptyItem.js ***!
-  \**************************************************************************/
-/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
-/* harmony import */ var react_feather__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-feather */ "./node_modules/react-feather/dist/index.js");
-/* harmony import */ var _ConnectorEditModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ConnectorEditModal */ "./resources/js/Components/SettingsConnectors/ConnectorEditModal.js");
-/* harmony import */ var _ConnectorAddModal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ConnectorAddModal */ "./resources/js/Components/SettingsConnectors/ConnectorAddModal.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/Store/Slices/Settings/indexers */ "./resources/js/Store/Slices/Settings/indexers.js");
+/* harmony import */ var _ConnectorEditModalContent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ConnectorEditModalContent */ "./resources/js/Components/SettingsConnectors/ConnectorEditModalContent.js");
+/* harmony import */ var _Components_Page_PageRow__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Components/Page/PageRow */ "./resources/js/Components/Page/PageRow.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Store/Slices/Settings/indexers */ "./resources/js/Store/Slices/Settings/indexers.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -401,6 +281,209 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+var ConnectorEditModal = /*#__PURE__*/function (_Component) {
+  _inherits(ConnectorEditModal, _Component);
+
+  var _super = _createSuper(ConnectorEditModal);
+
+  function ConnectorEditModal() {
+    var _this;
+
+    _classCallCheck(this, ConnectorEditModal);
+
+    _this = _super.call(this);
+    _this.state = {
+      testSuccess: false
+    };
+    _this.formRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.onClickTest = _this.onClickTest.bind(_assertThisInitialized(_this));
+    _this.onClickSave = _this.onClickSave.bind(_assertThisInitialized(_this));
+    _this.onClickDelete = _this.onClickDelete.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(ConnectorEditModal, [{
+    key: "prepareData",
+    value: function prepareData() {
+      var data = this.formRef.current.values;
+
+      if (this.props.item !== undefined) {
+        data.type = this.props.item.schema.type;
+      } else {
+        data.type = this.props.implementation.type;
+      }
+
+      return data;
+    }
+  }, {
+    key: "onClickTest",
+    value: function onClickTest() {
+      var _this2 = this;
+
+      this.setState({
+        testSuccess: false
+      });
+      var data = this.prepareData();
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(this.props.url + "/test", data).then(function (response) {
+        if (response.data.result) {
+          _this2.setState({
+            testSuccess: true
+          });
+        }
+      });
+    }
+  }, {
+    key: "onClickSave",
+    value: function onClickSave() {
+      var _this3 = this;
+
+      var data = this.prepareData();
+      var url = this.props.url;
+      var method = "post";
+      var item = this.props.item;
+
+      if (item) {
+        url += "/" + item.id;
+        method = "put";
+      }
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a[method](url, data).then(function () {
+        _this3.props.toggleModal();
+
+        _this3.props.dispatch(Object(_Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_7__["fetchIndexers"])());
+      });
+    }
+  }, {
+    key: "onClickDelete",
+    value: function onClickDelete() {
+      var _this4 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"](this.props.url + "/" + this.props.item.id).then(function () {
+        _this4.props.toggleModal();
+
+        _this4.props.dispatch(Object(_Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_7__["fetchIndexers"])());
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          toggleModal = _this$props.toggleModal,
+          implementation = _this$props.implementation,
+          item = _this$props.item;
+      var name = item ? item.schema.type : implementation ? implementation.type : "";
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Modal"], {
+        isOpen: this.props.isOpen,
+        toggle: toggleModal,
+        className: "itemModal",
+        size: "xl"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["ModalHeader"], {
+        toggle: this.props.toggleModal
+      }, "Edit - " + name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["ModalBody"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Page_PageRow__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorEditModalContent__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        item: item,
+        implementation: implementation,
+        toggleModal: toggleModal,
+        formRef: this.formRef
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["ModalFooter"], null, item ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
+        color: "danger mr-auto",
+        onClick: this.onClickDelete
+      }, "Delete") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
+        color: "secondary mr-auto",
+        onClick: toggleModal
+      }, "Close"), this.state.testSuccess ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Test Successful") : "", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
+        color: "secondary",
+        onClick: this.onClickTest
+      }, "Test"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
+        color: "secondary",
+        onClick: toggleModal
+      }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
+        color: "primary",
+        onClick: this.onClickSave
+      }, "Save")));
+    }
+  }]);
+
+  return ConnectorEditModal;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+ConnectorEditModal.propTypes = {
+  url: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
+  toggleModal: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func,
+  isOpen: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.bool,
+  implementation: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.object,
+  existingConnector: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.bool,
+  item: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.shape({
+    schema: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.shape({
+      type: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string
+    }),
+    id: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.number
+  }),
+  dispatch: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func
+};
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_6__["connect"])()(ConnectorEditModal));
+
+/***/ }),
+
+/***/ "./resources/js/Components/SettingsConnectors/ConnectorEditModalContent.js":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/Components/SettingsConnectors/ConnectorEditModalContent.js ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /opt/paperback/resources/js/Components/SettingsConnectors/ConnectorEditModalContent.js: Unexpected token, expected \",\" (43:0)\n\n\u001b[0m \u001b[90m 41 | \u001b[39m}\u001b[0m\n\u001b[0m \u001b[90m 42 | \u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 43 | \u001b[39m\u001b[33mConnectorEditModalContent\u001b[39m\u001b[33m.\u001b[39mpropTypes \u001b[33m=\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 44 | \u001b[39m    implementation\u001b[33m:\u001b[39m \u001b[33mPropTypes\u001b[39m\u001b[33m.\u001b[39mobject\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 45 | \u001b[39m    item\u001b[33m:\u001b[39m \u001b[33mPropTypes\u001b[39m\u001b[33m.\u001b[39mobject\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 46 | \u001b[39m    formRef\u001b[33m:\u001b[39m \u001b[33mPropTypes\u001b[39m\u001b[33m.\u001b[39mobject\u001b[33m.\u001b[39misRequired\u001b[33m,\u001b[39m\u001b[0m\n    at Object._raise (/opt/paperback/node_modules/@babel/parser/lib/index.js:746:17)\n    at Object.raiseWithData (/opt/paperback/node_modules/@babel/parser/lib/index.js:739:17)\n    at Object.raise (/opt/paperback/node_modules/@babel/parser/lib/index.js:733:17)\n    at Object.unexpected (/opt/paperback/node_modules/@babel/parser/lib/index.js:8807:16)\n    at Object.expect (/opt/paperback/node_modules/@babel/parser/lib/index.js:8793:28)\n    at Object.parseCallExpressionArguments (/opt/paperback/node_modules/@babel/parser/lib/index.js:9830:14)\n    at Object.parseSubscript (/opt/paperback/node_modules/@babel/parser/lib/index.js:9750:31)\n    at Object.parseSubscripts (/opt/paperback/node_modules/@babel/parser/lib/index.js:9679:19)\n    at Object.parseExprSubscripts (/opt/paperback/node_modules/@babel/parser/lib/index.js:9662:17)\n    at Object.parseMaybeUnary (/opt/paperback/node_modules/@babel/parser/lib/index.js:9636:21)\n    at Object.parseExprOps (/opt/paperback/node_modules/@babel/parser/lib/index.js:9506:23)\n    at Object.parseMaybeConditional (/opt/paperback/node_modules/@babel/parser/lib/index.js:9479:23)\n    at Object.parseMaybeAssign (/opt/paperback/node_modules/@babel/parser/lib/index.js:9434:21)\n    at Object.parseVar (/opt/paperback/node_modules/@babel/parser/lib/index.js:11815:26)\n    at Object.parseVarStatement (/opt/paperback/node_modules/@babel/parser/lib/index.js:11624:10)\n    at Object.parseStatementContent (/opt/paperback/node_modules/@babel/parser/lib/index.js:11223:21)\n    at Object.parseStatement (/opt/paperback/node_modules/@babel/parser/lib/index.js:11156:17)\n    at Object.parseBlockOrModuleBlockBody (/opt/paperback/node_modules/@babel/parser/lib/index.js:11731:25)\n    at Object.parseBlockBody (/opt/paperback/node_modules/@babel/parser/lib/index.js:11717:10)\n    at Object.parseTopLevel (/opt/paperback/node_modules/@babel/parser/lib/index.js:11087:10)\n    at Object.parse (/opt/paperback/node_modules/@babel/parser/lib/index.js:12768:10)\n    at parse (/opt/paperback/node_modules/@babel/parser/lib/index.js:12821:38)\n    at parser (/opt/paperback/node_modules/@babel/core/lib/parser/index.js:54:34)\n    at parser.next (<anonymous>)\n    at normalizeFile (/opt/paperback/node_modules/@babel/core/lib/transformation/normalize-file.js:93:38)\n    at normalizeFile.next (<anonymous>)\n    at run (/opt/paperback/node_modules/@babel/core/lib/transformation/index.js:31:50)\n    at run.next (<anonymous>)\n    at Function.transform (/opt/paperback/node_modules/@babel/core/lib/transform.js:27:41)\n    at transform.next (<anonymous>)\n    at step (/opt/paperback/node_modules/gensync/index.js:254:32)\n    at /opt/paperback/node_modules/gensync/index.js:266:13\n    at async.call.result.err.err (/opt/paperback/node_modules/gensync/index.js:216:11)");
+
+/***/ }),
+
+/***/ "./resources/js/Components/SettingsConnectors/ConnectorEmptyItem.js":
+/*!**************************************************************************!*\
+  !*** ./resources/js/Components/SettingsConnectors/ConnectorEmptyItem.js ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
+/* harmony import */ var react_feather__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-feather */ "./node_modules/react-feather/dist/index.js");
+/* harmony import */ var _ConnectorEditModal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ConnectorEditModal */ "./resources/js/Components/SettingsConnectors/ConnectorEditModal.js");
+/* harmony import */ var _ConnectorAddModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ConnectorAddModal */ "./resources/js/Components/SettingsConnectors/ConnectorAddModal.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Store/Slices/Settings/indexers */ "./resources/js/Store/Slices/Settings/indexers.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+
+
+
+
 
 var ConnectorEmptyItem = /*#__PURE__*/function (_Component) {
   _inherits(ConnectorEmptyItem, _Component);
@@ -414,14 +497,11 @@ var ConnectorEmptyItem = /*#__PURE__*/function (_Component) {
 
     _this = _super.call(this);
     _this.state = {
-      addModal: false,
-      schema: [],
-      implementation: null
+      addModal: false
     };
     _this.toggleAddModal = _this.toggleAddModal.bind(_assertThisInitialized(_this));
     _this.toggleEditModal = _this.toggleEditModal.bind(_assertThisInitialized(_this));
-    _this.openAddModal = _this.openAddModal.bind(_assertThisInitialized(_this));
-    _this.onAddModalClosed = _this.onAddModalClosed.bind(_assertThisInitialized(_this));
+    _this.schemaSelected = _this.schemaSelected.bind(_assertThisInitialized(_this));
     _this.onEditModalClosed = _this.onEditModalClosed.bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -437,7 +517,7 @@ var ConnectorEmptyItem = /*#__PURE__*/function (_Component) {
     key: "toggleEditModal",
     value: function toggleEditModal(refresh) {
       if (refresh) {
-        this.props.dispatch(Object(_Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_8__["fetchIndexers"])());
+        this.props.dispatch(Object(_Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_7__["fetchIndexers"])());
       }
 
       this.setState({
@@ -445,16 +525,11 @@ var ConnectorEmptyItem = /*#__PURE__*/function (_Component) {
       });
     }
   }, {
-    key: "onAddModalClosed",
-    value: function onAddModalClosed() {
-      var itemSelected = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-      var modelType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    key: "schemaSelected",
+    value: function schemaSelected() {
       this.setState({
         addModal: false,
-        editModal: itemSelected,
-        implementation: this.state.schema.find(function (item) {
-          return item.type === modelType;
-        })
+        editModal: true
       });
     }
   }, {
@@ -463,45 +538,26 @@ var ConnectorEmptyItem = /*#__PURE__*/function (_Component) {
       this.setState({
         editModal: false
       });
-    }
-  }, {
-    key: "openAddModal",
-    value: function openAddModal() {
-      var _this2 = this;
-
-      if (!this.state.schema.length) {
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(this.props.url + "/schema").then(function (response) {
-          _this2.setState({
-            schema: response.data
-          }, _this2.toggleAddModal());
-        });
-      } else {
-        this.toggleAddModal();
-      }
+      this.props.dispatch(Object(_Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_7__["deselectSchema"])());
     }
   }, {
     key: "render",
     value: function render() {
       var _this$state = this.state,
           addModal = _this$state.addModal,
-          editModal = _this$state.editModal,
-          implementation = _this$state.implementation,
-          schema = _this$state.schema;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Card"], {
-        onClick: this.openAddModal,
+          editModal = _this$state.editModal;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Card"], {
+        onClick: this.toggleAddModal,
         className: "settings-connector-item add-item shadow p-3 m-3 text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_4__["Plus"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_3__["Plus"], {
         size: 60
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorAddModal__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorAddModal__WEBPACK_IMPORTED_MODULE_5__["default"], {
         isOpen: addModal,
         toggleModal: this.toggleAddModal,
-        schema: schema,
-        onModalClose: this.onAddModalClosed,
-        url: this.props.url
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorEditModal__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        onSchemaSelect: this.schemaSelected
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorEditModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
         isOpen: editModal,
         toggleModal: this.toggleEditModal,
-        implementation: implementation,
         existingConnector: false,
         url: this.props.url
       }));
@@ -515,7 +571,7 @@ ConnectorEmptyItem.propTypes = {
   url: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   dispatch: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func
 };
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_7__["connect"])()(ConnectorEmptyItem));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_6__["connect"])()(ConnectorEmptyItem));
 
 /***/ }),
 
@@ -579,8 +635,7 @@ var ConnectorItem = /*#__PURE__*/function (_Component) {
 
     _this = _super.call(this);
     _this.state = {
-      editModal: false,
-      schema: {}
+      modal: false
     };
     _this.toggleEditModal = _this.toggleEditModal.bind(_assertThisInitialized(_this));
     _this.openEditModal = _this.openEditModal.bind(_assertThisInitialized(_this));
@@ -598,14 +653,14 @@ var ConnectorItem = /*#__PURE__*/function (_Component) {
       }
 
       this.setState({
-        editModal: !this.state.editModal
+        modal: !this.state.modal
       });
     }
   }, {
     key: "onEditModalClosed",
     value: function onEditModalClosed() {
       this.setState({
-        editModal: false
+        modal: false
       });
     }
   }, {
@@ -616,7 +671,7 @@ var ConnectorItem = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var editModal = this.state.editModal;
+      var modal = this.state.modal;
       var _this$props$item = this.props.item,
           name = _this$props$item.name,
           enableRss = _this$props$item.enableRss,
@@ -637,7 +692,7 @@ var ConnectorItem = /*#__PURE__*/function (_Component) {
         enabled: enable,
         text: "Enabled"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorEditModal__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        isOpen: editModal,
+        isOpen: modal,
         toggleModal: this.toggleEditModal,
         item: this.props.item,
         url: this.props.url

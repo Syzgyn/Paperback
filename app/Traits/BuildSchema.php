@@ -135,6 +135,10 @@ trait BuildSchema
             return $value ? true : false;
         }
 
+        if ($field['type'] === 'text') {
+            return $value ?: "";
+        }
+
         return $value;
     }
 }

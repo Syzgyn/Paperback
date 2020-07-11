@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import { Card, CardTitle, CardText } from "reactstrap";
 import ConnectorEditModal from "./ConnectorEditModal";
 import ConnectorBadge from "./ConnectorBadge";
-import { connect } from "react-redux";
-import { fetchIndexers } from "@/Store/Slices/Settings/indexers";
 
 class ConnectorItem extends Component {
     constructor() {
@@ -18,11 +16,7 @@ class ConnectorItem extends Component {
         this.onEditModalClosed = this.onEditModalClosed.bind(this);
     }
 
-    toggleEditModal(refresh = false) {
-        if (refresh) {
-            this.props.dispatch(fetchIndexers());
-        }
-
+    toggleEditModal() {
         this.setState({ modal: !this.state.modal});
     }
 
@@ -64,7 +58,6 @@ class ConnectorItem extends Component {
 ConnectorItem.propTypes = {
     url: PropTypes.string,
     item: PropTypes.object.isRequired,
-    dispatch: PropTypes.func,
 };
 
-export default connect()(ConnectorItem);
+export default ConnectorItem;
