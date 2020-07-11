@@ -30,7 +30,6 @@ class MonitoredIcon extends Component {
                     isMonitored: response.data.data.monitored,
                     isLoading: false,
                 });
-                console.log("dispatch");
                 if (itemType == "comic") {
                     this.props.dispatch(
                         toggleComicMonitored({

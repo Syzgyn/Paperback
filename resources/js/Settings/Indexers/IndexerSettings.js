@@ -1,40 +1,21 @@
-import React, { Component } from "react";
+import React from "react";
 import SettingsMenuBar from "@/Settings/SettingsMenuBar";
 import SettingsToolbar from "@/Settings/SettingsToolbar";
-import ConnectorList from "@/Components/SettingsConnectors/ConnectorList";
+import IndexerList from "@/Settings/Indexers/IndexerList";
 
-class IndexerSettings extends Component {
-    constructor() {
-        super();
-        this.state = {
-            editModal: true,
-            indexer: {},
-        };
-
-        this.url = "/api/indexer";
-
-        this.onSavePress = this.onSavePress.bind(this);
-        this.toggleEditModal = this.toggleEditModal.bind(this);
+const IndexerSettings = () => {
+    function onSavePress() {
+        //TODO: General indexers settings
     }
 
-    onSavePress() {
-        //TODO: Any general indexer settings
-    }
-
-    toggleEditModal() {
-        this.setState({ modal: !this.state.editModal });
-    }
-
-    render() {
-        return (
-            <>
-                <SettingsMenuBar />
-                <SettingsToolbar onSavePress={this.onSavePress} />
-                <h2>Indexers</h2>
-                <ConnectorList url={this.url} />
-            </>
-        );
-    }
+    return (
+        <>
+            <SettingsMenuBar />
+            <SettingsToolbar onSavePress={onSavePress} />
+            <h2>Indexers</h2>
+            <IndexerList />
+        </>
+    );
 }
 
 export default IndexerSettings;

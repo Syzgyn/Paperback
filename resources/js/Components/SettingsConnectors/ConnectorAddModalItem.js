@@ -1,36 +1,32 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Card, CardTitle } from "reactstrap";
+import { useDispatch } from "react-redux";
+import { selectSchema } from "@/Store/Slices/Settings/indexers";
 
-class ConnectorAddModalItem extends Component {
-    constructor() {
-        super();
+const ConnectorAddModalItem = (props) => {
+    const dispatch = useDispatch();
+    const { name } = props;
 
-        this.selectConnector = this.selectConnector.bind(this);
+    function selectConnector() {
+        dispatch(selectSchema(props.type));
+        props.onSchemaSelect();
     }
 
-    selectConnector() {
-        this.props.onConnectorSelect(this.props.type);
-    }
-
-    render() {
-        const { name } = this.props;
-
-        return (
-            <Card
-                onClick={this.selectConnector}
-                className="settings-connector-item shadow p-3 m-3"
-            >
-                <CardTitle>{name}</CardTitle>
-            </Card>
-        );
-    }
+    return (
+        <Card
+            onClick={selectConnector}
+            className="settings-connector-item shadow p-3 m-3"
+        >
+            <CardTitle>{name}</CardTitle>
+        </Card>
+    );
 }
 
 ConnectorAddModalItem.propTypes = {
     name: PropTypes.string,
     type: PropTypes.string,
-    onConnectorSelect: PropTypes.func.isRequired,
+    onSchemaSelect: PropTypes.func.isRequired,
 };
 
 export default ConnectorAddModalItem;

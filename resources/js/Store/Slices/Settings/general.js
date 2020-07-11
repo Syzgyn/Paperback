@@ -1,13 +1,8 @@
 import {
-    createAction,
     createAsyncThunk,
     createSlice,
-    createSelector,
 } from "@reduxjs/toolkit";
-import { getCurrentCvidSelector } from "@/Store/Slices/router";
 import axios from "axios";
-import { push } from "connected-react-router";
-import { batch } from "react-redux";
 import { toast } from "react-toastify";
 
 const defaultState = {

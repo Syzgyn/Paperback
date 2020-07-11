@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
-import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { FormGroup } from "reactstrap";
-import { toast } from "react-toastify";
 import PageRow from "@/Components/Page/PageRow";
 import LoadingIndicator from "@/Components/Loading/LoadingIndicator";
 import { useSelector, useDispatch } from "react-redux";
@@ -27,7 +25,7 @@ const GeneralSettingsForm = React.forwardRef((props, formRef) => {
         settingsGeneralSelector
     );
 
-    if (isLoading) {
+    if (isLoading || !isPopulated) {
         return <LoadingIndicator />;
     }
 
@@ -69,5 +67,7 @@ const GeneralSettingsForm = React.forwardRef((props, formRef) => {
         </PageRow>
     );
 });
+
+GeneralSettingsForm.displayName = "GeneralSettingsForm";
 
 export default GeneralSettingsForm;

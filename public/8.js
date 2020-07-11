@@ -1,9 +1,9 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[8],{
 
-/***/ "./resources/js/Settings/Indexers/IndexerSettings.js":
-/*!***********************************************************!*\
-  !*** ./resources/js/Settings/Indexers/IndexerSettings.js ***!
-  \***********************************************************/
+/***/ "./resources/js/Settings/Downloaders/DownloaderSettings.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/Settings/Downloaders/DownloaderSettings.js ***!
+  \*****************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -41,28 +41,28 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-var IndexerSettings = /*#__PURE__*/function (_Component) {
-  _inherits(IndexerSettings, _Component);
+var DownloaderSettings = /*#__PURE__*/function (_Component) {
+  _inherits(DownloaderSettings, _Component);
 
-  var _super = _createSuper(IndexerSettings);
+  var _super = _createSuper(DownloaderSettings);
 
-  function IndexerSettings() {
+  function DownloaderSettings() {
     var _this;
 
-    _classCallCheck(this, IndexerSettings);
+    _classCallCheck(this, DownloaderSettings);
 
     _this = _super.call(this);
     _this.state = {
       editModal: true,
-      indexer: {}
+      downloader: {}
     };
-    _this.url = "/api/indexer";
+    _this.url = "/api/downloader";
     _this.onSavePress = _this.onSavePress.bind(_assertThisInitialized(_this));
     _this.toggleEditModal = _this.toggleEditModal.bind(_assertThisInitialized(_this));
     return _this;
   }
 
-  _createClass(IndexerSettings, [{
+  _createClass(DownloaderSettings, [{
     key: "onSavePress",
     value: function onSavePress() {//TODO: Any general indexer settings
     }
@@ -78,17 +78,18 @@ var IndexerSettings = /*#__PURE__*/function (_Component) {
     value: function render() {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Settings_SettingsMenuBar__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Settings_SettingsToolbar__WEBPACK_IMPORTED_MODULE_2__["default"], {
         onSavePress: this.onSavePress
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Indexers"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_SettingsConnectors_ConnectorList__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Downloaders"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_SettingsConnectors_ConnectorList__WEBPACK_IMPORTED_MODULE_3__["default"], {
         url: this.url
       }));
     }
   }]);
 
-  return IndexerSettings;
+  return DownloaderSettings;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (IndexerSettings);
+/* harmony default export */ __webpack_exports__["default"] = (DownloaderSettings);
 
 /***/ })
 
 }]);
+//# sourceMappingURL=8.js.map

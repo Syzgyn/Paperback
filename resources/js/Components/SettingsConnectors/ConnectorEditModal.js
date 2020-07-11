@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import ConnectorEditModalContent from "./ConnectorEditModalContent";
 import PageRow from "@/Components/Page/PageRow";
+import { connect } from  "react-redux";
+import { fetchIndexers } from "@/Store/Slices/Settings/indexers";
 
 class ConnectorEditModal extends Component {
     constructor() {
@@ -49,13 +51,19 @@ class ConnectorEditModal extends Component {
             method = "put";
         }
 
-        axios[method](url, data).then(this.props.toggleModal(true));
+        axios[method](url, data).then(() => {
+            this.props.toggleModal();
+            this.props.dispatch(fetchIndexers());
+        });
     }
 
     onClickDelete() {
         axios
             .delete(this.props.url + "/" + this.props.item.id)
-            .then(this.props.toggleModal(true));
+            .then(() => {
+                this.props.toggleModal();
+                this.props.dispatch(fetchIndexers());
+            });
     }
 
     render() {
@@ -129,6 +137,7 @@ ConnectorEditModal.propTypes = {
         }),
         id: PropTypes.number,
     }),
+    dispatch: PropTypes.func,
 };
 
-export default ConnectorEditModal;
+export default connect()(ConnectorEditModal);

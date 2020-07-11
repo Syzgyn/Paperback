@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 import { Card, CardTitle, CardText } from "reactstrap";
 import ConnectorEditModal from "./ConnectorEditModal";
 import ConnectorBadge from "./ConnectorBadge";
+import { connect } from "react-redux";
+import { fetchIndexers } from "@/Store/Slices/Settings/indexers";
 
 class ConnectorItem extends Component {
     constructor() {
         super();
         this.state = {
-            editModal: false,
-            schema: {},
+            modal: false,
         };
 
         this.toggleEditModal = this.toggleEditModal.bind(this);
@@ -19,14 +20,14 @@ class ConnectorItem extends Component {
 
     toggleEditModal(refresh = false) {
         if (refresh) {
-            this.props.refreshCallback();
+            this.props.dispatch(fetchIndexers());
         }
 
-        this.setState({ editModal: !this.state.editModal });
+        this.setState({ modal: !this.state.modal});
     }
 
     onEditModalClosed() {
-        this.setState({ editModal: false });
+        this.setState({ modal: false });
     }
 
     openEditModal() {
@@ -34,7 +35,7 @@ class ConnectorItem extends Component {
     }
 
     render() {
-        const { editModal } = this.state;
+        const { modal } = this.state;
 
         const { name, enableRss, enableSearch, enable } = this.props.item;
 
@@ -50,7 +51,7 @@ class ConnectorItem extends Component {
                     <ConnectorBadge enabled={enable} text="Enabled" />
                 </CardText>
                 <ConnectorEditModal
-                    isOpen={editModal}
+                    isOpen={modal}
                     toggleModal={this.toggleEditModal}
                     item={this.props.item}
                     url={this.props.url}
@@ -63,7 +64,7 @@ class ConnectorItem extends Component {
 ConnectorItem.propTypes = {
     url: PropTypes.string,
     item: PropTypes.object.isRequired,
-    refreshCallback: PropTypes.func.isRequired,
+    dispatch: PropTypes.func,
 };
 
-export default ConnectorItem;
+export default connect()(ConnectorItem);

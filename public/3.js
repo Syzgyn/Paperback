@@ -2077,8 +2077,6 @@ var MonitoredIcon = /*#__PURE__*/function (_Component) {
           isLoading: false
         });
 
-        console.log("dispatch");
-
         if (itemType == "comic") {
           _this2.props.dispatch(Object(_Store_Slices_comics__WEBPACK_IMPORTED_MODULE_5__["toggleComicMonitored"])({
             cvid: cvid,
@@ -2179,3 +2177,4 @@ PageRow.defaultProps = {
 /***/ })
 
 }]);
+//# sourceMappingURL=3.js.map

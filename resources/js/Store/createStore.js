@@ -8,6 +8,7 @@ export const history = createBrowserHistory();
 const store = configureStore({
     reducer: createRootReducer(history),
     middleware: [...getDefaultMiddleware(), routerMiddleware(history)],
+    devTools: {trace: true, traceLimit: 25}
 });
 
 export default store;
