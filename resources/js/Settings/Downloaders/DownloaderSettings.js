@@ -1,40 +1,21 @@
-import React, { Component } from "react";
+import React from "react";
 import SettingsMenuBar from "@/Settings/SettingsMenuBar";
 import SettingsToolbar from "@/Settings/SettingsToolbar";
-import ConnectorList from "@/Components/SettingsConnectors/ConnectorList";
+import DownloaderList from "@/Settings/Downloaders/DownloaderList";
 
-class DownloaderSettings extends Component {
-    constructor() {
-        super();
-        this.state = {
-            editModal: true,
-            downloader: {},
-        };
-
-        this.url = "/api/downloader";
-
-        this.onSavePress = this.onSavePress.bind(this);
-        this.toggleEditModal = this.toggleEditModal.bind(this);
+const DownloaderSettings = () => {
+    function onSavePress() {
+        //TODO: General downloader settings
     }
 
-    onSavePress() {
-        //TODO: Any general indexer settings
-    }
-
-    toggleEditModal() {
-        this.setState({ modal: !this.state.editModal });
-    }
-
-    render() {
-        return (
-            <>
-                <SettingsMenuBar />
-                <SettingsToolbar onSavePress={this.onSavePress} />
-                <h2>Downloaders</h2>
-                <ConnectorList url={this.url} />
-            </>
-        );
-    }
+    return (
+        <>
+            <SettingsMenuBar />
+            <SettingsToolbar onSavePress={onSavePress} />
+            <h2>Downloaders</h2>
+            <DownloaderList />
+        </>
+    );
 }
 
 export default DownloaderSettings;

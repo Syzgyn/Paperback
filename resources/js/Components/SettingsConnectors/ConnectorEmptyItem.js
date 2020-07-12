@@ -5,7 +5,8 @@ import { Plus } from "react-feather";
 import ConnectorEditModal from "./ConnectorEditModal";
 import ConnectorAddModal from "./ConnectorAddModal";
 import { connect } from "react-redux";
-import { fetchIndexers, deselectSchema } from "@/Store/Slices/Settings/indexers";
+import { deselectSchema as indexerDeselect } from "@/Store/Slices/Settings/indexers";
+import { deselectSchema as downloaderDeselect } from "@/Store/Slices/Settings/downloaders";
 
 class ConnectorEmptyItem extends Component {
     constructor() {
@@ -17,28 +18,24 @@ class ConnectorEmptyItem extends Component {
         this.toggleAddModal = this.toggleAddModal.bind(this);
         this.toggleEditModal = this.toggleEditModal.bind(this);
         this.schemaSelected = this.schemaSelected.bind(this);
-        this.onEditModalClosed = this.onEditModalClosed.bind(this);
     }
 
     toggleAddModal() {
         this.setState({ addModal: !this.state.addModal });
     }
 
-    toggleEditModal(refresh) {
-        if (refresh) {
-            this.props.dispatch(fetchIndexers());
-        }
-
+    toggleEditModal() {
         this.setState({ editModal: !this.state.editModal });
+
+        if (this.props.pathname === "/settings/indexers") {
+            this.props.dispatch(indexerDeselect());
+        } else {
+            this.props.dispatch(downloaderDeselect());
+        }
     }
 
     schemaSelected() {
         this.setState({addModal: false, editModal: true});
-    }
-
-    onEditModalClosed() {
-        this.setState({ editModal: false });
-        this.props.dispatch(deselectSchema());
     }
 
     render() {
@@ -69,6 +66,11 @@ class ConnectorEmptyItem extends Component {
 ConnectorEmptyItem.propTypes = {
     url: PropTypes.string,
     dispatch: PropTypes.func,
+    pathname: PropTypes.string,
 };
 
-export default connect()(ConnectorEmptyItem);
+const mapStateToProps = state => ({
+  pathname: state.router.location.pathname,
+})
+
+export default connect(mapStateToProps)(ConnectorEmptyItem);

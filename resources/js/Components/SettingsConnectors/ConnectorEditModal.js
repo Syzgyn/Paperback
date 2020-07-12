@@ -1,135 +1,136 @@
-import React, { Component } from "react";
+import React from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import ConnectorEditModalContent from "./ConnectorEditModalContent";
 import PageRow from "@/Components/Page/PageRow";
-import { connect } from  "react-redux";
-import { fetchIndexers } from "@/Store/Slices/Settings/indexers";
+import { useDispatch, useSelector } from  "react-redux";
+import { getLocation } from "connected-react-router";
+import { fetchIndexers, settingsIndexersSelector } from "@/Store/Slices/Settings/indexers";
+import { fetchDownloaders, settingsDownloadersSelector } from "@/Store/Slices/Settings/downloaders";
 
-class ConnectorEditModal extends Component {
-    constructor() {
-        super();
-        this.state = {
-            testSuccess: false,
-        };
+const ConnectorEditModal = (props) => {
+    const dispatch = useDispatch();
+    const formRef = React.createRef();
+    const { pathname } = useSelector(getLocation);
 
-        this.formRef = React.createRef();
-        this.onClickTest = this.onClickTest.bind(this);
-        this.onClickSave = this.onClickSave.bind(this);
-        this.onClickDelete = this.onClickDelete.bind(this);
+    let fetchFunc, selector;
+
+    if (pathname === "/settings/indexers") {
+        fetchFunc = fetchIndexers;
+        selector = settingsIndexersSelector;
+    } else {
+        fetchFunc = fetchDownloaders;
+        selector = settingsDownloadersSelector;
     }
 
-    prepareData() {
-        let data = this.formRef.current.values;
-        if (this.props.item !== undefined) {
-            data.type = this.props.item.schema.type;
+    const selectedSchema = useSelector(selector);
+
+    function prepareData() {
+        let data = Object.assign({}, formRef.current.values);
+        if (props.item !== undefined) {
+            data.type = props.item.schema.type;
+            data.id = props.item.id;
         } else {
-            data.type = this.props.implementation.type;
+            data.type = selectedSchema;
         }
 
         return data;
     }
 
-    onClickTest() {
-        this.setState({ testSuccess: false });
-        let data = this.prepareData();
-        axios.post(this.props.url + "/test", data).then((response) => {
+    function onClickTest() {
+        let data = prepareData();
+        axios.post(props.url + "/test", data).then((response) => {
             if (response.data.result) {
-                this.setState({ testSuccess: true });
+                //setState({ testSuccess: true });
             }
         });
     }
 
-    onClickSave() {
-        let data = this.prepareData();
-        let { url } = this.props;
+    function onClickSave() {
+        let data = prepareData();
+        let { url } = props;
         let method = "post";
-        const item = this.props.item;
+        const item = props.item;
         if (item) {
             url += "/" + item.id;
             method = "put";
         }
 
         axios[method](url, data).then(() => {
-            this.props.toggleModal();
-            this.props.dispatch(fetchIndexers());
+            props.toggleModal();
+            dispatch(fetchFunc());
         });
     }
 
-    onClickDelete() {
+    function onClickDelete() {
         axios
-            .delete(this.props.url + "/" + this.props.item.id)
+            .delete(props.url + "/" + props.item.id)
             .then(() => {
-                this.props.toggleModal();
-                this.props.dispatch(fetchIndexers());
+                props.toggleModal();
+                dispatch(fetchFunc());
             });
     }
 
-    render() {
-        const { toggleModal, implementation, item } = this.props;
+    const { toggleModal, item } = props;
 
-        const name = item
-            ? item.schema.type
-            : implementation
-            ? implementation.type
-            : "";
+    const name = item
+        ? item.schema.type
+        : selectedSchema
+        ? selectedSchema
+        : "";
 
-        return (
-            <Modal
-                isOpen={this.props.isOpen}
-                toggle={toggleModal}
-                className="itemModal"
-                size="xl"
-            >
-                <ModalHeader toggle={this.props.toggleModal}>
-                    {"Edit - " + name}
-                </ModalHeader>
-                <ModalBody>
-                    <PageRow>
-                        <ConnectorEditModalContent
-                            item={item}
-                            implementation={implementation}
-                            toggleModal={toggleModal}
-                            formRef={this.formRef}
-                        />
-                    </PageRow>
-                </ModalBody>
-                <ModalFooter>
-                    {item ? (
-                        <Button
-                            color="danger mr-auto"
-                            onClick={this.onClickDelete}
-                        >
-                            Delete
-                        </Button>
-                    ) : (
-                        <Button color="secondary mr-auto" onClick={toggleModal}>
-                            Close
-                        </Button>
-                    )}
+    return (
+        <Modal
+            isOpen={props.isOpen}
+            toggle={toggleModal}
+            className="itemModal"
+            size="xl"
+        >
+            <ModalHeader toggle={props.toggleModal}>
+                {"Edit - " + name}
+            </ModalHeader>
+            <ModalBody>
+                <PageRow>
+                    <ConnectorEditModalContent
+                        item={item}
+                        toggleModal={toggleModal}
+                        ref={formRef}
+                    />
+                </PageRow>
+            </ModalBody>
+            <ModalFooter>
+                {item ? (
+                    <Button
+                        color="danger mr-auto"
+                        onClick={onClickDelete}
+                    >
+                        Delete
+                    </Button>
+                ) : (
+                    <Button color="secondary mr-auto" onClick={toggleModal}>
+                        Close
+                    </Button>
+                )}
 
-                    {this.state.testSuccess ? <span>Test Successful</span> : ""}
-                    <Button color="secondary" onClick={this.onClickTest}>
-                        Test
-                    </Button>
-                    <Button color="secondary" onClick={toggleModal}>
-                        Cancel
-                    </Button>
-                    <Button color="primary" onClick={this.onClickSave}>
-                        Save
-                    </Button>
-                </ModalFooter>
-            </Modal>
-        );
-    }
+                <Button color="secondary" onClick={onClickTest}>
+                    Test
+                </Button>
+                <Button color="secondary" onClick={toggleModal}>
+                    Cancel
+                </Button>
+                <Button color="primary" onClick={onClickSave}>
+                    Save
+                </Button>
+            </ModalFooter>
+        </Modal>
+    );
 }
 
 ConnectorEditModal.propTypes = {
     url: PropTypes.string,
     toggleModal: PropTypes.func,
     isOpen: PropTypes.bool,
-    implementation: PropTypes.object,
     existingConnector: PropTypes.bool,
     item: PropTypes.shape({
         schema: PropTypes.shape({
@@ -140,4 +141,4 @@ ConnectorEditModal.propTypes = {
     dispatch: PropTypes.func,
 };
 
-export default connect()(ConnectorEditModal);
+export default ConnectorEditModal;

@@ -12,20 +12,10 @@ class ConnectorItem extends Component {
         };
 
         this.toggleEditModal = this.toggleEditModal.bind(this);
-        this.openEditModal = this.openEditModal.bind(this);
-        this.onEditModalClosed = this.onEditModalClosed.bind(this);
     }
 
     toggleEditModal() {
         this.setState({ modal: !this.state.modal});
-    }
-
-    onEditModalClosed() {
-        this.setState({ modal: false });
-    }
-
-    openEditModal() {
-        this.toggleEditModal();
     }
 
     render() {
@@ -35,7 +25,7 @@ class ConnectorItem extends Component {
 
         return (
             <Card
-                onClick={this.openEditModal}
+                onClick={this.toggleEditModal}
                 className="settings-connector-item shadow p-3 m-3"
             >
                 <CardTitle>{name}</CardTitle>
