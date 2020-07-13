@@ -2,25 +2,28 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import LoadingIndicator from "@/Components/Loading/LoadingIndicator";
 import {
-    fetchIndexers,
-    settingsIndexersSelector,
-} from "@/Store/Slices/Settings/indexers";
-import ConnectorList from '@/Components/SettingsConnectors/ConnectorList';
+    fetchItems,
+    settingsItemsSelector,
+} from "@/Store/Slices/Settings/settingsConnectors";
+import ConnectorList from "@/Components/SettingsConnectors/ConnectorList";
 
 const IndexerList = () => {
     const dispatch = useDispatch();
+    const { isLoading, isPopulated, items } = useSelector(
+        settingsItemsSelector
+    );
 
     useEffect(() => {
-        dispatch(fetchIndexers());
-    }, [dispatch]);
+        if (!isPopulated) {
+            dispatch(fetchItems());
+        }
+    }, [dispatch, isPopulated]);
 
-    const { isLoading, isPopulated, items } = useSelector(settingsIndexersSelector);
-
-    if (isLoading || !isPopulated) {
+    if (isLoading) {
         return <LoadingIndicator />;
     }
-    
-    return <ConnectorList items={items} url="/api/indexer" />
-}
+
+    return <ConnectorList items={items} url="/api/indexer" />;
+};
 
 export default IndexerList;

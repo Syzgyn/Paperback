@@ -2,25 +2,28 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import LoadingIndicator from "@/Components/Loading/LoadingIndicator";
 import {
-    fetchDownloaders,
-    settingsDownloadersSelector,
-} from "@/Store/Slices/Settings/downloaders";
-import ConnectorList from '@/Components/SettingsConnectors/ConnectorList';
+    fetchItems,
+    settingsItemsSelector,
+} from "@/Store/Slices/Settings/settingsConnectors";
+import ConnectorList from "@/Components/SettingsConnectors/ConnectorList";
 
 const DownloaderList = () => {
     const dispatch = useDispatch();
+    const { isLoading, isPopulated, items } = useSelector(
+        settingsItemsSelector
+    );
 
     useEffect(() => {
-        dispatch(fetchDownloaders());
-    }, [dispatch]);
-
-    const { isLoading, isPopulated, items } = useSelector(settingsDownloadersSelector);
+        if (!isPopulated) {
+            dispatch(fetchItems());
+        }
+    }, [dispatch, isPopulated]);
 
     if (isLoading || !isPopulated) {
         return <LoadingIndicator />;
     }
-    
-    return <ConnectorList items={items} url="/api/downloader" />
-}
+
+    return <ConnectorList items={items} url="/api/downloader" />;
+};
 
 export default DownloaderList;

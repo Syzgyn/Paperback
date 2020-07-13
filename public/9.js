@@ -36,638 +36,95 @@ PageRow.defaultProps = {
 
 /***/ }),
 
-/***/ "./resources/js/Components/SettingsConnectors/ConnectorAddModal.js":
-/*!*************************************************************************!*\
-  !*** ./resources/js/Components/SettingsConnectors/ConnectorAddModal.js ***!
-  \*************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
-/* harmony import */ var _ConnectorAddModalContent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ConnectorAddModalContent */ "./resources/js/Components/SettingsConnectors/ConnectorAddModalContent.js");
-
-
-
-
-
-var ConnectorAddModal = function ConnectorAddModal(props) {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Modal"], {
-    isOpen: props.isOpen,
-    toggle: props.toggleModal,
-    className: "settingsItemModal",
-    size: "xl"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["ModalHeader"], {
-    toggle: props.toggleModal
-  }, "Add Connector"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["ModalBody"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorAddModalContent__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    onSchemaSelect: props.onSchemaSelect
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["ModalFooter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Button"], {
-    color: "secondary",
-    onClick: props.toggleModal
-  }, "Close")));
-};
-
-ConnectorAddModal.propTypes = {
-  toggleModal: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired,
-  isOpen: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool.isRequired,
-  onSchemaSelect: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
-};
-/* harmony default export */ __webpack_exports__["default"] = (ConnectorAddModal);
-
-/***/ }),
-
-/***/ "./resources/js/Components/SettingsConnectors/ConnectorAddModalContent.js":
-/*!********************************************************************************!*\
-  !*** ./resources/js/Components/SettingsConnectors/ConnectorAddModalContent.js ***!
-  \********************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _ConnectorAddModalItem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ConnectorAddModalItem */ "./resources/js/Components/SettingsConnectors/ConnectorAddModalItem.js");
-/* harmony import */ var _Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Components/Loading/LoadingIndicator */ "./resources/js/Components/Loading/LoadingIndicator.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Store/Slices/Settings/indexers */ "./resources/js/Store/Slices/Settings/indexers.js");
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-
-
-
-
-
-
-
-var ConnectorAddModalContent = function ConnectorAddModalContent(props) {
-  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["useDispatch"])();
-
-  var _useSelector = Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["useSelector"])(_Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_5__["settingsIndexersSelector"]),
-      isSchemaLoading = _useSelector.isSchemaLoading,
-      isSchemaPopulated = _useSelector.isSchemaPopulated,
-      schema = _useSelector.schema;
-
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    dispatch(Object(_Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_5__["fetchSchema"])());
-  }, [dispatch]);
-
-  if (isSchemaLoading || !isSchemaPopulated) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_3__["default"], null);
-  } //TODO: Update title from schema
-
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Usenet"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "settings-item-list"
-  }, schema.filter(function (item) {
-    return item.protocol == "usenet";
-  }).map(function (item) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorAddModalItem__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
-      key: item.name
-    }, item, {
-      onSchemaSelect: props.onSchemaSelect
-    }));
-  })));
-};
-
-ConnectorAddModalContent.propTypes = {
-  onSchemaSelect: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
-};
-/* harmony default export */ __webpack_exports__["default"] = (ConnectorAddModalContent);
-
-/***/ }),
-
-/***/ "./resources/js/Components/SettingsConnectors/ConnectorAddModalItem.js":
-/*!*****************************************************************************!*\
-  !*** ./resources/js/Components/SettingsConnectors/ConnectorAddModalItem.js ***!
-  \*****************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Store/Slices/Settings/indexers */ "./resources/js/Store/Slices/Settings/indexers.js");
-
-
-
-
-
-
-var ConnectorAddModalItem = function ConnectorAddModalItem(props) {
-  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["useDispatch"])();
-  var name = props.name;
-
-  function selectConnector() {
-    dispatch(Object(_Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_4__["selectSchema"])(props.type));
-    props.onSchemaSelect();
-  }
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Card"], {
-    onClick: selectConnector,
-    className: "settings-connector-item shadow p-3 m-3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["CardTitle"], null, name));
-};
-
-ConnectorAddModalItem.propTypes = {
-  name: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  type: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  onSchemaSelect: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
-};
-/* harmony default export */ __webpack_exports__["default"] = (ConnectorAddModalItem);
-
-/***/ }),
-
-/***/ "./resources/js/Components/SettingsConnectors/ConnectorBadge.js":
-/*!**********************************************************************!*\
-  !*** ./resources/js/Components/SettingsConnectors/ConnectorBadge.js ***!
-  \**********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
-
-
-
-
-function ConnectorBadge(props) {
-  var text = props.text,
-      enabled = props.enabled;
-  var color = enabled ? "success" : "danger";
-
-  if (enabled === undefined) {
-    return null;
-  }
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Badge"], {
-    color: color
-  }, text);
-}
-
-ConnectorBadge.propTypes = {
-  text: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  enabled: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool
-};
-/* harmony default export */ __webpack_exports__["default"] = (ConnectorBadge);
-
-/***/ }),
-
-/***/ "./resources/js/Components/SettingsConnectors/ConnectorEditModal.js":
-/*!**************************************************************************!*\
-  !*** ./resources/js/Components/SettingsConnectors/ConnectorEditModal.js ***!
-  \**************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
-/* harmony import */ var _ConnectorEditModalContent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ConnectorEditModalContent */ "./resources/js/Components/SettingsConnectors/ConnectorEditModalContent.js");
-/* harmony import */ var _Components_Page_PageRow__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Components/Page/PageRow */ "./resources/js/Components/Page/PageRow.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Store/Slices/Settings/indexers */ "./resources/js/Store/Slices/Settings/indexers.js");
-
-
-
-
-
-
-
-
-
-var ConnectorEditModal = function ConnectorEditModal(props) {
-  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_6__["useDispatch"])();
-  var formRef = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
-
-  var _useSelector = Object(react_redux__WEBPACK_IMPORTED_MODULE_6__["useSelector"])(_Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_7__["settingsIndexersSelector"]),
-      selectedSchema = _useSelector.selectedSchema;
-
-  function prepareData() {
-    var data = Object.assign({}, formRef.current.values);
-
-    if (props.item !== undefined) {
-      data.type = props.item.schema.type;
-      data.id = props.item.id;
-    } else {
-      data.type = selectedSchema;
-    }
-
-    return data;
-  }
-
-  function onClickTest() {
-    var data = prepareData();
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(props.url + "/test", data).then(function (response) {
-      if (response.data.result) {//setState({ testSuccess: true });
-      }
-    });
-  }
-
-  function onClickSave() {
-    var data = prepareData();
-    var url = props.url;
-    var method = "post";
-    var item = props.item;
-
-    if (item) {
-      url += "/" + item.id;
-      method = "put";
-    }
-
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a[method](url, data).then(function () {
-      props.toggleModal();
-      dispatch(Object(_Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_7__["fetchIndexers"])());
-    });
-  }
-
-  function onClickDelete() {
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"](props.url + "/" + props.item.id).then(function () {
-      props.toggleModal();
-      dispatch(Object(_Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_7__["fetchIndexers"])());
-    });
-  }
-
-  var toggleModal = props.toggleModal,
-      item = props.item;
-  var name = item ? item.schema.type : selectedSchema ? selectedSchema : "";
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Modal"], {
-    isOpen: props.isOpen,
-    toggle: toggleModal,
-    className: "itemModal",
-    size: "xl"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["ModalHeader"], {
-    toggle: props.toggleModal
-  }, "Edit - " + name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["ModalBody"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Page_PageRow__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorEditModalContent__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    item: item,
-    toggleModal: toggleModal,
-    ref: formRef
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["ModalFooter"], null, item ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
-    color: "danger mr-auto",
-    onClick: onClickDelete
-  }, "Delete") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
-    color: "secondary mr-auto",
-    onClick: toggleModal
-  }, "Close"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
-    color: "secondary",
-    onClick: onClickTest
-  }, "Test"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
-    color: "secondary",
-    onClick: toggleModal
-  }, "Cancel"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Button"], {
-    color: "primary",
-    onClick: onClickSave
-  }, "Save")));
-};
-
-ConnectorEditModal.propTypes = {
-  url: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
-  toggleModal: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func,
-  isOpen: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.bool,
-  existingConnector: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.bool,
-  item: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.shape({
-    schema: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.shape({
-      type: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string
-    }),
-    id: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.number
-  }),
-  dispatch: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func
-};
-/* harmony default export */ __webpack_exports__["default"] = (ConnectorEditModal);
-
-/***/ }),
-
-/***/ "./resources/js/Components/SettingsConnectors/ConnectorEditModalContent.js":
-/*!*********************************************************************************!*\
-  !*** ./resources/js/Components/SettingsConnectors/ConnectorEditModalContent.js ***!
-  \*********************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /opt/paperback/resources/js/Components/SettingsConnectors/ConnectorEditModalContent.js: Unexpected token (18:45)\n\n\u001b[0m \u001b[90m 16 | \u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 17 | \u001b[39m    \u001b[36mif\u001b[39m (pathname \u001b[33m===\u001b[39m \u001b[32m\"/settings/indexers\"\u001b[39m) {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 18 | \u001b[39m        { schema\u001b[33m:\u001b[39mallSchema\u001b[33m,\u001b[39m selectedSchema } \u001b[33m=\u001b[39m useSelector(settingsIndexersSelector)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m                                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 19 | \u001b[39m    } \u001b[36melse\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m 20 | \u001b[39m        { schema\u001b[33m:\u001b[39mallSchema\u001b[33m,\u001b[39m selectedSchema } \u001b[33m=\u001b[39m useSelector(settingsDownloadersSelector)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 21 | \u001b[39m    }\u001b[0m\n    at Object._raise (/opt/paperback/node_modules/@babel/parser/lib/index.js:746:17)\n    at Object.raiseWithData (/opt/paperback/node_modules/@babel/parser/lib/index.js:739:17)\n    at Object.raise (/opt/paperback/node_modules/@babel/parser/lib/index.js:733:17)\n    at Object.unexpected (/opt/paperback/node_modules/@babel/parser/lib/index.js:8807:16)\n    at Object.parseExprAtom (/opt/paperback/node_modules/@babel/parser/lib/index.js:10130:20)\n    at Object.parseExprAtom (/opt/paperback/node_modules/@babel/parser/lib/index.js:4638:20)\n    at Object.parseExprSubscripts (/opt/paperback/node_modules/@babel/parser/lib/index.js:9656:23)\n    at Object.parseMaybeUnary (/opt/paperback/node_modules/@babel/parser/lib/index.js:9636:21)\n    at Object.parseExprOps (/opt/paperback/node_modules/@babel/parser/lib/index.js:9506:23)\n    at Object.parseMaybeConditional (/opt/paperback/node_modules/@babel/parser/lib/index.js:9479:23)\n    at Object.parseMaybeAssign (/opt/paperback/node_modules/@babel/parser/lib/index.js:9434:21)\n    at Object.parseExpression (/opt/paperback/node_modules/@babel/parser/lib/index.js:9386:23)\n    at Object.parseStatementContent (/opt/paperback/node_modules/@babel/parser/lib/index.js:11285:23)\n    at Object.parseStatement (/opt/paperback/node_modules/@babel/parser/lib/index.js:11156:17)\n    at Object.parseBlockOrModuleBlockBody (/opt/paperback/node_modules/@babel/parser/lib/index.js:11731:25)\n    at Object.parseBlockBody (/opt/paperback/node_modules/@babel/parser/lib/index.js:11717:10)\n    at Object.parseBlock (/opt/paperback/node_modules/@babel/parser/lib/index.js:11701:10)\n    at Object.parseStatementContent (/opt/paperback/node_modules/@babel/parser/lib/index.js:11232:21)\n    at Object.parseStatement (/opt/paperback/node_modules/@babel/parser/lib/index.js:11156:17)\n    at Object.parseIfStatement (/opt/paperback/node_modules/@babel/parser/lib/index.js:11508:28)\n    at Object.parseStatementContent (/opt/paperback/node_modules/@babel/parser/lib/index.js:11201:21)\n    at Object.parseStatement (/opt/paperback/node_modules/@babel/parser/lib/index.js:11156:17)\n    at Object.parseBlockOrModuleBlockBody (/opt/paperback/node_modules/@babel/parser/lib/index.js:11731:25)\n    at Object.parseBlockBody (/opt/paperback/node_modules/@babel/parser/lib/index.js:11717:10)\n    at Object.parseBlock (/opt/paperback/node_modules/@babel/parser/lib/index.js:11701:10)\n    at Object.parseFunctionBody (/opt/paperback/node_modules/@babel/parser/lib/index.js:10708:24)\n    at Object.parseArrowExpression (/opt/paperback/node_modules/@babel/parser/lib/index.js:10677:10)\n    at Object.parseParenAndDistinguishExpression (/opt/paperback/node_modules/@babel/parser/lib/index.js:10295:12)\n    at Object.parseExprAtom (/opt/paperback/node_modules/@babel/parser/lib/index.js:10007:21)\n    at Object.parseExprAtom (/opt/paperback/node_modules/@babel/parser/lib/index.js:4638:20)\n    at Object.parseExprSubscripts (/opt/paperback/node_modules/@babel/parser/lib/index.js:9656:23)\n    at Object.parseMaybeUnary (/opt/paperback/node_modules/@babel/parser/lib/index.js:9636:21)\n    at Object.parseExprOps (/opt/paperback/node_modules/@babel/parser/lib/index.js:9506:23)\n    at Object.parseMaybeConditional (/opt/paperback/node_modules/@babel/parser/lib/index.js:9479:23)\n    at Object.parseMaybeAssign (/opt/paperback/node_modules/@babel/parser/lib/index.js:9434:21)\n    at Object.parseExprListItem (/opt/paperback/node_modules/@babel/parser/lib/index.js:10792:18)");
-
-/***/ }),
-
-/***/ "./resources/js/Components/SettingsConnectors/ConnectorEmptyItem.js":
-/*!**************************************************************************!*\
-  !*** ./resources/js/Components/SettingsConnectors/ConnectorEmptyItem.js ***!
-  \**************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
-/* harmony import */ var react_feather__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-feather */ "./node_modules/react-feather/dist/index.js");
-/* harmony import */ var _ConnectorEditModal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ConnectorEditModal */ "./resources/js/Components/SettingsConnectors/ConnectorEditModal.js");
-/* harmony import */ var _ConnectorAddModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ConnectorAddModal */ "./resources/js/Components/SettingsConnectors/ConnectorAddModal.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Store/Slices/Settings/indexers */ "./resources/js/Store/Slices/Settings/indexers.js");
-/* harmony import */ var _Store_Slices_Settings_downloaders__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/Store/Slices/Settings/downloaders */ "./resources/js/Store/Slices/Settings/downloaders.js");
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-
-
-
-
-
-
-
-
-
-
-var ConnectorEmptyItem = /*#__PURE__*/function (_Component) {
-  _inherits(ConnectorEmptyItem, _Component);
-
-  var _super = _createSuper(ConnectorEmptyItem);
-
-  function ConnectorEmptyItem() {
-    var _this;
-
-    _classCallCheck(this, ConnectorEmptyItem);
-
-    _this = _super.call(this);
-    _this.state = {
-      addModal: false
-    };
-    _this.toggleAddModal = _this.toggleAddModal.bind(_assertThisInitialized(_this));
-    _this.toggleEditModal = _this.toggleEditModal.bind(_assertThisInitialized(_this));
-    _this.schemaSelected = _this.schemaSelected.bind(_assertThisInitialized(_this));
-    return _this;
-  }
-
-  _createClass(ConnectorEmptyItem, [{
-    key: "toggleAddModal",
-    value: function toggleAddModal() {
-      this.setState({
-        addModal: !this.state.addModal
-      });
-    }
-  }, {
-    key: "toggleEditModal",
-    value: function toggleEditModal() {
-      this.setState({
-        editModal: !this.state.editModal
-      });
-
-      if (this.props.pathname === "/settings/indexers") {
-        this.props.dispatch(Object(_Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_7__["deselectSchema"])());
-      } else {
-        this.props.dispatch(Object(_Store_Slices_Settings_downloaders__WEBPACK_IMPORTED_MODULE_8__["deselectSchema"])());
-      }
-    }
-  }, {
-    key: "schemaSelected",
-    value: function schemaSelected() {
-      this.setState({
-        addModal: false,
-        editModal: true
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this$state = this.state,
-          addModal = _this$state.addModal,
-          editModal = _this$state.editModal;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Card"], {
-        onClick: this.toggleAddModal,
-        className: "settings-connector-item add-item shadow p-3 m-3 text-center"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_3__["Plus"], {
-        size: 60
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorAddModal__WEBPACK_IMPORTED_MODULE_5__["default"], {
-        isOpen: addModal,
-        toggleModal: this.toggleAddModal,
-        onSchemaSelect: this.schemaSelected
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorEditModal__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        isOpen: editModal,
-        toggleModal: this.toggleEditModal,
-        existingConnector: false,
-        url: this.props.url
-      }));
-    }
-  }]);
-
-  return ConnectorEmptyItem;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
-
-ConnectorEmptyItem.propTypes = {
-  url: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  dispatch: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func
-};
-
-var mapStateToProps = function mapStateToProps(state) {
-  return {
-    pathname: state.router.location.pathname
-  };
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_6__["connect"])(mapStateToProps)(ConnectorEmptyItem));
-
-/***/ }),
-
-/***/ "./resources/js/Components/SettingsConnectors/ConnectorItem.js":
-/*!*********************************************************************!*\
-  !*** ./resources/js/Components/SettingsConnectors/ConnectorItem.js ***!
-  \*********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
-/* harmony import */ var _ConnectorEditModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ConnectorEditModal */ "./resources/js/Components/SettingsConnectors/ConnectorEditModal.js");
-/* harmony import */ var _ConnectorBadge__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ConnectorBadge */ "./resources/js/Components/SettingsConnectors/ConnectorBadge.js");
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-
-
-
-
-
-
-var ConnectorItem = /*#__PURE__*/function (_Component) {
-  _inherits(ConnectorItem, _Component);
-
-  var _super = _createSuper(ConnectorItem);
-
-  function ConnectorItem() {
-    var _this;
-
-    _classCallCheck(this, ConnectorItem);
-
-    _this = _super.call(this);
-    _this.state = {
-      modal: false
-    };
-    _this.toggleEditModal = _this.toggleEditModal.bind(_assertThisInitialized(_this));
-    return _this;
-  }
-
-  _createClass(ConnectorItem, [{
-    key: "toggleEditModal",
-    value: function toggleEditModal() {
-      this.setState({
-        modal: !this.state.modal
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var modal = this.state.modal;
-      var _this$props$item = this.props.item,
-          name = _this$props$item.name,
-          enableRss = _this$props$item.enableRss,
-          enableSearch = _this$props$item.enableSearch,
-          enable = _this$props$item.enable;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Card"], {
-        onClick: this.toggleEditModal,
-        className: "settings-connector-item shadow p-3 m-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["CardTitle"], null, name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["CardText"], {
-        className: "mt-2"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorBadge__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        enabled: enableRss,
-        text: "RSS"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorBadge__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        enabled: enableSearch,
-        text: "Search"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorBadge__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        enabled: enable,
-        text: "Enabled"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorEditModal__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        isOpen: modal,
-        toggleModal: this.toggleEditModal,
-        item: this.props.item,
-        url: this.props.url
-      }));
-    }
-  }]);
-
-  return ConnectorItem;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
-
-ConnectorItem.propTypes = {
-  url: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  item: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired
-};
-/* harmony default export */ __webpack_exports__["default"] = (ConnectorItem);
-
-/***/ }),
-
 /***/ "./resources/js/Components/SettingsConnectors/ConnectorList.js":
 /*!*********************************************************************!*\
   !*** ./resources/js/Components/SettingsConnectors/ConnectorList.js ***!
   \*********************************************************************/
 /*! exports provided: default */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /opt/paperback/resources/js/Components/SettingsConnectors/ConnectorList.js: Unterminated string constant (6:30)\n\n\u001b[0m \u001b[90m 4 | \u001b[39m\u001b[36mimport\u001b[39m \u001b[33mConnectorItem\u001b[39m from \u001b[32m\"./ConnectorItem\"\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 5 | \u001b[39m\u001b[36mimport\u001b[39m \u001b[33mConnectorEmptyItem\u001b[39m from \u001b[32m\"./ConnectorEmptyItem\"\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 6 | \u001b[39m\u001b[36mimport\u001b[39m \u001b[33mConnectorAddModal\u001b[39m from \u001b[32m\"@/Components/S\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m   | \u001b[39m                              \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 7 | \u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 8 | \u001b[39m\u001b[36mconst\u001b[39m \u001b[33mConnectorList\u001b[39m \u001b[33m=\u001b[39m ({items\u001b[33m,\u001b[39m url}) \u001b[33m=>\u001b[39m ( \u001b[0m\n\u001b[0m \u001b[90m 9 | \u001b[39m    \u001b[33m<\u001b[39m\u001b[33mPageRow\u001b[39m className\u001b[33m=\u001b[39m\u001b[32m\"settings-connector-list\"\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n    at Object._raise (/opt/paperback/node_modules/@babel/parser/lib/index.js:746:17)\n    at Object.raiseWithData (/opt/paperback/node_modules/@babel/parser/lib/index.js:739:17)\n    at Object.raise (/opt/paperback/node_modules/@babel/parser/lib/index.js:733:17)\n    at Object.readString (/opt/paperback/node_modules/@babel/parser/lib/index.js:8423:20)\n    at Object.getTokenFromCode (/opt/paperback/node_modules/@babel/parser/lib/index.js:8071:14)\n    at Object.getTokenFromCode (/opt/paperback/node_modules/@babel/parser/lib/index.js:4670:18)\n    at Object.nextToken (/opt/paperback/node_modules/@babel/parser/lib/index.js:7598:12)\n    at Object.next (/opt/paperback/node_modules/@babel/parser/lib/index.js:7526:10)\n    at Object.eat (/opt/paperback/node_modules/@babel/parser/lib/index.js:7531:12)\n    at Object.eatContextual (/opt/paperback/node_modules/@babel/parser/lib/index.js:8769:44)\n    at Object.expectContextual (/opt/paperback/node_modules/@babel/parser/lib/index.js:8773:15)\n    at Object.parseImport (/opt/paperback/node_modules/@babel/parser/lib/index.js:12527:12)\n    at Object.parseStatementContent (/opt/paperback/node_modules/@babel/parser/lib/index.js:11254:27)\n    at Object.parseStatement (/opt/paperback/node_modules/@babel/parser/lib/index.js:11156:17)\n    at Object.parseBlockOrModuleBlockBody (/opt/paperback/node_modules/@babel/parser/lib/index.js:11731:25)\n    at Object.parseBlockBody (/opt/paperback/node_modules/@babel/parser/lib/index.js:11717:10)\n    at Object.parseTopLevel (/opt/paperback/node_modules/@babel/parser/lib/index.js:11087:10)\n    at Object.parse (/opt/paperback/node_modules/@babel/parser/lib/index.js:12768:10)\n    at parse (/opt/paperback/node_modules/@babel/parser/lib/index.js:12821:38)\n    at parser (/opt/paperback/node_modules/@babel/core/lib/parser/index.js:54:34)\n    at parser.next (<anonymous>)\n    at normalizeFile (/opt/paperback/node_modules/@babel/core/lib/transformation/normalize-file.js:93:38)\n    at normalizeFile.next (<anonymous>)\n    at run (/opt/paperback/node_modules/@babel/core/lib/transformation/index.js:31:50)\n    at run.next (<anonymous>)\n    at Function.transform (/opt/paperback/node_modules/@babel/core/lib/transform.js:27:41)\n    at transform.next (<anonymous>)\n    at step (/opt/paperback/node_modules/gensync/index.js:254:32)\n    at /opt/paperback/node_modules/gensync/index.js:266:13\n    at async.call.result.err.err (/opt/paperback/node_modules/gensync/index.js:216:11)");
+
+/***/ }),
+
+/***/ "./resources/js/Settings/Downloaders/DownloaderList.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/Settings/Downloaders/DownloaderList.js ***!
+  \*************************************************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Components_Page_PageRow__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Components/Page/PageRow */ "./resources/js/Components/Page/PageRow.js");
-/* harmony import */ var _ConnectorItem__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ConnectorItem */ "./resources/js/Components/SettingsConnectors/ConnectorItem.js");
-/* harmony import */ var _ConnectorEmptyItem__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ConnectorEmptyItem */ "./resources/js/Components/SettingsConnectors/ConnectorEmptyItem.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Components/Loading/LoadingIndicator */ "./resources/js/Components/Loading/LoadingIndicator.js");
+/* harmony import */ var _Store_Slices_Settings_settingsConnectors__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Store/Slices/Settings/settingsConnectors */ "./resources/js/Store/Slices/Settings/settingsConnectors.js");
+/* harmony import */ var _Components_SettingsConnectors_ConnectorList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Components/SettingsConnectors/ConnectorList */ "./resources/js/Components/SettingsConnectors/ConnectorList.js");
 
 
 
 
 
 
-var ConnectorList = function ConnectorList(_ref) {
-  var items = _ref.items,
-      url = _ref.url;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Page_PageRow__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    className: "settings-connector-list"
-  }, items.map(function (item) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorItem__WEBPACK_IMPORTED_MODULE_3__["default"], {
-      key: item.id,
-      item: item,
-      url: url
-    });
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorEmptyItem__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    url: url
-  }));
+var DownloaderList = function DownloaderList() {
+  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["useDispatch"])();
+
+  var _useSelector = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["useSelector"])(_Store_Slices_Settings_settingsConnectors__WEBPACK_IMPORTED_MODULE_3__["settingsItemsSelector"]),
+      isLoading = _useSelector.isLoading,
+      isPopulated = _useSelector.isPopulated,
+      items = _useSelector.items;
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (!isPopulated) {
+      dispatch(Object(_Store_Slices_Settings_settingsConnectors__WEBPACK_IMPORTED_MODULE_3__["fetchItems"])());
+    }
+  }, [dispatch, isPopulated]);
+
+  if (isLoading || !isPopulated) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_2__["default"], null);
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_SettingsConnectors_ConnectorList__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    items: items,
+    url: "/api/downloader"
+  });
 };
 
-ConnectorList.propTypes = {
-  items: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array.isRequired,
-  url: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
+/* harmony default export */ __webpack_exports__["default"] = (DownloaderList);
+
+/***/ }),
+
+/***/ "./resources/js/Settings/Downloaders/DownloaderSettings.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/Settings/Downloaders/DownloaderSettings.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Settings_SettingsMenuBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Settings/SettingsMenuBar */ "./resources/js/Settings/SettingsMenuBar.js");
+/* harmony import */ var _Settings_SettingsToolbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Settings/SettingsToolbar */ "./resources/js/Settings/SettingsToolbar.js");
+/* harmony import */ var _Settings_Downloaders_DownloaderList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Settings/Downloaders/DownloaderList */ "./resources/js/Settings/Downloaders/DownloaderList.js");
+
+
+
+
+
+var DownloaderSettings = function DownloaderSettings() {
+  function onSavePress() {//TODO: General downloader settings
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Settings_SettingsMenuBar__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Settings_SettingsToolbar__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    onSavePress: onSavePress
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Downloaders"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Settings_Downloaders_DownloaderList__WEBPACK_IMPORTED_MODULE_3__["default"], null));
 };
-/* harmony default export */ __webpack_exports__["default"] = (ConnectorList);
+
+/* harmony default export */ __webpack_exports__["default"] = (DownloaderSettings);
 
 /***/ }),
 

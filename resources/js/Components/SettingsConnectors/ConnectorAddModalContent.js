@@ -1,34 +1,24 @@
 import React, { useEffect } from "react";
-import PropTypes from "prop-types";
 import ConnectorAddModalItem from "./ConnectorAddModalItem";
 import LoadingIndicator from "@/Components/Loading/LoadingIndicator";
 import { useDispatch, useSelector } from "react-redux";
-import { getLocation } from "connected-react-router";
-import { fetchSchema as indexerSchema, settingsIndexersSelector } from "@/Store/Slices/Settings/indexers";
-import { fetchSchema as downloaderSchema, settingsDownloadersSelector } from "@/Store/Slices/Settings/downloaders";
+import {
+    fetchSchema,
+    settingsItemsSelector,
+} from "@/Store/Slices/Settings/settingsConnectors";
 
-const ConnectorAddModalContent = (props) => {
+const ConnectorAddModalContent = () => {
     const dispatch = useDispatch();
-    const { pathname } = useSelector(getLocation);
-    
-    let fetchSchema, selector;
-
-    if (pathname === "/settings/indexers") {
-        fetchSchema = indexerSchema;
-        selector = settingsIndexersSelector;
-    } else {
-        fetchSchema = downloaderSchema;
-        selector = settingsDownloadersSelector;
-    }
-
-    const { isSchemaLoading, isSchemaPopulated, schema } = useSelector(selector);
+    const { isSchemaLoading, isSchemaPopulated, schema } = useSelector(
+        settingsItemsSelector
+    );
 
     useEffect(() => {
         dispatch(fetchSchema());
-    }, [dispatch, fetchSchema]);
+    }, [dispatch]);
 
     if (isSchemaLoading || !isSchemaPopulated) {
-        return <LoadingIndicator />
+        return <LoadingIndicator />;
     }
 
     //TODO: Update title from schema
@@ -41,19 +31,11 @@ const ConnectorAddModalContent = (props) => {
                         return item.protocol == "usenet";
                     })
                     .map((item) => (
-                        <ConnectorAddModalItem
-                            key={item.name}
-                            {...item}
-                            onSchemaSelect={props.onSchemaSelect}
-                        />
+                        <ConnectorAddModalItem key={item.name} {...item} />
                     ))}
             </div>
         </>
     );
-}
-
-ConnectorAddModalContent.propTypes = {
-    onSchemaSelect: PropTypes.func.isRequired,
 };
 
 export default ConnectorAddModalContent;

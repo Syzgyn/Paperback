@@ -1,35 +1,38 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import ConnectorAddModalContent from "./ConnectorAddModalContent";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    toggleAddModal,
+    settingsItemsSelector,
+} from "@/Store/Slices/Settings/settingsConnectors";
 
-const ConnectorAddModal = (props) => (
-    <Modal
-        isOpen={props.isOpen}
-        toggle={props.toggleModal}
-        className="settingsItemModal"
-        size="xl"
-    >
-        <ModalHeader toggle={props.toggleModal}>
-            Add Connector
-        </ModalHeader>
-        <ModalBody>
-            <ConnectorAddModalContent
-                onSchemaSelect={props.onSchemaSelect}
-            />
-        </ModalBody>
-        <ModalFooter>
-            <Button color="secondary" onClick={props.toggleModal}>
-                Close
-            </Button>
-        </ModalFooter>
-    </Modal>
-);
+const ConnectorAddModal = () => {
+    const dispatch = useDispatch();
+    const { showAddModal } = useSelector(settingsItemsSelector);
 
-ConnectorAddModal.propTypes = {
-    toggleModal: PropTypes.func.isRequired,
-    isOpen: PropTypes.bool.isRequired,
-    onSchemaSelect: PropTypes.func.isRequired,
+    function toggle() {
+        dispatch(toggleAddModal());
+    }
+
+    return (
+        <Modal
+            isOpen={showAddModal}
+            toggle={toggle}
+            className="settingsItemModal"
+            size="xl"
+        >
+            <ModalHeader toggle={toggle}>Add Connector</ModalHeader>
+            <ModalBody>
+                <ConnectorAddModalContent />
+            </ModalBody>
+            <ModalFooter>
+                <Button color="secondary" onClick={toggle}>
+                    Close
+                </Button>
+            </ModalFooter>
+        </Modal>
+    );
 };
 
 export default ConnectorAddModal;

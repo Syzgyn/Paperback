@@ -16,6 +16,6 @@ const IndexerSettings = () => {
             <IndexerList />
         </>
     );
-}
+};
 
 export default IndexerSettings;

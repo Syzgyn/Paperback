@@ -3,34 +3,25 @@ import PropTypes from "prop-types";
 import { FormGroup, Label } from "reactstrap";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useSelector } from "react-redux";
-import { getLocation } from "connected-react-router";
-import { settingsIndexersSelector } from "@/Store/Slices/Settings/indexers";
-import { settingsDownloadersSelector } from "@/Store/Slices/Settings/downloaders";
+import { settingsItemsSelector } from "@/Store/Slices/Settings/settingsConnectors";
 import LoadingIndicator from "@/Components/Loading/LoadingIndicator";
 
 const ConnectorEditModalContent = React.forwardRef((props, formRef) => {
     const { item } = props;
-    const { pathname } = useSelector(getLocation);
 
-    let selector;
-
-    if (pathname === "/settings/indexers") {
-        selector = settingsIndexersSelector;
-    } else {
-        selector = settingsDownloadersSelector;
-    }
-
-    const{ schema:allSchema, selectedSchema } = useSelector(selector);
+    const { schema: allSchema, selectedSchema } = useSelector(
+        settingsItemsSelector
+    );
 
     let schema = null;
     if (item) {
         schema = item.schema;
     } else {
-        schema = allSchema.find(item => item.type === selectedSchema )
+        schema = allSchema.find((item) => item.type === selectedSchema);
     }
 
     if (!schema) {
-        return <LoadingIndicator />
+        return <LoadingIndicator />;
     }
 
     const { fields, initialValues } = schema;

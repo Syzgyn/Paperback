@@ -144,9 +144,6 @@ __webpack_require__.r(__webpack_exports__);
 
 var GeneralSettingsForm = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.forwardRef(function (props, formRef) {
   var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_5__["useDispatch"])();
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    dispatch(Object(_Store_Slices_Settings_general__WEBPACK_IMPORTED_MODULE_6__["fetchSettings"])());
-  }, [dispatch]);
 
   function onSubmit(values) {
     dispatch(Object(_Store_Slices_Settings_general__WEBPACK_IMPORTED_MODULE_6__["submitSettings"])(values));
@@ -156,6 +153,12 @@ var GeneralSettingsForm = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___defaul
       isLoading = _useSelector.isLoading,
       isPopulated = _useSelector.isPopulated,
       items = _useSelector.items;
+
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (!isPopulated) {
+      dispatch(Object(_Store_Slices_Settings_general__WEBPACK_IMPORTED_MODULE_6__["fetchSettings"])());
+    }
+  }, [dispatch, isPopulated]);
 
   if (isLoading || !isPopulated) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_4__["default"], null);

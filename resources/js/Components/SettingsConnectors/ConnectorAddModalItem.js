@@ -1,28 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Card, CardTitle } from "reactstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { selectSchema as indexerSelect } from "@/Store/Slices/Settings/indexers";
-import { selectSchema as downloaderSelect } from "@/Store/Slices/Settings/downloaders";
-import { getLocation } from "connected-react-router";
+import { useDispatch } from "react-redux";
+import { selectSchemaAndToggleEditModal } from "@/Store/Slices/Settings/settingsConnectors";
 
 const ConnectorAddModalItem = (props) => {
     const dispatch = useDispatch();
     const { name } = props;
-    const { pathname } = useSelector(getLocation);
-
-    let selectSchema;
-
-    if (pathname === "/settings/indexers") {
-        selectSchema = indexerSelect;
-    } else {
-        selectSchema = downloaderSelect;
-    }
-
 
     function selectConnector() {
-        dispatch(selectSchema(props.type));
-        props.onSchemaSelect();
+        dispatch(selectSchemaAndToggleEditModal(props.type));
     }
 
     return (
@@ -33,7 +20,7 @@ const ConnectorAddModalItem = (props) => {
             <CardTitle>{name}</CardTitle>
         </Card>
     );
-}
+};
 
 ConnectorAddModalItem.propTypes = {
     name: PropTypes.string,

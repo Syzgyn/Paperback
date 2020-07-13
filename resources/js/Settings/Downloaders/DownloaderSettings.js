@@ -16,6 +16,6 @@ const DownloaderSettings = () => {
             <DownloaderList />
         </>
     );
-}
+};
 
 export default DownloaderSettings;

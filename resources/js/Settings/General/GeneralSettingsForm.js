@@ -13,10 +13,6 @@ import {
 const GeneralSettingsForm = React.forwardRef((props, formRef) => {
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(fetchSettings());
-    }, [dispatch]);
-
     function onSubmit(values) {
         dispatch(submitSettings(values));
     }
@@ -24,6 +20,12 @@ const GeneralSettingsForm = React.forwardRef((props, formRef) => {
     const { isLoading, isPopulated, items } = useSelector(
         settingsGeneralSelector
     );
+
+    useEffect(() => {
+        if (!isPopulated) {
+            dispatch(fetchSettings());
+        }
+    }, [dispatch, isPopulated]);
 
     if (isLoading || !isPopulated) {
         return <LoadingIndicator />;

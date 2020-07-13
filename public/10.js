@@ -302,17 +302,25 @@ var ConnectorEditModal = function ConnectorEditModal(props) {
   var _useSelector = Object(react_redux__WEBPACK_IMPORTED_MODULE_6__["useSelector"])(connected_react_router__WEBPACK_IMPORTED_MODULE_7__["getLocation"]),
       pathname = _useSelector.pathname;
 
-  var fetchFunc, selector;
+  var fetchFunc, testFunc, saveFunc, deleteFunc, selector, toggleModalFunc;
 
   if (pathname === "/settings/indexers") {
     fetchFunc = _Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_8__["fetchIndexers"];
+    testFunc = _Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_8__["testIndexer"];
+    saveFunc = _Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_8__["submitIndexer"];
+    toggleModalFunc = _Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_8__["toggleEditModal"];
     selector = _Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_8__["settingsIndexersSelector"];
   } else {
     fetchFunc = _Store_Slices_Settings_downloaders__WEBPACK_IMPORTED_MODULE_9__["fetchDownloaders"];
+    testFunc = _Store_Slices_Settings_downloaders__WEBPACK_IMPORTED_MODULE_9__["testDownloader"];
+    saveFunc = _Store_Slices_Settings_downloaders__WEBPACK_IMPORTED_MODULE_9__["submitDownloader"];
+    toggleModalFunc = _Store_Slices_Settings_downloaders__WEBPACK_IMPORTED_MODULE_9__["toggleEditModal"];
     selector = _Store_Slices_Settings_downloaders__WEBPACK_IMPORTED_MODULE_9__["settingsDownloadersSelector"];
   }
 
-  var selectedSchema = Object(react_redux__WEBPACK_IMPORTED_MODULE_6__["useSelector"])(selector);
+  var _useSelector2 = Object(react_redux__WEBPACK_IMPORTED_MODULE_6__["useSelector"])(selector),
+      selectedSchema = _useSelector2.selectedSchema,
+      showEditModal = _useSelector2.showEditModal;
 
   function prepareData() {
     var data = Object.assign({}, formRef.current.values);
@@ -329,14 +337,12 @@ var ConnectorEditModal = function ConnectorEditModal(props) {
 
   function onClickTest() {
     var data = prepareData();
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(props.url + "/test", data).then(function (response) {
-      if (response.data.result) {//setState({ testSuccess: true });
-      }
-    });
+    dispatch(testFunc(data));
   }
 
   function onClickSave() {
     var data = prepareData();
+    console.log(dispatch(saveFunc(data)));
     var url = props.url;
     var method = "post";
     var item = props.item;
@@ -347,23 +353,26 @@ var ConnectorEditModal = function ConnectorEditModal(props) {
     }
 
     axios__WEBPACK_IMPORTED_MODULE_1___default.a[method](url, data).then(function () {
-      props.toggleModal();
+      toggleModal();
       dispatch(fetchFunc());
     });
   }
 
   function onClickDelete() {
     axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"](props.url + "/" + props.item.id).then(function () {
-      props.toggleModal();
+      toggleModal();
       dispatch(fetchFunc());
     });
   }
 
-  var toggleModal = props.toggleModal,
-      item = props.item;
+  function toggleModal() {
+    dispatch(toggleModalFunc());
+  }
+
+  var item = props.item;
   var name = item ? item.schema.type : selectedSchema ? selectedSchema : "";
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["Modal"], {
-    isOpen: props.isOpen,
+    isOpen: showEditModal,
     toggle: toggleModal,
     className: "itemModal",
     size: "xl"
@@ -662,27 +671,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! reactstrap */ "./node_modules/reactstrap/es/index.js");
 /* harmony import */ var _ConnectorEditModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ConnectorEditModal */ "./resources/js/Components/SettingsConnectors/ConnectorEditModal.js");
 /* harmony import */ var _ConnectorBadge__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ConnectorBadge */ "./resources/js/Components/SettingsConnectors/ConnectorBadge.js");
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+/* harmony import */ var _Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Store/Slices/Settings/indexers */ "./resources/js/Store/Slices/Settings/indexers.js");
+/* harmony import */ var _Store_Slices_Settings_downloaders__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Store/Slices/Settings/downloaders */ "./resources/js/Store/Slices/Settings/downloaders.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var connected_react_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! connected-react-router */ "./node_modules/connected-react-router/esm/index.js");
+/* harmony import */ var _Store_Selectors_settingsApiPath__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/Store/Selectors/settingsApiPath */ "./resources/js/Store/Selectors/settingsApiPath.js");
 
 
 
@@ -690,65 +683,50 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-var ConnectorItem = /*#__PURE__*/function (_Component) {
-  _inherits(ConnectorItem, _Component);
 
-  var _super = _createSuper(ConnectorItem);
 
-  function ConnectorItem() {
-    var _this;
 
-    _classCallCheck(this, ConnectorItem);
 
-    _this = _super.call(this);
-    _this.state = {
-      modal: false
-    };
-    _this.toggleEditModal = _this.toggleEditModal.bind(_assertThisInitialized(_this));
-    return _this;
+var ConnectorItem = function ConnectorItem(_ref) {
+  var item = _ref.item;
+  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_7__["useDispatch"])();
+
+  var _useSelector = Object(react_redux__WEBPACK_IMPORTED_MODULE_7__["useSelector"])(connected_react_router__WEBPACK_IMPORTED_MODULE_8__["getLocation"]),
+      pathname = _useSelector.pathname;
+
+  console.log(Object(react_redux__WEBPACK_IMPORTED_MODULE_7__["useSelector"])(_Store_Selectors_settingsApiPath__WEBPACK_IMPORTED_MODULE_9__["settingsApiPathSelector"]));
+  var showItemFunc;
+
+  if (pathname === "/settings/indexers") {
+    showItemFunc = _Store_Slices_Settings_indexers__WEBPACK_IMPORTED_MODULE_5__["showItem"];
+  } else {
+    showItemFunc = _Store_Slices_Settings_downloaders__WEBPACK_IMPORTED_MODULE_6__["showItem"];
   }
 
-  _createClass(ConnectorItem, [{
-    key: "toggleEditModal",
-    value: function toggleEditModal() {
-      this.setState({
-        modal: !this.state.modal
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var modal = this.state.modal;
-      var _this$props$item = this.props.item,
-          name = _this$props$item.name,
-          enableRss = _this$props$item.enableRss,
-          enableSearch = _this$props$item.enableSearch,
-          enable = _this$props$item.enable;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Card"], {
-        onClick: this.toggleEditModal,
-        className: "settings-connector-item shadow p-3 m-3"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["CardTitle"], null, name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["CardText"], {
-        className: "mt-2"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorBadge__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        enabled: enableRss,
-        text: "RSS"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorBadge__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        enabled: enableSearch,
-        text: "Search"
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorBadge__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        enabled: enable,
-        text: "Enabled"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorEditModal__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        isOpen: modal,
-        toggleModal: this.toggleEditModal,
-        item: this.props.item,
-        url: this.props.url
-      }));
-    }
-  }]);
+  function toggleEditModal() {
+    dispatch(showItemFunc(item));
+  }
 
-  return ConnectorItem;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+  var name = item.name,
+      enableRss = item.enableRss,
+      enableSearch = item.enableSearch,
+      enable = item.enable;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["Card"], {
+    onClick: toggleEditModal,
+    className: "settings-connector-item shadow p-3 m-3"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["CardTitle"], null, name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_2__["CardText"], {
+    className: "mt-2"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorBadge__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    enabled: enableRss,
+    text: "RSS"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorBadge__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    enabled: enableSearch,
+    text: "Search"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ConnectorBadge__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    enabled: enable,
+    text: "Enabled"
+  })));
+};
 
 ConnectorItem.propTypes = {
   url: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
