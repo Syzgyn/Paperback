@@ -1,9 +1,9 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[8],{
 
-/***/ "./resources/js/Settings/Indexers/IndexerList.js":
-/*!*******************************************************!*\
-  !*** ./resources/js/Settings/Indexers/IndexerList.js ***!
-  \*******************************************************/
+/***/ "./resources/js/Settings/Downloaders/DownloaderList.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/Settings/Downloaders/DownloaderList.js ***!
+  \*************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -21,7 +21,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var IndexerList = function IndexerList() {
+var DownloaderList = function DownloaderList() {
   var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["useDispatch"])();
 
   var _useSelector = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["useSelector"])(_Store_Slices_Settings_settingsConnectors__WEBPACK_IMPORTED_MODULE_3__["settingsItemsSelector"]),
@@ -35,24 +35,24 @@ var IndexerList = function IndexerList() {
     }
   }, [dispatch, isPopulated]);
 
-  if (isLoading) {
+  if (isLoading || !isPopulated) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_2__["default"], null);
   }
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_SettingsConnectors_ConnectorList__WEBPACK_IMPORTED_MODULE_4__["default"], {
     items: items,
-    url: "/api/indexer"
+    url: "/api/downloader"
   });
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (IndexerList);
+/* harmony default export */ __webpack_exports__["default"] = (DownloaderList);
 
 /***/ }),
 
-/***/ "./resources/js/Settings/Indexers/IndexerSettings.js":
-/*!***********************************************************!*\
-  !*** ./resources/js/Settings/Indexers/IndexerSettings.js ***!
-  \***********************************************************/
+/***/ "./resources/js/Settings/Downloaders/DownloaderSettings.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/Settings/Downloaders/DownloaderSettings.js ***!
+  \*****************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -62,22 +62,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Settings_SettingsMenuBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Settings/SettingsMenuBar */ "./resources/js/Settings/SettingsMenuBar.js");
 /* harmony import */ var _Settings_SettingsToolbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Settings/SettingsToolbar */ "./resources/js/Settings/SettingsToolbar.js");
-/* harmony import */ var _Settings_Indexers_IndexerList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Settings/Indexers/IndexerList */ "./resources/js/Settings/Indexers/IndexerList.js");
+/* harmony import */ var _Settings_Downloaders_DownloaderList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Settings/Downloaders/DownloaderList */ "./resources/js/Settings/Downloaders/DownloaderList.js");
 
 
 
 
 
-var IndexerSettings = function IndexerSettings() {
-  function onSavePress() {//TODO: General indexers settings
+var DownloaderSettings = function DownloaderSettings() {
+  function onSavePress() {//TODO: General downloader settings
   }
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Settings_SettingsMenuBar__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Settings_SettingsToolbar__WEBPACK_IMPORTED_MODULE_2__["default"], {
     onSavePress: onSavePress
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Indexers"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Settings_Indexers_IndexerList__WEBPACK_IMPORTED_MODULE_3__["default"], null));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Downloaders"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Settings_Downloaders_DownloaderList__WEBPACK_IMPORTED_MODULE_3__["default"], null));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (IndexerSettings);
+/* harmony default export */ __webpack_exports__["default"] = (DownloaderSettings);
 
 /***/ })
 

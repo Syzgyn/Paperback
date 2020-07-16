@@ -6,6 +6,9 @@ use App\Models\Issue;
 use Illuminate\Http\Request;
 use App\Http\Resources\IssueCollection;
 use App\Http\Resources\Issue as IssueResource;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class IssueController extends Controller
 {
@@ -26,6 +29,38 @@ class IssueController extends Controller
         $issues = Issue::where('comic_id', $cvid)->orderBy('issue_num', 'DESC')->get();
 
         return new IssueCollection($issues);
+    }
+
+    public function wanted(Request $request)
+    {
+        $params = $request->validate([
+            'page' => 'integer',
+            'pageSize' => 'integer',
+            'sortKey' => 'string',
+            'sortDir' => 'in:asc,desc',
+        ]);
+
+        $params['pageSize'] = $params['pageSize'] ?? 20;
+
+        $issues = new IssueCollection(Issue::with('comic')->doesntHave('downloadedFile')->get());
+
+        $sortFunc = $params['sortDir'] == "asc" ? "sortBy" : "sortByDesc";
+
+        $sorted = $issues->{$sortFunc}($params['sortKey']);
+        return $this->paginate($sorted, $params['pageSize']);
+    }
+
+    protected function paginate($items, $perPage = 20, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+
+        $paginator = new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+        $output = $paginator->toArray();
+        $output['data'] = array_values($output['data']);
+
+        return $output;
     }
 
     /**

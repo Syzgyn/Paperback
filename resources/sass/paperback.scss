@@ -74,6 +74,38 @@ td.issue-search-cell {
     width: 75px;
 }
 
+table.wanted-table td {
+    padding: 7px;
+}
+
+table.wanted-table th {
+    cursor: pointer;
+}
+
+table.wanted-table th:hover {
+    background: #ECECEC;
+}
+
+td.wanted-comic-cell,
+td.wanted-issue-name-cell {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 400px;
+    overflow: hidden;
+}
+
+td.wanted-date-cell {
+    width: 150px;
+}
+
+td.wanted-issue-num-cell {
+    width: 40px;
+}
+
+.pagination-control {
+    padding: 3px;
+}
+
 a.hideLink {
     color: inherit;
     text-decoration: none;

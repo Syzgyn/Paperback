@@ -14,6 +14,7 @@ const IndexerSettings = lazy(() =>
 const DownloaderSettings = lazy(() =>
     import("@/Settings/Downloaders/DownloaderSettings")
 );
+const WantedPage = lazy(() => import("@/Wanted/WantedPage"));
 
 function AppRoutes() {
     return (
@@ -39,6 +40,9 @@ function AppRoutes() {
                 </Route>
                 <Route path="/settings/downloaders">
                     <DownloaderSettings />
+                </Route>
+                <Route path="/wanted">
+                    <WantedPage />
                 </Route>
             </Switch>
         </Suspense>

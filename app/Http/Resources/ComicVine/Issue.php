@@ -14,7 +14,6 @@ class Issue extends JsonResource
      */
     public function toArray($request)
     {
-        var_dump($this->resource);
         return [
             'name' => $this->resource->name,
             'comic_id' => (int)$this->resource->volume->id,

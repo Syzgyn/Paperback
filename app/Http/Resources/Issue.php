@@ -15,7 +15,8 @@ class Issue extends JsonResource
     public function toArray($request)
     {
         return [
-            'volume_name' => $this->getName(),
+            'issue_name' => $this->getName(),
+            'comic_name' => $this->comic->name,
             'comic_id' => $this->comic_id,
             'description' => $this->description,
             'release_date' => $this->release_date,

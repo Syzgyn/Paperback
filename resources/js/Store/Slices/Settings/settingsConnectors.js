@@ -121,7 +121,7 @@ const deleteItem = createAsyncThunk(
 
 const submitSettings = createAsyncThunk(
     "settings/items/submitSettings",
-    async (values, {getState}) => {
+    async (values, { getState }) => {
         const response = await axios.post("/api/settings", {
             [getApiPath(getState()) + "s"]: values,
         });
