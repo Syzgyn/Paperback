@@ -4,21 +4,82 @@ namespace App\Services;
 
 use App\Models\Indexer;
 use App\Models\TrackedDownload;
+use App\Models\Comic;
+use App\Models\Issue;
 use App\Dto\SearchResultCollection;
 
 class DownloadService
 {
+    protected static $issues = [];
+
     public function searchIssue(int $cvid)
     {
         $indexers = Indexer::where('enable_search', true)->get();
 
         $results = [];
         foreach ($indexers as $indexer) {
-            $result = $indexer->searchCvid($cvid);
-            $results = array_merge($results, $result->resolve());
+            $result = $this->searchIndexerForIssue($indexer, $cvid);
+
+            $source = $indexer->schema['protocol'] == 'usenet' ? 'nzb' : 'torrent';
+            $comic = $this->getIssue($cvid)->comic;
+
+            array_walk($result, function (&$item, $key) use ($source, $cvid, $comic, $indexer) {
+                $item['indexer'] = $indexer->name;
+                $item['indexer_id'] = $indexer->id;
+                $item['source'] = $source;
+                $item['issue_id'] = (int)$cvid;
+                $item['comic_id'] = $comic->cvid;
+            });
+
+            $results = array_merge($results, $result);
         }
 
         return $results;
+    }
+
+    protected function searchIndexerForIssue(Indexer $indexer, int $cvid)
+    {
+        $issue = $this->getIssue($cvid);
+        $padding = 3; 
+
+        while (true) {
+            $query = $this->buildSearchQuery($cvid, $padding);
+            $result = $indexer->searchCvid($query);
+            
+            //If we have results, we're done
+            if (count($result)) {
+                return $result->resolve();
+            }
+
+            //Try decreasing the issue num padding by one 
+            if ($padding == 3 && $issue->issue_num !== 0) {
+                $padding = 2;
+                continue;
+            }
+
+            return [];
+        }
+    }
+
+    public function buildSearchQuery(int $cvid, $issuePadding = 3)
+    {
+        $issue = $this->getIssue($cvid);
+        $year = date('Y', strtotime($issue->release_date));
+        $formatString = '%s %0' . $issuePadding . 'd %d';
+
+        return sprintf($formatString, $issue->comic->name, $issue->issue_num, $year);
+    }
+
+    public function getIssue(int $cvid)
+    {
+        if (array_key_exists($cvid, self::$issues)) {
+            return self::$issues[$cvid];
+        }
+
+        $issue = Issue::with('comic')->find($cvid);
+        self::$issues[$cvid] = $issue;
+
+        return self::$issues[$cvid];
     }
 
     public function downloadIssue(int $cvid)

@@ -50,6 +50,8 @@ Route::post('settings', 'SettingsController@update');
 
 Route::get('history/issue/{id}', 'HistoryController@issue');
 
+Route::get('command', 'CommandController@command');
+
 Route::fallback(function () {
     return response()->json([
         'message' => 'Page Not Found.'], 404);

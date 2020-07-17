@@ -76,30 +76,4 @@ class Indexer extends Model
     {
         $this->attributes['enable_search'] = $value;
     }
-
-    public function buildSearchQuery(int $cvid)
-    {
-        $comicvine = resolve('ComicVineRepository');
-        $issue = $comicvine->issue($cvid);
-
-        $releaseDate = $issue['release_date'];
-        $year = date('Y', strtotime($releaseDate));
-
-        $formatString = '%s %02d %d';
-
-        if ($issue['issue_num'] === 0) {
-            $formatString = '%s %03d %d';
-        }
-
-        return sprintf($formatString, $issue['volume']->name, $issue['issue_num'], $year);
-    }
-
-    public function getComic(int $cvid)
-    {
-        $comicvine = resolve('ComicVineRepository');
-        $issue = $comicvine->issue($cvid);
-        $comic = $comicvine->volume($issue['volume']->id);
-
-        return $comic;
-    }
 }

@@ -26,11 +26,6 @@ class Newznab extends JsonResource
             'size' => $this->formatSize($this->resource['enclosure']['@attributes']['length']),
             'raw_size' => $this->resource['enclosure']['@attributes']['length'],
             'url' => $this->resource['link'],
-            'indexer' => $this->resource['indexer'],
-            'indexer_id' => $this->resource['indexer_id'],
-            'source' => $this->resource['source'],
-            'issue_id' => $this->resource['issue_id'],
-            'comic_id' => $this->resource['comic_id'],
         ];
 
         //Cache results for downloading later
