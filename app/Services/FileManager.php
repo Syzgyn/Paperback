@@ -154,4 +154,37 @@ class FileManager
             return false;
         }
     }
+
+    public function getDirectoryListing($path = '', $includeFiles = false)
+    {
+        $path .= DIRECTORY_SEPARATOR;
+        $output = [
+            'directories' => [],
+            'files' => [],
+        ];
+        $contents = scandir($path);
+
+        foreach($contents as $file) {
+            if ($file === '.' || $file === '..') {
+                continue;
+            }
+            if (is_dir($path . $file)) {
+                $output['directories'][] = [
+                    'type' => 'dir',
+                    'name' => $file,
+                    'path' => $path . $file,
+                ];
+            } else {
+                if ($includeFiles) {
+                    $output['files'][] = [
+                        'type' => 'file',
+                        'name' => $file,
+                        'path' => $path . $file,
+                    ];
+                }
+            }
+        }
+
+        return $output;
+    }
 }

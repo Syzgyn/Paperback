@@ -4,6 +4,7 @@ import { Search as Searchbar } from "./Search";
 import LoadingIndicator from "@/Components/Loading/LoadingIndicator";
 import PageRow from "@/Components/Page/PageRow";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
     searchComics,
     addComicsSelector,
@@ -26,6 +27,7 @@ const AddNewComic = () => {
 
     return (
         <>
+            <Link to="/add/import" className="btn btn-secondary">Import</Link>
             <Searchbar searchCallback={onSearchSubmit} />
             <PageRow>
                 {isLoading ? (

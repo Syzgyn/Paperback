@@ -50,7 +50,11 @@ Route::post('settings', 'SettingsController@update');
 
 Route::get('history/issue/{id}', 'HistoryController@issue');
 
+Route::get('rootFolder/{id}/import', 'RootFolderController@import');
+Route::apiResource('rootFolder', 'RootFolderController');
+
 Route::get('command', 'CommandController@command');
+Route::get('filesystem', 'FilesystemController@filesystem');
 
 Route::fallback(function () {
     return response()->json([

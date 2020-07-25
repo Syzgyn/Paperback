@@ -195,4 +195,9 @@ class ParserService
 
         return false;
     }
+
+    public function matchDirToComics(string $dir, $comics)
+    {
+        return false;
+    }
 }

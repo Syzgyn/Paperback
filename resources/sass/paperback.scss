@@ -188,3 +188,15 @@ a.hideLink {
 .modal-title {
     text-transform: capitalize;
 }
+
+table.file-browser-table td {
+    padding: 3px;
+}
+
+td.file-type-cell {
+    width: 15px;
+}
+
+table.file-browser-table tbody tr:hover {
+    background: #ECECEC;
+}
