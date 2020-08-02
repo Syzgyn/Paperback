@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('comic/search', 'ComicController@search');
+Route::get('comic/importSearch', 'ComicController@importSearch');
 Route::resource('comic', 'ComicController');
 
 Route::get('issue/byComic/{cvid}', 'IssueController@byComic');
@@ -50,7 +51,8 @@ Route::post('settings', 'SettingsController@update');
 
 Route::get('history/issue/{id}', 'HistoryController@issue');
 
-Route::get('rootFolder/{id}/import', 'RootFolderController@import');
+Route::get('rootFolder/{id}/getFolders', 'RootFolderController@getFolders');
+Route::post('rootFolder/import', 'RootFolderController@import');
 Route::apiResource('rootFolder', 'RootFolderController');
 
 Route::get('command', 'CommandController@command');

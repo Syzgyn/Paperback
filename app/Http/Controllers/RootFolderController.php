@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\RootFolder;
+use App\Models\Comic;
 use App\Http\Resources\RootFolder as RootFolderResource;
 use App\Http\Resources\RootFolderCollection;
 use Illuminate\Http\Request;
@@ -59,9 +60,33 @@ class RootFolderController extends Controller
         return response()->json(['status' => 'OK']);
     }
 
-    public function import(int $id)
+    public function getFolders(int $id)
     {
         $rootFolder = RootFolder::find($id);
         return $rootFolder->import();
+    }
+
+    public function import(Request $request)
+    {
+        $data = $request->input('data');
+        $fileManager = resolve('FileManager');
+        $output = [];
+
+        foreach ($data as $folder) {
+            $comic = Comic::find($folder['matchId']);
+            if (!$comic) {
+                $comic = Comic::createFromCvid($folder['matchId']);
+            }
+
+            $comic->importIssuesFromPath($folder['path']);
+
+            if ($folder['path'] !== $comic->fullDirectoryName) {
+                $fileManager->removeEmptyDir($folder['path']);
+            }
+
+            $output[] = $comic;
+        }
+
+        return $output;
     }
 }

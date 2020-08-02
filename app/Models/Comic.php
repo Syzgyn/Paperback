@@ -72,6 +72,7 @@ class Comic extends Model
         $volume['start_year'] = $volume['startYear'];
 
         $comic = Comic::create($volume);
+        resolve('FileManager')->getOrCreateComicDir($comic);
 
         if ($grabImage) {
             $imagePath = $volume['image'];
@@ -142,5 +143,36 @@ class Comic extends Model
     public function getTruncatedDescriptionAttribute()
     {
         return $this->truncateHtml($this->description, self::TRUNCATE_LENGTH, '...');
+    }
+
+    public function importIssuesFromPath(string $path)
+    {
+        $fileManager = resolve('FileManager');
+        $parser = resolve('ParserService');
+        $files = $fileManager->getComicsInFolder($path);
+
+        if ($this->fullDirectoryName == $path) {
+            //Path matches where the comic wants to put the issues, no need to move anything
+            //continue;
+        }
+
+        foreach ($files as $file) {
+            $info = $parser->getIssueInfoFromFile($file);
+
+            foreach ($this->issues as $issue) {
+                if ($issue->hasDownloadedFile()) {
+                    continue;
+                }
+
+                if ($issue->issue_num == $info['issueNum']) {
+                    IssueFile::createAndMove([
+                        'comic_id' => $this->cvid,
+                        'issue_id' => $issue->cvid,
+                        'original_file_path' => $file,
+                    ]);
+                    break;
+                }
+            }
+        }
     }
 }

@@ -67,6 +67,11 @@ class Issue extends Model
             ])->get();
     }
 
+    public function hasDownloadedFile()
+    {
+        return isset($this->downloadedFile);
+    }
+
     public function getReleaseDateAttribute()
     {
         return date('M j Y', strtotime($this->attributes['release_date']));

@@ -35,12 +35,11 @@ class RootFolder extends Model
         $parser = resolve('ParserService');
         $listing = resolve('FileManager')->getDirectoryListing($this->path);
         $dirs = $listing['directories'];
-        $populatedComics = Comic::has('issues.downloadedFile')->get();
 
         $unmappedFolders = [];
 
         foreach($dirs as $dir) {
-            if ($parser->matchDirToComics($dir['name'], $populatedComics)) {
+            if ($parser->matchDirToComics($dir['path'])) {
                 continue;
             }
 
@@ -59,5 +58,26 @@ class RootFolder extends Model
 
     public function import()
     {
+        $output = [];
+        $fileManager = resolve('FileManager');
+
+        foreach($this->unmappedFolders as $folder) {
+            $count = count($fileManager->getComicsInFolder($folder['path']));
+            $output[] = [
+                'name' => $folder['name'],
+                'path' => $folder['path'],
+                'comicCount' => $count,
+                'isLoading' => true,
+                'isPopulated' => false,
+                'error' => null,
+                'items' => [],
+                'monitor' => 'all',
+                'checked' => false,
+                'matchedComics' => [],
+                'matchId' => 0,
+            ];
+        }
+
+        return $output;
     }
 }

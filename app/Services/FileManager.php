@@ -68,7 +68,7 @@ class FileManager
         $download->delete();
     }
 
-    protected function getComicsInFolder($path)
+    public function getComicsInFolder($path)
     {
         if (! is_dir($path)) {
             //Check if path is the file itself
@@ -105,7 +105,7 @@ class FileManager
         return null;
     }
 
-    protected function getOrCreateComicDir(Comic $comic)
+    public function getOrCreateComicDir(Comic $comic)
     {
         $path = $comic->fullDirectoryName;
         if (! file_exists($path)) {
@@ -186,5 +186,15 @@ class FileManager
         }
 
         return $output;
+    }
+
+    public function removeEmptyDir(string $path)
+    {
+        $data = $this->getDirectoryListing($path, true);
+        if (count($data['files'])) {
+            return;
+        }
+        
+        $this->removeDir($path);
     }
 }

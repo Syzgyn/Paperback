@@ -8,6 +8,7 @@ use App\Dto\SearchResultCollection;
 
 class ParserService
 {
+    protected static $_comics;
     protected $issue;
     protected $comic;
 
@@ -23,6 +24,17 @@ class ParserService
         $this->comic = Comic::find($cvid);
 
         return $this;
+    }
+
+    protected function getComics()
+    {
+        if (isset(self::$_comics)) {
+            return self::$_comics;
+        }
+
+        self::$_comics = Comic::all();
+
+        return self::$_comics;
     }
 
     protected function finish()
@@ -196,8 +208,80 @@ class ParserService
         return false;
     }
 
-    public function matchDirToComics(string $dir, $comics)
+    public function matchDirToComics(string $dir)
     {
+        foreach ($this->getComics() as $comic) {
+            if ($dir == $comic->fullDirectoryName) {
+                return true;
+            }
+        }
+
         return false;
+    }
+
+    public function getComicInfoFromString(string $data)
+    {
+        $regexes = [
+            '/(?<name>.+)\((?<year>\d{2,4})\)$/',
+            '/(?<name>.+)\[(?<year>\d{2,4})\]$/',
+            '/(?<name>.+) (?<year>\d{2,4})$/',
+            '/(?<name>.+)$/'
+        ];
+
+        $name = null;
+        $year = null;
+
+        foreach ($regexes as $regex) {
+            preg_match($regex, $data, $match);
+            if (isset($match[0])) {
+                $name = $match['name'];
+                $year = $match['year'] ?? null;
+                break;
+            }
+        }
+
+        $last = substr($name, -1);
+        if ($last == '_') {
+            $name = str_replace('_', ' ', $name);
+        } elseif ($last == '.') {
+            $name = str_replace('.', ' ', $name);
+        }
+
+        $name = trim($name);
+
+        return [
+            'name' => $name,
+            'year' => $year,
+        ];
+    }
+
+    public function getIssueInfoFromFile(string $file)
+    {
+        $regexes = [
+            '/(?<name>.+) (?<issueNum>\d{1,3})/',
+            '/(?<name>.+) (?<issueNum>\d{1,3}) \((?<year>\d{2,4})\)/',
+        ];
+
+        $filename = pathinfo($file, PATHINFO_FILENAME);
+        $name = null;
+        $issueNum = null;
+        $year = null;
+
+        foreach ($regexes as $regex) {
+            preg_match($regex, $filename, $match);
+            if (isset($match[0])) {
+                $name = $match['name'];
+                $issueNum = $match['issueNum'];
+                break;
+            }
+        }
+
+        $name = trim($name);
+
+        return [
+            'name' => $name,
+            'issueNum' => $issueNum,
+            'year' => $year,
+        ];
     }
 }

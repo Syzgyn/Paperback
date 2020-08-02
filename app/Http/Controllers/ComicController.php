@@ -85,6 +85,14 @@ class ComicController extends Controller
     {
         $search = $request->input('query');
 
-        return $this->comicvine->volumes($search);
+        return $this->comicvine->searchVolumes($search);
     }
+
+    public function importSearch(Request $request)
+    {
+        $search = $request->input('query');
+
+        return $this->comicvine->searchVolumes($search);
+    }
+
 }
