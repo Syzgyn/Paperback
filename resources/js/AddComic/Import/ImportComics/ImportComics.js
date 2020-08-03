@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PageRow from "@/Components/Page/PageRow";
 import ImportComicTable from "@/AddComic/Import/ImportComics/ImportComicTable";
 import ImportComicFooter from "@/AddComic/Import/ImportComics/ImportComicFooter";
@@ -12,7 +12,6 @@ const Import = () => {
             </form>
         </PageRow>
     );
-}
+};
 
 export default Import;
-

@@ -1,9 +1,6 @@
 import {
-    createAction,
     createAsyncThunk,
     createSlice,
-    createSelector,
-    current,
 } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -15,7 +12,7 @@ const defaultState = {
 
 export const fetchItems = createAsyncThunk(
     "rootFolders/fetchItems",
-    async (vars) => {
+    async () => {
         const response = await axios.get("/api/rootFolder");
         return response.data.data;
     }

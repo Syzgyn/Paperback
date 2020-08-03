@@ -10,11 +10,19 @@ import {
 
 const FileBrowserModalContent = () => {
     const dispatch = useDispatch();
-    const { currentPath, isLoading, isPopulated, directories, files } = useSelector(pathsSelector);
+    const {
+        currentPath,
+        isLoading,
+        directories,
+    } = useSelector(pathsSelector);
 
     useEffect(() => {
         dispatch(fetchPaths());
     }, [dispatch, currentPath]);
+
+    if (isLoading) {
+        return <LoadingIndicator />
+    }
 
     return (
         <>
@@ -27,15 +35,22 @@ const FileBrowserModalContent = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {currentPath !== "" ?
-                        <tr onClick={() => dispatch(setCurrentPath('..'))} >
-                            <td className="text-center file-type-cell"><CornerUpLeft /></td>
+                    {currentPath !== "" ? (
+                        <tr onClick={() => dispatch(setCurrentPath(".."))}>
+                            <td className="text-center file-type-cell">
+                                <CornerUpLeft />
+                            </td>
                             <td className="file-name-cell">..</td>
                         </tr>
-                    : null} 
-                    {directories.map(dir => (
-                        <tr key={dir.name} onClick={() => dispatch(setCurrentPath(dir.path))}>
-                            <td className="text-center file-type-cell"><Folder /></td>
+                    ) : null}
+                    {directories.map((dir) => (
+                        <tr
+                            key={dir.name}
+                            onClick={() => dispatch(setCurrentPath(dir.path))}
+                        >
+                            <td className="text-center file-type-cell">
+                                <Folder />
+                            </td>
                             <td className="file-name-cell">{dir.name}</td>
                         </tr>
                     ))}
@@ -43,6 +58,6 @@ const FileBrowserModalContent = () => {
             </table>
         </>
     );
-}
+};
 
 export default FileBrowserModalContent;

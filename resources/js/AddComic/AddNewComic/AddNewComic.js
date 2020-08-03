@@ -27,7 +27,9 @@ const AddNewComic = () => {
 
     return (
         <>
-            <Link to="/add/import" className="btn btn-secondary">Import</Link>
+            <Link to="/add/import" className="btn btn-secondary">
+                Import
+            </Link>
             <Searchbar searchCallback={onSearchSubmit} />
             <PageRow>
                 {isLoading ? (

@@ -5,7 +5,7 @@ import LoadingIndicator from "@/Components/Loading/LoadingIndicator";
 import PageRow from "@/Components/Page/PageRow";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { comicsSelector, sortedComicsSelector } from "@/Store/Slices/comics";
+import { sortedComicsSelector } from "@/Store/Slices/comics";
 
 const ComicIndex = () => {
     const { items: comics, isFetching, isPopulated } = useSelector(

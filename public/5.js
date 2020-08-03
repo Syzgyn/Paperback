@@ -11,19 +11,22 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _Store_Slices_importComics__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Store/Slices/importComics */ "./resources/js/Store/Slices/importComics.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Store_Slices_importComics__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Store/Slices/importComics */ "./resources/js/Store/Slices/importComics.js");
+
 
 
 
 
 var ImportComicFooter = function ImportComicFooter(props) {
-  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["useDispatch"])();
-  var count = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["useSelector"])(_Store_Slices_importComics__WEBPACK_IMPORTED_MODULE_2__["importComicsCheckedCountSelector"]);
+  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["useDispatch"])();
+  var count = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["useSelector"])(_Store_Slices_importComics__WEBPACK_IMPORTED_MODULE_3__["importComicsCheckedCountSelector"]);
 
   function importComics(e) {
     e.preventDefault();
-    dispatch(Object(_Store_Slices_importComics__WEBPACK_IMPORTED_MODULE_2__["importSelectedDirs"])());
+    dispatch(Object(_Store_Slices_importComics__WEBPACK_IMPORTED_MODULE_3__["importSelectedDirs"])());
   }
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -33,6 +36,9 @@ var ImportComicFooter = function ImportComicFooter(props) {
   }, "Import ", count, " Comics"));
 };
 
+ImportComicFooter.propTypes = {
+  checkedCount: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number
+};
 /* harmony default export */ __webpack_exports__["default"] = (ImportComicFooter);
 
 /***/ }),
@@ -48,23 +54,26 @@ var ImportComicFooter = function ImportComicFooter(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _AddComic_Import_ImportComics_ImportComicSearchResults__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/AddComic/Import/ImportComics/ImportComicSearchResults */ "./resources/js/AddComic/Import/ImportComics/ImportComicSearchResults.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _Store_Slices_importComics__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Store/Slices/importComics */ "./resources/js/Store/Slices/importComics.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _AddComic_Import_ImportComics_ImportComicSearchResults__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/AddComic/Import/ImportComics/ImportComicSearchResults */ "./resources/js/AddComic/Import/ImportComics/ImportComicSearchResults.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Store_Slices_importComics__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Store/Slices/importComics */ "./resources/js/Store/Slices/importComics.js");
+
 
 
 
 
 
 var ImportTableRow = function ImportTableRow(props) {
-  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["useDispatch"])();
+  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["useDispatch"])();
 
   function toggleChecked() {
-    dispatch(Object(_Store_Slices_importComics__WEBPACK_IMPORTED_MODULE_3__["toggleCheckbox"])(props.id));
+    dispatch(Object(_Store_Slices_importComics__WEBPACK_IMPORTED_MODULE_4__["toggleCheckbox"])(props.id));
   }
 
   function changeMonitor(e) {
-    dispatch(Object(_Store_Slices_importComics__WEBPACK_IMPORTED_MODULE_3__["setMonitored"])({
+    dispatch(Object(_Store_Slices_importComics__WEBPACK_IMPORTED_MODULE_4__["setMonitored"])({
       id: props.id,
       monitored: e.target.value
     }));
@@ -89,11 +98,18 @@ var ImportTableRow = function ImportTableRow(props) {
     value: "existing"
   }, "Existing Issues"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
     value: "none"
-  }, "None"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AddComic_Import_ImportComics_ImportComicSearchResults__WEBPACK_IMPORTED_MODULE_1__["default"], {
+  }, "None"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AddComic_Import_ImportComics_ImportComicSearchResults__WEBPACK_IMPORTED_MODULE_2__["default"], {
     id: props.id
   })));
 };
 
+ImportTableRow.propTypes = {
+  id: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number,
+  items: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array,
+  checked: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
+  name: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  comicCount: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number
+};
 /* harmony default export */ __webpack_exports__["default"] = (ImportTableRow);
 
 /***/ }),
@@ -109,28 +125,30 @@ var ImportTableRow = function ImportTableRow(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Store_Slices_importComics__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Store/Slices/importComics */ "./resources/js/Store/Slices/importComics.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Store_Slices_importComics__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Store/Slices/importComics */ "./resources/js/Store/Slices/importComics.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
 
 
 
 
 var ImportComicSearchResults = function ImportComicSearchResults(props) {
-  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["useDispatch"])();
-  var selector = Object(_Store_Slices_importComics__WEBPACK_IMPORTED_MODULE_1__["importComicsItemSelectorFactory"])(props.id);
+  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["useDispatch"])();
+  var selector = Object(_Store_Slices_importComics__WEBPACK_IMPORTED_MODULE_2__["importComicsItemSelectorFactory"])(props.id);
 
-  var _useSelector = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["useSelector"])(selector),
-      name = _useSelector.name,
+  var _useSelector = Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["useSelector"])(selector),
       isLoading = _useSelector.isLoading,
       isPopulated = _useSelector.isPopulated,
       items = _useSelector.items;
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    dispatch(Object(_Store_Slices_importComics__WEBPACK_IMPORTED_MODULE_1__["fetchSearchResults"])(props.id));
-  }, [dispatch]);
+    dispatch(Object(_Store_Slices_importComics__WEBPACK_IMPORTED_MODULE_2__["fetchSearchResults"])(props.id));
+  }, [dispatch, props.id]);
 
   function changeMatch(e) {
-    dispatch(Object(_Store_Slices_importComics__WEBPACK_IMPORTED_MODULE_1__["setMatchId"])({
+    dispatch(Object(_Store_Slices_importComics__WEBPACK_IMPORTED_MODULE_2__["setMatchId"])({
       id: props.id,
       matchId: e.target.value
     }));
@@ -155,6 +173,9 @@ var ImportComicSearchResults = function ImportComicSearchResults(props) {
   }));
 };
 
+ImportComicSearchResults.propTypes = {
+  id: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number
+};
 /* harmony default export */ __webpack_exports__["default"] = (ImportComicSearchResults);
 
 /***/ }),
@@ -170,7 +191,8 @@ var ImportComicSearchResults = function ImportComicSearchResults(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Components_Page_PageRow__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Components/Page/PageRow */ "./resources/js/Components/Page/PageRow.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Components/Loading/LoadingIndicator */ "./resources/js/Components/Loading/LoadingIndicator.js");
 /* harmony import */ var _AddComic_Import_ImportComics_ImportComicRow__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/AddComic/Import/ImportComics/ImportComicRow */ "./resources/js/AddComic/Import/ImportComics/ImportComicRow.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
@@ -193,7 +215,6 @@ var ImportComicTable = function ImportComicTable(_ref) {
 
   var _useSelector = Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["useSelector"])(_Store_Slices_importComics__WEBPACK_IMPORTED_MODULE_5__["importComicsSelector"]),
       isLoading = _useSelector.isLoading,
-      isPopulated = _useSelector.isPopulated,
       items = _useSelector.items;
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
@@ -203,6 +224,10 @@ var ImportComicTable = function ImportComicTable(_ref) {
   function onMasterChange(e) {
     var checked = e.target.checked;
     dispatch(Object(_Store_Slices_importComics__WEBPACK_IMPORTED_MODULE_5__["setAllChecked"])(checked));
+  }
+
+  if (isLoading) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_2__["default"], null);
   }
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
@@ -219,6 +244,9 @@ var ImportComicTable = function ImportComicTable(_ref) {
   })));
 };
 
+ImportComicTable.propTypes = {
+  match: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object
+};
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_6__["withRouter"])(ImportComicTable));
 
 /***/ }),

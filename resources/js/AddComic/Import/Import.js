@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import LoadingIndicator from "@/Components/Loading/LoadingIndicator";
+import React, { useState } from "react";
 import PageRow from "@/Components/Page/PageRow";
 import FileBrowserModal from "@/Components/FileBrowserModal/FileBrowserModal";
 import ImportDirectoryTable from "@/AddComic/Import/ImportDirectoryTable";
@@ -25,10 +24,16 @@ const Import = () => {
         <PageRow>
             <h1 className="text-center">Import existing Comics</h1>
             <ImportDirectoryTable />
-            <button className="btn btn-primary" onClick={toggleModal}>Add Folder</button>
-            <FileBrowserModal modal={modal} toggleModal={toggleModal} onSelectClick={onSelect} />
+            <button className="btn btn-primary" onClick={toggleModal}>
+                Add Folder
+            </button>
+            <FileBrowserModal
+                modal={modal}
+                toggleModal={toggleModal}
+                onSelectClick={onSelect}
+            />
         </PageRow>
     );
-}
+};
 
 export default Import;

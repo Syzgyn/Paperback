@@ -5,7 +5,9 @@ import LoadingIndicator from "@/Components/Loading/LoadingIndicator";
 const ComicIndex = lazy(() => import("@/Comic/Index/ComicIndex"));
 const AddNewComic = lazy(() => import("@/AddComic/AddNewComic/AddNewComic"));
 const ImportPage = lazy(() => import("@/AddComic/Import/Import"));
-const ImportComicsPage = lazy(() => import("@/AddComic/Import/ImportComics/ImportComics"));
+const ImportComicsPage = lazy(() =>
+    import("@/AddComic/Import/ImportComics/ImportComics")
+);
 const ComicDetails = lazy(() => import("@/Comic/Details/ComicDetails"));
 const GeneralSettings = lazy(() =>
     import("@/Settings/General/GeneralSettings")

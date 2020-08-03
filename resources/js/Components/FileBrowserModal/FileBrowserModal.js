@@ -4,7 +4,6 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import FileBrowserModalContent from "@/Components/FileBrowserModal/FileBrowserModalContent";
 
 const FileBrowserModal = (props) => {
-
     function selectClick() {
         props.onSelectClick();
         props.toggleModal();
@@ -31,12 +30,12 @@ const FileBrowserModal = (props) => {
             </ModalFooter>
         </Modal>
     );
-}
+};
 
 FileBrowserModal.propTypes = {
     modal: PropTypes.bool,
     toggleModal: PropTypes.func,
     onSelectClick: PropTypes.func,
-}
+};
 
 export default FileBrowserModal;

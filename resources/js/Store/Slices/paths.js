@@ -2,7 +2,6 @@ import {
     createAction,
     createAsyncThunk,
     createSlice,
-    createSelector,
     current,
 } from "@reduxjs/toolkit";
 import axios from "axios";
@@ -17,9 +16,11 @@ const defaultState = {
 
 export const fetchPaths = createAsyncThunk(
     "paths/fetchPaths",
-    async (vars, {getState}) => {
+    async (vars, { getState }) => {
         const state = getState();
-        const response = await axios.get("/api/filesystem", { params: { path: state.paths.currentPath} });
+        const response = await axios.get("/api/filesystem", {
+            params: { path: state.paths.currentPath },
+        });
         return response.data;
     }
 );
@@ -44,9 +45,12 @@ const slice = createSlice({
             state.isLoading = false;
         },
         [setCurrentPath]: (state, action) => {
-            if (action.payload == '..') {
+            if (action.payload == "..") {
                 const currentState = current(state);
-                state.currentPath = currentState.currentPath.slice (0, currentState.currentPath.lastIndexOf('/'));
+                state.currentPath = currentState.currentPath.slice(
+                    0,
+                    currentState.currentPath.lastIndexOf("/")
+                );
             } else {
                 state.currentPath = action.payload;
             }

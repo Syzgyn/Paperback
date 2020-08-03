@@ -15,8 +15,8 @@ const defaultState = {
     isLoading: false,
     isPopulated: false,
     items: [],
-    sortKey: 'sortName',
-    sortDir: 'asc',
+    sortKey: "sortName",
+    sortDir: "asc",
 };
 
 export const fetchComics = createAsyncThunk("comics/fetchComics", async () => {
@@ -73,7 +73,7 @@ const slice = createSlice({
             //TODO: Error handling
         },
         [setComicSort]: (state, action) => {
-            const currentState = current(state)
+            const currentState = current(state);
             const oldKey = currentState.sortKey;
             const oldDir = currentState.sortDir;
             const newDir = oldDir == "asc" ? "desc" : "asc";
@@ -82,7 +82,7 @@ const slice = createSlice({
                 state.sortDir = newDir;
             } else {
                 state.sortKey = action.payload;
-                state.sortDir = 'asc';
+                state.sortDir = "asc";
             }
         },
     },
@@ -94,13 +94,15 @@ export const currentComicSelector = createSelector(
     (comics, cvid) => comics.items.find((comic) => comic.cvid == cvid)
 );
 
-const comicsSortSelector = state => {return {key: state.comics.sortKey, dir: state.comics.sortDir}}
+const comicsSortSelector = (state) => {
+    return { key: state.comics.sortKey, dir: state.comics.sortDir };
+};
 export const sortedComicsSelector = createSelector(
     [comicsSelector, comicsSortSelector],
     (comics, sort) => {
         let clone = Object.assign({}, comics);
-        let items = clone.items.slice().sort(function(a, b) {
-            if (sort.dir == 'asc') {
+        let items = clone.items.slice().sort(function (a, b) {
+            if (sort.dir == "asc") {
                 return a[sort.key] > b[sort.key] ? 1 : -1;
             } else {
                 return a[sort.key] < b[sort.key] ? 1 : -1;

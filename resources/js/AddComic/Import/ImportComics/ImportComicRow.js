@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import ImportComicSearchResults from "@/AddComic/Import/ImportComics/ImportComicSearchResults";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleCheckbox, setMonitored} from "@/Store/Slices/importComics";
+import { useDispatch } from "react-redux";
+import { toggleCheckbox, setMonitored } from "@/Store/Slices/importComics";
 
 const ImportTableRow = (props) => {
     const dispatch = useDispatch();
@@ -11,16 +12,27 @@ const ImportTableRow = (props) => {
     }
 
     function changeMonitor(e) {
-        dispatch(setMonitored({id: props.id, monitored: e.target.value}));
+        dispatch(setMonitored({ id: props.id, monitored: e.target.value }));
     }
 
     return (
         <tr>
-            <td><input type="checkbox" checked={props.checked} disabled={props.items.length == 0} onChange={toggleChecked} /></td>
+            <td>
+                <input
+                    type="checkbox"
+                    checked={props.checked}
+                    disabled={props.items.length == 0}
+                    onChange={toggleChecked}
+                />
+            </td>
             <td>{props.name}</td>
             <td>{props.comicCount}</td>
             <td>
-                <select defaultValue="all" className="custom-select" onChange={changeMonitor} >
+                <select
+                    defaultValue="all"
+                    className="custom-select"
+                    onChange={changeMonitor}
+                >
                     <option value="all">All Issues</option>
                     <option value="future">Future Issues</option>
                     <option value="missing">Missing Issues</option>
@@ -32,7 +44,15 @@ const ImportTableRow = (props) => {
                 <ImportComicSearchResults id={props.id} />
             </td>
         </tr>
-    )
+    );
+};
+
+ImportTableRow.propTypes = {
+    id: PropTypes.number,
+    items: PropTypes.array,
+    checked: PropTypes.bool,
+    name: PropTypes.string,
+    comicCount: PropTypes.number,
 }
 
 export default ImportTableRow;

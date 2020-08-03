@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
 import LoadingIndicator from "@/Components/Loading/LoadingIndicator";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    fetchItems,
-    wantedIssuesSelector,
-} from "@/Store/Slices/wanted";
+import { fetchItems, wantedIssuesSelector } from "@/Store/Slices/wanted";
 import PageRow from "@/Components/Page/PageRow";
 import WantedList from "@/Wanted/WantedList";
 import WantedPageControls from "@/Wanted/WantedPageControls";

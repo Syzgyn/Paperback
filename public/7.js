@@ -11,13 +11,12 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Components/Loading/LoadingIndicator */ "./resources/js/Components/Loading/LoadingIndicator.js");
-/* harmony import */ var _Components_Page_PageRow__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Components/Page/PageRow */ "./resources/js/Components/Page/PageRow.js");
-/* harmony import */ var _Components_FileBrowserModal_FileBrowserModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Components/FileBrowserModal/FileBrowserModal */ "./resources/js/Components/FileBrowserModal/FileBrowserModal.js");
-/* harmony import */ var _AddComic_Import_ImportDirectoryTable__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/AddComic/Import/ImportDirectoryTable */ "./resources/js/AddComic/Import/ImportDirectoryTable.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _Store_Slices_rootFolders__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Store/Slices/rootFolders */ "./resources/js/Store/Slices/rootFolders.js");
-/* harmony import */ var _Store_Slices_paths__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Store/Slices/paths */ "./resources/js/Store/Slices/paths.js");
+/* harmony import */ var _Components_Page_PageRow__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Components/Page/PageRow */ "./resources/js/Components/Page/PageRow.js");
+/* harmony import */ var _Components_FileBrowserModal_FileBrowserModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Components/FileBrowserModal/FileBrowserModal */ "./resources/js/Components/FileBrowserModal/FileBrowserModal.js");
+/* harmony import */ var _AddComic_Import_ImportDirectoryTable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/AddComic/Import/ImportDirectoryTable */ "./resources/js/AddComic/Import/ImportDirectoryTable.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Store_Slices_rootFolders__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Store/Slices/rootFolders */ "./resources/js/Store/Slices/rootFolders.js");
+/* harmony import */ var _Store_Slices_paths__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Store/Slices/paths */ "./resources/js/Store/Slices/paths.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -38,16 +37,15 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
 var Import = function Import() {
-  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_5__["useDispatch"])();
+  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["useDispatch"])();
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
       _useState2 = _slicedToArray(_useState, 2),
       modal = _useState2[0],
       setModal = _useState2[1];
 
-  var _useSelector = Object(react_redux__WEBPACK_IMPORTED_MODULE_5__["useSelector"])(_Store_Slices_paths__WEBPACK_IMPORTED_MODULE_7__["pathsSelector"]),
+  var _useSelector = Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["useSelector"])(_Store_Slices_paths__WEBPACK_IMPORTED_MODULE_6__["pathsSelector"]),
       currentPath = _useSelector.currentPath;
 
   function toggleModal() {
@@ -55,16 +53,16 @@ var Import = function Import() {
   }
 
   function onSelect() {
-    dispatch(Object(_Store_Slices_rootFolders__WEBPACK_IMPORTED_MODULE_6__["addItem"])(currentPath));
-    dispatch(Object(_Store_Slices_paths__WEBPACK_IMPORTED_MODULE_7__["setCurrentPath"])(""));
+    dispatch(Object(_Store_Slices_rootFolders__WEBPACK_IMPORTED_MODULE_5__["addItem"])(currentPath));
+    dispatch(Object(_Store_Slices_paths__WEBPACK_IMPORTED_MODULE_6__["setCurrentPath"])(""));
   }
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Page_PageRow__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Page_PageRow__WEBPACK_IMPORTED_MODULE_1__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
     className: "text-center"
-  }, "Import existing Comics"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AddComic_Import_ImportDirectoryTable__WEBPACK_IMPORTED_MODULE_4__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+  }, "Import existing Comics"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AddComic_Import_ImportDirectoryTable__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     className: "btn btn-primary",
     onClick: toggleModal
-  }, "Add Folder"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_FileBrowserModal_FileBrowserModal__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }, "Add Folder"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_FileBrowserModal_FileBrowserModal__WEBPACK_IMPORTED_MODULE_2__["default"], {
     modal: modal,
     toggleModal: toggleModal,
     onSelectClick: onSelect
@@ -87,14 +85,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Components/Loading/LoadingIndicator */ "./resources/js/Components/Loading/LoadingIndicator.js");
-/* harmony import */ var _Components_Page_PageRow__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Components/Page/PageRow */ "./resources/js/Components/Page/PageRow.js");
-/* harmony import */ var _Components_FileBrowserModal_FileBrowserModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Components/FileBrowserModal/FileBrowserModal */ "./resources/js/Components/FileBrowserModal/FileBrowserModal.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _Store_Slices_rootFolders__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Store/Slices/rootFolders */ "./resources/js/Store/Slices/rootFolders.js");
-/* harmony import */ var react_feather__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-feather */ "./node_modules/react-feather/dist/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-
-
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _Store_Slices_rootFolders__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Store/Slices/rootFolders */ "./resources/js/Store/Slices/rootFolders.js");
+/* harmony import */ var react_feather__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-feather */ "./node_modules/react-feather/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 
 
 
@@ -103,27 +97,31 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Import = function Import() {
-  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["useDispatch"])();
+  var dispatch = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["useDispatch"])();
 
-  var _useSelector = Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["useSelector"])(_Store_Slices_rootFolders__WEBPACK_IMPORTED_MODULE_5__["rootFoldersSelector"]),
+  var _useSelector = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["useSelector"])(_Store_Slices_rootFolders__WEBPACK_IMPORTED_MODULE_3__["rootFoldersSelector"]),
       isLoading = _useSelector.isLoading,
-      isPopulated = _useSelector.isPopulated,
       items = _useSelector.items;
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    dispatch(Object(_Store_Slices_rootFolders__WEBPACK_IMPORTED_MODULE_5__["fetchItems"])());
+    dispatch(Object(_Store_Slices_rootFolders__WEBPACK_IMPORTED_MODULE_3__["fetchItems"])());
   }, [dispatch]);
+
+  if (isLoading) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_1__["default"], null);
+  }
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
     className: "table"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Path"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Free Space"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Unmapped Folders"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, items.map(function (item) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
       key: item.id
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__["Link"], {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["Link"], {
       to: "/add/import/" + item.id
-    }, item.path)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, item.freeSpace), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, item.unmappedFoldersCount), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_6__["X"], {
+    }, item.path)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, item.freeSpace), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, item.unmappedFoldersCount), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_4__["X"], {
       className: "cursor-pointer",
       onClick: function onClick() {
-        return dispatch(Object(_Store_Slices_rootFolders__WEBPACK_IMPORTED_MODULE_5__["deleteItem"])(item.id));
+        return dispatch(Object(_Store_Slices_rootFolders__WEBPACK_IMPORTED_MODULE_3__["deleteItem"])(item.id));
       }
     })));
   })));
@@ -211,18 +209,21 @@ var FileBrowserModalContent = function FileBrowserModalContent() {
   var _useSelector = Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["useSelector"])(_Store_Slices_paths__WEBPACK_IMPORTED_MODULE_4__["pathsSelector"]),
       currentPath = _useSelector.currentPath,
       isLoading = _useSelector.isLoading,
-      isPopulated = _useSelector.isPopulated,
-      directories = _useSelector.directories,
-      files = _useSelector.files;
+      directories = _useSelector.directories;
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     dispatch(Object(_Store_Slices_paths__WEBPACK_IMPORTED_MODULE_4__["fetchPaths"])());
   }, [dispatch, currentPath]);
+
+  if (isLoading) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Components_Loading_LoadingIndicator__WEBPACK_IMPORTED_MODULE_1__["default"], null);
+  }
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, currentPath), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
     className: "table file-browser-table"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Type"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Name"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, currentPath !== "" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
     onClick: function onClick() {
-      return dispatch(Object(_Store_Slices_paths__WEBPACK_IMPORTED_MODULE_4__["setCurrentPath"])('..'));
+      return dispatch(Object(_Store_Slices_paths__WEBPACK_IMPORTED_MODULE_4__["setCurrentPath"])(".."));
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
     className: "text-center file-type-cell"
