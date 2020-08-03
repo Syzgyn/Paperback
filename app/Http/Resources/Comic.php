@@ -22,6 +22,7 @@ class Comic extends JsonResource
     {
         return [
             'name' => $this->name,
+            'sortName' => $this->getSortName(),
             'displayDescription' => $this->truncatedDescription,
             'description' => $this->description,
             'descriptionIsTruncated' => $this->description !== $this->truncatedDescription,
@@ -34,5 +35,15 @@ class Comic extends JsonResource
             'downloadedIssues' => $this->downloadedIssuesCount,
             'monitored' => $this->monitored,
         ];
+    }
+    
+    protected function getSortName()
+    {
+        $name = strtolower($this->name);
+        if (substr($name, 0, 3) == 'the') {
+            $name = substr($name, 3); 
+        } 
+
+        return trim($name);
     }
 }

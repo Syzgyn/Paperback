@@ -1,20 +1,22 @@
 import React from "react";
 import ComicIndexItem from "./ComicIndexItem";
+import ComicIndexHeader from "@/Comic/Index/ComicIndexHeader";
 import LoadingIndicator from "@/Components/Loading/LoadingIndicator";
+import PageRow from "@/Components/Page/PageRow";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { comicsSelector } from "@/Store/Slices/comics";
+import { comicsSelector, sortedComicsSelector } from "@/Store/Slices/comics";
 
 const ComicIndex = () => {
     const { items: comics, isFetching, isPopulated } = useSelector(
-        comicsSelector
+        sortedComicsSelector
     );
 
     if (isFetching) {
         return <LoadingIndicator />;
     }
 
-    if (!isPopulated) {
+    if (!isPopulated && !isFetching) {
         return "Something went wrong";
     }
 
@@ -32,8 +34,9 @@ const ComicIndex = () => {
     }
 
     return (
-        <div className="row">
-            <div className="col-md-12">
+        <>
+            <ComicIndexHeader />
+            <PageRow>
                 <div id="comic-list">
                     {comics.map((comic) => (
                         <ComicIndexItem
@@ -43,8 +46,8 @@ const ComicIndex = () => {
                         />
                     ))}
                 </div>
-            </div>
-        </div>
+            </PageRow>
+        </>
     );
 };
 

@@ -3,6 +3,7 @@ import {
     createAsyncThunk,
     createSlice,
     createSelector,
+    current,
 } from "@reduxjs/toolkit";
 import { getCurrentCvidSelector } from "@/Store/Slices/router";
 import axios from "axios";
@@ -14,6 +15,8 @@ const defaultState = {
     isLoading: false,
     isPopulated: false,
     items: [],
+    sortKey: 'sortName',
+    sortDir: 'asc',
 };
 
 export const fetchComics = createAsyncThunk("comics/fetchComics", async () => {
@@ -41,6 +44,7 @@ export const deleteComic = createAsyncThunk(
 );
 
 export const toggleComicMonitored = createAction("comics/toggleComicMonitored");
+export const setComicSort = createAction("comics/setComicSort");
 
 const slice = createSlice({
     name: "comics",
@@ -68,6 +72,19 @@ const slice = createSlice({
         [deleteComic.rejected]: () => {
             //TODO: Error handling
         },
+        [setComicSort]: (state, action) => {
+            const currentState = current(state)
+            const oldKey = currentState.sortKey;
+            const oldDir = currentState.sortDir;
+            const newDir = oldDir == "asc" ? "desc" : "asc";
+
+            if (oldKey === action.payload) {
+                state.sortDir = newDir;
+            } else {
+                state.sortKey = action.payload;
+                state.sortDir = 'asc';
+            }
+        },
     },
 });
 
@@ -75,6 +92,25 @@ export const comicsSelector = (state) => state.comics;
 export const currentComicSelector = createSelector(
     [comicsSelector, getCurrentCvidSelector],
     (comics, cvid) => comics.items.find((comic) => comic.cvid == cvid)
+);
+
+const comicsSortSelector = state => {return {key: state.comics.sortKey, dir: state.comics.sortDir}}
+export const sortedComicsSelector = createSelector(
+    [comicsSelector, comicsSortSelector],
+    (comics, sort) => {
+        let clone = Object.assign({}, comics);
+        let items = clone.items.slice().sort(function(a, b) {
+            if (sort.dir == 'asc') {
+                return a[sort.key] > b[sort.key] ? 1 : -1;
+            } else {
+                return a[sort.key] < b[sort.key] ? 1 : -1;
+            }
+        });
+
+        clone.items = items;
+
+        return clone;
+    }
 );
 
 export default slice.reducer;
