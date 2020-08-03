@@ -225,7 +225,7 @@ class ParserService
             '/(?<name>.+)\((?<year>\d{2,4})\)$/',
             '/(?<name>.+)\[(?<year>\d{2,4})\]$/',
             '/(?<name>.+) (?<year>\d{2,4})$/',
-            '/(?<name>.+)$/'
+            '/(?<name>.+)$/',
         ];
 
         $name = null;

@@ -2,10 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Issue;
 use App\Models\Indexer;
 use App\Models\TrackedDownload;
-use App\Models\Comic;
-use App\Models\Issue;
 use App\Dto\SearchResultCollection;
 
 class DownloadService
@@ -40,18 +39,18 @@ class DownloadService
     protected function searchIndexerForIssue(Indexer $indexer, int $cvid)
     {
         $issue = $this->getIssue($cvid);
-        $padding = 3; 
+        $padding = 3;
 
         while (true) {
             $query = $this->buildSearchQuery($cvid, $padding);
             $result = $indexer->searchCvid($query);
-            
+
             //If we have results, we're done
             if (count($result)) {
                 return $result->resolve();
             }
 
-            //Try decreasing the issue num padding by one 
+            //Try decreasing the issue num padding by one
             if ($padding == 3 && $issue->issue_num !== 0) {
                 $padding = 2;
                 continue;

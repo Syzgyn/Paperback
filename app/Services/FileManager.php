@@ -164,7 +164,7 @@ class FileManager
         ];
         $contents = scandir($path);
 
-        foreach($contents as $file) {
+        foreach ($contents as $file) {
             if ($file === '.' || $file === '..') {
                 continue;
             }
@@ -194,7 +194,7 @@ class FileManager
         if (count($data['files'])) {
             return;
         }
-        
+
         $this->removeDir($path);
     }
 }

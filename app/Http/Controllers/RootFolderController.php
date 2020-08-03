@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\RootFolder;
 use App\Models\Comic;
-use App\Http\Resources\RootFolder as RootFolderResource;
-use App\Http\Resources\RootFolderCollection;
+use App\Models\RootFolder;
 use Illuminate\Http\Request;
+use App\Http\Resources\RootFolderCollection;
+use App\Http\Resources\RootFolder as RootFolderResource;
 
 class RootFolderController extends Controller
 {
@@ -32,7 +32,7 @@ class RootFolderController extends Controller
             'path' => 'string|required',
         ]);
         $model = RootFolder::create($params);
-        
+
         return new RootFolderResource($model);
     }
 
@@ -63,6 +63,7 @@ class RootFolderController extends Controller
     public function getFolders(int $id)
     {
         $rootFolder = RootFolder::find($id);
+
         return $rootFolder->import();
     }
 
@@ -74,7 +75,7 @@ class RootFolderController extends Controller
 
         foreach ($data as $folder) {
             $comic = Comic::find($folder['matchId']);
-            if (!$comic) {
+            if (! $comic) {
                 $comic = Comic::createFromCvid($folder['matchId']);
             }
 

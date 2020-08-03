@@ -36,13 +36,13 @@ class Comic extends JsonResource
             'monitored' => $this->monitored,
         ];
     }
-    
+
     protected function getSortName()
     {
         $name = strtolower($this->name);
         if (substr($name, 0, 3) == 'the') {
-            $name = substr($name, 3); 
-        } 
+            $name = substr($name, 3);
+        }
 
         return trim($name);
     }

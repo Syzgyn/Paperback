@@ -94,5 +94,4 @@ class ComicController extends Controller
 
         return $this->comicvine->searchVolumes($search);
     }
-
 }

@@ -17,6 +17,7 @@ class FilesystemController extends Controller
         $params['showFiles'] = $params['showFiles'] ?? false;
 
         $service = resolve('FileManager');
+
         return $service->getDirectoryListing($params['path'], $params['showFiles']);
     }
 }

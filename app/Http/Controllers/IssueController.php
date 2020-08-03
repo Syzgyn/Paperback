@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Issue;
 use Illuminate\Http\Request;
-use App\Http\Resources\IssueCollection;
-use App\Http\Resources\Issue as IssueResource;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Pagination\LengthAwarePaginator;
+use App\Http\Resources\IssueCollection;
 use Illuminate\Database\Eloquent\Collection;
+use App\Http\Resources\Issue as IssueResource;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class IssueController extends Controller
 {
@@ -44,9 +44,10 @@ class IssueController extends Controller
 
         $issues = new IssueCollection(Issue::with('comic')->doesntHave('downloadedFile')->get());
 
-        $sortFunc = $params['sortDir'] == "asc" ? "sortBy" : "sortByDesc";
+        $sortFunc = $params['sortDir'] == 'asc' ? 'sortBy' : 'sortByDesc';
 
         $sorted = $issues->{$sortFunc}($params['sortKey']);
+
         return $this->paginate($sorted, $params['pageSize']);
     }
 

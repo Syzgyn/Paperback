@@ -45,6 +45,7 @@ class Newznab extends Indexer
     public function searchCvid($query, $offset = 0)
     {
         $result = $this->repository->search($query, $offset);
+
         return new NewznabCollection($result);
     }
 

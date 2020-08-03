@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Comic;
 
 class RootFolder extends Model
 {
@@ -18,13 +17,14 @@ class RootFolder extends Model
         $bytes = disk_free_space($this->path);
         $si_prefix = ['B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB'];
         $base = 1024;
-        $class = min((int)log($bytes , $base) , count($si_prefix) - 1);
-        return sprintf('%1.2f' , $bytes / pow($base,$class)) . ' ' . $si_prefix[$class];
+        $class = min((int)log($bytes, $base), count($si_prefix) - 1);
+
+        return sprintf('%1.2f', $bytes / pow($base, $class)) . ' ' . $si_prefix[$class];
     }
-    
+
     public function getUnmappedFoldersAttribute()
     {
-        if (!isset($this->path)) {
+        if (! isset($this->path)) {
             return [];
         }
 
@@ -38,7 +38,7 @@ class RootFolder extends Model
 
         $unmappedFolders = [];
 
-        foreach($dirs as $dir) {
+        foreach ($dirs as $dir) {
             if ($parser->matchDirToComics($dir['path'])) {
                 continue;
             }
@@ -61,7 +61,7 @@ class RootFolder extends Model
         $output = [];
         $fileManager = resolve('FileManager');
 
-        foreach($this->unmappedFolders as $folder) {
+        foreach ($this->unmappedFolders as $folder) {
             $count = count($fileManager->getComicsInFolder($folder['path']));
             $output[] = [
                 'name' => $folder['name'],
