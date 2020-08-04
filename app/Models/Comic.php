@@ -45,7 +45,7 @@ class Comic extends Model
 
     public function getDownloadedIssuesCountAttribute()
     {
-        return $this->issues()->where('status', 'downloaded')->count();
+        return $this->issueFiles()->count();
     }
 
     public function getImageAttribute()

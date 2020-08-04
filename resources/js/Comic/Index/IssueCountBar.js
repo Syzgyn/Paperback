@@ -1,14 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function IssueCountBar(props) {
+const IssueCountBar = (props) => {
     const { count, total } = props;
 
     const percent = count / total;
     const color = count == total ? "primary" : "danger";
     const text = count + " / " + total;
     const style = {
-        width: percent + "%",
+        width: (percent * 100) + "%",
     };
 
     return (

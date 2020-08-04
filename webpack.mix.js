@@ -19,7 +19,7 @@ mix.webpackConfig({
   resolve: {
     extensions: ['.js', '.json'],
     alias: {
-      '@': __dirname + '/resources/js'
+      '@': __dirname + '/resources/js',
     },
   },
 })

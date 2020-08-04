@@ -8,15 +8,15 @@ import { useSelector } from "react-redux";
 import { sortedComicsSelector } from "@/Store/Slices/comics";
 
 const ComicIndex = () => {
-    const { items: comics, isFetching, isPopulated } = useSelector(
+    const { items: comics, isLoading, isPopulated } = useSelector(
         sortedComicsSelector
     );
 
-    if (isFetching) {
+    if (isLoading) {
         return <LoadingIndicator />;
     }
 
-    if (!isPopulated && !isFetching) {
+    if (!isPopulated && !isLoading) {
         return "Something went wrong";
     }
 
