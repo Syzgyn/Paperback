@@ -19,7 +19,7 @@ const ComicIndexHeader = () => {
     }
 
     return (
-        <div className="row justify-content-end text-right">
+        <div className="row justify-content-end text-right pb-4">
             <div className="col-md-3">
                 <Dropdown isOpen={dropdownOpen} toggle={toggle}>
                     <DropdownToggle caret>Sort Comics</DropdownToggle>

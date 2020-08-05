@@ -5,6 +5,7 @@ import DOMPurify from "dompurify";
 import Pluralize from "react-pluralize";
 import ComicBadge from "@/Components/ComicBadge";
 import IssueCountBar from "./IssueCountBar";
+import ComicSettings from "@/Comic/Details/ComicSettings";
 
 class ComicIndexItem extends Component {
     render() {
@@ -35,6 +36,9 @@ class ComicIndexItem extends Component {
                                     <span className="comic-year">
                                         ({startYear})
                                     </span>
+                                </span>
+                                <span className="float-right">
+                                    <ComicSettings cvid={cvid} />
                                 </span>
                             </Link>
                         </div>
