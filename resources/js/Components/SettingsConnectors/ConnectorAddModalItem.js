@@ -6,10 +6,10 @@ import { selectSchemaAndToggleEditModal } from "@/Store/Slices/Settings/settings
 
 const ConnectorAddModalItem = (props) => {
     const dispatch = useDispatch();
-    const { name } = props;
+    const { name, type } = props;
 
     function selectConnector() {
-        dispatch(selectSchemaAndToggleEditModal(props.type));
+        dispatch(selectSchemaAndToggleEditModal(type));
     }
 
     return (
@@ -25,7 +25,6 @@ const ConnectorAddModalItem = (props) => {
 ConnectorAddModalItem.propTypes = {
     name: PropTypes.string,
     type: PropTypes.string,
-    onSchemaSelect: PropTypes.func.isRequired,
 };
 
 export default ConnectorAddModalItem;

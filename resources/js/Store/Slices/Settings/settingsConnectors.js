@@ -215,6 +215,9 @@ export const slice = createSlice({
                 return state;
             }
             state.showEditModal = !current(state).showEditModal;
+            if (! state.showEditModal) {
+                state.selectedItem = null;
+            }
         },
         [toggleAddModal]: (state, action) => {
             if (!correctStatePath(state, action)) {

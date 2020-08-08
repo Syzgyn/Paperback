@@ -34,6 +34,16 @@ const ConnectorAddModalContent = () => {
                         <ConnectorAddModalItem key={item.name} {...item} />
                     ))}
             </div>
+            <h2>Direct Download</h2>
+            <div className="settings-item-list">
+                {schema
+                    .filter((item) => {
+                        return item.protocol == "ddl";
+                    })
+                    .map((item) => (
+                        <ConnectorAddModalItem key={item.name} {...item} />
+                    ))}
+            </div>
         </>
     );
 };

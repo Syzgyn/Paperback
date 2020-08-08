@@ -6,12 +6,8 @@ use App\Dto\Indexers\NewznabSettings;
 use App\Repositories\Indexers\NewznabRepository;
 use App\Http\Resources\Indexers\NewznabCollection;
 
-use Nanigans\SingleTableInheritance\SingleTableInheritanceTrait;
-
 class Newznab extends Indexer
 {
-    use SingleTableInheritanceTrait;
-
     const URL_ENDPOINT_BASE = '/api/';
 
     public $repository;
@@ -34,6 +30,11 @@ class Newznab extends Indexer
         'protocol' => 'usenet',
         'name' => 'Newznab',
         'fields' => [
+            'settings.url' => [
+                'label' => 'Base URL',
+                'type' => 'text',
+                'validation' => ['required', 'string'],
+            ],
             'settings.apikey' => [
                 'label' => 'API Key',
                 'type' => 'text',
@@ -42,8 +43,9 @@ class Newznab extends Indexer
         ],
     ];
 
-    public function searchCvid($query, $offset = 0)
+    public function searchCvid($comic, $issue = '', $year = '', $offset = 0)
     {
+        $query = "$comic $issue $year";
         $result = $this->repository->search($query, $offset);
 
         return new NewznabCollection($result);

@@ -17,6 +17,7 @@ class Indexer extends Model
 
     const INDEXER_TYPES = [
         'newznab' => \App\Models\Indexers\Newznab::class,
+        'getcomics' => \App\Models\Indexers\GetComics::class,
     ];
 
     const CACHE_PREFIX = '.indexer';
@@ -39,11 +40,6 @@ class Indexer extends Model
                 'label' => 'Enable Search',
                 'type' => 'checkbox',
                 'validation' => ['required', 'bool'],
-            ],
-            'settings.url' => [
-                'label' => 'Base URL',
-                'type' => 'text',
-                'validation' => ['required', 'string'],
             ],
         ],
     ];

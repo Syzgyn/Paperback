@@ -19,7 +19,7 @@ class DownloadService
         foreach ($indexers as $indexer) {
             $result = $this->searchIndexerForIssue($indexer, $cvid);
 
-            $source = $indexer->schema['protocol'] == 'usenet' ? 'nzb' : 'torrent';
+            $source = $indexer->schema['protocol'] == 'usenet' ? 'nzb' : $indexer->schema['protocol'];
             $comic = $this->getIssue($cvid)->comic;
 
             array_walk($result, function (&$item, $key) use ($source, $cvid, $comic, $indexer) {
@@ -42,8 +42,8 @@ class DownloadService
         $padding = 3;
 
         while (true) {
-            $query = $this->buildSearchQuery($cvid, $padding);
-            $result = $indexer->searchCvid($query);
+            $queryData = $this->buildSearchQuery($cvid, $padding);
+            $result = $indexer->searchCvid($queryData['comic'], $queryData['issue'], $queryData['year']);
 
             //If we have results, we're done
             if (count($result)) {
@@ -64,9 +64,13 @@ class DownloadService
     {
         $issue = $this->getIssue($cvid);
         $year = date('Y', strtotime($issue->release_date));
-        $formatString = '%s %0' . $issuePadding . 'd %d';
+        $formatString = '%0' . $issuePadding . 'd';
 
-        return sprintf($formatString, $issue->comic->name, $issue->issue_num, $year);
+        return [
+            'comic' => $issue->comic->name,
+            'issue' => sprintf($formatString, $issue->issue_num),
+            'year' => $year,
+        ];
     }
 
     public function getIssue(int $cvid)
