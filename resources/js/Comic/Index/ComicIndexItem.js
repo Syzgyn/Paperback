@@ -37,10 +37,10 @@ class ComicIndexItem extends Component {
                                         ({startYear})
                                     </span>
                                 </span>
-                                <span className="float-right">
-                                    <ComicSettings cvid={cvid} />
-                                </span>
                             </Link>
+                            <span className="float-right">
+                                <ComicSettings cvid={cvid} />
+                            </span>
                         </div>
                     </div>
                     <div className="row">

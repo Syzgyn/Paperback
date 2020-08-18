@@ -14,10 +14,10 @@ const ComicSettings = ({ cvid }) => {
 
     return (
         <>
-            <Sliders id="comicSettingsButton" />
+            <Sliders className="cursor-pointer" id={"popover-button-" + cvid} />
             <UncontrolledPopover
                 trigger="legacy"
-                target="comicSettingsButton"
+                target={"popover-button-" + cvid}
                 placement="bottom"
             >
                 <PopoverBody>
