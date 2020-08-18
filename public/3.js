@@ -482,7 +482,11 @@ var IndexerSearchResultsItem = /*#__PURE__*/function (_Component) {
   _createClass(IndexerSearchResultsItem, [{
     key: "onDownloadClick",
     value: function onDownloadClick() {
-      this.props.downloadClick(this.props.item.guid);
+      this.props.downloadClick({
+        guid: this.props.item.guid,
+        protocol: this.props.item.protocol,
+        url: this.props.item.url
+      });
     }
   }, {
     key: "render",
@@ -1452,9 +1456,13 @@ var IssueModal = /*#__PURE__*/function (_Component) {
     }
   }, {
     key: "onDownloadClick",
-    value: function onDownloadClick(guid) {
+    value: function onDownloadClick(data) {
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/trackeddownload", {
-        guid: guid
+        guid: data.guid,
+        comic_id: this.props.issue.comic_id,
+        issue_id: this.props.issue.cvid,
+        protocol: data.protocol,
+        url: data.url
       }).then(this.props.toggleModal());
     }
   }, {

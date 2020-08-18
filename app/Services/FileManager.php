@@ -5,7 +5,10 @@ namespace App\Services;
 use App\Models\Comic;
 use App\Models\IssueFile;
 use App\Models\TrackedDownload;
+use App\Models\Downloaders\DirectDownload;
 use Illuminate\Support\Facades\Log;
+use \wapmorgan\UnifiedArchive\UnifiedArchive;
+
 
 class FileManager
 {
@@ -54,7 +57,6 @@ class FileManager
         }
 
         $downloadedFile = $files[0];
-        $comicPath = $this->getOrCreateComicDir($download->comic);
 
         IssueFile::createAndMove([
             'comic_id' => $download->comic_id,
@@ -65,7 +67,122 @@ class FileManager
         if (is_dir($downloadPath)) {
             $this->removeDir($downloadPath);
         }
+
         $download->delete();
+    }
+
+    public function manageDirectDownload(TrackedDownload $download)
+    {
+        $downloadedFile = $download->ddlFilename;
+
+        //If it's a single issue that's already the correct type
+        if ($this->checkFileType($downloadedFile)) {
+            IssueFile::createAndMove([
+                'comic_id' => $download->comic_id,
+                'issue_id' => $download->issue_id,
+                'original_file_path' => $downloadedFile,
+            ]);
+
+            $download->delete();
+            return;
+        }
+
+        //Check if it's a zipfile and unzip the contents
+        $fileInfo = pathinfo($downloadedFile);
+        $destDir = $fileInfo['dirname'] . DIRECTORY_SEPARATOR . $fileInfo['basename'];
+        mkdir($destDir);
+        $result = $this->extractArchive($downloadedFile, $destDir);
+
+        //TODO: Manage other filetypes too
+        if (! $result) {
+            Log::error("The direct downloaded file failed to unzip.  Aborting");
+            $download->delete();
+            return;
+        }
+
+        $files = $this->getComicsInFolder($path);
+
+        if (count($files) === 0) {
+            if (! is_dir($path)) {
+                Log::error("Attmpted to look for files in $downloadPath, but it doesn't exist");
+            } else {
+                Log::debug("No comic archives found in $downloadPath");
+            }
+
+            $download->delete();
+
+            return;
+        }
+
+        //Single file, assume it's for the specified issue
+        if (count($files) == 1) {
+            IssueFile::createAndMove([
+                'comic_id' => $download->comic_id,
+                'issue_id' => $download->issue_id,
+                'original_file_path' => $files[0],
+            ]);
+
+            $this->removeDir($path);
+            $download->delete();
+            
+            return;
+        }
+
+        //Multiple files, need to match them to specific issues
+        $comic = $download->comic->with('issues');
+        $parser = resolve('ParserService');
+
+        //Look for ComicInfo.xml in each archive
+        foreach($files as $file) {
+            $issueNum = null;
+            $archive = UnifiedArchive::open($file);
+            if ($archive && $archive->isFileExists('ComicInfo.xml')) {
+                $xml = $archive->getFileContents('ComicInfo.xml');
+                $issueNum = $this->getIssueFromComicInfoXml($xml);
+            } else {
+                //No XML found, parse the name to get the issue number
+                $info = $parser->getIssueInfoFromFile($file);
+                $issueNum = $info['issueNum'];
+            }
+
+            if ($issueNum) {
+                $key = $comic->issues->search(function($item, $issue) use ($issueNum) {
+                    return $issue->issue_num == $issueNum;
+                });
+
+                if ($key !== false) {
+                    IssueFile::createAndMove([
+                        'comic_id' => $download->comic_id,
+                        'issue_id' => $comic->issues[$key],
+                        'original_file_path' => $file,
+                    ]);
+
+                    Log::info("Matched $file to {$comic->name} issue $issueNum");
+                    continue;
+                }
+            }
+
+            Log::info("No matching issue found for $file");
+        }
+        
+    }
+
+    public function extractArchive($filename, $destDir)
+    {
+        $archive = UnifiedArchive::open($filename);
+        if (! $archive) {
+            return false;
+        }
+
+        $archive->extractFiles($destDir);
+
+        return true;
+    }
+
+    public function getIssueFromComicInfoXml(string $xml)
+    {
+        $info = new SimpleXMLElement($xml);
+        return $info->number;
     }
 
     public function getComicsInFolder($path)

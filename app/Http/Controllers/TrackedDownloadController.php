@@ -32,7 +32,11 @@ class TrackedDownloadController extends Controller
     {
         $attrs = $request->validated();
 
-        $trackedDownload = TrackedDownload::createFromGuid($attrs['guid']);
+        $trackedDownload = new TrackedDownload();
+        $trackedDownload->fill($attrs);
+        $trackedDownload->url = $attrs['url'];
+        $trackedDownload->save();
+        //$trackedDownload = TrackedDownload::createFromGuid($attrs['guid'], $attrs['comic_id'], $attrs['issue_id']);
 
         if (! $trackedDownload) {
             return response()->json(['error' => true, 'message' => 'Search results invalidated, please search again']);

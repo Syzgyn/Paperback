@@ -9,6 +9,7 @@ use App\Http\Resources\Indexers\NewznabCollection;
 class Newznab extends Indexer
 {
     const URL_ENDPOINT_BASE = '/api/';
+    const PROTOCOL = 'usenet';
 
     public $repository;
 

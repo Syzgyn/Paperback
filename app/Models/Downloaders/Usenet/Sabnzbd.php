@@ -12,6 +12,7 @@ class Sabnzbd extends Downloader
     use SingleTableInheritanceTrait;
 
     const URL_ENDPOINT_BASE = '/api/';
+    const PROTOCOL = 'usenet';
 
     public $repository;
 
@@ -30,7 +31,7 @@ class Sabnzbd extends Downloader
     ];
 
     protected $modelSchema = [
-        'protocol' => 'usenet',
+        'protocol' => self::PROTOCOL,
         'name' => 'SabNZBd',
         'fields' => [
             'settings.port' => [
@@ -72,14 +73,14 @@ class Sabnzbd extends Downloader
 
     public function download($link)
     {
-        $response = $this->repository->addUrl($link);
+        $response = $this->getRepository()->addUrl($link);
 
         return $response['nzo_ids'][0];
     }
 
     public function getDownload($nzoId)
     {
-        return $this->repository->getDownloadInfo($nzoId);
+        return $this->getRepository()->getDownloadInfo($nzoId);
     }
 
     public function getRepository()

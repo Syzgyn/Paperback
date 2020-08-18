@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Issue;
 use App\Models\Indexer;
 use App\Models\TrackedDownload;
+use App\Dto\SearchResult;
 use App\Dto\SearchResultCollection;
 
 class DownloadService
@@ -28,6 +29,7 @@ class DownloadService
                 $item['source'] = $source;
                 $item['issue_id'] = (int)$cvid;
                 $item['comic_id'] = $comic->cvid;
+                $item['protocol'] = $indexer::PROTOCOL;
             });
 
             $results = array_merge($results, $result);
@@ -65,9 +67,10 @@ class DownloadService
         $issue = $this->getIssue($cvid);
         $year = date('Y', strtotime($issue->release_date));
         $formatString = '%0' . $issuePadding . 'd';
+        $name = preg_replace("/[^A-Za-z0-9 ]/", '', $issue->comic->name);
 
         return [
-            'comic' => $issue->comic->name,
+            'comic' => $name,
             'issue' => sprintf($formatString, $issue->issue_num),
             'year' => $year,
         ];
@@ -110,12 +113,12 @@ class DownloadService
             return;
         }
 
-        return $this->downloadFromGuid($selectedResult->guid);
+        return $this->download($selectedResult);
     }
 
-    public function downloadFromGuid(string $guid)
+    public function download(SearchResult $result)
     {
-        $trackedDownload = TrackedDownload::createFromGuid($guid);
+        $trackedDownload = TrackedDownload::create($result->toArray());
 
         return $trackedDownload;
     }

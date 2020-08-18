@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Events\DownloadStarted;
+use App\Models\Downloaders\DirectDownload;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,8 +18,9 @@ class TrackedDownload extends Model
 
     protected $table = 'tracked_downloads';
     public $timestamps = false;
+    public $url;
+    public $ddlFilename;
 
-    public $url = null;
     protected $pulledDownloadData;
 
     protected $fillable = [
@@ -27,7 +29,9 @@ class TrackedDownload extends Model
         'download_id',
         'download_client_id',
         'guid',
+        'protocol',
     ];
+
     protected $casts = [
         'comic_id' => 'integer',
         'issue_id' => 'integer',
@@ -47,24 +51,12 @@ class TrackedDownload extends Model
         });
     }
 
-    public static function createFromGuid(string $guid)
-    {
-        $data = Cache::get(Indexer::CACHE_PREFIX . '.' . $guid);
-
-        if ($data) {
-            $model = new self();
-            $model->fill($data);
-            $model->url = $data['url'];
-            $model->save();
-
-            return $model;
-        }
-
-        return null;
-    }
-
     public function downloadClient()
     {
+        if ($this->protocol == 'ddl') {
+            return new DirectDownload($this);
+        }
+
         return $this->belongsTo('App\Models\Downloader');
     }
 
@@ -108,8 +100,16 @@ class TrackedDownload extends Model
 
     public function startDownload()
     {
+        if ($this->protocol === 'ddl') {
+            return $this->startDirectDownload();
+        }
+
         $downloaders = Downloader::where('enable', true)->get();
         foreach ($downloaders as $downloader) {
+            if ($downloader::PROTOCOL != $this->protocol) {
+                continue;
+            }
+
             try {
                 $download_id = $downloader->download($this->url);
 
@@ -118,6 +118,7 @@ class TrackedDownload extends Model
                     'download_id' => $download_id,
                 ];
 
+                $this->status = static::DOWNLOAD_STATUS['Downloading'];
                 $this->fill($params);
                 $this->save();
             } catch (\Exception $e) {
@@ -130,5 +131,15 @@ class TrackedDownload extends Model
         }
 
         return false;
+    }
+
+    protected function startDirectDownload()
+    {
+        $downloader = new DirectDownload($this);
+        $downloader->download();
+        $this->status = static::DOWNLOAD_STATUS['Downloading'];
+        $this->save();
+
+        return true;
     }
 }

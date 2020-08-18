@@ -15,7 +15,7 @@ class GetComicsRepository
     protected $indexer;
     protected $client;
 
-    public function __construct(GetComics $indexer)
+    public function __construct(GetComics $indexer = null)
     {
         $this->indexer = $indexer;
         $this->client = new Client();
@@ -33,9 +33,10 @@ class GetComicsRepository
         $url .= '?s=' . urlencode($query);
 
         $results = $this->getSearchResults($url);
+        $parser = resolve('ParserService');
 
-        return array_filter($results, function($result) use ($query) {
-            return strpos(strtolower($result['title']), strtolower($query)) !== false;
+        return array_filter($results, function($result) use ($parser, $query) {
+            return $parser->titleMatchesQuery($result['title'], $query);
         });
     }
 
@@ -97,6 +98,46 @@ class GetComicsRepository
         //$last_page = $crawler->filter('ul.page-numbers>li>a')->last()->text(1);
 
         return $results;
+    }
+
+    public function getDownloadLinkFromPage(string $url)
+    {
+        $crawler = $this->client->request('GET', $url); 
+
+        /*
+        // Get more info from the download page
+        $title = $crawler->filter('h1.post-title')->text();
+        $title = preg_replace('/\x{2013}/u', '-', $title);
+
+        $crawler->filter('p[style*="text-align: center"]')->each(function($node) use (&$output) {
+            preg_match('/Year :\ ?(?<year>\d+(?:-\d+)?) \| Size : (?<size>[\d\.]+ .B)/', $node->text(), $infoMatch);
+            if (!isset($output['year']) && isset($infoMatch['year'])) {
+                $output['year'] = $infoMatch['year'];
+                $output['size'] = $infoMatch['size'];
+            }
+        });
+        */
+
+        foreach ($crawler->filter('div.aio-pulse a') as $node) {
+            if ($node->nodeValue == "Download Now") {
+                $url = $node->getAttribute('href');
+                $urlData = parse_url($url);
+
+                if ($urlData['host'] == 'sh.st') {
+
+                    $ch = \curl_init();
+                    \curl_setopt($ch, CURLOPT_URL, $url);
+                    \curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                    $output = \curl_exec($ch);
+                    \curl_close($ch);
+
+                    $urlCrawler = new Crawler($output);
+                    $url = $urlCrawler->filter('a')->attr('href');
+                }
+
+                return $url;
+            }
+        }
     }
 
     public function test()

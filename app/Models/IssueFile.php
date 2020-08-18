@@ -42,6 +42,8 @@ class IssueFile extends Model
         $attrs['original_file_name'] = $originalFileInfo['basename'];
         $issue = Issue::with('comic')->find($attrs['issue_id']);
 
+        resolve('FileManager')->getOrCreateComicDir($issue->comic);
+
         //TODO: Catch errors here, pass upstream
         $newFilePath = resolve('FileManager')->moveFile($attrs['original_file_path'], $issue->fullFileName);
         $newFileInfo = pathinfo($newFilePath);

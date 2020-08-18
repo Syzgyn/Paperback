@@ -15,6 +15,7 @@ class Downloader extends Model
     use BuildSchema;
     use CreateChild;
 
+    const PROTOCOL = null;
     const DOWNLOADER_TYPES = [
         'sabnzbd' => \App\Models\Downloaders\Usenet\Sabnzbd::class,
     ];
@@ -64,6 +65,11 @@ class Downloader extends Model
     public function getEnableAttribute()
     {
         return isset($this->attributes['enable']) ? $this->attributes['enable'] : true;
+    }
+
+    public function getProtocolAttribute()
+    {
+        return self::PROTOCOL;
     }
 
     protected static function booted()

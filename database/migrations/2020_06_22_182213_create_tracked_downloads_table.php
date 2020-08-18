@@ -22,6 +22,7 @@ class CreateTrackedDownloadsTable extends Migration
             $table->string('download_id')->nullable();
             $table->string('guid');
             $table->integer('status')->default(0);
+            $table->string('protocol');
         });
     }
 

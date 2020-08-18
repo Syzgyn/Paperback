@@ -10,9 +10,13 @@ class DDLController extends Controller
 {
     public function index(Request $request)
     {
+
+        $repo = new \App\Repositories\Indexers\GetComicsRepository();
+        $results = $repo->search("Locke & Key Welcome to Lovecraft");
+        dd($results);
         $results = [];
         $client = new Client();
-        $crawler = $client->request('GET', 'http://getcomics.info/?s=planetary');
+        $crawler = $client->request('GET', 'http://getcomics.info/?s=Locke++Key+Welcome+to+Lovecraft');
 
         $statusCode = $client->getResponse()->getStatusCode();
         if ($statusCode !== 200) {
@@ -20,42 +24,42 @@ class DDLController extends Controller
         }
 
         $crawler->filter('article')->each(function($node) use (&$results) {
-            $output = [
+                $output = [
                 'multiple' => false,
-            ];
+                ];
 
-            $id = $node->attr('id');
-            $output['id'] = substr($id, strpos($id, '-') + 1);
-            $output['link'] = $node->filter('a')->attr('href');
-            $title = $node->filter('h1.post-title')->text();
-            $title = preg_replace('/\x{2013}/u', '-', $title);
-            $output['originalTitle'] = $title;
+                $id = $node->attr('id');
+                $output['id'] = substr($id, strpos($id, '-') + 1);
+                $output['link'] = $node->filter('a')->attr('href');
+                $title = $node->filter('h1.post-title')->text();
+                $title = preg_replace('/\x{2013}/u', '-', $title);
+                $output['originalTitle'] = $title;
 
-            preg_match('/#(?<issues>\d+ - \d+)/', $title, $issuesMatch);
+                preg_match('/#(?<issues>\d+ - \d+)/', $title, $issuesMatch);
 
-            if (isset($issuesMatch['issues'])) {
+                if (isset($issuesMatch['issues'])) {
                 $output['issues'] = $issuesMatch['issues'];
                 $output['multiple'] = true;
                 $title = preg_replace('/ ?#\d+ - \d+/', '', $title);
-            }
+                }
 
-            $info = $node->filter('p[style*="text-align: center"]')->text();
-            preg_match('/Year :\ ?(?<year>\d+(?:-\d+)?) \| Size : (?<size>[\d\.]+ .B)/', $info, $infoMatch);
+                $info = $node->filter('p[style*="text-align: center"]')->text();
+                preg_match('/Year :\ ?(?<year>\d+(?:-\d+)?) \| Size : (?<size>[\d\.]+ .B)/', $info, $infoMatch);
 
-            $output['year'] = $infoMatch['year'];
-            $output['size'] = $infoMatch['size'];
+                $output['year'] = $infoMatch['year'];
+                $output['size'] = $infoMatch['size'];
 
-            if ($output['multiple'] && strpos($output['year'], '-') !== -1) {
-                $title = preg_replace('/\(' . $output['year'] . '\)/', '', $title);
-            }
+                if ($output['multiple'] && strpos($output['year'], '-') !== -1) {
+                    $title = preg_replace('/\(' . $output['year'] . '\)/', '', $title);
+                }
 
-            $output['title'] = trim($title);
+                $output['title'] = trim($title);
 
-            $date = $node->filter('time')->attr('datetime');
-            $output['date'] = $date;
+                $date = $node->filter('time')->attr('datetime');
+                $output['date'] = $date;
 
 
-            $results[] = $output;
+                $results[] = $output;
         });
 
         $last_page = $crawler->filter('ul.page-numbers>li>a')->last()->text(1);
@@ -72,12 +76,12 @@ class DDLController extends Controller
         dump($title);
 
         $crawler->filter('p[style*="text-align: center"]')->each(function($node) use (&$output) {
-            preg_match('/Year :\ ?(?<year>\d+(?:-\d+)?) \| Size : (?<size>[\d\.]+ .B)/', $node->text(), $infoMatch);
-            if (!isset($output['year']) && isset($infoMatch['year'])) {
+                preg_match('/Year :\ ?(?<year>\d+(?:-\d+)?) \| Size : (?<size>[\d\.]+ .B)/', $node->text(), $infoMatch);
+                if (!isset($output['year']) && isset($infoMatch['year'])) {
                 $output['year'] = $infoMatch['year'];
                 $output['size'] = $infoMatch['size'];
-            }
-        });
+                }
+                });
 
         foreach ($crawler->filter('div.aio-pulse a') as $node) {
             if ($node->nodeValue == "Download Now") {
@@ -106,10 +110,10 @@ class DDLController extends Controller
     public function short()
     {
         /*
-        $client = new Client();
-        $crawler = $client->request('GET', 'http://sh.st/faBW5');
-        dump($crawler);
-        */
+           $client = new Client();
+           $crawler = $client->request('GET', 'http://sh.st/faBW5');
+           dump($crawler);
+         */
 
         $ch = \curl_init();
         \curl_setopt($ch, CURLOPT_URL, 'http://sh.st/faBW5');
@@ -125,4 +129,78 @@ class DDLController extends Controller
         //$output = $c->request('GET', 'http://google.com');
         dump($output->getBody());
     }
+
+    public function download()
+    {
+        $td = new \App\Models\TrackedDownload;
+        $td->fill([
+            'comic_id' => 7506, 
+            'issue_id' => '175227', 
+            'protocol' => 'ddl', 
+            'guid' => 'abc1234', 
+        ]);
+        $td->url = 'http://speedtest-ny.turnkeyinternet.net/1000mb.bin';
+        \App\Jobs\DownloadFile::dispatchNow($td);
+        exit;
+        //output buffer
+        ob_start();
+
+        //create javascript progress bar
+        echo '<html><head>
+            <script type="text/javascript">
+            function updateProgress(percentage) {
+                document.getElementById(\'progress\').value = percentage;
+            }
+        </script></head><body>
+
+            <progress id="prog" value="0" max="100.0"></progress>
+            ';
+
+        //initilize progress bar
+        ob_flush();
+        flush();
+
+        //save progress to variable instead of a file
+        $targetFile = fopen( '/mnt/nfs/media/the-magicians.zip', 'w' );
+        $ch = curl_init( 'http://elv.comicfiles.ru/Others/Boom%20Studios/The%20Magicians/The%20Magicians%20001-005%20%282019-2020%29.zip');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt( $ch, CURLOPT_NOPROGRESS, false);
+        curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt( $ch, CURLOPT_PROGRESSFUNCTION, [$this, 'progressCallback'] );
+        curl_setopt( $ch, CURLOPT_FILE, $targetFile );
+        curl_exec( $ch );
+        fclose( $targetFile );
+
+
+        //if we get here, the download has completed
+        echo "Done";
+
+        //flush just to be sure
+        ob_flush();
+        flush();
+    }
+
+    //must add $resource to the function after a newer php version. Previous comments states php 5.5
+    public function progressCallback( $resource, $download_size, $downloaded_size, $upload_size, $uploaded_size )
+    {
+        static $previousProgress = 0;
+
+        if ( $download_size == 0 ) {
+            $progress = 0;
+        } else {
+            $progress = round( $downloaded_size * 100 / $download_size );
+        }
+
+        if ( $progress > $previousProgress)
+        {
+            $previousProgress = $progress;
+        }
+        //update javacsript progress bar to show download progress
+        echo '<script>document.getElementById(\'prog\').value = '.$progress.';</script>';
+
+        ob_flush();
+        flush();
+        //sleep(1); // just to see effect
+    }
+
 }

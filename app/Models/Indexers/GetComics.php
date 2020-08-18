@@ -8,6 +8,7 @@ use App\Http\Resources\Indexers\GetComicsCollection;
 class GetComics extends Indexer
 {
     const URL_ENDPOINT_BASE = '/api/';
+    const PROTOCOL = 'ddl';
 
     public $repository;
 

@@ -258,8 +258,10 @@ class ParserService
     public function getIssueInfoFromFile(string $file)
     {
         $regexes = [
-            '/(?<name>.+) (?<issueNum>\d{1,3})/',
+            '/(?<name>.+) (?<issueNum>\d{1,3}) \(of \d+\) \((?<year>\d{2,4})\)/',
+            '/(?<name>.+) (?<issueNum>\d{1,3}) \(of \d+\)/',
             '/(?<name>.+) (?<issueNum>\d{1,3}) \((?<year>\d{2,4})\)/',
+            '/(?<name>.+) (?<issueNum>\d{1,3})/',
         ];
 
         $filename = pathinfo($file, PATHINFO_FILENAME);
@@ -283,5 +285,24 @@ class ParserService
             'issueNum' => $issueNum,
             'year' => $year,
         ];
+    }
+
+    //Checks if at least half of the words in the query are in the title, excluding common words
+    public function titleMatchesQuery(string $title, string $query)
+    {
+        $removeWords = ['', 'and', 'the', 'of', 'in', 'to', 'it'];
+        $title = preg_replace("/[^A-Za-z0-9 ]/", '', $title);
+        $query = preg_replace("/[^A-Za-z0-9 ]/", '', $query);
+
+        $titleParts = array_filter(explode(" ", strtolower($title)), function($word) use ($removeWords) {
+            return ! in_array($word, $removeWords);
+        });
+        $queryParts = array_filter(explode(" ", strtolower($query)), function($word) use ($removeWords) {
+            return ! in_array($word, $removeWords);
+        });
+
+        $diff = array_diff($queryParts, $titleParts);
+
+        return count($diff) <= count($queryParts) / 2;
     }
 }

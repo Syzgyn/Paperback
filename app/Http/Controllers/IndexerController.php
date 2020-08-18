@@ -88,6 +88,7 @@ class IndexerController extends Controller
     public function autosearch(Request $request)
     {
         $cvid = $request->input('cvid');
+        //TODO: Look at matching files and try replacing issue number to download the rest of the comics
 
         $trackedDownload = resolve('DownloadService')->downloadIssue($cvid);
 

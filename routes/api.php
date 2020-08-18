@@ -61,6 +61,7 @@ Route::get('filesystem', 'FilesystemController@filesystem');
 Route::get('ddl/index', 'DDLController@index');
 Route::get('ddl/page', 'DDLController@page');
 Route::get('ddl/short', 'DDLController@short');
+Route::get('ddl/download', 'DDLController@download');
 
 Route::fallback(function () {
     return response()->json([
