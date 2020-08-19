@@ -3,11 +3,11 @@ namespace App\Models\Indexers;
 
 use App\Models\Indexer;
 use App\Models\TrackedDownload;
-use App\Models\Downloaders\DDL\GetComics as GetComicsDownloader;
-use App\Repositories\Indexers\GetComicsRepository;
-use App\Http\Resources\Indexers\GetComicsCollection;
+use App\Models\Downloaders\DDL\ComicExtra as ComicExtraDownloader;
+use App\Repositories\Indexers\ComicExtraRepository;
+use App\Http\Resources\IndexerResultCollection;
 
-class GetComics extends Indexer
+class ComicExtra extends Indexer
 {
     const URL_ENDPOINT_BASE = '/api/';
     const PROTOCOL = 'ddl';
@@ -24,16 +24,15 @@ class GetComics extends Indexer
 
     protected $modelSchema = [
         'protocol' => 'ddl',
-        'name' => 'GetComics.info',
+        'name' => 'ComicExtra.com',
         'fields' => [],
     ];
 
-    public function searchCvid($comic, $issue = '', $year = '', $offset = 0)
+    public function searchCvid(string $comic, string$issue = '', string $year = '', int $offset = 0)
     {
-        $query = $comic;
-        $result = $this->repository->search($query, $offset);
+        $result = $this->repository->search($comic, (int) $issue);
 
-        return new GetComicsCollection($result);
+        return new IndexerResultCollection($result);
     }
 
     protected static function booted()
@@ -43,7 +42,7 @@ class GetComics extends Indexer
         });
 
         static::retrieved(function ($indexer) {
-            $indexer->repository = new GetComicsRepository();
+            $indexer->repository = new ComicExtraRepository();
             $indexer->class = self::class;
         });
     }
@@ -52,7 +51,7 @@ class GetComics extends Indexer
     {
         //Manually create the repo if we're working with an unsaved model
         if (! $this->repository) {
-            $this->repository = new GetComicsRepository();
+            $this->repository = new ComicExtraRepository();
         }
 
         return $this->repository->test();
@@ -60,6 +59,6 @@ class GetComics extends Indexer
 
     public function getDownloader(TrackedDownload $download)
     {
-        return new GetComicsDownloader($download);
+        return new ComicExtraDownloader($download);
     }
 }

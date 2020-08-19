@@ -12,12 +12,10 @@ class GetComicsRepository
     const BASE_URL = 'https://getcomics.info';
     const RESULTS_PER_PAGE = 12;
 
-    protected $indexer;
     protected $client;
 
-    public function __construct(GetComics $indexer = null)
+    public function __construct()
     {
-        $this->indexer = $indexer;
         $this->client = new Client();
     }
 

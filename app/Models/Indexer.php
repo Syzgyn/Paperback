@@ -18,6 +18,7 @@ class Indexer extends Model
     const INDEXER_TYPES = [
         'newznab' => \App\Models\Indexers\Newznab::class,
         'getcomics' => \App\Models\Indexers\GetComics::class,
+        'comicextra' => \App\Models\Indexers\ComicExtra::class,
     ];
 
     const CACHE_PREFIX = '.indexer';

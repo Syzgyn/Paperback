@@ -10,6 +10,7 @@ class IndexerRequest extends FormRequest
     protected $types = [
         'newznab',
         'getcomics',
+        'comicextra',
     ];
 
     /**

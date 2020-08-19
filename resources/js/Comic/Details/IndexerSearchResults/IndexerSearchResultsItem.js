@@ -10,11 +10,7 @@ class IndexerSearchResultsItem extends Component {
     }
 
     onDownloadClick() {
-        this.props.downloadClick({
-            guid: this.props.item.guid,
-            protocol: this.props.item.protocol,
-            url: this.props.item.url,
-        });
+        this.props.downloadClick(this.props.item);
     }
 
     render() {

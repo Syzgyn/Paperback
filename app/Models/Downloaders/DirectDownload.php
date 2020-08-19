@@ -1,9 +1,7 @@
 <?php
 namespace App\Models\Downloaders;
 
-use App\Jobs\DownloadFile;
 use App\Models\TrackedDownload;
-use App\Repositories\Indexers\GetComicsRepository;
 
 class DirectDownload
 {
@@ -22,25 +20,14 @@ class DirectDownload
 
     public function download()
     {
-        $url = $this->getFinalUrl($this->trackedDownload->url);
         $filename = DownloadFile::dispatchNow([
-            'url' => $url,
+            'url' => $this->trackedDownload->url,
             'file' => $this->getFilename(),
         ]);
 
         $this->trackedDownload->ddlFilename = $filename;
 
         resolve('FileManager')->manageDirectDownload($this->trackedDownload);
-    }
-
-    protected function getFinalUrl(string $url)
-    {
-        if(strpos($url, 'getcomics.info') !== false && strpos($url, 'run.php') === false && strpos($url, 'go.php') === false) {
-            $repo = new GetComicsRepository();
-            return $repo->getDownloadLinkFromPage($url);
-        }
-
-        return $url;
     }
 
     public function getDownload($id)
@@ -72,7 +59,7 @@ class DirectDownload
 
     public function getProgressFilename()
     {
-        return $this->getFilename . self::PROGRESS_EXTENSION;
+        return $this->getFilename() . self::PROGRESS_EXTENSION;
     }
 
     protected function getProgress()

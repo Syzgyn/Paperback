@@ -27,6 +27,7 @@ class TrackedDownloadRequest extends FormRequest
             'guid' => 'required|string',
             'comic_id' => 'required|integer',
             'issue_id' => 'required|integer',
+            'indexer_id' => 'required|integer',
             'protocol' => 'required',
             'url' => 'required',
         ];

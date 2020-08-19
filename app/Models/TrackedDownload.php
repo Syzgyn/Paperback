@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Indexer;
 use App\Events\DownloadStarted;
 use App\Models\Downloaders\DirectDownload;
 use Illuminate\Support\Facades\Cache;
@@ -19,6 +20,7 @@ class TrackedDownload extends Model
     protected $table = 'tracked_downloads';
     public $timestamps = false;
     public $url;
+    public $indexerId;
     public $ddlFilename;
 
     protected $pulledDownloadData;
@@ -58,6 +60,15 @@ class TrackedDownload extends Model
         }
 
         return $this->belongsTo('App\Models\Downloader');
+    }
+
+    public function indexerClient()
+    {
+        if (isset($this->indexerId)) {
+            return Indexer::find($this->indexerId);
+        }
+
+        return null;
     }
 
     public function comic()
@@ -135,7 +146,11 @@ class TrackedDownload extends Model
 
     protected function startDirectDownload()
     {
-        $downloader = new DirectDownload($this);
+        $indexer = $this->indexerClient();
+        if (!$indexer) {
+            return false;
+        }
+        $downloader = $indexer->getDownloader($this);
         $downloader->download();
         $this->status = static::DOWNLOAD_STATUS['Downloading'];
         $this->save();

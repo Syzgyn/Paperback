@@ -51,7 +51,6 @@ class DownloadFile implements ShouldQueue
             'Referer: https://getcomics.info/',
         ]);
         curl_setopt($ch, CURLOPT_PROGRESSFUNCTION, [$this, 'progressCallback']);
-        //curl_setopt($ch, CURLOPT_WRITEFUNCTION, [$this, 'writeCallback']);
         curl_setopt($ch, CURLOPT_TIMEOUT, -1);
         curl_setopt($ch, CURLOPT_FILE, $this->fileHandler);
         curl_exec($ch);
@@ -62,7 +61,6 @@ class DownloadFile implements ShouldQueue
         unlink($this->targetFile . DirectDownload::PROGRESS_EXTENSION);
 
         $url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
-        var_dump($this->url);
         $extension = pathinfo($url, PATHINFO_EXTENSION);
         $fileInfo = pathinfo($this->targetFile);
         $newFilename = $fileInfo['dirname'] . DIRECTORY_SEPARATOR . $fileInfo['filename'] . '.' . $extension;
@@ -82,12 +80,5 @@ class DownloadFile implements ShouldQueue
         }
 
         file_put_contents($this->targetFile . DirectDownload::PROGRESS_EXTENSION, $progress);
-
-    }
-
-    protected function writeCallback($ch, $data)
-    {
-        $length = fwrite($this->fileHandler, $data);
-        return $length;
     }
 }

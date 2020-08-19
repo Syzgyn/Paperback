@@ -10,18 +10,37 @@ class DDLController extends Controller
 {
     public function index(Request $request)
     {
-
-        $repo = new \App\Repositories\Indexers\GetComicsRepository();
-        $results = $repo->search("Locke Key Welcome to Lovecraft");
-        dd($results);
+        $td = new \App\Models\TrackedDownload();
+        $td->url = 'https://www.comicextra.com/locke-amp-key-small-world/chapter-Full/full';
+        $td->comic_id = 57506;
+        $td->issue_id = 387137;
+        $td->guid = 'abc123';
+        $dl = new \App\Models\Downloaders\DDL\ComicExtra($td);
+        $dl->download();
+        exit;
         $results = [];
         $client = new Client();
-        $crawler = $client->request('GET', 'http://getcomics.info/?s=Locke++Key+Welcome+to+Lovecraft');
+        $crawler = $client->request('GET', 'https://www.comicextra.com/locke-amp-key-small-world/chapter-Full/full');
+        dd($crawler->filter('img.chapter_img')->extract(['src']));
+        //$crawler = $client->request('HEAD', 'https://www.comicextra.com/comic/locke-amp-key-2008');
 
         $statusCode = $client->getResponse()->getStatusCode();
+        dd($statusCode);
         if ($statusCode !== 200) {
             return [];
         }
+
+        $doc = $crawler->getNode(0)->parentNode;
+        $element = $doc->createElement('date', date('Y-m-d'));
+        dump($element);
+        $doc->appendChild($element);
+        dd($doc->saveHTML());
+        exit;
+        $crawler->filter('.series-col li')->each(function($node) {
+            dump($node->text());
+        });
+
+        exit;
 
         $crawler->filter('article')->each(function($node) use (&$results) {
                 $output = [

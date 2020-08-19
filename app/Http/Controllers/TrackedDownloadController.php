@@ -35,6 +35,7 @@ class TrackedDownloadController extends Controller
         $trackedDownload = new TrackedDownload();
         $trackedDownload->fill($attrs);
         $trackedDownload->url = $attrs['url'];
+        $trackedDownload->indexerId = $attrs['indexer_id'];
         $trackedDownload->save();
         //$trackedDownload = TrackedDownload::createFromGuid($attrs['guid'], $attrs['comic_id'], $attrs['issue_id']);
 

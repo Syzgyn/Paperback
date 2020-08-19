@@ -84,15 +84,9 @@ class IssueModal extends Component {
         }
     }
 
-    onDownloadClick(data) {
+    onDownloadClick(item) {
         axios
-            .post("/api/trackeddownload", {
-                guid: data.guid, 
-                comic_id: this.props.issue.comic_id, 
-                issue_id: this.props.issue.cvid,
-                protocol: data.protocol,
-                url: data.url,
-            })
+            .post("/api/trackeddownload", item)
             .then(this.props.toggleModal());
     }
 

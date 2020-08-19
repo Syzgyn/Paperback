@@ -309,10 +309,8 @@ class ParserService
 
     public function filterResults(array $results, string $query)
     {
-        dump($query);
         $fuse = new Fuse($results, [
             'keys' => ['title', 'year'],
-            'includeScore' => true,
         ]);
 
         return $fuse->search($query);
