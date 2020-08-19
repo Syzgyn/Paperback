@@ -12,7 +12,7 @@ class DDLController extends Controller
     {
 
         $repo = new \App\Repositories\Indexers\GetComicsRepository();
-        $results = $repo->search("Locke & Key Welcome to Lovecraft");
+        $results = $repo->search("Locke Key Welcome to Lovecraft");
         dd($results);
         $results = [];
         $client = new Client();

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Comic;
 use App\Models\Issue;
 use App\Dto\SearchResultCollection;
+use Fuse\Fuse;
 
 class ParserService
 {
@@ -304,5 +305,16 @@ class ParserService
         $diff = array_diff($queryParts, $titleParts);
 
         return count($diff) <= count($queryParts) / 2;
+    }
+
+    public function filterResults(array $results, string $query)
+    {
+        dump($query);
+        $fuse = new Fuse($results, [
+            'keys' => ['title', 'year'],
+            'includeScore' => true,
+        ]);
+
+        return $fuse->search($query);
     }
 }

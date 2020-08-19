@@ -35,9 +35,13 @@ class GetComicsRepository
         $results = $this->getSearchResults($url);
         $parser = resolve('ParserService');
 
+        return $parser->filterResults($results, $query);
+
+/*
         return array_filter($results, function($result) use ($parser, $query) {
             return $parser->titleMatchesQuery($result['title'], $query);
         });
+*/
     }
 
     protected function getSearchResults(String $url)
