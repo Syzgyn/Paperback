@@ -31,8 +31,8 @@ class IssueItem extends Component {
         this.toggleModal();
     }
 
-    onSearchClick() {
-        this.changeModalTab("search");
+    onSearchClick(tab) {
+        this.changeModalTab(tab);
         this.toggleModal();
     }
 

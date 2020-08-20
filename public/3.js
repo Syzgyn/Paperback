@@ -706,8 +706,8 @@ var IssueItem = /*#__PURE__*/function (_Component) {
     }
   }, {
     key: "onSearchClick",
-    value: function onSearchClick() {
-      this.changeModalTab("search");
+    value: function onSearchClick(tab) {
+      this.changeModalTab(tab);
       this.toggleModal();
     }
   }, {

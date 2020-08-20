@@ -230,6 +230,7 @@ class FileManager
                 Log::error("Unable to create directory for comic {$comic->name}");
                 throw new \Exception("Unable to create directory for comic {$comic->name}");
             } else {
+                chmod($path, 0777);
                 Log::info("Created directory $path for comic {$comic->name}");
             }
         }

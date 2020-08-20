@@ -23,6 +23,8 @@ class TrackedDownload extends Model
     public $indexerId;
     public $ddlFilename;
 
+    protected $downloadStarted = false;
+
     protected $pulledDownloadData;
 
     protected $fillable = [
@@ -111,6 +113,12 @@ class TrackedDownload extends Model
 
     public function startDownload()
     {
+        if ($this->downloadStarted) {
+            return;
+        }
+
+        $this->downloadStarted = true;
+
         if ($this->protocol === 'ddl') {
             return $this->startDirectDownload();
         }
@@ -147,6 +155,7 @@ class TrackedDownload extends Model
     protected function startDirectDownload()
     {
         $indexer = $this->indexerClient();
+
         if (!$indexer) {
             return false;
         }

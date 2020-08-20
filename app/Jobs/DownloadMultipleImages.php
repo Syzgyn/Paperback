@@ -46,7 +46,7 @@ class DownloadMultipleImages implements ShouldQueue
             $promises[$index] = $client->getAsync($url, ['save_to' => $this->baseDir . DIRECTORY_SEPARATOR . sprintf("%03d", $index + 1)]);
         }
 
-        Promise\settle($promises)->wait();
+        $results = Promise\settle($promises)->wait();
 
         $files = array_diff(scandir($this->baseDir), ['.', '..']);
         foreach($files as $file) {
@@ -73,7 +73,7 @@ class DownloadMultipleImages implements ShouldQueue
 
         UnifiedArchive::archiveDirectory($this->baseDir, $this->baseDir . '.zip');
         rename($this->baseDir . '.zip', $this->baseDir . '.cbz');
-        unlink($this->baseDir);
+        resolve('FileManager')->removeDir($this->baseDir);
 
         return $this->baseDir . '.cbz';
     }

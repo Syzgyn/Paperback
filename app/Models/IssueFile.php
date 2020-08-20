@@ -38,6 +38,10 @@ class IssueFile extends Model
 
     public static function createAndMove(array $attrs)
     {
+        if ($match = self::where('issue_id', $attrs['issue_id'])->first()) {
+            $match->delete();
+        }
+
         $originalFileInfo = pathinfo($attrs['original_file_path']);
         $attrs['original_file_name'] = $originalFileInfo['basename'];
         $issue = Issue::with('comic')->find($attrs['issue_id']);

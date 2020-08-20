@@ -34,12 +34,14 @@ class ComicExtra extends DirectDownload
             $downloadDir = storage_path(self::DEFAULT_DOWNLOAD_PATH);
         }
 
-        if (! file_exists($downloadDir)) {
-            mkdir($downloadDir, 0777, true);
-            chmod($downloadDir, 0777);
+        $finalDir = rtrim($downloadDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $this->trackedDownload->comic->name . ' - ' . sprintf("%03d", $this->trackedDownload->issue->issue_num);
+
+        if (! file_exists($finalDir)) {
+            mkdir($finalDir, 0777, true);
+            chmod($finalDir, 0777);
         }
 
-        return rtrim($downloadDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $this->trackedDownload->comic->name . ' - ' . sprintf("%03d", $this->trackedDownload->issue->issue_num);
+        return $finalDir;
     }
 
     public function getFilename()
