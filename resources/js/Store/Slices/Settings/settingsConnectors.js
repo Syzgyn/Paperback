@@ -215,7 +215,7 @@ export const slice = createSlice({
                 return state;
             }
             state.showEditModal = !current(state).showEditModal;
-            if (! state.showEditModal) {
+            if (!state.showEditModal) {
                 state.selectedItem = null;
             }
         },

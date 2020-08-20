@@ -18,7 +18,7 @@ const Import = () => {
     }, [dispatch]);
 
     if (isLoading) {
-        return <LoadingIndicator />
+        return <LoadingIndicator />;
     }
 
     return (

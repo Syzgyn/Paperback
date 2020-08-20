@@ -25,7 +25,7 @@ const ImportComicTable = ({ match }) => {
     }
 
     if (isLoading) {
-        return <LoadingIndicator />
+        return <LoadingIndicator />;
     }
 
     return (
@@ -56,6 +56,6 @@ const ImportComicTable = ({ match }) => {
 
 ImportComicTable.propTypes = {
     match: PropTypes.object,
-}
+};
 
 export default withRouter(ImportComicTable);

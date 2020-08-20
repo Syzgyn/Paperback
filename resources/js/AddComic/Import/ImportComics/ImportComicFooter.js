@@ -30,6 +30,6 @@ const ImportComicFooter = (props) => {
 
 ImportComicFooter.propTypes = {
     checkedCount: PropTypes.number,
-}
+};
 
 export default ImportComicFooter;

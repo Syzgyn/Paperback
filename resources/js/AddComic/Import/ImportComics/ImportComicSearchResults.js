@@ -55,6 +55,6 @@ const ImportComicSearchResults = (props) => {
 
 ImportComicSearchResults.propTypes = {
     id: PropTypes.number,
-}
+};
 
 export default ImportComicSearchResults;

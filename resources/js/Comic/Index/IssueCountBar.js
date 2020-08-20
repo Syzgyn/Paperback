@@ -8,7 +8,7 @@ const IssueCountBar = (props) => {
     const color = count == total ? "primary" : "danger";
     const text = count + " / " + total;
     const style = {
-        width: (percent * 100) + "%",
+        width: percent * 100 + "%",
     };
 
     return (
@@ -25,7 +25,7 @@ const IssueCountBar = (props) => {
             </div>
         </div>
     );
-}
+};
 
 IssueCountBar.propTypes = {
     count: PropTypes.number,

@@ -85,9 +85,7 @@ class IssueModal extends Component {
     }
 
     onDownloadClick(item) {
-        axios
-            .post("/api/trackeddownload", item)
-            .then(this.props.toggleModal());
+        axios.post("/api/trackeddownload", item).then(this.props.toggleModal());
     }
 
     onNavButtonClick(event) {

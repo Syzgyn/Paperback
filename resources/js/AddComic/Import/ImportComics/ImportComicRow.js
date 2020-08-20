@@ -53,6 +53,6 @@ ImportTableRow.propTypes = {
     checked: PropTypes.bool,
     name: PropTypes.string,
     comicCount: PropTypes.number,
-}
+};
 
 export default ImportTableRow;

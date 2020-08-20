@@ -10,18 +10,14 @@ import {
 
 const FileBrowserModalContent = () => {
     const dispatch = useDispatch();
-    const {
-        currentPath,
-        isLoading,
-        directories,
-    } = useSelector(pathsSelector);
+    const { currentPath, isLoading, directories } = useSelector(pathsSelector);
 
     useEffect(() => {
         dispatch(fetchPaths());
     }, [dispatch, currentPath]);
 
     if (isLoading) {
-        return <LoadingIndicator />
+        return <LoadingIndicator />;
     }
 
     return (
