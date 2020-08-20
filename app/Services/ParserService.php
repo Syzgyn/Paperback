@@ -309,6 +309,12 @@ class ParserService
 
     public function filterResults(array $results, string $query)
     {
+        //To avoid running into Fuse timeout errors, filter down to only results that start with the right first letter
+        $letter = strtolower(substr($query, 0, 1));
+        $results = array_filter($results, function($item) use ($letter) {
+            return strtolower(substr($item['title'], 0, 1)) == $letter;
+        });
+
         $fuse = new Fuse($results, [
             'keys' => ['title', 'year'],
         ]);

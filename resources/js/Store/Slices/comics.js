@@ -82,7 +82,11 @@ const slice = createSlice({
                 state.sortDir = newDir;
             } else {
                 state.sortKey = action.payload;
-                state.sortDir = "asc";
+                if (state.sortKey == 'sortName') {
+                    state.sortDir = "asc";
+                } else {
+                    state.sortDir = "desc";
+                }
             }
         },
     },

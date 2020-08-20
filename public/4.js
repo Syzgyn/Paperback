@@ -182,9 +182,12 @@ var ComicIndexHeader = function ComicIndexHeader() {
     value: "sortName",
     onClick: setSort
   }, "Title"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["DropdownItem"], {
+    value: "downloadedIssues",
+    onClick: setSort
+  }, "Issues"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["DropdownItem"], {
     value: "numIssues",
     onClick: setSort
-  }, "Issues")))));
+  }, "Issue Count")))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ComicIndexHeader);

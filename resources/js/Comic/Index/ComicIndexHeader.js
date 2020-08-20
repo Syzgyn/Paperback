@@ -27,8 +27,11 @@ const ComicIndexHeader = () => {
                         <DropdownItem value="sortName" onClick={setSort}>
                             Title
                         </DropdownItem>
-                        <DropdownItem value="numIssues" onClick={setSort}>
+                        <DropdownItem value="downloadedIssues" onClick={setSort}>
                             Issues
+                        </DropdownItem>
+                        <DropdownItem value="numIssues" onClick={setSort}>
+                            Issue Count
                         </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
