@@ -2,10 +2,8 @@
 
 namespace App\Repositories\Indexers;
 
-use Goutte\Client; 
+use Goutte\Client;
 use Symfony\Component\DomCrawler\Crawler;
-
-use App\Models\Indexers\GetComics;
 
 class GetComicsRepository
 {
@@ -35,11 +33,11 @@ class GetComicsRepository
 
         return $parser->filterResults($results, $query);
 
-/*
-        return array_filter($results, function($result) use ($parser, $query) {
-            return $parser->titleMatchesQuery($result['title'], $query);
-        });
-*/
+        /*
+                return array_filter($results, function($result) use ($parser, $query) {
+                    return $parser->titleMatchesQuery($result['title'], $query);
+                });
+        */
     }
 
     protected function getSearchResults(String $url)
@@ -53,7 +51,7 @@ class GetComicsRepository
         }
 
         // Get results
-        $crawler->filter('article')->each(function($node) use (&$results) {
+        $crawler->filter('article')->each(function ($node) use (&$results) {
             $output = [
                 'multiple' => false,
             ];
@@ -104,7 +102,7 @@ class GetComicsRepository
 
     public function getDownloadLinkFromPage(string $url)
     {
-        $crawler = $this->client->request('GET', $url); 
+        $crawler = $this->client->request('GET', $url);
 
         /*
         // Get more info from the download page
@@ -121,12 +119,11 @@ class GetComicsRepository
         */
 
         foreach ($crawler->filter('div.aio-pulse a') as $node) {
-            if ($node->nodeValue == "Download Now") {
+            if ($node->nodeValue == 'Download Now') {
                 $url = $node->getAttribute('href');
                 $urlData = parse_url($url);
 
                 if ($urlData['host'] == 'sh.st') {
-
                     $ch = \curl_init();
                     \curl_setopt($ch, CURLOPT_URL, $url);
                     \curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -145,7 +142,7 @@ class GetComicsRepository
     public function test()
     {
         $file_headers = @get_headers(self::BASE_URL);
-        if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
+        if (! $file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
             $exists = false;
         } else {
             $exists = true;
@@ -154,4 +151,3 @@ class GetComicsRepository
         return json_encode(['result' => $exists]);
     }
 }
-

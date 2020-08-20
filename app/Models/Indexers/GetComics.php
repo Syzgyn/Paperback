@@ -3,9 +3,9 @@ namespace App\Models\Indexers;
 
 use App\Models\Indexer;
 use App\Models\TrackedDownload;
-use App\Models\Downloaders\DDL\GetComics as GetComicsDownloader;
 use App\Repositories\Indexers\GetComicsRepository;
 use App\Http\Resources\Indexers\GetComicsCollection;
+use App\Models\Downloaders\DDL\GetComics as GetComicsDownloader;
 
 class GetComics extends Indexer
 {
@@ -47,7 +47,7 @@ class GetComics extends Indexer
             $indexer->class = self::class;
         });
     }
-    
+
     public function test()
     {
         //Manually create the repo if we're working with an unsaved model

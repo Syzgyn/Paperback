@@ -22,8 +22,9 @@ class GetComics extends DirectDownload
 
     protected function getFinalUrl(string $url)
     {
-        if(strpos($url, 'getcomics.info') !== false && strpos($url, 'run.php') === false && strpos($url, 'go.php') === false) {
+        if (strpos($url, 'getcomics.info') !== false && strpos($url, 'run.php') === false && strpos($url, 'go.php') === false) {
             $repo = new GetComicsRepository();
+
             return $repo->getDownloadLinkFromPage($url);
         }
 

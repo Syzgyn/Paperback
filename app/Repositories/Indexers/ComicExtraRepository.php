@@ -2,10 +2,8 @@
 
 namespace App\Repositories\Indexers;
 
-use Goutte\Client; 
+use Goutte\Client;
 use Symfony\Component\DomCrawler\Crawler;
-
-use App\Models\Indexers\ComicExtra;
 
 class ComicExtraRepository
 {
@@ -39,12 +37,12 @@ class ComicExtraRepository
         try {
             $content = file_get_contents($filePath);
             $data = json_decode($content, true);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return $this->parseComicListHtml($this->downloadComicList());
         }
 
         $date = $data['date'];
-        
+
         if ($date < date('Y-m-d')) {
             return $this->parseComicListHtml($this->downloadComicList());
         }
@@ -57,7 +55,7 @@ class ComicExtraRepository
         $crawler = new Crawler($html);
         $comics = [];
 
-        $crawler->filter('.series-col li')->each(function($node) use (&$comics) {
+        $crawler->filter('.series-col li')->each(function ($node) use (&$comics) {
             $output = [
                 'url' => $node->filter('a')->attr('href'),
                 'title' => $node->text(),
@@ -78,6 +76,7 @@ class ComicExtraRepository
     {
         $comics = $this->getComicListData();
         $parser = resolve('ParserService');
+
         return $parser->filterResults($comics, $comic)[0];
     }
 
@@ -124,13 +123,14 @@ class ComicExtraRepository
     {
         $parts = explode('/', $comicUrl);
         $comicPart = array_pop($parts);
+
         return self::BASE_URL . sprintf(self::ISSUE_URL_FORMAT, $comicPart, $issueNum);
     }
 
     public function test()
     {
         $file_headers = @get_headers(self::BASE_URL);
-        if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
+        if (! $file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
             $exists = false;
         } else {
             $exists = true;
@@ -150,4 +150,3 @@ class ComicExtraRepository
         return $crawler->filter('img.chapter_img')->extract(['src']);
     }
 }
-

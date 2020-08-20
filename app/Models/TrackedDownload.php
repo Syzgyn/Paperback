@@ -2,11 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Indexer;
 use App\Events\DownloadStarted;
-use App\Models\Downloaders\DirectDownload;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Downloaders\DirectDownload;
 
 class TrackedDownload extends Model
 {
@@ -156,7 +154,7 @@ class TrackedDownload extends Model
     {
         $indexer = $this->indexerClient();
 
-        if (!$indexer) {
+        if (! $indexer) {
             return false;
         }
         $downloader = $indexer->getDownloader($this);

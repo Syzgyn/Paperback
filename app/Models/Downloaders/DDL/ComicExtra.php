@@ -23,6 +23,7 @@ class ComicExtra extends DirectDownload
     protected function getImageUrls()
     {
         $repo = new ComicExtraRepository();
+
         return $repo->getIssueImageUrls($this->trackedDownload->url);
     }
 
@@ -34,7 +35,7 @@ class ComicExtra extends DirectDownload
             $downloadDir = storage_path(self::DEFAULT_DOWNLOAD_PATH);
         }
 
-        $finalDir = rtrim($downloadDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $this->trackedDownload->comic->name . ' - ' . sprintf("%03d", $this->trackedDownload->issue->issue_num);
+        $finalDir = rtrim($downloadDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $this->trackedDownload->comic->name . ' - ' . sprintf('%03d', $this->trackedDownload->issue->issue_num);
 
         if (! file_exists($finalDir)) {
             mkdir($finalDir, 0777, true);

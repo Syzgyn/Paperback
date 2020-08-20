@@ -3,11 +3,11 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
+use App\Models\Downloaders\DirectDownload;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use App\Models\Downloaders\DirectDownload;
 
 class DownloadFile implements ShouldQueue
 {
@@ -41,7 +41,7 @@ class DownloadFile implements ShouldQueue
         $this->targetFile = $this->targetFile;
         $this->fileHandler = fopen($this->targetFile, 'w+');
 
-        $ch = curl_init($this->url); 
+        $ch = curl_init($this->url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_NOPROGRESS, false);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
@@ -71,7 +71,7 @@ class DownloadFile implements ShouldQueue
         return $newFilename;
     }
 
-    protected function progressCallback($ch, $downloadSize, $downloadedSize, $uploadSize, $uploadedSize) 
+    protected function progressCallback($ch, $downloadSize, $downloadedSize, $uploadSize, $uploadedSize)
     {
         if ($downloadSize == 0) {
             $progress = 0;

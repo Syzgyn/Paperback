@@ -4,8 +4,8 @@ namespace App\Services;
 
 use App\Models\Issue;
 use App\Models\Indexer;
-use App\Models\TrackedDownload;
 use App\Dto\SearchResult;
+use App\Models\TrackedDownload;
 use App\Dto\SearchResultCollection;
 
 class DownloadService
@@ -67,7 +67,7 @@ class DownloadService
         $issue = $this->getIssue($cvid);
         $year = date('Y', strtotime($issue->release_date));
         $formatString = '%0' . $issuePadding . 'd';
-        $name = preg_replace("/[^A-Za-z0-9 ]/", '', $issue->comic->name);
+        $name = preg_replace('/[^A-Za-z0-9 ]/', '', $issue->comic->name);
 
         return [
             'comic' => $name,

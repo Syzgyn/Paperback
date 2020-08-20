@@ -2,14 +2,13 @@
 
 namespace App\Jobs;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use App\Models\Downloaders\DirectDownload;
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
+use Illuminate\Bus\Queueable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
 use wapmorgan\UnifiedArchive\UnifiedArchive;
 
 class DownloadMultipleImages implements ShouldQueue
@@ -42,16 +41,16 @@ class DownloadMultipleImages implements ShouldQueue
         $client = new Client();
         $promises = [];
 
-        foreach($this->imageUrls as $index => $url) {
-            $promises[$index] = $client->getAsync($url, ['save_to' => $this->baseDir . DIRECTORY_SEPARATOR . sprintf("%03d", $index + 1)]);
+        foreach ($this->imageUrls as $index => $url) {
+            $promises[$index] = $client->getAsync($url, ['save_to' => $this->baseDir . DIRECTORY_SEPARATOR . sprintf('%03d', $index + 1)]);
         }
 
         $results = Promise\settle($promises)->wait();
 
         $files = array_diff(scandir($this->baseDir), ['.', '..']);
-        foreach($files as $file) {
+        foreach ($files as $file) {
             $fullPath = $this->baseDir . DIRECTORY_SEPARATOR . $file;
-            switch(exif_imagetype($fullPath)) {
+            switch (exif_imagetype($fullPath)) {
                 case IMAGETYPE_GIF:
                     $ext = 'gif';
                     break;

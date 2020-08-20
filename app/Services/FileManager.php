@@ -5,10 +5,8 @@ namespace App\Services;
 use App\Models\Comic;
 use App\Models\IssueFile;
 use App\Models\TrackedDownload;
-use App\Models\Downloaders\DirectDownload;
 use Illuminate\Support\Facades\Log;
 use \wapmorgan\UnifiedArchive\UnifiedArchive;
-
 
 class FileManager
 {
@@ -84,6 +82,7 @@ class FileManager
             ]);
 
             $download->delete();
+
             return;
         }
 
@@ -95,8 +94,9 @@ class FileManager
 
         //TODO: Manage other filetypes too
         if (! $result) {
-            Log::error("The direct downloaded file failed to unzip.  Aborting");
+            Log::error('The direct downloaded file failed to unzip.  Aborting');
             $download->delete();
+
             return;
         }
 
@@ -124,7 +124,7 @@ class FileManager
 
             $this->removeDir($path);
             $download->delete();
-            
+
             return;
         }
 
@@ -133,7 +133,7 @@ class FileManager
         $parser = resolve('ParserService');
 
         //Look for ComicInfo.xml in each archive
-        foreach($files as $file) {
+        foreach ($files as $file) {
             $issueNum = null;
             $archive = UnifiedArchive::open($file);
             if ($archive && $archive->isFileExists('ComicInfo.xml')) {
@@ -146,7 +146,7 @@ class FileManager
             }
 
             if ($issueNum) {
-                $key = $comic->issues->search(function($item, $issue) use ($issueNum) {
+                $key = $comic->issues->search(function ($item, $issue) use ($issueNum) {
                     return $issue->issue_num == $issueNum;
                 });
 
@@ -164,7 +164,6 @@ class FileManager
 
             Log::info("No matching issue found for $file");
         }
-        
     }
 
     public function extractArchive($filename, $destDir)
@@ -182,6 +181,7 @@ class FileManager
     public function getIssueFromComicInfoXml(string $xml)
     {
         $info = new SimpleXMLElement($xml);
+
         return $info->number;
     }
 

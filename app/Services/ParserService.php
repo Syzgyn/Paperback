@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
+use Fuse\Fuse;
 use App\Models\Comic;
 use App\Models\Issue;
 use App\Dto\SearchResultCollection;
-use Fuse\Fuse;
 
 class ParserService
 {
@@ -292,13 +292,13 @@ class ParserService
     public function titleMatchesQuery(string $title, string $query)
     {
         $removeWords = ['', 'and', 'the', 'of', 'in', 'to', 'it'];
-        $title = preg_replace("/[^A-Za-z0-9 ]/", '', $title);
-        $query = preg_replace("/[^A-Za-z0-9 ]/", '', $query);
+        $title = preg_replace('/[^A-Za-z0-9 ]/', '', $title);
+        $query = preg_replace('/[^A-Za-z0-9 ]/', '', $query);
 
-        $titleParts = array_filter(explode(" ", strtolower($title)), function($word) use ($removeWords) {
+        $titleParts = array_filter(explode(' ', strtolower($title)), function ($word) use ($removeWords) {
             return ! in_array($word, $removeWords);
         });
-        $queryParts = array_filter(explode(" ", strtolower($query)), function($word) use ($removeWords) {
+        $queryParts = array_filter(explode(' ', strtolower($query)), function ($word) use ($removeWords) {
             return ! in_array($word, $removeWords);
         });
 
