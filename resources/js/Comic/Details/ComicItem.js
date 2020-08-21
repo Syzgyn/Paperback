@@ -16,17 +16,27 @@ class ComicItem extends Component {
             modal: false,
         };
         this.toggleModal = this.toggleModal.bind(this);
+        this.clickReadMore = this.clickReadMore.bind(this);
     }
 
     toggleModal() {
         this.setState({ modal: !this.state.modal });
     }
 
+    clickReadMore(e) {
+     // `target` is the element the click was on (the div we hooked or an element
+     // with in it), `currentTarget` is the div we hooked the event on
+     const el = e.target.closest("button");
+     console.log(this);
+     if (el && e.currentTarget.contains(el)) {
+        this.toggleModal();
+     }
+    }
+
     descriptionModal() {
         if (this.props.descriptionIsTruncated) {
             return (
                 <>
-                    <Button onClick={this.toggleModal}>Read More</Button>
                     <ComicDescriptionModal
                         name={this.props.name}
                         description={this.props.description}
@@ -47,9 +57,13 @@ class ComicItem extends Component {
             publisher,
             image,
             name,
-            displayDescription,
             classes,
         } = this.props;
+
+        let displayDescription = this.props.displayDescription;
+        if (this.props.descriptionIsTruncated && displayDescription.substring(displayDescription.length - 4) == '</p>') {
+            displayDescription = displayDescription.substring(0, displayDescription.length - 4);
+        }
 
         return (
             <div className={"row pb-5 " + classes}>
@@ -80,10 +94,11 @@ class ComicItem extends Component {
                     <div className="row">
                         <div className="col-12">
                             <div
+                                onClick={this.clickReadMore}
                                 className="comic-description"
                                 dangerouslySetInnerHTML={{
                                     __html: DOMPurify.sanitize(
-                                        displayDescription,
+                                        displayDescription + '<button type="button" class="btn btn-secondary pt-0 pb-0 ml-2">Read More</button>',
                                         { ADD_ATTR: ["target"] }
                                     ),
                                 }}

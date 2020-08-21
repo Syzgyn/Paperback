@@ -263,6 +263,7 @@ var ComicItem = /*#__PURE__*/function (_Component) {
       modal: false
     };
     _this.toggleModal = _this.toggleModal.bind(_assertThisInitialized(_this));
+    _this.clickReadMore = _this.clickReadMore.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -274,12 +275,22 @@ var ComicItem = /*#__PURE__*/function (_Component) {
       });
     }
   }, {
+    key: "clickReadMore",
+    value: function clickReadMore(e) {
+      // `target` is the element the click was on (the div we hooked or an element
+      // with in it), `currentTarget` is the div we hooked the event on
+      var el = e.target.closest("button");
+      console.log(this);
+
+      if (el && e.currentTarget.contains(el)) {
+        this.toggleModal();
+      }
+    }
+  }, {
     key: "descriptionModal",
     value: function descriptionModal() {
       if (this.props.descriptionIsTruncated) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_5__["Button"], {
-          onClick: this.toggleModal
-        }, "Read More"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ComicDescriptionModal__WEBPACK_IMPORTED_MODULE_7__["default"], {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ComicDescriptionModal__WEBPACK_IMPORTED_MODULE_7__["default"], {
           name: this.props.name,
           description: this.props.description,
           toggleModal: this.toggleModal,
@@ -298,8 +309,13 @@ var ComicItem = /*#__PURE__*/function (_Component) {
           publisher = _this$props.publisher,
           image = _this$props.image,
           name = _this$props.name,
-          displayDescription = _this$props.displayDescription,
           classes = _this$props.classes;
+      var displayDescription = this.props.displayDescription;
+
+      if (this.props.descriptionIsTruncated && displayDescription.substring(displayDescription.length - 4) == '</p>') {
+        displayDescription = displayDescription.substring(0, displayDescription.length - 4);
+      }
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row pb-5 " + classes
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -330,9 +346,10 @@ var ComicItem = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-12"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        onClick: this.clickReadMore,
         className: "comic-description",
         dangerouslySetInnerHTML: {
-          __html: dompurify__WEBPACK_IMPORTED_MODULE_3___default.a.sanitize(displayDescription, {
+          __html: dompurify__WEBPACK_IMPORTED_MODULE_3___default.a.sanitize(displayDescription + '<button type="button" class="btn btn-secondary pt-0 pb-0 ml-2">Read More</button>', {
             ADD_ATTR: ["target"]
           })
         }
