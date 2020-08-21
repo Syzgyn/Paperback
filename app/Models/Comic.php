@@ -86,23 +86,23 @@ class Comic extends Model
         return $comic;
     }
 
-    public function updateFromCvid($grabImage = true, $fetchIssues = false)
+    public function updateFromComicvine($grabImage = true, $fetchIssues = false)
     {
         $repo = resolve('ComicVineRepository');
-        $volume = $repo->volume($cvid);
+        $volume = $repo->volume($this->cvid);
 
-        $comic->fill($volume);
+        $this->fill($volume);
 
         if ($grabImage) {
             $imagePath = $volume->image;
-            $comic->downloadImage($imagePath);
+            $this->downloadImage($imagePath);
         }
 
         if ($fetchIssues) {
             $this->fetchIssues();
         }
 
-        return $comic;
+        return $this;
     }
 
     protected function downloadImage($path)
@@ -118,7 +118,7 @@ class Comic extends Model
         $issues = $repo->volumeIssues($this->cvid);
 
         foreach ($issues as $issue) {
-            Issue::create($issue);
+            Issue::updateOrCreate(['cvid' => $issue['cvid']], $issue);
         }
     }
 

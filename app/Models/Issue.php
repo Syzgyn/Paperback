@@ -127,14 +127,4 @@ class Issue extends Model
 
         return $issue;
     }
-
-    public function updateFromCvid()
-    {
-        $repo = resolve('ComicVineRepository');
-        $issue = $repo->issue($cvid);
-
-        $issue->fill($volume);
-
-        return $issue;
-    }
 }

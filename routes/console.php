@@ -4,6 +4,7 @@ use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 use App\Models\TrackedDownload;
+use App\Models\Comic;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,10 @@ Artisan::command('paperback:check-downloads', function() {
     }
     resolve('FileManager')->moveCompletedDownloads();
 })->describe('Check for recently completed downloads');
+
+Artisan::command('paperback:update-comics', function() {
+    foreach(Comic::all() as $comic) {
+        $comic->updateFromComicvine(false, true)->save();
+        echo "Updated $comic->name\n";
+    }
+})->describe('Update comic data from ComicVine');
