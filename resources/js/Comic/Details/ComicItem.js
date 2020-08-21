@@ -62,7 +62,7 @@ class ComicItem extends Component {
 
         let displayDescription = this.props.displayDescription;
         if (this.props.descriptionIsTruncated && displayDescription.substring(displayDescription.length - 4) == '</p>') {
-            displayDescription = displayDescription.substring(0, displayDescription.length - 4);
+            displayDescription = displayDescription.substring(0, displayDescription.length - 4) + '<button type="button" class="btn btn-secondary pt-0 pb-0 ml-2">Read More</button>';
         }
 
         return (
@@ -98,7 +98,7 @@ class ComicItem extends Component {
                                 className="comic-description"
                                 dangerouslySetInnerHTML={{
                                     __html: DOMPurify.sanitize(
-                                        displayDescription + '<button type="button" class="btn btn-secondary pt-0 pb-0 ml-2">Read More</button>',
+                                        displayDescription,
                                         { ADD_ATTR: ["target"] }
                                     ),
                                 }}

@@ -313,7 +313,7 @@ var ComicItem = /*#__PURE__*/function (_Component) {
       var displayDescription = this.props.displayDescription;
 
       if (this.props.descriptionIsTruncated && displayDescription.substring(displayDescription.length - 4) == '</p>') {
-        displayDescription = displayDescription.substring(0, displayDescription.length - 4);
+        displayDescription = displayDescription.substring(0, displayDescription.length - 4) + '<button type="button" class="btn btn-secondary pt-0 pb-0 ml-2">Read More</button>';
       }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -349,7 +349,7 @@ var ComicItem = /*#__PURE__*/function (_Component) {
         onClick: this.clickReadMore,
         className: "comic-description",
         dangerouslySetInnerHTML: {
-          __html: dompurify__WEBPACK_IMPORTED_MODULE_3___default.a.sanitize(displayDescription + '<button type="button" class="btn btn-secondary pt-0 pb-0 ml-2">Read More</button>', {
+          __html: dompurify__WEBPACK_IMPORTED_MODULE_3___default.a.sanitize(displayDescription, {
             ADD_ATTR: ["target"]
           })
         }
