@@ -8,8 +8,9 @@ use Symfony\Component\DomCrawler\Crawler;
 class ComicExtraRepository
 {
     const BASE_URL = 'https://comicextra.com';
-    const COMIC_LIST_FILE = 'app/comicextralist.json';
+    //const COMIC_LIST_FILE = 'app/comicextralist.json';
     const ISSUE_URL_FORMAT = '/%s/chapter-%s/full';
+    const ISSUES_PER_PAGE = 50;
 
     protected $client;
 
@@ -18,10 +19,10 @@ class ComicExtraRepository
         $this->client = new Client();
     }
 
+    /*
     protected function downloadComicList()
     {
-        $client = new Client();
-        $crawler = $client->request('GET', self::BASE_URL . '/comic-list');
+        $crawler = $this->client->request('GET', self::BASE_URL . '/comic-list');
         $statusCode = $client->getResponse()->getStatusCode();
         if ($statusCode !== 200) {
             return false;
@@ -80,7 +81,7 @@ class ComicExtraRepository
         return $parser->filterResults($comics, $comic)[0];
     }
 
-    public function search(string $comic, int $issueNum)
+    public function oldSearch(string $comic, int $issueNum)
     {
         $comicData = $this->getBestMatchingComic($comic);
         $comicName = $comicData['title'];
@@ -100,6 +101,126 @@ class ComicExtraRepository
         }
 
         return [];
+    }
+    */
+
+    public function search(string $comic, int $issueNum, int $comicYear)
+    {
+        $parser = resolve('ParserService');
+        $results = $this->getSearchResults($comic);
+
+        if (! count($results)) {
+            return [];
+        }
+
+        $bestMatch = $parser->filterResults($results, "$comic $comicYear")[0];
+        
+        //Check if the expected issue URL exists
+        $url = $this->doesIssueExist($bestMatch['url'], $issueNum);
+        if ($url) {
+            return [$this->generateResult($comic, $issueNum, $url, $bestMatch['id'])];
+        }
+
+        //No match, this usually means there's a custom title as part of the url
+        //Look through the listed issues and return the best match
+        $issues = $this->getMatchingIssues($bestMatch['url'], $issueNum);
+
+        if (count($issues) == 0) {
+            return [];
+        }
+
+        $output = [];
+        foreach($issues as $issue) {
+            $output[] = $this->generateResult(
+                $comic,
+                $issueNum,
+                $issue['url'],
+                $bestMatch['id'],
+                $issue['title'],
+                date('Y-m-d', strtotime($issue['date'])),
+            );
+        }
+
+        return $output;
+    }
+
+    protected function generateResult(string $comicName, int $issueNum, string $url, int $id = null, string $title = null, string $date = null)
+    {
+        if (! $id) {
+            $id = "$comicName-$issueNum";
+        }
+
+        if (! $title) {
+            $title = "$comicName - #$issueNum";
+        }
+
+        if (! $date) {
+            $date = date('Y-m-d');
+        }
+
+        $datetime1 = new \DateTime($date);
+        $datetime2 = new \DateTime();
+        $interval = $datetime1->diff($datetime2);
+
+        $ago = $interval->format('%a days');
+
+        return [
+            'guid' => "comicextra-$id",
+            'url' => $url,
+            'displayTitle' => $title,
+            'title' => $title,
+            'date' => $date,
+            'ago' => $ago,
+            'size' => 'Unknown',
+        ];
+    }
+
+    protected function getSearchResults(string $comic)
+    {
+        $url = self::BASE_URL . '/comic-search?key=' . urlencode($comic);
+
+        $crawler = $this->client->request('GET', $url);
+        $statusCode = $this->client->getResponse()->getStatusCode();
+        if ($statusCode !== 200) {
+            return false;
+        }
+
+        $results = [];
+
+        $crawler->filter('div.cartoon-box')->each(function($node) use (&$results) {
+            $link = $node->filter('h3 a');
+            $idString = $node->filter('img')->attr('src');
+            preg_match('/(\d+)\.jpg/', $idString, $matches);
+
+            $results[] = [
+                'id' => isset($matches[1]) ? $matches[1] : null,
+                'url' => $link->attr('href'),
+                'title' => $link->text(),
+                'year' => $node->filter('div.detail')->last()->text(),
+            ];
+        });
+
+        return $results;
+    }
+
+    protected function getMatchingIssues(string $url, int $issueNum)
+    {
+        //We're only using the first page here.  I haven't found a comic with custom issue urls that has more than 50 issues yet
+        //If that changes, we can search more pages here
+        $crawler = $this->client->request('GET', $url);
+        $results = [];
+        
+        $crawler->filter('.episode-list td a')->each(function($node) use (&$results, $issueNum) {
+            if (preg_match("/\#{$issueNum}_/", $node->text())) {
+                $results[] = [
+                    'url' => $node->attr('href'),
+                    'title' => str_replace('_', ' ', $node->text()),
+                    'date' => $node->parents()->nextAll()->text(),
+                ];
+            }
+        });
+
+        return $results;
     }
 
     protected function doesIssueExist(string $url, $issueNum)

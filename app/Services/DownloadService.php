@@ -45,7 +45,7 @@ class DownloadService
 
         while (true) {
             $queryData = $this->buildSearchQuery($cvid, $padding);
-            $result = $indexer->searchCvid($queryData['comic'], $queryData['issue'], $queryData['year']);
+            $result = $indexer->searchCvid($queryData['comic'], $queryData['issue'], $queryData['issueYear'], $queryData['comicYear']);
 
             //If we have results, we're done
             if (count($result)) {
@@ -72,7 +72,8 @@ class DownloadService
         return [
             'comic' => $name,
             'issue' => sprintf($formatString, $issue->issue_num),
-            'year' => $year,
+            'issueYear' => $year,
+            'comicYear' => $issue->comic->start_year,
         ];
     }
 

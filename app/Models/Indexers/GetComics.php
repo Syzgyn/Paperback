@@ -28,7 +28,7 @@ class GetComics extends Indexer
         'fields' => [],
     ];
 
-    public function searchCvid($comic, $issue = '', $year = '', $offset = 0)
+    public function searchCvid($comic, $issue = '', $year = '', int $comicYear = null, $offset = 0)
     {
         $query = $comic;
         $result = $this->repository->search($query, $offset);

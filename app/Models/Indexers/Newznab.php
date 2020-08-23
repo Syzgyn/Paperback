@@ -44,7 +44,7 @@ class Newznab extends Indexer
         ],
     ];
 
-    public function searchCvid($comic, $issue = '', $year = '', $offset = 0)
+    public function searchCvid($comic, $issue = '', $year = '', $comicYear = null, $offset = 0)
     {
         $query = "$comic $issue $year";
         $result = $this->repository->search($query, $offset);

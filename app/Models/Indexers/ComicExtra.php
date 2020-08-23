@@ -28,9 +28,9 @@ class ComicExtra extends Indexer
         'fields' => [],
     ];
 
-    public function searchCvid(string $comic, string$issue = '', string $year = '', int $offset = 0)
+    public function searchCvid(string $comic, string $issue = '', string $issueYear = '', int $comicYear = null)
     {
-        $result = $this->repository->search($comic, (int) $issue);
+        $result = $this->repository->search($comic, (int) $issue, $comicYear);
 
         return new IndexerResultCollection($result);
     }
