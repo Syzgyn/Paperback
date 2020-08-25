@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Issue;
+use App\Models\Comic;
 use App\Models\Indexer;
 use App\Dto\SearchResult;
 use App\Models\TrackedDownload;
@@ -119,8 +120,24 @@ class DownloadService
 
     public function download(SearchResult $result)
     {
-        $trackedDownload = TrackedDownload::create($result->toArray());
+        $trackedDownload = new TrackedDownload();
+        $trackedDownload->indexerId = $result->indexer_id;
+        $trackedDownload->url = $result->url;
+        $trackedDownload->fill($result->toArray());
+        $trackedDownload->save();
 
         return $trackedDownload;
+    }
+
+    public function downloadComic(int $cvid)
+    {
+        $comic = Comic::with(['issues', 'issues.downloadedFile'])->find($cvid);
+
+        foreach($comic->issues as $issue) {
+            if (! $issue->monitored || $issue->hasDownloadedFile()) {
+                continue;
+            }
+            $this->downloadIssue($issue->cvid);
+        }
     }
 }

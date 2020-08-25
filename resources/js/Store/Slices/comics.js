@@ -43,6 +43,23 @@ export const deleteComic = createAsyncThunk(
     }
 );
 
+export const searchComic = createAsyncThunk(
+    "comics/searchComic",
+    async (cvid, { getState }) => {
+        const state = getState();
+        const comic = state.comics.items.find((comic) => comic.cvid == cvid);
+        
+        if (! comic.monitored) {
+            toast("Comic is not monitored");
+            return;
+        }
+
+        toast("Searching for monitored issues");
+
+        const response = await axios.get("/api/comic/" + cvid + "/download");
+    }
+);
+
 export const toggleComicMonitored = createAction("comics/toggleComicMonitored");
 export const setComicSort = createAction("comics/setComicSort");
 

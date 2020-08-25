@@ -20,6 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('comic/search', 'ComicController@search');
 Route::get('comic/importSearch', 'ComicController@importSearch');
+Route::get('comic/{comic}/download', 'ComicController@download');
+Route::get('comic/{comic}/comicvine', 'ComicController@comicvine');
 Route::resource('comic', 'ComicController');
 
 Route::get('issue/byComic/{cvid}', 'IssueController@byComic');

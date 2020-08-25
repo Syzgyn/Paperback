@@ -88,6 +88,17 @@ class ComicController extends Controller
         return $this->comicvine->searchVolumes($search);
     }
 
+    public function download(Comic $comic)
+    {
+        resolve('DownloadService')->downloadComic($comic->cvid);
+    }
+
+    public function comicvine(Comic $comic)
+    {
+        $data = resolve('ComicVineRepository')->volume($comic->cvid);
+        return redirect($data['url']);
+    }
+
     public function importSearch(Request $request)
     {
         $search = $request->input('query');

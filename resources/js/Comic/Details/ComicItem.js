@@ -87,7 +87,7 @@ class ComicItem extends Component {
                                 </span>
                             </span>
                         </div>
-                        <div className="col-1">
+                        <div className="col-2 text-right">
                             <ComicSettings cvid={this.props.cvid} />
                         </div>
                     </div>

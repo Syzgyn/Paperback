@@ -106,15 +106,12 @@ class ComicExtraRepository
 
     public function search(string $comic, int $issueNum, int $comicYear)
     {
-        $parser = resolve('ParserService');
-        $results = $this->getSearchResults($comic);
+        $bestMatch = $this->getBestMatchComic($comic, $comicYear);
 
-        if (! count($results)) {
+        if (! $bestMatch) {
             return [];
         }
 
-        $bestMatch = $parser->filterResults($results, "$comic $comicYear")[0];
-        
         //Check if the expected issue URL exists
         $url = $this->doesIssueExist($bestMatch['url'], $issueNum);
         if ($url) {
@@ -142,6 +139,18 @@ class ComicExtraRepository
         }
 
         return $output;
+    }
+
+    protected function getBestMatchComic(string $comic, string $comicYear = '')
+    {
+        $parser = resolve('ParserService');
+        $results = $this->getSearchResults($comic);
+
+        if (! count($results)) {
+            return false;
+        }
+
+        return $parser->filterResults($results, trim("$comic $comicYear"))[0];
     }
 
     protected function generateResult(string $comicName, int $issueNum, string $url, int $id = null, string $title = null, string $date = null)
@@ -172,6 +181,7 @@ class ComicExtraRepository
             'date' => $date,
             'ago' => $ago,
             'size' => 'Unknown',
+            'protocol' => 'ddl',
         ];
     }
 
@@ -213,7 +223,7 @@ class ComicExtraRepository
         $crawler->filter('.episode-list td a')->each(function($node) use (&$results, $issueNum) {
             if (preg_match("/\#{$issueNum}_/", $node->text())) {
                 $results[] = [
-                    'url' => $node->attr('href'),
+                    'url' => $node->attr('href') . '/full',
                     'title' => str_replace('_', ' ', $node->text()),
                     'date' => $node->parents()->nextAll()->text(),
                 ];

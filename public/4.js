@@ -32,18 +32,35 @@ var ComicSettings = function ComicSettings(_ref) {
     dispatch(Object(_Store_Slices_comics__WEBPACK_IMPORTED_MODULE_5__["deleteComic"])(cvid));
   }
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_2__["Sliders"], {
-    className: "cursor-pointer",
+  function onSearchClick() {
+    dispatch(Object(_Store_Slices_comics__WEBPACK_IMPORTED_MODULE_5__["searchComic"])(cvid));
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_2__["Search"], {
+    className: "cursor-pointer mr-1",
+    id: "Tooltip-" + cvid,
+    onClick: onSearchClick
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["UncontrolledTooltip"], {
+    placement: "top",
+    target: "Tooltip-" + cvid
+  }, "Search for all monitored issues in this comic"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_2__["Sliders"], {
+    className: "cursor-pointer mr-1",
     id: "popover-button-" + cvid
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["UncontrolledPopover"], {
     trigger: "legacy",
     target: "popover-button-" + cvid,
     placement: "bottom"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["PopoverBody"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["PopoverBody"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "text-center"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     type: "button",
-    className: "btn btn-danger",
+    className: "btn btn-danger d-block",
     onClick: onDeleteClick
-  }, "Delete"))));
+  }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    className: "btn btn-secondary d-block",
+    href: "/api/comic/" + cvid + "/comicvine",
+    target: "_blank"
+  }, "View on ComicVine")))));
 };
 
 ComicSettings.propTypes = {

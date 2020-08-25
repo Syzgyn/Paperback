@@ -17,6 +17,7 @@ final class SearchResult extends FlexibleDataTransferObject
     public $source;
     public $issue_id;
     public $comic_id;
+    public $protocol;
 
     public function __get(string $name)
     {

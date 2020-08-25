@@ -44,6 +44,7 @@ class ParserService
         unset($this->comic);
     }
 
+    //TODO: Fix this function, not all results will have all that data
     public function parseSearchResults(SearchResultCollection $results)
     {
         $output = [];
@@ -76,8 +77,8 @@ class ParserService
 
             //Step 3: Match year
             if (! $this->checkYear($searchTitleParts, $issue->release_date)) {
-                dd('year');
-                continue;
+                //dd('year');
+                //continue;
             }
 
             $output[] = $result;
@@ -163,7 +164,7 @@ class ParserService
                 continue;
             }
 
-            for ($i = 2; $i <= 4; $i++) {
+            for ($i = 0; $i <= 4; $i++) {
                 if (sprintf("%0{$i}d", $issueNum) === $part) {
                     unset($searchTitleParts[$index]);
 
