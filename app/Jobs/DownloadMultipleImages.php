@@ -17,7 +17,7 @@ class DownloadMultipleImages implements ShouldQueue
 
     protected $imageUrls;
     protected $baseDir;
-    protected $downloadStarted = false;
+    protected $trackedDownload;
 
     /**
      * Create a new job instance.
@@ -28,6 +28,7 @@ class DownloadMultipleImages implements ShouldQueue
     {
         $this->imageUrls = $data['imageUrls'];
         $this->baseDir = $data['baseDir'];
+        $this->trackedDownload = $data['trackedDownload']->withoutRelations();
     }
 
     /**
@@ -74,6 +75,8 @@ class DownloadMultipleImages implements ShouldQueue
         rename($this->baseDir . '.zip', $this->baseDir . '.cbz');
         resolve('FileManager')->removeDir($this->baseDir);
 
-        return $this->baseDir . '.cbz';
+        $this->trackedDownload->ddlFilename = $this->baseDir . '.cbz';
+
+        resolve('FileManager')->manageDirectDownload($this->trackedDownload);
     }
 }

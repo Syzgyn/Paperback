@@ -14,9 +14,9 @@ class DownloadFile implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $url;
-    protected $fileHandler;
     protected $targetFile;
-    protected $downloadStarted = false;
+    protected $trackedDownload;
+    protected $fileHandler;
 
     /**
      * Create a new job instance.
@@ -27,6 +27,7 @@ class DownloadFile implements ShouldQueue
     {
         $this->url = $data['url'];
         $this->targetFile = $data['file'];
+        $this->trackedDownload = $data['trackedDownload']->withoutRelations();
     }
 
     /**
@@ -68,7 +69,9 @@ class DownloadFile implements ShouldQueue
 
         curl_close($ch);
 
-        return $newFilename;
+        $this->trackedDownload->ddlFilename = $newfilename;
+
+        resolve('FileManager')->manageDirectDownload($this->trackedDownload);
     }
 
     protected function progressCallback($ch, $downloadSize, $downloadedSize, $uploadSize, $uploadedSize)

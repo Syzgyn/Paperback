@@ -4,7 +4,6 @@ namespace App\Models\Downloaders\DDL;
 use App\Jobs\DownloadMultipleImages;
 use App\Models\Downloaders\DirectDownload;
 use App\Repositories\Indexers\ComicExtraRepository;
-use Illuminate\Support\Facades\DB;
 
 class ComicExtra extends DirectDownload
 {
@@ -12,22 +11,14 @@ class ComicExtra extends DirectDownload
     {
         $imageUrls = $this->getImageUrls();
         if (! $imageUrls) {
-            DB::connection()->enableQueryLog();
-            dump($this->trackedDownload, $this->trackedDownload->getKey(), $this->trackedDownload->getKeyName());
-            $this->trackedDownload->delete();
-            //DB::table('tracked_downloads')->where('id', $this->trackedDownload->id)->delete();
-            dd(DB::getQueryLog());
             return false;
         }
 
-        $filename = DownloadMultipleImages::dispatchNow([
+        DownloadMultipleImages::dispatch([
             'imageUrls' => $imageUrls,
             'baseDir' => $this->getDirname(),
+            'trackedDownload' => $this->trackedDownload,
         ]);
-
-        $this->trackedDownload->ddlFilename = $filename;
-
-        resolve('FileManager')->manageDirectDownload($this->trackedDownload);
     }
 
     protected function getImageUrls()

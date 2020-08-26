@@ -10,14 +10,11 @@ class GetComics extends DirectDownload
     public function download()
     {
         $url = $this->getFinalUrl($this->trackedDownload->url);
-        $filename = DownloadFile::dispatchNow([
+        $filename = DownloadFile::dispatch([
             'url' => $url,
             'file' => $this->getFilename(),
+            'trackedDownload' => $this->trackedDownload,
         ]);
-
-        $this->trackedDownload->ddlFilename = $filename;
-
-        resolve('FileManager')->manageDirectDownload($this->trackedDownload);
     }
 
     protected function getFinalUrl(string $url)
