@@ -18,18 +18,18 @@ const ComicSettings = ({ cvid }) => {
 
     return (
         <>
-            <Search className="cursor-pointer mr-1" id={"Tooltip-" + cvid} onClick={onSearchClick} />
+            <Search className="cursor-pointer mr-1" id={"search-button-" + cvid} onClick={onSearchClick} />
             <UncontrolledTooltip
                 placement="top"
-                target={"Tooltip-" + cvid}
+                target={"search-button-" + cvid}
             >
                 Search for all monitored issues in this comic
             </UncontrolledTooltip>
 
-            <Sliders className="cursor-pointer mr-1" id={"popover-button-" + cvid} />
+            <Sliders className="cursor-pointer mr-1" id={"settings-button-" + cvid} />
             <UncontrolledPopover
                 trigger="legacy"
-                target={"popover-button-" + cvid}
+                target={"settings-button-" + cvid}
                 placement="bottom"
             >
                 <PopoverBody>
@@ -52,6 +52,12 @@ const ComicSettings = ({ cvid }) => {
                         
                 </PopoverBody>
             </UncontrolledPopover>
+            <UncontrolledTooltip
+                placement="top"
+                target={"settings-button-" + cvid}
+            >
+                Settings
+            </UncontrolledTooltip>
         </>
     );
 };

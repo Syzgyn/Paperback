@@ -427,17 +427,17 @@ var ComicSettings = function ComicSettings(_ref) {
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_2__["Search"], {
     className: "cursor-pointer mr-1",
-    id: "Tooltip-" + cvid,
+    id: "search-button-" + cvid,
     onClick: onSearchClick
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["UncontrolledTooltip"], {
     placement: "top",
-    target: "Tooltip-" + cvid
+    target: "search-button-" + cvid
   }, "Search for all monitored issues in this comic"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_feather__WEBPACK_IMPORTED_MODULE_2__["Sliders"], {
     className: "cursor-pointer mr-1",
-    id: "popover-button-" + cvid
+    id: "settings-button-" + cvid
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["UncontrolledPopover"], {
     trigger: "legacy",
-    target: "popover-button-" + cvid,
+    target: "settings-button-" + cvid,
     placement: "bottom"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["PopoverBody"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "text-center"
@@ -449,7 +449,10 @@ var ComicSettings = function ComicSettings(_ref) {
     className: "btn btn-secondary d-block",
     href: "/api/comic/" + cvid + "/comicvine",
     target: "_blank"
-  }, "View on ComicVine")))));
+  }, "View on ComicVine")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_3__["UncontrolledTooltip"], {
+    placement: "top",
+    target: "settings-button-" + cvid
+  }, "Settings"));
 };
 
 ComicSettings.propTypes = {

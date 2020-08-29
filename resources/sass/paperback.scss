@@ -129,6 +129,7 @@ a.hideLink {
 .issue-progress .progressbar-back-text {
     position: absolute;
     height: 100%;
+    left: 0;
 }
 
 .issue-progress .progress-bar {
@@ -199,4 +200,18 @@ td.file-type-cell {
 
 table.file-browser-table tbody tr:hover {
     background: #ECECEC;
+}
+
+.comic-poster-item {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.issue-progress-poster, .issue-progress-poster .progressbar-back-text, .issue-progress-poster .progressbar-front-text {
+    width: 162px !important;
+}
+
+.comic-poster-item-image {
+    width: 162px;
+    height: 250px;
 }

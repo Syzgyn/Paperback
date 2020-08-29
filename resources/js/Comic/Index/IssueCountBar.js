@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const IssueCountBar = (props) => {
-    const { count, total } = props;
+    const { count, total, className } = props;
 
     const percent = count / total;
     const color = count == total ? "primary" : "danger";
@@ -12,7 +12,7 @@ const IssueCountBar = (props) => {
     };
 
     return (
-        <div className="issue-progress">
+        <div className={"issue-progress " + (className || "")}>
             <span className="progressbar-back-text">{text}</span>
             <div
                 className={"progress-bar bg-" + color}
@@ -30,6 +30,7 @@ const IssueCountBar = (props) => {
 IssueCountBar.propTypes = {
     count: PropTypes.number,
     total: PropTypes.number,
+    className: PropTypes.string,
 };
 
 export default IssueCountBar;

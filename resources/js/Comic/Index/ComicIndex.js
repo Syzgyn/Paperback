@@ -1,5 +1,7 @@
 import React from "react";
-import ComicIndexItem from "./ComicIndexItem";
+import ComicIndexOverviewView from "@/Comic/Index/Overview/ComicIndexOverviewView";
+import ComicIndexPosterView from "@/Comic/Index/Poster/ComicIndexPosterView";
+import ComicIndexTableView from "@/Comic/Index/Table/ComicIndexTableView";
 import ComicIndexHeader from "@/Comic/Index/ComicIndexHeader";
 import LoadingIndicator from "@/Components/Loading/LoadingIndicator";
 import PageRow from "@/Components/Page/PageRow";
@@ -8,7 +10,7 @@ import { useSelector } from "react-redux";
 import { sortedComicsSelector } from "@/Store/Slices/comics";
 
 const ComicIndex = () => {
-    const { items: comics, isLoading, isPopulated } = useSelector(
+    const { items: comics, isLoading, isPopulated, view } = useSelector(
         sortedComicsSelector
     );
 
@@ -33,18 +35,26 @@ const ComicIndex = () => {
         );
     }
 
+    function getViewComponent(view) {
+        if (view == "overview") {
+            return ComicIndexOverviewView;
+        }
+
+        if (view == "posters") {
+            return ComicIndexPosterView;
+        }
+
+        return ComicIndexTableView;
+    }
+
+    const ViewComponent = getViewComponent(view);
+
     return (
         <>
             <ComicIndexHeader />
             <PageRow>
                 <div id="comic-list">
-                    {comics.map((comic) => (
-                        <ComicIndexItem
-                            {...comic}
-                            key={comic.cvid}
-                            indexView={true}
-                        />
-                    ))}
+                    <ViewComponent comics={comics} />
                 </div>
             </PageRow>
         </>

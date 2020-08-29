@@ -17,6 +17,7 @@ const defaultState = {
     items: [],
     sortKey: "sortName",
     sortDir: "asc",
+    view: "overview",
 };
 
 export const fetchComics = createAsyncThunk("comics/fetchComics", async () => {
@@ -62,6 +63,7 @@ export const searchComic = createAsyncThunk(
 
 export const toggleComicMonitored = createAction("comics/toggleComicMonitored");
 export const setComicSort = createAction("comics/setComicSort");
+export const setComicView = createAction("comics/setComicView");
 
 const slice = createSlice({
     name: "comics",
@@ -105,6 +107,9 @@ const slice = createSlice({
                     state.sortDir = "desc";
                 }
             }
+        },
+        [setComicView]: (state, action) => {
+            state.view = action.payload;
         },
     },
 });
