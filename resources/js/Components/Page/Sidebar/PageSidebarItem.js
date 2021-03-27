@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import Link from "@/Components/Link/Link";
 import classNames from "classnames";
 import Icon from "@/Components/Icon";
 import styles from "./PageSidebarItem.module.scss";
@@ -11,7 +11,7 @@ const PageSidebarItem = (props) => {
             isChildItem,
             isParentItem,
             onPress
-        } = this.props;
+        } = props;
 
         if (isChildItem || !isParentItem) {
             onPress();

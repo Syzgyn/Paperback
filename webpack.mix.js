@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const util = require('util');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -9,14 +10,6 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
-
-const cssVarsFiles = [
-  './resources/js/Styles/Variables/colors.js',
-//  '../src/Styles/Variables/dimensions',
-//  '../src/Styles/Variables/fonts',
-//  '../src/Styles/Variables/animations',
-//  '../src/Styles/Variables/zIndexes'
-].map(require.resolve);
 
 mix.js('resources/js/app.js', 'public/assets/bundle').react()
     .sourceMaps(true, 'source-map')
@@ -36,3 +29,18 @@ mix.webpackConfig({
     },
   },
 }).sourceMaps();
+
+mix.extend('foo', function(webpackConfig, ...args) {
+    webpackConfig.module.rules.forEach(rule => {
+        if (! rule.hasOwnProperty('oneOf')) { return;}
+        rule.oneOf.forEach(oneOf => {
+            oneOf.use.forEach(use => {
+                if (use.loader === "css-loader" && typeof use.options.modules !== 'boolean') {
+                    use.options.modules.localIdentName = '[name]/[local]/[hash:base64:5]';
+                }
+            });
+        });
+    });
+});
+
+mix.foo('testvalue');

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { icons } from "@/Helpers/Props";
 import locationShape from "@/Helpers/Props/Shapes/locationShape";
 import PageSidebarItem from "@/Components/Page/Sidebar/PageSidebarItem";
+import styles from "./PageSidebar.module.scss";
 
 const links = [
   {
@@ -208,70 +209,74 @@ function hasActiveChildLink(link, pathname) {
 
 const PageSidebar = (props) => {
 	const onItemPress = () => {
-		props.onSidebarVisibleChange(false);
+		//props.onSidebarVisibleChange(false);
 	}
     const pathname = location.pathname;
     const activeParent = getActiveParent(pathname);
 
     return (
-        <div>
-            <div>
-                {
-                    links.map((link) => {
-						const childWithStatusComponent = _.find(link.children, (child) => {
-                	  		return !!child.statusComponent;
-                		});
+        <div
+            className={styles.sidebarContainer}
+        >
+			<div className={styles.sidebar}>
+				<div>
+					{
+						links.map((link) => {
+							const childWithStatusComponent = _.find(link.children, (child) => {
+								return !!child.statusComponent;
+							});
 
-						const childStatusComponent = childWithStatusComponent ?
-							childWithStatusComponent.statusComponent :
-							null;
+							const childStatusComponent = childWithStatusComponent ?
+								childWithStatusComponent.statusComponent :
+								null;
 
-                        const isActiveParent = activeParent === link.to;
-                        const hasActiveChild = hasActiveChildLink(link, pathname);
+							const isActiveParent = activeParent === link.to;
+							const hasActiveChild = hasActiveChildLink(link, pathname);
 
-                        return (
-                            <PageSidebarItem
-                                key={link.to}
-                                iconName={link.iconName}
-                                title={link.title}
-                                to={link.to}
-                                statusComponent={isActiveParent || !childStatusComponent ? link.statusComponent : childStatusComponent}
-                                isActive={pathname === link.to && !hasActiveChild}
-                                isActiveParent={isActiveParent}
-                                isParentItem={!!link.children}
-                                onPress={onItemPress}
-                            >
-                                {
-                                    link.children && link.to === activeParent &&
-                                        link.children.map((child) => {
-                                            return (
-                                                <PageSidebarItem
-                                                    key={child.to}
-                                                    title={child.title}
-                                                    to={child.to}
-                                                    isActive={pathname.startsWith(child.to)}
-                                                    isParentItem={false}
-                                                    isChildItem={true}
-                                                    statusComponent={child.statusComponent}
-                                                    onPress={onItemPress}
-                                                />
-                                            );
-                                        })
-                                }
-                            </PageSidebarItem>
-                        );
-                    })
-                }
-            </div>
+							return (
+								<PageSidebarItem
+									key={link.to}
+									iconName={link.iconName}
+									title={link.title}
+									to={link.to}
+									statusComponent={isActiveParent || !childStatusComponent ? link.statusComponent : childStatusComponent}
+									isActive={pathname === link.to && !hasActiveChild}
+									isActiveParent={isActiveParent}
+									isParentItem={!!link.children}
+									onPress={onItemPress}
+								>
+									{
+										link.children && link.to === activeParent &&
+											link.children.map((child) => {
+												return (
+													<PageSidebarItem
+														key={child.to}
+														title={child.title}
+														to={child.to}
+														isActive={pathname.startsWith(child.to)}
+														isParentItem={false}
+														isChildItem={true}
+														statusComponent={child.statusComponent}
+														onPress={onItemPress}
+													/>
+												);
+											})
+									}
+								</PageSidebarItem>
+							);
+						})
+					}
+				</div>
+        	</div>
         </div>
     );
 };
 
 PageSidebar.propTypes = {
-  location: locationShape.isRequired,
-  isSmallScreen: PropTypes.bool.isRequired,
-  isSidebarVisible: PropTypes.bool.isRequired,
-  onSidebarVisibleChange: PropTypes.func.isRequired
+  location: locationShape,
+  isSmallScreen: PropTypes.bool,
+  isSidebarVisible: PropTypes.bool,
+  onSidebarVisibleChange: PropTypes.func
 };
 
 export default PageSidebar;
