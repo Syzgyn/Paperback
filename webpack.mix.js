@@ -1,5 +1,4 @@
 const mix = require('laravel-mix');
-
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,9 +10,23 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.react('resources/js/app.js', 'public/js')
+const cssVarsFiles = [
+  './resources/js/Styles/Variables/colors.js',
+//  '../src/Styles/Variables/dimensions',
+//  '../src/Styles/Variables/fonts',
+//  '../src/Styles/Variables/animations',
+//  '../src/Styles/Variables/zIndexes'
+].map(require.resolve);
+
+mix.js('resources/js/app.js', 'public/assets/bundle').react()
     .sourceMaps(true, 'source-map')
-    .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/css', {
+        sassOptions: {
+            includePaths: [
+                './resources/sass',
+            ]
+        }
+    });
 
 mix.webpackConfig({
   resolve: {
@@ -22,4 +35,4 @@ mix.webpackConfig({
       '@': __dirname + '/resources/js',
     },
   },
-})
+}).sourceMaps();

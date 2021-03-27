@@ -1,0 +1,12 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: #FF0000;
+}
+
+.main {
+    position: relative; /* need this to position inner content - is this really needed? */
+    display: flex;
+    flex: 1 1 auto;
+}

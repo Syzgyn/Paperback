@@ -2,13 +2,21 @@ import React, { Suspense, lazy } from "react";
 import { Route, Switch, Redirect } from "react-router";
 import LoadingIndicator from "@/Components/Loading/LoadingIndicator";
 
-const ComicIndex = lazy(() => import("@/Comic/Index/ComicIndex"));
-const AddNewComic = lazy(() => import("@/AddComic/AddNewComic/AddNewComic"));
-const ImportPage = lazy(() => import("@/AddComic/Import/Import"));
+const ComicIndex = lazy(() =>
+    import("@/Comic/Index/ComicIndex")
+);
+const AddNewComic = lazy(() =>
+    import("@/AddComic/AddNewComic/AddNewComic")
+);
+const ImportPage = lazy(() =>
+    import("@/AddComic/Import/Import")
+);
 const ImportComicsPage = lazy(() =>
     import("@/AddComic/Import/ImportComics/ImportComics")
 );
-const ComicDetails = lazy(() => import("@/Comic/Details/ComicDetails"));
+const ComicDetails = lazy(() => 
+    import("@/Comic/Details/ComicDetails")
+);
 const GeneralSettings = lazy(() =>
     import("@/Settings/General/GeneralSettings")
 );
@@ -18,7 +26,9 @@ const IndexerSettings = lazy(() =>
 const DownloaderSettings = lazy(() =>
     import("@/Settings/Downloaders/DownloaderSettings")
 );
-const WantedPage = lazy(() => import("@/Wanted/WantedPage"));
+const WantedPage = lazy(() =>
+    import("@/Wanted/WantedPage")
+);
 
 function AppRoutes() {
     return (
