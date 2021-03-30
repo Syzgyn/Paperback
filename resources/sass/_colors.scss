@@ -21,7 +21,7 @@ $gray: #adadad;
 $lightGray: #ddd;
 $disabledInputColor: #808080;
 
-// Theme Colors
+/* Theme Colors */
 
 $themeBlue: $sonarrBlue;
 $themeAlternateBlue: #2193b5;
@@ -32,25 +32,25 @@ $themeLightColor: #4f566f;
 $torrentColor: #00853d;
 $usenetColor: #17b1d9;
 
-// Links
+/* Links */
 $defaultLinkHoverColor: #fff;
 $linkColor: #5d9cec;
 $linkHoverColor: #1b72e2;
 
-// Sidebar
+/* Sidebar */
 
 $sidebarColor: #e1e2e3;
 $sidebarBackgroundColor: #3a3f51;
 $sidebarActiveBackgroundColor: #252833;
 
-// Toolbar
+/* Toolbar */
 $toolbarColor: #e1e2e3;
 $toolbarBackgroundColor: #4f566f;
 $toolbarMenuItemBackgroundColor: #454b60;
 $toolbarMenuItemHoverBackgroundColor: #3a3f51;
 $toolbarLabelColor: #8895aa;
 
-// Accents
+/* Accents */
 $borderColor: #e5e5e5;
 $inputBorderColor: #dde6e9;
 $inputBoxShadowColor: rgba(0, 0, 0, 0.075);
@@ -63,8 +63,8 @@ $inputWarningBoxShadowColor: rgba(255, 165, 0, 0.6);
 $colorImpairedGradient: #ffffff;
 $colorImpairedGradientDark: #f4f5f6;
 
-//
-// Buttons
+/* */
+/* Buttons */
 
 $defaultBackgroundColor: #fff;
 $defaultBorderColor: #eaeaea;
@@ -95,39 +95,39 @@ $iconButtonDisabledColor: #7a7a7a;
 $iconButtonHoverColor: #666;
 $iconButtonHoverLightColor: #ccc;
 
-//
-// Modal
+/* */
+/* Modal */
 
 $modalBackdropBackgroundColor: rgba(0, 0, 0, 0.6);
 $modalBackgroundColor: #fff;
 $modalCloseButtonHoverColor: #888;
 
-//
-// Menu
+/* */
+/* Menu */
 $menuItemColor: #e1e2e3;
 $menuItemHoverColor: #fbfcfc;
 $menuItemHoverBackgroundColor: #f5f7fa;
 
-//
-// Toolbar
+/* */
+/* Toolbar */
 
 $toobarButtonHoverColor: #35c5f4;
 $toobarButtonSelectedColor: #35c5f4;
 
-//
-// Scroller
+/* */
+/* Scroller */
 
 $scrollbarBackgroundColor: #9ea4b9;
 $scrollbarHoverBackgroundColor: #656d8c;
 
-//
-// Card
+/* */
+/* Card */
 
 $cardShadowColor: #e1e1e1;
 $cardAlternateBackgroundColor: #f5f5f5;
 
-//
-// Alert
+/* */
+/* Alert */
 
 $alertDangerBorderColor: #ebccd1;
 $alertDangerBackgroundColor: #f2dede;
@@ -145,19 +145,19 @@ $alertWarningBorderColor: #faebcc;
 $alertWarningBackgroundColor: #fcf8e3;
 $alertWarningColor: #8a6d3b;
 
-//
-// Slider
+/* */
+/* Slider */
 
 $sliderAccentColor: #5d9cec;
 
-//
-// Form
+/* */
+/* Form */
 
 $advancedFormLabelColor: #ff902b;
 $disabledCheckInputColor: #ddd;
 
-//
-// Popover
+/* */
+/* Popover */
 
 $popoverTitleBackgroundColor: #f7f7f7;
 $popoverTitleBorderColor: #ebebeb;
@@ -169,14 +169,14 @@ $popoverTitleBorderInverseColor: #4f566f;
 $popoverShadowInverseColor: rgba(0, 0, 0, 0.2);
 $popoverArrowBorderInverseColor: rgba(58, 63, 81, 0.75);
 
-//
-// Calendar
+/* */
+/* Calendar */
 
 $calendarTodayBackgroundColor: #ddd;
 $calendarBorderColor: #cecece;
 $calendarTextDim: #666;
 
-//
-// Table
+/* */
+/* Table */
 
 $tableRowHoverBackgroundColor: #fafbfc

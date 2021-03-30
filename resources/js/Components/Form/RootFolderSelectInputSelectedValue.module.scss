@@ -1,0 +1,35 @@
+@import "~sass/_colors.scss";
+@import "~sass/_fonts.scss";
+
+.selectedValue {
+  composes: selectedValue from '~./EnhancedSelectInputSelectedValue.module.scss';
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.pathContainer {
+  @add-mixin truncate;
+  display: flex;
+  flex: 1 0 0;
+}
+
+.path {
+  flex: 0 1 auto;
+}
+
+.comicFolder {
+  @add-mixin truncate;
+  flex: 0 1 auto;
+  color: $disabledColor;
+}
+
+.freeSpace {
+  flex: 0 0 auto;
+  margin-left: 15px;
+  color: $gray;
+  text-align: right;
+  font-size: $smallFontSize;
+}

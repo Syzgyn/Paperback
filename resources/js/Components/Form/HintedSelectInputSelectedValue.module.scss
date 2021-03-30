@@ -1,0 +1,27 @@
+@import "~sass/_colors.scss";
+@import "~sass/_fonts.scss";
+
+.selectedValue {
+  composes: selectedValue from '~./EnhancedSelectInputSelectedValue.module.scss';
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.valueText {
+  @add-mixin truncate;
+
+  flex: 0 0 auto;
+}
+
+.hintText {
+  @add-mixin truncate;
+
+  flex: 1 10 0;
+  margin-left: 15px;
+  color: $gray;
+  text-align: right;
+  font-size: $smallFontSize;
+}

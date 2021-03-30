@@ -26,7 +26,8 @@ mix.webpackConfig({
     extensions: ['.js', '.json'],
     alias: {
       '@': __dirname + '/resources/js',
-    },
+      'sass': __dirname + '/resources/sass',
+    }
   },
 }).sourceMaps();
 

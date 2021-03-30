@@ -41,7 +41,7 @@
 }
 
 .donate {
-  //composes: link from '~Components/Link/Link.css';
+  composes: link from '~@/Components/Link/Link.module.scss';
 
   width: 30px;
   color: $themeRed;

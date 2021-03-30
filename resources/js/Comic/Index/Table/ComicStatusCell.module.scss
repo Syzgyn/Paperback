@@ -1,0 +1,9 @@
+.status {
+  composes: cell from '~@/Components/Table/Cells/TableRowCell.module.scss';
+
+  width: 60px;
+}
+
+.statusIcon {
+  width: 20px !important;
+}

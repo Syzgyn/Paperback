@@ -1,0 +1,19 @@
+.input {
+  composes: input from '~@/Components/Form/Input.module.scss';
+}
+
+.readOnly {
+  background-color: #eee;
+}
+
+.hasError {
+  composes: hasError from '~@/Components/Form/Input.module.scss';
+}
+
+.hasWarning {
+  composes: hasWarning from '~@/Components/Form/Input.module.scss';
+}
+
+.hasButton {
+  composes: hasButton from '~@/Components/Form/Input.module.scss';
+}

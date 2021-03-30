@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { kinds } from '@/Helpers/Props';
 import classNames from 'classnames';
-import styles from './Icon.css';
+import styles from './Icon.module.scss';
 
 class Icon extends PureComponent {
 

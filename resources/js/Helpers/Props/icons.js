@@ -1,3 +1,6 @@
+//
+// Regular
+
 import {
   faBookmark as farBookmark,
   faCalendar as farCalendar,
