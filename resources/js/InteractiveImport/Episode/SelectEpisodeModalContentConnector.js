@@ -52,11 +52,11 @@ class SelectEpisodeModalContentConnector extends Component {
   //
   // Listeners
 
-  onSortPress(sortKey, sortDirection) {
+  onSortPress = (sortKey, sortDirection) => {
     this.props.dispatchSetInteractiveImportEpisodesSort({ sortKey, sortDirection });
   }
 
-  onEpisodesSelect(episodeIds) {
+  onEpisodesSelect = (episodeIds) => {
     const {
       ids,
       items,

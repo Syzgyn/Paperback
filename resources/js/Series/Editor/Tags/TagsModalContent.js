@@ -31,11 +31,11 @@ class TagsModalContent extends Component {
   //
   // Lifecycle
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     this.setState({ [name]: value });
   }
 
-  onApplyTagsPress() {
+  onApplyTagsPress = () => {
     const {
       tags,
       applyTags

@@ -132,7 +132,7 @@ class RootFolderSelectInputConnector extends Component {
   //
   // Listeners
 
-  onNewRootFolderSelect(path) {
+  onNewRootFolderSelect = (path) => {
     this.props.dispatchAddRootFolder(path);
   }
 

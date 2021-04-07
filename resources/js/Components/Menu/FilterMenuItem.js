@@ -7,7 +7,7 @@ class FilterMenuItem extends Component {
   //
   // Listeners
 
-  onPress() {
+  onPress = () => {
     const {
       filterKey,
       onPress

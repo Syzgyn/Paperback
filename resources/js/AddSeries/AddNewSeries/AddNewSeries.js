@@ -56,7 +56,7 @@ class AddNewSeries extends Component {
   //
   // Listeners
 
-  onSearchInputChange({ value }) {
+  onSearchInputChange = ({ value }) => {
     const hasValue = !!value.trim();
 
     this.setState({ term: value, isFetching: hasValue }, () => {
@@ -68,7 +68,7 @@ class AddNewSeries extends Component {
     });
   }
 
-  onClearSeriesLookupPress() {
+  onClearSeriesLookupPress = () => {
     this.setState({ term: '' });
     this.props.onClearSeriesLookup();
   }

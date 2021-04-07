@@ -52,15 +52,15 @@ class EditMetadataModalContentConnector extends Component {
   //
   // Listeners
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     this.props.setMetadataValue({ name, value });
   }
 
-  onFieldChange({ name, value }) {
+  onFieldChange = ({ name, value }) => {
     this.props.setMetadataFieldValue({ name, value });
   }
 
-  onSavePress() {
+  onSavePress = () => {
     this.props.saveMetadata({ id: this.props.id });
   }
 

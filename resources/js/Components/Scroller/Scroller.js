@@ -34,7 +34,7 @@ class Scroller extends Component {
   //
   // Control
 
-  _setScrollerRef(ref) {
+  _setScrollerRef = (ref) => {
     this._scroller = ref;
 
     this.props.registerScroller(ref);

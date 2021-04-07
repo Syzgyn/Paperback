@@ -40,19 +40,19 @@ class EditNotificationModalContentConnector extends Component {
   //
   // Listeners
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     this.props.setNotificationValue({ name, value });
   }
 
-  onFieldChange({ name, value }) {
+  onFieldChange = ({ name, value }) => {
     this.props.setNotificationFieldValue({ name, value });
   }
 
-  onSavePress() {
+  onSavePress = () => {
     this.props.saveNotification({ id: this.props.id });
   }
 
-  onTestPress() {
+  onTestPress = () => {
     this.props.testNotification({ id: this.props.id });
   }
 

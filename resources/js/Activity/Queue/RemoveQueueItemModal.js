@@ -28,7 +28,7 @@ class RemoveQueueItemModal extends Component {
   //
   // Control
 
-  resetState() {
+  resetState = function() {
     this.setState({
       remove: true,
       blacklist: false
@@ -38,22 +38,22 @@ class RemoveQueueItemModal extends Component {
   //
   // Listeners
 
-  onRemoveChange({ value }) {
+  onRemoveChange = ({ value }) => {
     this.setState({ remove: value });
   }
 
-  onBlacklistChange({ value }) {
+  onBlacklistChange = ({ value }) => {
     this.setState({ blacklist: value });
   }
 
-  onRemoveConfirmed() {
+  onRemoveConfirmed = () => {
     const state = this.state;
 
     this.resetState();
     this.props.onRemovePress(state);
   }
 
-  onModalClose() {
+  onModalClose = () => {
     this.resetState();
     this.props.onModalClose();
   }

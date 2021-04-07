@@ -112,7 +112,7 @@ class CalendarConnector extends Component {
   //
   // Control
 
-  repopulate() {
+  repopulate = () => {
     const {
       time,
       view
@@ -122,19 +122,19 @@ class CalendarConnector extends Component {
     this.props.fetchCalendar({ time, view });
   }
 
-  scheduleUpdate() {
+  scheduleUpdate = () => {
     this.clearUpdateTimeout();
 
     this.updateTimeoutId = setTimeout(this.updateCalendar, UPDATE_DELAY);
   }
 
-  clearUpdateTimeout() {
+  clearUpdateTimeout = () => {
     if (this.updateTimeoutId) {
       clearTimeout(this.updateTimeoutId);
     }
   }
 
-  updateCalendar() {
+  updateCalendar = () => {
     this.props.gotoCalendarToday();
     this.scheduleUpdate();
   }
@@ -142,19 +142,19 @@ class CalendarConnector extends Component {
   //
   // Listeners
 
-  onCalendarViewChange(view) {
+  onCalendarViewChange = (view) => {
     this.props.setCalendarView({ view });
   }
 
-  onTodayPress() {
+  onTodayPress = () => {
     this.props.gotoCalendarToday();
   }
 
-  onPreviousPress() {
+  onPreviousPress = () => {
     this.props.gotoCalendarPreviousRange();
   }
 
-  onNextPress() {
+  onNextPress = () => {
     this.props.gotoCalendarNextRange();
   }
 

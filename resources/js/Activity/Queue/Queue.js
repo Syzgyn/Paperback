@@ -85,44 +85,44 @@ class Queue extends Component {
   //
   // Control
 
-  getSelectedIds() {
+  getSelectedIds = () => {
     return getSelectedIds(this.state.selectedState);
   }
 
   //
   // Listeners
 
-  onQueueRowModalOpenOrClose(isOpen) {
+  onQueueRowModalOpenOrClose = (isOpen) => {
     this._shouldBlockRefresh = isOpen;
   }
 
-  onSelectAllChange({ value }) {
+  onSelectAllChange = ({ value }) => {
     this.setState(selectAll(this.state.selectedState, value));
   }
 
-  onSelectedChange({ id, value, shiftKey = false }) {
+  onSelectedChange = ({ id, value, shiftKey = false }) => {
     this.setState((state) => {
       return toggleSelected(state, this.props.items, id, value, shiftKey);
     });
   }
 
-  onGrabSelectedPress() {
+  onGrabSelectedPress = () => {
     this.props.onGrabSelectedPress(this.getSelectedIds());
   }
 
-  onRemoveSelectedPress() {
+  onRemoveSelectedPress = () => {
     this.setState({ isConfirmRemoveModalOpen: true }, () => {
       this._shouldBlockRefresh = true;
     });
   }
 
-  onRemoveSelectedConfirmed(payload) {
+  onRemoveSelectedConfirmed = (payload) => {
     this._shouldBlockRefresh = false;
     this.props.onRemoveSelectedPress({ ids: this.getSelectedIds(), ...payload });
     this.setState({ isConfirmRemoveModalOpen: false });
   }
 
-  onConfirmRemoveModalClose() {
+  onConfirmRemoveModalClose = () => {
     this._shouldBlockRefresh = false;
     this.setState({ isConfirmRemoveModalOpen: false });
   }

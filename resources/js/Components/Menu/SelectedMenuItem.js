@@ -10,7 +10,7 @@ class SelectedMenuItem extends Component {
   //
   // Listeners
 
-  onPress() {
+  onPress = () => {
     const {
       name,
       onPress

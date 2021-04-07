@@ -32,7 +32,7 @@ class SelectSeasonModalContentConnector extends Component {
   //
   // Listeners
 
-  onSeasonSelect(seasonNumber) {
+  onSeasonSelect = (seasonNumber) => {
     this.props.ids.forEach((id) => {
       this.props.updateInteractiveImportItem({
         id,

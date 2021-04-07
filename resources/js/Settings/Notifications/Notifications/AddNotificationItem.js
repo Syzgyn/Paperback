@@ -13,7 +13,7 @@ class AddNotificationItem extends Component {
   //
   // Listeners
 
-  onNotificationSelect() {
+  onNotificationSelect = () => {
     const {
       implementation
     } = this.props;

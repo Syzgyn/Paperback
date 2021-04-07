@@ -42,7 +42,7 @@ class ImportSeriesRowConnector extends Component {
   //
   // Listeners
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     this.props.setImportSeriesValue({
       id: this.props.id,
       [name]: value

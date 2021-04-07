@@ -115,11 +115,11 @@ class EditDelayProfileModalContentConnector extends Component {
   //
   // Listeners
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     this.props.setDelayProfileValue({ name, value });
   }
 
-  onProtocolChange({ value }) {
+  onProtocolChange = ({ value }) => {
     switch (value) {
       case 'preferUsenet':
         this.props.setDelayProfileValue({ name: 'enableUsenet', value: true });
@@ -146,7 +146,7 @@ class EditDelayProfileModalContentConnector extends Component {
     }
   }
 
-  onSavePress() {
+  onSavePress = () => {
     this.props.saveDelayProfile({ id: this.props.id });
   }
 

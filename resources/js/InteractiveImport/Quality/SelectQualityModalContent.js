@@ -36,19 +36,19 @@ class SelectQualityModalContent extends Component {
   //
   // Listeners
 
-  onQualityChange({ value }) {
+  onQualityChange = ({ value }) => {
     this.setState({ qualityId: parseInt(value) });
   }
 
-  onProperChange({ value }) {
+  onProperChange = ({ value }) => {
     this.setState({ proper: value });
   }
 
-  onRealChange({ value }) {
+  onRealChange = ({ value }) => {
     this.setState({ real: value });
   }
 
-  onQualitySelect() {
+  onQualitySelect = () => {
     this.props.onQualitySelect(this.state);
   }
 

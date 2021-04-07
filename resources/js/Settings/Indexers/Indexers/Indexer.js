@@ -25,30 +25,30 @@ class Indexer extends Component {
   //
   // Listeners
 
-  onEditIndexerPress() {
+  onEditIndexerPress = () => {
     this.setState({ isEditIndexerModalOpen: true });
   }
 
-  onEditIndexerModalClose() {
+  onEditIndexerModalClose = () => {
     this.setState({ isEditIndexerModalOpen: false });
   }
 
-  onDeleteIndexerPress() {
+  onDeleteIndexerPress = () => {
     this.setState({
       isEditIndexerModalOpen: false,
       isDeleteIndexerModalOpen: true
     });
   }
 
-  onDeleteIndexerModalClose() {
+  onDeleteIndexerModalClose= () => {
     this.setState({ isDeleteIndexerModalOpen: false });
   }
 
-  onConfirmDeleteIndexer() {
+  onConfirmDeleteIndexer = () => {
     this.props.onConfirmDeleteIndexer(this.props.id);
   }
 
-  onCloneIndexerPress() {
+  onCloneIndexerPress = () => {
     const {
       id,
       onCloneIndexerPress

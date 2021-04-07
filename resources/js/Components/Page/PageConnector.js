@@ -207,7 +207,7 @@ class PageConnector extends Component {
   //
   // Listeners
 
-  onSidebarToggle() {
+  onSidebarToggle = () => {
     this.props.onSidebarVisibleChange(!this.props.isSidebarVisible);
   }
 

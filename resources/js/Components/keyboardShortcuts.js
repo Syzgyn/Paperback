@@ -50,19 +50,19 @@ function keyboardShortcuts(WrappedComponent) {
     //
     // Control
 
-    bindShortcut(key, callback, options = {}) {
+    bindShortcut = (key, callback, options = {}) => {
       this._mousetrap.bind(key, callback);
       this._mousetrapBindings[key] = options;
     }
 
-    unbindShortcut(key) {
+    unbindShortcut = (key) => {
       if (this._mousetrap != null) {
         delete this._mousetrapBindings[key];
         this._mousetrap.unbind(key);
       }
     }
 
-    unbindAllShortcuts() {
+    unbindAllShortcuts = () => {
       const keys = Object.keys(this._mousetrapBindings);
 
       if (!keys.length) {
@@ -76,7 +76,7 @@ function keyboardShortcuts(WrappedComponent) {
       this._mousetrapBindings = {};
     }
 
-    stopCallback(event, element, combo) {
+    stopCallback = (event, element, combo) => {
       const binding = this._mousetrapBindings[combo];
 
       if (!binding || binding.isGlobal) {

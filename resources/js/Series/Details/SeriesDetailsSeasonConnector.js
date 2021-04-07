@@ -52,11 +52,11 @@ class SeriesDetailsSeasonConnector extends Component {
   //
   // Listeners
 
-  onTableOptionChange(payload) {
+  onTableOptionChange = (payload) => {
     this.props.setEpisodesTableOption(payload);
   }
 
-  onMonitorSeasonPress(monitored) {
+  onMonitorSeasonPress = (monitored) => {
     const {
       seriesId,
       seasonNumber
@@ -69,7 +69,7 @@ class SeriesDetailsSeasonConnector extends Component {
     });
   }
 
-  onSearchPress() {
+  onSearchPress = () => {
     const {
       seriesId,
       seasonNumber
@@ -82,7 +82,7 @@ class SeriesDetailsSeasonConnector extends Component {
     });
   }
 
-  onMonitorEpisodePress(episodeIds, monitored) {
+  onMonitorEpisodePress = (episodeIds, monitored) => {
     this.props.toggleEpisodesMonitored({
       episodeIds,
       monitored

@@ -122,13 +122,13 @@ class EpisodeFileEditorModalContentConnector extends Component {
   //
   // Listeners
 
-  onLanguageChange(episodeFileIds, languageId) {
+  onLanguageChange = (episodeFileIds, languageId) => {
     const language = _.find(this.props.languages, { id: languageId });
 
     this.props.dispatchUpdateEpisodeFiles({ episodeFileIds, language });
   }
 
-  onQualityChange(episodeFileIds, qualityId) {
+  onQualityChange = (episodeFileIds, qualityId) => {
     const quality = {
       quality: _.find(this.props.qualities, { id: qualityId }),
       revision: {

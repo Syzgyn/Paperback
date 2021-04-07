@@ -63,41 +63,41 @@ class BlacklistConnector extends Component {
   //
   // Control
 
-  repopulate() {
+  repopulate = () => {
     this.props.fetchBlacklist();
   }
   //
   // Listeners
 
-  onFirstPagePress() {
+  onFirstPagePress = () => {
     this.props.gotoBlacklistFirstPage();
   }
 
-  onPreviousPagePress() {
+  onPreviousPagePress = () => {
     this.props.gotoBlacklistPreviousPage();
   }
 
-  onNextPagePress() {
+  onNextPagePress = () => {
     this.props.gotoBlacklistNextPage();
   }
 
-  onLastPagePress() {
+  onLastPagePress = () => {
     this.props.gotoBlacklistLastPage();
   }
 
-  onPageSelect(page) {
+  onPageSelect = (page) => {
     this.props.gotoBlacklistPage({ page });
   }
 
-  onRemoveSelected(ids) {
+  onRemoveSelected = (ids) => {
     this.props.removeBlacklistItems({ ids });
   }
 
-  onSortPress(sortKey) {
+  onSortPress = (sortKey) => {
     this.props.setBlacklistSort({ sortKey });
   }
 
-  onTableOptionChange(payload) {
+  onTableOptionChange = (payload) => {
     this.props.setBlacklistTableOption(payload);
 
     if (payload.pageSize) {
@@ -105,11 +105,11 @@ class BlacklistConnector extends Component {
     }
   }
 
-  onClearBlacklistPress() {
+  onClearBlacklistPress = () => {
     this.props.executeCommand({ name: commandNames.CLEAR_BLACKLIST });
   }
 
-  onTableOptionChange(payload) {
+  onTableOptionChange = (payload) => {
     this.props.setBlacklistTableOption(payload);
 
     if (payload.pageSize) {

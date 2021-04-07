@@ -27,26 +27,26 @@ class ReleaseProfile extends Component {
   //
   // Listeners
 
-  onEditReleaseProfilePress() {
+  onEditReleaseProfilePress = () => {
     this.setState({ isEditReleaseProfileModalOpen: true });
   }
 
-  onEditReleaseProfileModalClose() {
+  onEditReleaseProfileModalClose = () => {
     this.setState({ isEditReleaseProfileModalOpen: false });
   }
 
-  onDeleteReleaseProfilePress() {
+  onDeleteReleaseProfilePress = () => {
     this.setState({
       isEditReleaseProfileModalOpen: false,
       isDeleteReleaseProfileModalOpen: true
     });
   }
 
-  onDeleteReleaseProfileModalClose() {
+  onDeleteReleaseProfileModalClose= () => {
     this.setState({ isDeleteReleaseProfileModalOpen: false });
   }
 
-  onConfirmDeleteReleaseProfile() {
+  onConfirmDeleteReleaseProfile = () => {
     this.props.onConfirmDeleteReleaseProfile(this.props.id);
   }
 

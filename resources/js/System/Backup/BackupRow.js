@@ -28,23 +28,23 @@ class BackupRow extends Component {
   //
   // Listeners
 
-  onRestorePress() {
+  onRestorePress = () => {
     this.setState({ isRestoreModalOpen: true });
   }
 
-  onRestoreModalClose() {
+  onRestoreModalClose = () => {
     this.setState({ isRestoreModalOpen: false });
   }
 
-  onDeletePress() {
+  onDeletePress = () => {
     this.setState({ isConfirmDeleteModalOpen: true });
   }
 
-  onConfirmDeleteModalClose() {
+  onConfirmDeleteModalClose = () => {
     this.setState({ isConfirmDeleteModalOpen: false });
   }
 
-  onConfirmDeletePress() {
+  onConfirmDeletePress = () => {
     const {
       id,
       onDeleteBackupPress

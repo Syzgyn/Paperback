@@ -28,18 +28,18 @@ class ImportLists extends Component {
   //
   // Listeners
 
-  onAddImportListPress() {
+  onAddImportListPress = () => {
     this.setState({ isAddImportListModalOpen: true });
   }
 
-  onAddImportListModalClose({ listSelected = false } = {}) {
+  onAddImportListModalClose = ({ listSelected = false } = {}) => {
     this.setState({
       isAddImportListModalOpen: false,
       isEditImportListModalOpen: listSelected
     });
   }
 
-  onEditImportListModalClose() {
+  onEditImportListModalClose = () => {
     this.setState({ isEditImportListModalOpen: false });
   }
 

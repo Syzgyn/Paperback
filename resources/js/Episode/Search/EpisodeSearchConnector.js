@@ -44,7 +44,7 @@ class EpisodeSearchConnector extends Component {
   //
   // Listeners
 
-  onQuickSearchPress() {
+  onQuickSearchPress = () => {
     this.props.executeCommand({
       name: commandNames.EPISODE_SEARCH,
       episodeIds: [this.props.episodeId]
@@ -53,7 +53,7 @@ class EpisodeSearchConnector extends Component {
     this.props.onModalClose();
   }
 
-  onInteractiveSearchPress() {
+  onInteractiveSearchPress = () => {
     this.setState({ isInteractiveSearchOpen: true });
   }
 

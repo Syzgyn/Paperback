@@ -113,11 +113,11 @@ class SeriesIndexOverviews extends Component {
   //
   // Control
 
-  setGridRef(ref) {
+  setGridRef = (ref) => {
     this._grid = ref;
   }
 
-  calculateGrid(width = this.state.width, isSmallScreen) {
+  calculateGrid = (width = this.state.width, isSmallScreen) => {
     const {
       sortKey,
       overviewOptions
@@ -135,7 +135,7 @@ class SeriesIndexOverviews extends Component {
     });
   }
 
-  cellRenderer({ key, rowIndex, style }) {
+  cellRenderer = ({ key, rowIndex, style }) => {
     const {
       items,
       sortKey,
@@ -190,7 +190,7 @@ class SeriesIndexOverviews extends Component {
   //
   // Listeners
 
-  onMeasure({ width }) {
+  onMeasure = ({ width }) => {
     this.calculateGrid(width, this.props.isSmallScreen);
   }
 

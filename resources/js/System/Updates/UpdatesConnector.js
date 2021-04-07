@@ -72,7 +72,7 @@ class UpdatesConnector extends Component {
   //
   // Listeners
 
-  onInstallLatestPress() {
+  onInstallLatestPress = () => {
     this.props.dispatchExecuteCommand({ name: commandNames.APPLICATION_UPDATE });
   }
 

@@ -42,16 +42,16 @@ class EpisodeHistoryRow extends Component {
   //
   // Listeners
 
-  onMarkAsFailedPress() {
+  onMarkAsFailedPress = () => {
     this.setState({ isMarkAsFailedModalOpen: true });
   }
 
-  onConfirmMarkAsFailed() {
+  onConfirmMarkAsFailed = () => {
     this.props.onMarkAsFailedPress(this.props.id);
     this.setState({ isMarkAsFailedModalOpen: false });
   }
 
-  onMarkAsFailedModalClose() {
+  onMarkAsFailedModalClose = () => {
     this.setState({ isMarkAsFailedModalOpen: false });
   }
 

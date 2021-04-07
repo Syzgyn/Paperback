@@ -25,16 +25,16 @@ class LanguageProfiles extends Component {
   //
   // Listeners
 
-  onCloneLanguageProfilePress(id) {
+  onCloneLanguageProfilePress = (id) => {
     this.props.onCloneLanguageProfilePress(id);
     this.setState({ isLanguageProfileModalOpen: true });
   }
 
-  onEditLanguageProfilePress() {
+  onEditLanguageProfilePress = () => {
     this.setState({ isLanguageProfileModalOpen: true });
   }
 
-  onModalClose() {
+  onModalClose = () => {
     this.setState({ isLanguageProfileModalOpen: false });
   }
 

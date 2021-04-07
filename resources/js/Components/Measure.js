@@ -15,11 +15,9 @@ class Measure extends Component {
   //
   // Listeners
 
-  onMeasure(payload) {
-      _.debounce((payload) => {
-        this.props.onMeasure(payload);
-      }, 250, { leading: true, trailing: false })
-  }
+  onMeasure = _.debounce((payload) => {
+    this.props.onMeasure(payload);
+  }, 250, { leading: true, trailing: false })
 
   //
   // Render

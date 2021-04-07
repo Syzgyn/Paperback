@@ -31,7 +31,7 @@ class DownloadClientsConnector extends Component {
   //
   // Listeners
 
-  onConfirmDeleteDownloadClient(id) {
+  onConfirmDeleteDownloadClient = (id) => {
     this.props.deleteDownloadClient({ id });
   }
 

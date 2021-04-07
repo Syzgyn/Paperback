@@ -33,7 +33,7 @@ class TextInput extends Component {
   //
   // Control
 
-  setInputRef(ref) {
+  setInputRef = (ref) => {
     this._input = ref;
   }
 
@@ -63,7 +63,7 @@ class TextInput extends Component {
   //
   // Listeners
 
-  onChange(event) {
+  onChange = (event) => {
     const {
       name,
       type,
@@ -84,7 +84,7 @@ class TextInput extends Component {
     onChange(payload);
   }
 
-  onFocus(event) {
+  onFocus = (event) => {
     if (this.props.onFocus) {
       this.props.onFocus(event);
     }
@@ -92,19 +92,19 @@ class TextInput extends Component {
     this.selectionChange();
   }
 
-  onKeyUp() {
+  onKeyUp = () => {
     this.selectionChange();
   }
 
-  onMouseDown() {
+  onMouseDown = () => {
     this._isMouseTarget = true;
   }
 
-  onMouseUp() {
+  onMouseUp = () => {
     this.selectionChange();
   }
 
-  onDocumentMouseUp() {
+  onDocumentMouseUp = () => {
     if (this._isMouseTarget) {
       this.selectionChange();
     }

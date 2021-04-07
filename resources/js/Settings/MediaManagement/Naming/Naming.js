@@ -28,7 +28,7 @@ class Naming extends Component {
   //
   // Listeners
 
-  onStandardNamingModalOpenClick() {
+  onStandardNamingModalOpenClick = () => {
     this.setState({
       isNamingModalOpen: true,
       namingModalOptions: {
@@ -40,7 +40,7 @@ class Naming extends Component {
     });
   }
 
-  onDailyNamingModalOpenClick() {
+  onDailyNamingModalOpenClick = () => {
     this.setState({
       isNamingModalOpen: true,
       namingModalOptions: {
@@ -53,7 +53,7 @@ class Naming extends Component {
     });
   }
 
-  onAnimeNamingModalOpenClick() {
+  onAnimeNamingModalOpenClick = () => {
     this.setState({
       isNamingModalOpen: true,
       namingModalOptions: {
@@ -66,7 +66,7 @@ class Naming extends Component {
     });
   }
 
-  onSeriesFolderNamingModalOpenClick() {
+  onSeriesFolderNamingModalOpenClick = () => {
     this.setState({
       isNamingModalOpen: true,
       namingModalOptions: {
@@ -75,7 +75,7 @@ class Naming extends Component {
     });
   }
 
-  onSeasonFolderNamingModalOpenClick() {
+  onSeasonFolderNamingModalOpenClick = () => {
     this.setState({
       isNamingModalOpen: true,
       namingModalOptions: {
@@ -85,7 +85,7 @@ class Naming extends Component {
     });
   }
 
-  onSpecialsFolderNamingModalOpenClick() {
+  onSpecialsFolderNamingModalOpenClick = () => {
     this.setState({
       isNamingModalOpen: true,
       namingModalOptions: {
@@ -95,7 +95,7 @@ class Naming extends Component {
     });
   }
 
-  onNamingModalClose() {
+  onNamingModalClose = () => {
     this.setState({ isNamingModalOpen: false });
   }
 

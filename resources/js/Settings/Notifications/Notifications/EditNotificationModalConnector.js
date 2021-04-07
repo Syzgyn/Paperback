@@ -28,7 +28,7 @@ class EditNotificationModalConnector extends Component {
   //
   // Listeners
 
-  onModalClose() {
+  onModalClose = () => {
     this.props.dispatchClearPendingChanges();
     this.props.dispatchCancelTestNotification();
     this.props.dispatchCancelSaveNotification();

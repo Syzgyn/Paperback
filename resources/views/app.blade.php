@@ -26,7 +26,8 @@
     </style>
 </head>
 <body>
-    <div id="app"></div>
+    <div id="portal-root"></div>
+    <div id="root"></div>
 
     <script>
         window.Sonarr = {

@@ -30,7 +30,7 @@ class ImportSeriesSelectSeriesConnector extends Component {
   //
   // Listeners
 
-  onSearchInputChange(term) {
+  onSearchInputChange = (term) => {
     this.props.queueLookupSeries({
       name: this.props.id,
       term,
@@ -38,7 +38,7 @@ class ImportSeriesSelectSeriesConnector extends Component {
     });
   }
 
-  onSeriesSelect(tvdbId) {
+  onSeriesSelect = (tvdbId) => {
     const {
       id,
       items,

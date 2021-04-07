@@ -118,7 +118,7 @@ class ImportSeriesConnector extends Component {
   //
   // Listeners
 
-  onInputChange(ids, name, value) {
+  onInputChange = (ids, name, value) => {
     this.props.dispatchSetAddSeriesDefault({ [name]: value });
 
     ids.forEach((id) => {
@@ -129,7 +129,7 @@ class ImportSeriesConnector extends Component {
     });
   }
 
-  onImportPress(ids) {
+  onImportPress = (ids) => {
     this.props.dispatchImportSeries({ ids });
   }
 

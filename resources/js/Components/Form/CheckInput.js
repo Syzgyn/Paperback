@@ -42,7 +42,7 @@ class CheckInput extends Component {
     this._checkbox.indeterminate = value !== uncheckedValue && value !== checkedValue;
   }
 
-  toggleChecked(checked, shiftKey) {
+  toggleChecked = (checked, shiftKey) => {
     const {
       name,
       value,
@@ -64,11 +64,11 @@ class CheckInput extends Component {
   //
   // Listeners
 
-  setRef(ref) {
+  setRef = (ref) => {
     this._checkbox = ref;
   }
 
-  onClick(event) {
+  onClick = (event) => {
     if (this.props.isDisabled) {
       return;
     }
@@ -80,7 +80,7 @@ class CheckInput extends Component {
     this.toggleChecked(checked, shiftKey);
   }
 
-  onChange(event) {
+  onChange = (event) => {
     const checked = event.target.checked;
     const shiftKey = event.nativeEvent.shiftKey;
 

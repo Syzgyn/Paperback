@@ -38,11 +38,11 @@ class LanguageProfilesConnector extends Component {
   //
   // Listeners
 
-  onConfirmDeleteLanguageProfile(id) {
+  onConfirmDeleteLanguageProfile = (id) => {
     this.props.dispatchDeleteLanguageProfile({ id });
   }
 
-  onCloneLanguageProfilePress(id) {
+  onCloneLanguageProfilePress = (id) => {
     this.props.dispatchCloneLanguageProfile({ id });
   }
 

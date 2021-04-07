@@ -139,39 +139,39 @@ class SeriesDetailsSeason extends Component {
   //
   // Listeners
 
-  onOrganizePress() {
+  onOrganizePress = () => {
     this.setState({ isOrganizeModalOpen: true });
   }
 
-  onOrganizeModalClose() {
+  onOrganizeModalClose = () => {
     this.setState({ isOrganizeModalOpen: false });
   }
 
-  onManageEpisodesPress() {
+  onManageEpisodesPress = () => {
     this.setState({ isManageEpisodesOpen: true });
   }
 
-  onManageEpisodesModalClose() {
+  onManageEpisodesModalClose = () => {
     this.setState({ isManageEpisodesOpen: false });
   }
 
-  onHistoryPress() {
+  onHistoryPress = () => {
     this.setState({ isHistoryModalOpen: true });
   }
 
-  onHistoryModalClose() {
+  onHistoryModalClose = () => {
     this.setState({ isHistoryModalOpen: false });
   }
 
-  onInteractiveSearchPress() {
+  onInteractiveSearchPress = () => {
     this.setState({ isInteractiveSearchModalOpen: true });
   }
 
-  onInteractiveSearchModalClose() {
+  onInteractiveSearchModalClose = () => {
     this.setState({ isInteractiveSearchModalOpen: false });
   }
 
-  onExpandPress() {
+  onExpandPress = () => {
     const {
       seasonNumber,
       isExpanded
@@ -180,7 +180,7 @@ class SeriesDetailsSeason extends Component {
     this.props.onExpandPress(seasonNumber, !isExpanded);
   }
 
-  onMonitorEpisodePress(episodeId, monitored, { shiftKey }) {
+  onMonitorEpisodePress = (episodeId, monitored, { shiftKey }) => {
     const lastToggled = this.state.lastToggledEpisode;
     const episodeIds = [episodeId];
 

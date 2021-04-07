@@ -12,7 +12,7 @@ class EnhancedSelectInputOption extends Component {
   //
   // Listeners
 
-  onPress(e) {
+  onPress = (e) => {
     e.preventDefault();
 
     const {
@@ -23,7 +23,7 @@ class EnhancedSelectInputOption extends Component {
     onSelect(id);
   }
 
-  onCheckPress() {
+  onCheckPress = () => {
     // CheckInput requires a handler. Swallow the change event because onPress will already handle it via event propagation.
   }
 

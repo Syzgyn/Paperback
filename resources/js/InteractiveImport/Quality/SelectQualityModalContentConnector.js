@@ -40,7 +40,7 @@ class SelectQualityModalContentConnector extends Component {
   //
   // Lifecycle
 
-  componentDidMount() {
+  componentDidMount = () => {
     if (!this.props.isPopulated) {
       this.props.dispatchFetchQualityProfileSchema();
     }
@@ -49,7 +49,7 @@ class SelectQualityModalContentConnector extends Component {
   //
   // Listeners
 
-  onQualitySelect({ qualityId, proper, real }) {
+  onQualitySelect = ({ qualityId, proper, real }) => {
     const {
       ids,
       dispatchUpdateInteractiveImportItems,

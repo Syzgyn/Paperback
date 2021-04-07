@@ -67,7 +67,7 @@ class FileBrowserModalContentConnector extends Component {
   //
   // Listeners
 
-  onFetchPaths(path) {
+  onFetchPaths = (path) => {
     const {
       includeFiles,
       dispatchFetchPaths
@@ -80,11 +80,11 @@ class FileBrowserModalContentConnector extends Component {
     });
   }
 
-  onClearPaths() {
+  onClearPaths = () => {
     // this.props.dispatchClearPaths();
   }
 
-  onModalClose() {
+  onModalClose = () => {
     this.props.dispatchClearPaths();
     this.props.onModalClose();
   }

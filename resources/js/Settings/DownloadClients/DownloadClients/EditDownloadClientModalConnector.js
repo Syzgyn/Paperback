@@ -28,7 +28,7 @@ class EditDownloadClientModalConnector extends Component {
   //
   // Listeners
 
-  onModalClose() {
+  onModalClose = () => {
     this.props.dispatchClearPendingChanges();
     this.props.dispatchCancelTestDownloadClient();
     this.props.dispatchCancelSaveDownloadClient();

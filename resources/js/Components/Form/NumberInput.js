@@ -51,7 +51,7 @@ class NumberInput extends Component {
   //
   // Listeners
 
-  onChange({ name, value }) {
+  onChange = ({ name, value }) => {
     this.setState({ value });
 
     this.props.onChange({
@@ -61,11 +61,11 @@ class NumberInput extends Component {
 
   }
 
-  onFocus() {
+  onFocus = () => {
     this.setState({ isFocused: true });
   }
 
-  onBlur() {
+  onBlur = () => {
     const {
       name,
       onChange

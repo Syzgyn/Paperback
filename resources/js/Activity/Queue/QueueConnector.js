@@ -88,38 +88,38 @@ class QueueConnector extends Component {
   //
   // Control
 
-  repopulate() {
+  repopulate = () => {
     this.props.fetchQueue();
   }
 
   //
   // Listeners
 
-  onFirstPagePress() {
+  onFirstPagePress = () => {
     this.props.gotoQueueFirstPage();
   }
 
-  onPreviousPagePress() {
+  onPreviousPagePress = () => {
     this.props.gotoQueuePreviousPage();
   }
 
-  onNextPagePress() {
+  onNextPagePress = () => {
     this.props.gotoQueueNextPage();
   }
 
-  onLastPagePress() {
+  onLastPagePress = () => {
     this.props.gotoQueueLastPage();
   }
 
-  onPageSelect(page) {
+  onPageSelect = (page) => {
     this.props.gotoQueuePage({ page });
   }
 
-  onSortPress(sortKey) {
+  onSortPress = (sortKey) => {
     this.props.setQueueSort({ sortKey });
   }
 
-  onTableOptionChange(payload) {
+  onTableOptionChange = (payload) => {
     this.props.setQueueTableOption(payload);
 
     if (payload.pageSize) {
@@ -127,17 +127,17 @@ class QueueConnector extends Component {
     }
   }
 
-  onRefreshPress() {
+  onRefreshPress = () => {
     this.props.executeCommand({
       name: commandNames.REFRESH_MONITORED_DOWNLOADS
     });
   }
 
-  onGrabSelectedPress(ids) {
+  onGrabSelectedPress = (ids) => {
     this.props.grabQueueItems({ ids });
   }
 
-  onRemoveSelectedPress(payload) {
+  onRemoveSelectedPress = (payload) => {
     this.props.removeQueueItems(payload);
   }
 

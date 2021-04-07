@@ -113,7 +113,7 @@ class Menu extends Component {
   //
   // Listeners
 
-  onWindowClick(event) {
+  onWindowClick = (event) => {
     const menuButton = document.getElementById(this._menuButtonId);
 
     if (!menuButton) {
@@ -126,7 +126,7 @@ class Menu extends Component {
     }
   }
 
-  onTouchStart(event) {
+  onTouchStart = (event) => {
     const menuButton = document.getElementById(this._menuButtonId);
     const menuContent = document.getElementById(this._menuContentId);
 
@@ -150,17 +150,17 @@ class Menu extends Component {
     }
   }
 
-  onWindowResize() {
+  onWindowResize = () => {
     this.setMaxHeight();
   }
 
-  onWindowScroll(event) {
+  onWindowScroll = (event) => {
     if (this.state.isMenuOpen) {
       this.setMaxHeight();
     }
   }
 
-  onMenuButtonPress() {
+  onMenuButtonPress = () => {
     const state = {
       isMenuOpen: !this.state.isMenuOpen
     };

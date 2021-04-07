@@ -7,7 +7,7 @@ class AddDownloadClientPresetMenuItem extends Component {
   //
   // Listeners
 
-  onPress() {
+  onPress = () => {
     const {
       name,
       implementation

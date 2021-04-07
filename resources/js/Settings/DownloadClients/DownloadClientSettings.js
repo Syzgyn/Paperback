@@ -29,15 +29,15 @@ class DownloadClientSettings extends Component {
   //
   // Listeners
 
-  onChildMounted(saveCallback) {
+  onChildMounted = (saveCallback) => {
     this._saveCallback = saveCallback;
   }
 
-  onChildStateChange(payload) {
+  onChildStateChange = (payload) => {
     this.setState(payload);
   }
 
-  onSavePress() {
+  onSavePress = () => {
     if (this._saveCallback) {
       this._saveCallback();
     }

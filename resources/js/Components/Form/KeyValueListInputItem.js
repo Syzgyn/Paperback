@@ -10,7 +10,7 @@ class KeyValueListInputItem extends Component {
   //
   // Listeners
 
-  onKeyChange({ value: keyValue }) {
+  onKeyChange = ({ value: keyValue }) => {
     const {
       index,
       value,
@@ -20,7 +20,7 @@ class KeyValueListInputItem extends Component {
     onChange(index, { key: keyValue, value });
   }
 
-  onValueChange({ value }) {
+  onValueChange = ({ value }) => {
     // TODO: Validate here or validate at a lower level component
 
     const {
@@ -32,7 +32,7 @@ class KeyValueListInputItem extends Component {
     onChange(index, { key: keyValue, value });
   }
 
-  onRemovePress() {
+  onRemovePress = () => {
     const {
       index,
       onRemove
@@ -41,11 +41,11 @@ class KeyValueListInputItem extends Component {
     onRemove(index);
   }
 
-  onFocus() {
+  onFocus = () => {
     this.props.onFocus();
   }
 
-  onBlur() {
+  onBlur = () => {
     this.props.onBlur();
   }
 

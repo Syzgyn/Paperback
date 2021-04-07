@@ -8,7 +8,7 @@ class SelectSeriesRow extends Component {
   //
   // Listeners
 
-  onPress() {
+  onPress = () => {
     this.props.onSeriesSelect(this.props.id);
   }
 

@@ -70,7 +70,7 @@ class DownloadClientOptionsConnector extends Component {
   //
   // Listeners
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     this.props.dispatchSetDownloadClientOptionsValue({ name, value });
   }
 

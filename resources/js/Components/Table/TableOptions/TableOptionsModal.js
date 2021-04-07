@@ -46,7 +46,7 @@ class TableOptionsModal extends Component {
   //
   // Listeners
 
-  onPageSizeChange({ value }) {
+  onPageSizeChange = ({ value }) => {
     let pageSizeError = null;
 
     if (value < 5) {
@@ -63,7 +63,7 @@ class TableOptionsModal extends Component {
     });
   }
 
-  onVisibleChange({ name, value }) {
+  onVisibleChange = ({ name, value }) => {
     const columns = _.cloneDeep(this.props.columns);
 
     const column = _.find(columns, { name });
@@ -72,7 +72,7 @@ class TableOptionsModal extends Component {
     this.props.onTableOptionChange({ columns });
   }
 
-  onColumnDragMove(dragIndex, dropIndex) {
+  onColumnDragMove = (dragIndex, dropIndex) => {
     if (this.state.dragIndex !== dragIndex || this.state.dropIndex !== dropIndex) {
       this.setState({
         dragIndex,
@@ -81,7 +81,7 @@ class TableOptionsModal extends Component {
     }
   }
 
-  onColumnDragEnd({ id }, didDrop) {
+  onColumnDragEnd = ({ id }, didDrop) => {
     const {
       dragIndex,
       dropIndex

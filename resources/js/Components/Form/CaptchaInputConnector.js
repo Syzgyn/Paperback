@@ -37,14 +37,14 @@ class CaptchaInputConnector extends Component {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     this.props.resetCaptcha();
   }
 
   //
   // Listeners
 
-  onRefreshPress() {
+  onRefreshPress = () => {
     const {
       provider,
       providerData
@@ -53,7 +53,7 @@ class CaptchaInputConnector extends Component {
     this.props.refreshCaptcha({ provider, providerData });
   }
 
-  onCaptchaChange(captchaResponse) {
+  onCaptchaChange = (captchaResponse) => {
     // If the captcha has expired `captchaResponse` will be null.
     // In the event it's null don't try to get the captchaCookie.
     // TODO: Should we clear the cookie? or reset the captcha?

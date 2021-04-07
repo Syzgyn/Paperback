@@ -8,7 +8,7 @@ class SelectSeasonRow extends Component {
   //
   // Listeners
 
-  onPress() {
+  onPress = () => {
     this.props.onSeasonSelect(this.props.seasonNumber);
   }
 

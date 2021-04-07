@@ -39,14 +39,14 @@ class OAuthInputConnector extends Component {
     });
   }
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     this.props.resetOAuth();
   }
 
   //
   // Listeners
 
-  onPress() {
+  onPress = () => {
     const {
       name,
       provider,

@@ -113,7 +113,7 @@ class EditQualityProfileModalContentConnector extends Component {
   //
   // Control
 
-  ensureCutoff(qualityProfile) {
+  ensureCutoff = (qualityProfile) => {
     const cutoff = qualityProfile.cutoff.value;
 
     const cutoffItem = _.find(qualityProfile.items.value, (i) => {
@@ -140,11 +140,11 @@ class EditQualityProfileModalContentConnector extends Component {
   //
   // Listeners
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     this.props.setQualityProfileValue({ name, value });
   }
 
-  onCutoffChange({ name, value }) {
+  onCutoffChange = ({ name, value }) => {
     const id = parseInt(value);
     const item = _.find(this.props.item.items.value, (i) => {
       if (i.quality) {
@@ -159,11 +159,11 @@ class EditQualityProfileModalContentConnector extends Component {
     this.props.setQualityProfileValue({ name, value: cutoffId });
   }
 
-  onSavePress() {
+  onSavePress = () => {
     this.props.saveQualityProfile({ id: this.props.id });
   }
 
-  onQualityProfileItemAllowedChange(id, allowed) {
+  onQualityProfileItemAllowedChange = (id, allowed) => {
     const qualityProfile = _.cloneDeep(this.props.item);
     const items = qualityProfile.items.value;
     const item = _.find(qualityProfile.items.value, (i) => i.quality && i.quality.id === id);
@@ -178,7 +178,7 @@ class EditQualityProfileModalContentConnector extends Component {
     this.ensureCutoff(qualityProfile);
   }
 
-  onItemGroupAllowedChange(id, allowed) {
+  onItemGroupAllowedChange = (id, allowed) => {
     const qualityProfile = _.cloneDeep(this.props.item);
     const items = qualityProfile.items.value;
     const item = _.find(qualityProfile.items.value, (i) => i.id === id);
@@ -198,7 +198,7 @@ class EditQualityProfileModalContentConnector extends Component {
     this.ensureCutoff(qualityProfile);
   }
 
-  onItemGroupNameChange(id, name) {
+  onItemGroupNameChange = (id, name) => {
     const qualityProfile = _.cloneDeep(this.props.item);
     const items = qualityProfile.items.value;
     const group = _.find(items, (i) => i.id === id);
@@ -211,7 +211,7 @@ class EditQualityProfileModalContentConnector extends Component {
     });
   }
 
-  onCreateGroupPress(id) {
+  onCreateGroupPress = (id) => {
     const qualityProfile = _.cloneDeep(this.props.item);
     const items = qualityProfile.items.value;
     const item = _.find(items, (i) => i.quality && i.quality.id === id);
@@ -238,7 +238,7 @@ class EditQualityProfileModalContentConnector extends Component {
     this.ensureCutoff(qualityProfile);
   }
 
-  onDeleteGroupPress(id) {
+  onDeleteGroupPress = (id) => {
     const qualityProfile = _.cloneDeep(this.props.item);
     const items = qualityProfile.items.value;
     const group = _.find(items, (i) => i.id === id);
@@ -255,7 +255,7 @@ class EditQualityProfileModalContentConnector extends Component {
     this.ensureCutoff(qualityProfile);
   }
 
-  onQualityProfileItemDragMove(options) {
+  onQualityProfileItemDragMove = (options) => {
     const {
       dragQualityIndex,
       dropQualityIndex,
@@ -341,7 +341,7 @@ class EditQualityProfileModalContentConnector extends Component {
     }
   }
 
-  onQualityProfileItemDragEnd(didDrop) {
+  onQualityProfileItemDragEnd = (didDrop) => {
     const {
       dragQualityIndex,
       dropQualityIndex
@@ -394,7 +394,7 @@ class EditQualityProfileModalContentConnector extends Component {
     });
   }
 
-  onToggleEditGroupsMode() {
+  onToggleEditGroupsMode = () => {
     this.setState({ editGroups: !this.state.editGroups });
   }
 

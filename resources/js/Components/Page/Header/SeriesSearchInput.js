@@ -7,6 +7,7 @@ import Icon from 'Components/Icon';
 import keyboardShortcuts, { shortcuts } from 'Components/keyboardShortcuts';
 import SeriesSearchResult from './SeriesSearchResult';
 import LoadingIndicator from 'Components/Loading/LoadingIndicator';
+import FuseWorker from './fuse.worker';
 import styles from './SeriesSearchInput.css';
 
 const ADD_NEW_TYPE = 'addNew';
@@ -20,6 +21,7 @@ class SeriesSearchInput extends Component {
     super(props, context);
 
     this._autosuggest = null;
+    this._worker = null;
 
     this.state = {
       value: '',
@@ -31,15 +33,31 @@ class SeriesSearchInput extends Component {
     this.props.bindShortcut(shortcuts.SERIES_SEARCH_INPUT.key, this.focusInput);
   }
 
+  componentWillUnmount() {
+    if (this._worker) {
+      this._worker.removeEventListener('message', this.onSuggestionsReceived, false);
+      this._worker.terminate();
+      this._worker = null;
+    }
+  }
+
+  getWorker() {
+    if (!this._worker) {
+      this._worker = new FuseWorker();
+      this._worker.addEventListener('message', this.onSuggestionsReceived, false);
+    }
+
+    return this._worker;
+  }
 
   //
   // Control
 
-  setAutosuggestRef(ref) {
+  setAutosuggestRef = (ref) => {
     this._autosuggest = ref;
   }
 
-  focusInput(event) {
+  focusInput = (event) => {
     event.preventDefault();
     this._autosuggest.input.focus();
   }
@@ -102,7 +120,7 @@ class SeriesSearchInput extends Component {
   //
   // Listeners
 
-  onChange(event, { newValue, method }) {
+  onChange = (event, { newValue, method }) => {
     if (method === 'up' || method === 'down') {
       return;
     }
@@ -110,7 +128,7 @@ class SeriesSearchInput extends Component {
     this.setState({ value: newValue });
   }
 
-  onKeyDown(event) {
+  onKeyDown = (event) => {
     if (event.shiftKey || event.altKey || event.ctrlKey) {
       return;
     }
@@ -155,11 +173,11 @@ class SeriesSearchInput extends Component {
     this.reset();
   }
 
-  onBlur() {
+  onBlur = () => {
     this.reset();
   }
 
-  onSuggestionsFetchRequested({ value }) {
+  onSuggestionsFetchRequested = ({ value }) => {
     if (!this.state.loading) {
       this.setState({
         loading: true
@@ -169,30 +187,29 @@ class SeriesSearchInput extends Component {
     this.requestSuggestions(value);
   };
 
-  requestSuggestions(value) {
-      _.debounce((value) => {
-        if (!this.state.loading) {
-          return;
-        }
+  requestSuggestions = _.debounce((value) => {
+    if (!this.state.loading) {
+      return;
+    }
 
-        const requestLoading = this.state.requestLoading;
+    const requestLoading = this.state.requestLoading;
 
-        this.setState({
-          requestValue: value,
-          requestLoading: true
-        });
+    this.setState({
+      requestValue: value,
+      requestLoading: true
+    });
 
-        if (!requestLoading) {
-          const payload = {
-            value,
-            series: this.props.series
-          };
+    if (!requestLoading) {
+      const payload = {
+        value,
+        series: this.props.series
+      };
 
-        }
-      }, 250);
-  };
+      this.getWorker().postMessage(payload);
+    }
+  }, 250);
 
-  onSuggestionsReceived(message) {
+  onSuggestionsReceived = (message) => {
     const {
       value,
       suggestions
@@ -221,17 +238,18 @@ class SeriesSearchInput extends Component {
         series: this.props.series
       };
 
+      this.getWorker().postMessage(payload);
     }
   }
 
-  onSuggestionsClearRequested() {
+  onSuggestionsClearRequested = () => {
     this.setState({
       suggestions: [],
       loading: false
     });
   }
 
-  onSuggestionSelected(event, { suggestion }) {
+  onSuggestionSelected = (event, { suggestion }) => {
     if (suggestion.type === ADD_NEW_TYPE) {
       this.props.onGoToAddNewSeries(this.state.value);
     } else {

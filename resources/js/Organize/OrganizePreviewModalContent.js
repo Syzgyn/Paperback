@@ -45,24 +45,24 @@ class OrganizePreviewModalContent extends Component {
   //
   // Control
 
-  getSelectedIds() {
+  getSelectedIds = () => {
     return getSelectedIds(this.state.selectedState);
   }
 
   //
   // Listeners
 
-  onSelectAllChange({ value }) {
+  onSelectAllChange = ({ value }) => {
     this.setState(selectAll(this.state.selectedState, value));
   }
 
-  onSelectedChange({ id, value, shiftKey = false }) {
+  onSelectedChange = ({ id, value, shiftKey = false }) => {
     this.setState((state) => {
       return toggleSelected(state, this.props.items, id, value, shiftKey);
     });
   }
 
-  onOrganizePress() {
+  onOrganizePress = () => {
     this.props.onOrganizePress(this.getSelectedIds());
   }
 

@@ -90,14 +90,14 @@ class SeriesIndexItemConnector extends Component {
   //
   // Listeners
 
-  onRefreshSeriesPress() {
+  onRefreshSeriesPress = () => {
     this.props.dispatchExecuteCommand({
       name: commandNames.REFRESH_SERIES,
       seriesId: this.props.id
     });
   }
 
-  onSearchPress() {
+  onSearchPress = () => {
     this.props.dispatchExecuteCommand({
       name: commandNames.SERIES_SEARCH,
       seriesId: this.props.id

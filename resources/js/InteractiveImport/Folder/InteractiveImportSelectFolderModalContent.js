@@ -44,19 +44,19 @@ class InteractiveImportSelectFolderModalContent extends Component {
   //
   // Listeners
 
-  onPathChange({ value }) {
+  onPathChange = ({ value }) => {
     this.setState({ folder: value });
   }
 
-  onRecentPathPress(folder) {
+  onRecentPathPress = (folder) => {
     this.setState({ folder });
   }
 
-  onQuickImportPress() {
+  onQuickImportPress = () => {
     this.props.onQuickImportPress(this.state.folder);
   }
 
-  onInteractiveImportPress() {
+  onInteractiveImportPress = () => {
     this.props.onInteractiveImportPress(this.state.folder);
   }
 

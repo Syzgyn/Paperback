@@ -55,35 +55,35 @@ class LogsTableConnector extends Component {
   //
   // Listeners
 
-  onFirstPagePress() {
+  onFirstPagePress = () => {
     this.props.gotoLogsFirstPage();
   }
 
-  onPreviousPagePress() {
+  onPreviousPagePress = () => {
     this.props.gotoLogsPreviousPage();
   }
 
-  onNextPagePress() {
+  onNextPagePress = () => {
     this.props.gotoLogsNextPage();
   }
 
-  onLastPagePress() {
+  onLastPagePress = () => {
     this.props.gotoLogsLastPage();
   }
 
-  onPageSelect(page) {
+  onPageSelect = (page) => {
     this.props.gotoLogsPage({ page });
   }
 
-  onSortPress(sortKey) {
+  onSortPress = (sortKey) => {
     this.props.setLogsSort({ sortKey });
   }
 
-  onFilterSelect(selectedFilterKey) {
+  onFilterSelect = (selectedFilterKey) => {
     this.props.setLogsFilter({ selectedFilterKey });
   }
 
-  onTableOptionChange(payload) {
+  onTableOptionChange = (payload) => {
     this.props.setLogsTableOption(payload);
 
     if (payload.pageSize) {
@@ -91,11 +91,11 @@ class LogsTableConnector extends Component {
     }
   }
 
-  onRefreshPress() {
+  onRefreshPress = () => {
     this.props.gotoLogsFirstPage();
   }
 
-  onClearLogsPress() {
+  onClearLogsPress = () => {
     this.props.executeCommand({ name: commandNames.CLEAR_LOGS });
   }
 

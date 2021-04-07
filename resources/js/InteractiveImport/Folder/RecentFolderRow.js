@@ -12,11 +12,11 @@ class RecentFolderRow extends Component {
   //
   // Listeners
 
-  onPress() {
+  onPress = () => {
     this.props.onPress(this.props.folder);
   }
 
-  onRemovePress(event) {
+  onRemovePress = (event) => {
     event.stopPropagation();
 
     const {

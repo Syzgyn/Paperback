@@ -28,7 +28,7 @@ class EditImportListModalConnector extends Component {
   //
   // Listeners
 
-  onModalClose() {
+  onModalClose = () => {
     this.props.dispatchClearPendingChanges();
     this.props.dispatchCancelTestImportList();
     this.props.dispatchCancelSaveImportList();

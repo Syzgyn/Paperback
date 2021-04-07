@@ -11,7 +11,7 @@ class NamingOption extends Component {
   //
   // Listeners
 
-  onPress() {
+  onPress = () => {
     const {
       token,
       tokenSeparator,

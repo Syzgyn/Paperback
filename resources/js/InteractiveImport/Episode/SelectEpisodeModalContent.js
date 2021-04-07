@@ -57,28 +57,28 @@ class SelectEpisodeModalContent extends Component {
   //
   // Control
 
-  getSelectedIds() {
+  getSelectedIds = () => {
     return getSelectedIds(this.state.selectedState);
   }
 
   //
   // Listeners
 
-  onFilterChange({ value }) {
+  onFilterChange = ({ value }) => {
     this.setState({ filter: value.toLowerCase() });
   }
 
-  onSelectAllChange({ value }) {
+  onSelectAllChange = ({ value }) => {
     this.setState(selectAll(this.state.selectedState, value));
   }
 
-  onSelectedChange({ id, value, shiftKey = false }) {
+  onSelectedChange = ({ id, value, shiftKey = false }) => {
     this.setState((state) => {
       return toggleSelected(state, this.props.items, id, value, shiftKey);
     });
   }
 
-  onEpisodesSelect() {
+  onEpisodesSelect = () => {
     this.props.onEpisodesSelect(this.getSelectedIds());
   }
 

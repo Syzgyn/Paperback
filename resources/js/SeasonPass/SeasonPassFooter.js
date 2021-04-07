@@ -40,11 +40,11 @@ class SeasonPassFooter extends Component {
   //
   // Listeners
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     this.setState({ [name]: value });
   }
 
-  onUpdateSelectedPress() {
+  onUpdateSelectedPress = () => {
     const {
       monitor,
       monitored

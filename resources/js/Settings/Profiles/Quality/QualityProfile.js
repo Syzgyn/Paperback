@@ -26,30 +26,30 @@ class QualityProfile extends Component {
   //
   // Listeners
 
-  onEditQualityProfilePress() {
+  onEditQualityProfilePress = () => {
     this.setState({ isEditQualityProfileModalOpen: true });
   }
 
-  onEditQualityProfileModalClose() {
+  onEditQualityProfileModalClose = () => {
     this.setState({ isEditQualityProfileModalOpen: false });
   }
 
-  onDeleteQualityProfilePress() {
+  onDeleteQualityProfilePress = () => {
     this.setState({
       isEditQualityProfileModalOpen: false,
       isDeleteQualityProfileModalOpen: true
     });
   }
 
-  onDeleteQualityProfileModalClose() {
+  onDeleteQualityProfileModalClose = () => {
     this.setState({ isDeleteQualityProfileModalOpen: false });
   }
 
-  onConfirmDeleteQualityProfile() {
+  onConfirmDeleteQualityProfile = () => {
     this.props.onConfirmDeleteQualityProfile(this.props.id);
   }
 
-  onCloneQualityProfilePress() {
+  onCloneQualityProfilePress = () => {
     const {
       id,
       onCloneQualityProfilePress

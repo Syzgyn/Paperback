@@ -39,7 +39,7 @@ class QualityFilterBuilderRowValueConnector extends Component {
   //
   // Lifecycle
 
-  componentDidMount() {
+  componentDidMount = () => {
     if (!this.props.isPopulated) {
       this.props.dispatchFetchQualityProfileSchema();
     }

@@ -28,11 +28,11 @@ class AgendaEvent extends Component {
   //
   // Listeners
 
-  onPress() {
+  onPress = () => {
     this.setState({ isDetailsModalOpen: true });
   }
 
-  onDetailsModalClose() {
+  onDetailsModalClose = () => {
     this.setState({ isDetailsModalOpen: false });
   }
 

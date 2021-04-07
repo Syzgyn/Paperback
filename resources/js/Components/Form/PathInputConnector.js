@@ -37,7 +37,7 @@ class PathInputConnector extends Component {
   //
   // Listeners
 
-  onFetchPaths(path) {
+  onFetchPaths = (path) => {
     const {
       includeFiles,
       dispatchFetchPaths
@@ -49,7 +49,7 @@ class PathInputConnector extends Component {
     });
   }
 
-  onClearPaths() {
+  onClearPaths = () => {
     this.props.dispatchClearPaths();
   }
 

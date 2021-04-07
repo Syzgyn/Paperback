@@ -40,14 +40,14 @@ class MonitoringOptionsModalContent extends Component {
     }
   }
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     this.setState({ [name]: value });
   }
 
   //
   // Listeners
 
-  onSavePress() {
+  onSavePress = () => {
     const {
       onSavePress
     } = this.props;

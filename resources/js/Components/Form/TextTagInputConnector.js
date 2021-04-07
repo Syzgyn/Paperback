@@ -34,7 +34,7 @@ class TextTagInputConnector extends Component {
   //
   // Listeners
 
-  onTagAdd(tag) {
+  onTagAdd = (tag) => {
     const {
       name,
       valueArray,
@@ -55,7 +55,7 @@ class TextTagInputConnector extends Component {
     onChange({ name, value: newValue.join(',') });
   }
 
-  onTagDelete({ index }) {
+  onTagDelete = ({ index }) => {
     const {
       name,
       valueArray,

@@ -30,18 +30,18 @@ class AutoCompleteInput extends Component {
   //
   // Listeners
 
-  onInputChange(event, { newValue }) {
+  onInputChange = (event, { newValue }) => {
     this.props.onChange({
       name: this.props.name,
       value: newValue
     });
   }
 
-  onInputBlur() {
+  onInputBlur = () => {
     this.setState({ suggestions: [] });
   }
 
-  onSuggestionsFetchRequested({ value }) {
+  onSuggestionsFetchRequested = ({ value }) => {
     const { values } = this.props;
     const lowerCaseValue = jdu.replace(value).toLowerCase();
 
@@ -52,7 +52,7 @@ class AutoCompleteInput extends Component {
     this.setState({ suggestions: filteredValues });
   }
 
-  onSuggestionsClearRequested() {
+  onSuggestionsClearRequested = () => {
     this.setState({ suggestions: [] });
   }
 

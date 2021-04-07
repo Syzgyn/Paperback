@@ -8,7 +8,7 @@ class SelectInput extends Component {
   //
   // Listeners
 
-  onChange(event) {
+  onChange = (event) => {
     this.props.onChange({
       name: this.props.name,
       value: event.target.value

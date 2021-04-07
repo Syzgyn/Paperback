@@ -39,7 +39,7 @@ class SelectLanguageModalContentConnector extends Component {
   //
   // Lifecycle
 
-  componentDidMount() {
+  componentDidMount = () => {
     if (!this.props.isPopulated) {
       this.props.dispatchFetchLanguageProfileSchema();
     }
@@ -48,7 +48,7 @@ class SelectLanguageModalContentConnector extends Component {
   //
   // Listeners
 
-  onLanguageSelect({ value }) {
+  onLanguageSelect = ({ value }) => {
     const {
       ids,
       dispatchUpdateInteractiveImportItems,

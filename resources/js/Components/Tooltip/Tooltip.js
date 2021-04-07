@@ -58,7 +58,7 @@ class Tooltip extends Component {
   //
   // Control
 
-  computeMaxSize(data) {
+  computeMaxSize = (data) => {
     const {
       top,
       right,
@@ -87,17 +87,17 @@ class Tooltip extends Component {
   //
   // Listeners
 
-  onMeasure({ width }) {
+  onMeasure = ({ width }) => {
     this.setState({ width });
   }
 
-  onClick() {
+  onClick = () => {
     if (isMobileUtil()) {
       this.setState({ isOpen: !this.state.isOpen });
     }
   }
 
-  onMouseEnter() {
+  onMouseEnter = () => {
     if (this._closeTimeout) {
       this._closeTimeout = clearTimeout(this._closeTimeout);
     }
@@ -105,7 +105,7 @@ class Tooltip extends Component {
     this.setState({ isOpen: true });
   }
 
-  onMouseLeave() {
+  onMouseLeave = () => {
     this._closeTimeout = setTimeout(() => {
       this.setState({ isOpen: false });
     }, 100);

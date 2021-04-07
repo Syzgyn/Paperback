@@ -67,7 +67,7 @@ class FilterBuilderRowValue extends Component {
   //
   // Listeners
 
-  onTagAdd(tag) {
+  onTagAdd = (tag) => {
     const {
       filterValue,
       selectedFilterBuilderProp,
@@ -86,7 +86,7 @@ class FilterBuilderRowValue extends Component {
     });
   }
 
-  onTagDelete({ index }) {
+  onTagDelete = ({ index }) => {
     const {
       filterValue,
       onChange

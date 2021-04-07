@@ -18,5 +18,5 @@ render(
     store={store}
     history={history}
   />,
-  document.getElementById('app')
+  document.getElementById('root')
 );

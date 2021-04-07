@@ -43,15 +43,15 @@ class AddNewSeriesModalContent extends Component {
   //
   // Listeners
 
-  onQualityProfileIdChange({ value }) {
+  onQualityProfileIdChange = ({ value }) => {
     this.props.onInputChange({ name: 'qualityProfileId', value: parseInt(value) });
   }
 
-  onLanguageProfileIdChange({ value }) {
+  onLanguageProfileIdChange = ({ value }) => {
     this.props.onInputChange({ name: 'languageProfileId', value: parseInt(value) });
   }
 
-  onAddSeriesPress() {
+  onAddSeriesPress = () => {
     const {
       seriesType
     } = this.state;

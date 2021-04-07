@@ -64,7 +64,7 @@ class Modal extends Component {
   //
   // Control
 
-  _setBackgroundRef(ref) {
+  _setBackgroundRef = (ref) => {
     this._backgroundRef = ref;
   }
 
@@ -129,11 +129,11 @@ class Modal extends Component {
   //
   // Listeners
 
-  onBackdropBeginPress(event) {
+  onBackdropBeginPress = (event) => {
     this._isBackdropPressed = this._isBackdropTarget(event);
   }
 
-  onBackdropEndPress(event) {
+  onBackdropEndPress = (event) => {
     const {
       closeOnBackgroundClick,
       onModalClose
@@ -150,7 +150,7 @@ class Modal extends Component {
     this._isBackdropPressed = false;
   }
 
-  onKeyDown(event) {
+  onKeyDown = (event) => {
     const keyCode = event.keyCode;
 
     if (keyCode === keyCodes.ESCAPE) {

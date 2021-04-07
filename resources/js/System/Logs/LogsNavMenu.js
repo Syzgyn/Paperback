@@ -21,11 +21,11 @@ class LogsNavMenu extends Component {
   //
   // Listeners
 
-  onMenuButtonPress() {
+  onMenuButtonPress = () => {
     this.setState({ isMenuOpen: !this.state.isMenuOpen });
   }
 
-  onMenuItemPress() {
+  onMenuItemPress = () => {
     this.setState({ isMenuOpen: false });
   }
 

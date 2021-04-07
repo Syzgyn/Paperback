@@ -47,7 +47,7 @@ class CustomFilter extends Component {
   //
   // Listeners
 
-  onEditPress() {
+  onEditPress = () => {
     const {
       id,
       onEditPress
@@ -56,7 +56,7 @@ class CustomFilter extends Component {
     onEditPress(id);
   }
 
-  onRemovePress() {
+  onRemovePress = () => {
     const {
       id,
       dispatchDeleteCustomFilter

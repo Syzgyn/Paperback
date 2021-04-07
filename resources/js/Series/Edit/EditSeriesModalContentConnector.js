@@ -82,11 +82,11 @@ class EditSeriesModalContentConnector extends Component {
   //
   // Listeners
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     this.props.dispatchSetSeriesValue({ name, value });
   }
 
-  onSavePress(moveFiles) {
+  onSavePress = (moveFiles) => {
     this.props.dispatchSaveSeries({
       id: this.props.seriesId,
       moveFiles

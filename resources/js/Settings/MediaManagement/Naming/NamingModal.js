@@ -134,20 +134,20 @@ class NamingModal extends Component {
   //
   // Listeners
 
-  onTokenSeparatorChange(event) {
+  onTokenSeparatorChange = (event) => {
     this.setState({ separator: event.value });
   }
 
-  onTokenCaseChange(event) {
+  onTokenCaseChange = (event) => {
     this.setState({ case: event.value });
   }
 
-  onInputSelectionChange(selectionStart, selectionEnd) {
+  onInputSelectionChange = (selectionStart, selectionEnd) => {
     this._selectionStart = selectionStart;
     this._selectionEnd = selectionEnd;
   }
 
-  onOptionPress({ isFullFilename, tokenValue }) {
+  onOptionPress = ({ isFullFilename, tokenValue }) => {
     const {
       name,
       value,

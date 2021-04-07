@@ -58,33 +58,33 @@ class Blacklist extends Component {
   //
   // Control
 
-  getSelectedIds() {
+  getSelectedIds = () => {
     return getSelectedIds(this.state.selectedState);
   }
 
   //
   // Listeners
 
-  onSelectAllChange({ value }) {
+  onSelectAllChange = ({ value }) => {
     this.setState(selectAll(this.state.selectedState, value));
   }
 
-  onSelectedChange({ id, value, shiftKey = false }) {
+  onSelectedChange = ({ id, value, shiftKey = false }) => {
     this.setState((state) => {
       return toggleSelected(state, this.props.items, id, value, shiftKey);
     });
   }
 
-  onRemoveSelectedPress() {
+  onRemoveSelectedPress = () => {
     this.setState({ isConfirmRemoveModalOpen: true });
   }
 
-  onRemoveSelectedConfirmed() {
+  onRemoveSelectedConfirmed = () => {
     this.props.onRemoveSelected(this.getSelectedIds());
     this.setState({ isConfirmRemoveModalOpen: false });
   }
 
-  onConfirmRemoveModalClose() {
+  onConfirmRemoveModalClose = () => {
     this.setState({ isConfirmRemoveModalOpen: false });
   }
 

@@ -117,24 +117,24 @@ class InteractiveImportModalContent extends Component {
   //
   // Control
 
-  getSelectedIds() {
+  getSelectedIds = () => {
     return getSelectedIds(this.state.selectedState);
   }
 
   //
   // Listeners
 
-  onSelectAllChange({ value }) {
+  onSelectAllChange = ({ value }) => {
     this.setState(selectAll(this.state.selectedState, value));
   }
 
-  onSelectedChange({ id, value, shiftKey = false }) {
+  onSelectedChange = ({ id, value, shiftKey = false }) => {
     this.setState((state) => {
       return toggleSelected(state, this.props.items, id, value, shiftKey);
     });
   }
 
-  onValidRowChange(id, isValid) {
+  onValidRowChange = (id, isValid) => {
     this.setState((state) => {
       if (isValid) {
         return {
@@ -148,7 +148,7 @@ class InteractiveImportModalContent extends Component {
     });
   }
 
-  onImportSelectedPress() {
+  onImportSelectedPress = () => {
     const {
       downloadId,
       showImportMode,
@@ -162,19 +162,19 @@ class InteractiveImportModalContent extends Component {
     onImportSelectedPress(selected, finalImportMode);
   }
 
-  onFilterExistingFilesChange(value) {
+  onFilterExistingFilesChange = (value) => {
     this.props.onFilterExistingFilesChange(value !== filterExistingFilesOptions.ALL);
   }
 
-  onImportModeChange({ value }) {
+  onImportModeChange = ({ value }) => {
     this.props.onImportModeChange(value);
   }
 
-  onSelectModalSelect({ value }) {
+  onSelectModalSelect = ({ value }) => {
     this.setState({ selectModalOpen: value });
   }
 
-  onSelectModalClose() {
+  onSelectModalClose = () => {
     this.setState({ selectModalOpen: null });
   }
 

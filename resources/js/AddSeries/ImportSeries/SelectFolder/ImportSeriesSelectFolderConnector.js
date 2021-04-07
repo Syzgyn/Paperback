@@ -55,7 +55,7 @@ class ImportSeriesSelectFolderConnector extends Component {
   //
   // Listeners
 
-  onNewRootFolderSelect(path) {
+  onNewRootFolderSelect = (path) => {
     this.props.addRootFolder({ path });
   }
 

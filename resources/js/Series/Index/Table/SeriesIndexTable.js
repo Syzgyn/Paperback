@@ -43,7 +43,7 @@ class SeriesIndexTable extends Component {
   //
   // Control
 
-  rowRenderer({ key, rowIndex, style }) {
+  rowRenderer = ({ key, rowIndex, style }) => {
     const {
       items,
       columns,

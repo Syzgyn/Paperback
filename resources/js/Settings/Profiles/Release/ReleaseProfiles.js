@@ -25,11 +25,11 @@ class ReleaseProfiles extends Component {
   //
   // Listeners
 
-  onAddReleaseProfilePress() {
+  onAddReleaseProfilePress = () => {
     this.setState({ isAddReleaseProfileModalOpen: true });
   }
 
-  onAddReleaseProfileModalClose() {
+  onAddReleaseProfileModalClose = () => {
     this.setState({ isAddReleaseProfileModalOpen: false });
   }
 

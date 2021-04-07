@@ -63,7 +63,7 @@ class FileBrowserModalContent extends Component {
   //
   // Control
 
-  setScrollerRef(ref) {
+  setScrollerRef = (ref) => {
     if (ref) {
       this._scrollerNode = ReactDOM.findDOMNode(ref);
     } else {
@@ -74,15 +74,15 @@ class FileBrowserModalContent extends Component {
   //
   // Listeners
 
-  onPathInputChange({ value }) {
+  onPathInputChange = ({ value }) => {
     this.setState({ currentPath: value });
   }
 
-  onRowPress(path) {
+  onRowPress = (path) => {
     this.props.onFetchPaths(path);
   }
 
-  onOkPress() {
+  onOkPress = () => {
     this.props.onChange({
       name: this.props.name,
       value: this.state.currentPath

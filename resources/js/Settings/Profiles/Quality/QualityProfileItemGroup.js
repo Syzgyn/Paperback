@@ -15,7 +15,7 @@ class QualityProfileItemGroup extends Component {
   //
   // Listeners
 
-  onAllowedChange({ value }) {
+  onAllowedChange = ({ value }) => {
     const {
       groupId,
       onItemGroupAllowedChange
@@ -24,7 +24,7 @@ class QualityProfileItemGroup extends Component {
     onItemGroupAllowedChange(groupId, value);
   }
 
-  onNameChange({ value }) {
+  onNameChange = ({ value }) => {
     const {
       groupId,
       onItemGroupNameChange
@@ -33,7 +33,7 @@ class QualityProfileItemGroup extends Component {
     onItemGroupNameChange(groupId, value);
   }
 
-  onDeleteGroupPress({ value }) {
+  onDeleteGroupPress = ({ value }) => {
     const {
       groupId,
       onDeleteGroupPress

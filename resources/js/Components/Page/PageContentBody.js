@@ -21,7 +21,7 @@ class PageContentBody extends Component {
   //
   // Listeners
 
-  onScroll(props) {
+  onScroll = (props) => {
     const { onScroll } = this.props;
 
     if (this.props.onScroll && !isLocked()) {

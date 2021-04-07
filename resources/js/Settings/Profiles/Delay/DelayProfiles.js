@@ -30,15 +30,15 @@ class DelayProfiles extends Component {
   //
   // Listeners
 
-  onAddDelayProfilePress() {
+  onAddDelayProfilePress = () => {
     this.setState({ isAddDelayProfileModalOpen: true });
   }
 
-  onModalClose() {
+  onModalClose = () => {
     this.setState({ isAddDelayProfileModalOpen: false });
   }
 
-  onMeasure({ width }) {
+  onMeasure = ({ width }) => {
     this.setState({ width });
   }
 

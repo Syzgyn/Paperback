@@ -32,7 +32,7 @@ class IndexersConnector extends Component {
   //
   // Listeners
 
-  onConfirmDeleteIndexer(id) {
+  onConfirmDeleteIndexer = (id) => {
     this.props.dispatchDeleteIndexer({ id });
   }
 

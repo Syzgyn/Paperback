@@ -66,7 +66,7 @@ class CalendarHeader extends Component {
   //
   // Listeners
 
-  onViewChange(view) {
+  onViewChange = (view) => {
     this.setState({ view }, () => {
       this.props.onViewChange(view);
     });

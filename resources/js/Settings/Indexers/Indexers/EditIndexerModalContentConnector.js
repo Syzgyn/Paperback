@@ -40,19 +40,19 @@ class EditIndexerModalContentConnector extends Component {
   //
   // Listeners
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     this.props.setIndexerValue({ name, value });
   }
 
-  onFieldChange({ name, value }) {
+  onFieldChange = ({ name, value }) => {
     this.props.setIndexerFieldValue({ name, value });
   }
 
-  onSavePress() {
+  onSavePress = () => {
     this.props.saveIndexer({ id: this.props.id });
   }
 
-  onTestPress() {
+  onTestPress = () => {
     this.props.testIndexer({ id: this.props.id });
   }
 

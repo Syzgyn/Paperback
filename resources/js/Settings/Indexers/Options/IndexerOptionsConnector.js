@@ -70,7 +70,7 @@ class IndexerOptionsConnector extends Component {
   //
   // Listeners
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     this.props.dispatchSetIndexerOptionsValue({ name, value });
   }
 

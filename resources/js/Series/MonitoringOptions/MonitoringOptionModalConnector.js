@@ -13,7 +13,7 @@ class MonitoringOptionsModalConnector extends Component {
   //
   // Listeners
 
-  onModalClose() {
+  onModalClose = () => {
     this.props.clearPendingChanges({ section: 'series' });
     this.props.onModalClose();
   }

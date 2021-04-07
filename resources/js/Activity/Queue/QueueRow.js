@@ -37,11 +37,11 @@ class QueueRow extends Component {
   //
   // Listeners
 
-  onRemoveQueueItemPress() {
+  onRemoveQueueItemPress = () => {
     this.setState({ isRemoveQueueItemModalOpen: true });
   }
 
-  onRemoveQueueItemModalConfirmed(blacklist) {
+  onRemoveQueueItemModalConfirmed = (blacklist) => {
     const {
       onRemoveQueueItemPress,
       onQueueRowModalOpenOrClose
@@ -53,19 +53,19 @@ class QueueRow extends Component {
     this.setState({ isRemoveQueueItemModalOpen: false });
   }
 
-  onRemoveQueueItemModalClose() {
+  onRemoveQueueItemModalClose = () => {
     this.props.onQueueRowModalOpenOrClose(false);
 
     this.setState({ isRemoveQueueItemModalOpen: false });
   }
 
-  onInteractiveImportPress() {
+  onInteractiveImportPress = () => {
     this.props.onQueueRowModalOpenOrClose(true);
 
     this.setState({ isInteractiveImportModalOpen: true });
   }
 
-  onInteractiveImportModalClose() {
+  onInteractiveImportModalClose = () => {
     this.props.onQueueRowModalOpenOrClose(false);
 
     this.setState({ isInteractiveImportModalOpen: false });

@@ -51,11 +51,11 @@ class AddNewSeriesModalContentConnector extends Component {
   //
   // Listeners
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     this.props.setAddSeriesDefault({ [name]: value });
   }
 
-  onAddSeriesPress(seriesType) {
+  onAddSeriesPress = (seriesType) => {
     const {
       tvdbId,
       rootFolderPath,

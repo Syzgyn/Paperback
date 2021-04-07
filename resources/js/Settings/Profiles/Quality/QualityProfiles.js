@@ -25,16 +25,16 @@ class QualityProfiles extends Component {
   //
   // Listeners
 
-  onCloneQualityProfilePress(id) {
+  onCloneQualityProfilePress = (id) => {
     this.props.onCloneQualityProfilePress(id);
     this.setState({ isQualityProfileModalOpen: true });
   }
 
-  onEditQualityProfilePress() {
+  onEditQualityProfilePress = () => {
     this.setState({ isQualityProfileModalOpen: true });
   }
 
-  onModalClose() {
+  onModalClose = () => {
     this.setState({ isQualityProfileModalOpen: false });
   }
 

@@ -78,7 +78,7 @@ class EpisodeFileEditorModalContent extends Component {
   //
   // Control
 
-  getSelectedIds() {
+  getSelectedIds = () => {
     const selectedIds = getSelectedIds(this.state.selectedState);
 
     return selectedIds.reduce((acc, id) => {
@@ -95,30 +95,30 @@ class EpisodeFileEditorModalContent extends Component {
   //
   // Listeners
 
-  onSelectAllChange({ value }) {
+  onSelectAllChange = ({ value }) => {
     this.setState(selectAll(this.state.selectedState, value));
   }
 
-  onSelectedChange({ id, value, shiftKey = false }) {
+  onSelectedChange = ({ id, value, shiftKey = false }) => {
     this.setState((state) => {
       return toggleSelected(state, this.props.items, id, value, shiftKey);
     });
   }
 
-  onDeletePress() {
+  onDeletePress = () => {
     this.setState({ isConfirmDeleteModalOpen: true });
   }
 
-  onConfirmDelete() {
+  onConfirmDelete = () => {
     this.setState({ isConfirmDeleteModalOpen: false });
     this.props.onDeletePress(this.getSelectedIds());
   }
 
-  onConfirmDeleteModalClose() {
+  onConfirmDeleteModalClose = () => {
     this.setState({ isConfirmDeleteModalOpen: false });
   }
 
-  onLanguageChange({ value }) {
+  onLanguageChange = ({ value }) => {
     const selectedIds = this.getSelectedIds();
 
     if (!selectedIds.length) {
@@ -128,7 +128,7 @@ class EpisodeFileEditorModalContent extends Component {
     this.props.onLanguageChange(selectedIds, parseInt(value));
   }
 
-  onQualityChange({ value }) {
+  onQualityChange = ({ value }) => {
     const selectedIds = this.getSelectedIds();
 
     if (!selectedIds.length) {

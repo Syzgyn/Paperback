@@ -25,30 +25,30 @@ class LanguageProfile extends Component {
   //
   // Listeners
 
-  onEditLanguageProfilePress() {
+  onEditLanguageProfilePress = () => {
     this.setState({ isEditLanguageProfileModalOpen: true });
   }
 
-  onEditLanguageProfileModalClose() {
+  onEditLanguageProfileModalClose = () => {
     this.setState({ isEditLanguageProfileModalOpen: false });
   }
 
-  onDeleteLanguageProfilePress() {
+  onDeleteLanguageProfilePress = () => {
     this.setState({
       isEditLanguageProfileModalOpen: false,
       isDeleteLanguageProfileModalOpen: true
     });
   }
 
-  onDeleteLanguageProfileModalClose() {
+  onDeleteLanguageProfileModalClose = () => {
     this.setState({ isDeleteLanguageProfileModalOpen: false });
   }
-
-  onConfirmDeleteLanguageProfile() {
+onCloneLanguageProfilePress
+  onConfirmDeleteLanguageProfile = () => {
     this.props.onConfirmDeleteLanguageProfile(this.props.id);
   }
 
-  onCloneLanguageProfilePress() {
+  onCloneLanguageProfilePress = () => {
     const {
       id,
       onCloneLanguageProfilePress

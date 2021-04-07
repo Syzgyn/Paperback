@@ -27,23 +27,23 @@ class Indexers extends Component {
   //
   // Listeners
 
-  onAddIndexerPress() {
+  onAddIndexerPress = () => {
     this.setState({ isAddIndexerModalOpen: true });
   }
 
-  onCloneIndexerPress(id) {
+  onCloneIndexerPress = (id) => {
     this.props.dispatchCloneIndexer({ id });
     this.setState({ isEditIndexerModalOpen: true });
   }
 
-  onAddIndexerModalClose({ indexerSelected = false } = {}) {
+  onAddIndexerModalClose = ({ indexerSelected = false } = {}) => {
     this.setState({
       isAddIndexerModalOpen: false,
       isEditIndexerModalOpen: indexerSelected
     });
   }
 
-  onEditIndexerModalClose() {
+  onEditIndexerModalClose = () => {
     this.setState({ isEditIndexerModalOpen: false });
   }
 

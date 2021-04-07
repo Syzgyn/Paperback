@@ -59,7 +59,7 @@ class CalendarEventGroup extends Component {
   //
   // Listeners
 
-  onExpandPress() {
+  onExpandPress = () => {
     this.setState({ isExpanded: !this.state.isExpanded });
   }
 

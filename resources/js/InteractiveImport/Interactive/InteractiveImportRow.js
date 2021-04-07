@@ -99,7 +99,7 @@ class InteractiveImportRow extends Component {
   //
   // Control
 
-  selectRowAfterChange(value) {
+  selectRowAfterChange = (value) => {
     const {
       id,
       isSelected
@@ -113,47 +113,47 @@ class InteractiveImportRow extends Component {
   //
   // Listeners
 
-  onSelectSeriesPress() {
+  onSelectSeriesPress = () => {
     this.setState({ isSelectSeriesModalOpen: true });
   }
 
-  onSelectSeasonPress() {
+  onSelectSeasonPress = () => {
     this.setState({ isSelectSeasonModalOpen: true });
   }
 
-  onSelectEpisodePress() {
+  onSelectEpisodePress = () => {
     this.setState({ isSelectEpisodeModalOpen: true });
   }
 
-  onSelectQualityPress() {
+  onSelectQualityPress = () => {
     this.setState({ isSelectQualityModalOpen: true });
   }
 
-  onSelectLanguagePress() {
+  onSelectLanguagePress = () => {
     this.setState({ isSelectLanguageModalOpen: true });
   }
 
-  onSelectSeriesModalClose(changed) {
+  onSelectSeriesModalClose = (changed) => {
     this.setState({ isSelectSeriesModalOpen: false });
     this.selectRowAfterChange(changed);
   }
 
-  onSelectSeasonModalClose(changed) {
+  onSelectSeasonModalClose = (changed) => {
     this.setState({ isSelectSeasonModalOpen: false });
     this.selectRowAfterChange(changed);
   }
 
-  onSelectEpisodeModalClose(changed) {
+  onSelectEpisodeModalClose = (changed) => {
     this.setState({ isSelectEpisodeModalOpen: false });
     this.selectRowAfterChange(changed);
   }
 
-  onSelectQualityModalClose(changed) {
+  onSelectQualityModalClose = (changed) => {
     this.setState({ isSelectQualityModalOpen: false });
     this.selectRowAfterChange(changed);
   }
 
-  onSelectLanguageModalClose(changed) {
+  onSelectLanguageModalClose = (changed) => {
     this.setState({ isSelectLanguageModalOpen: false });
     this.selectRowAfterChange(changed);
   }

@@ -157,11 +157,11 @@ class SeriesIndexPosters extends Component {
   //
   // Control
 
-  setGridRef(ref) {
+  setGridRef = (ref) => {
     this._grid = ref;
   }
 
-  calculateGrid(width = this.state.width, isSmallScreen) {
+  calculateGrid = (width = this.state.width, isSmallScreen) => {
     const {
       sortKey,
       posterOptions
@@ -183,7 +183,7 @@ class SeriesIndexPosters extends Component {
     });
   }
 
-  cellRenderer({ key, rowIndex, columnIndex, style }) {
+  cellRenderer = ({ key, rowIndex, columnIndex, style }) => {
     const {
       items,
       sortKey,
@@ -245,7 +245,7 @@ class SeriesIndexPosters extends Component {
   //
   // Listeners
 
-  onMeasure({ width }) {
+  onMeasure = ({ width }) => {
     this.calculateGrid(width, this.props.isSmallScreen);
   }
 

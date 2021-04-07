@@ -13,7 +13,7 @@ class AddIndexerItem extends Component {
   //
   // Listeners
 
-  onIndexerSelect() {
+  onIndexerSelect = () => {
     const {
       implementation
     } = this.props;

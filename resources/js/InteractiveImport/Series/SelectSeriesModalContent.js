@@ -27,7 +27,7 @@ class SelectSeriesModalContent extends Component {
   //
   // Listeners
 
-  onFilterChange({ value }) {
+  onFilterChange = ({ value }) => {
     this.setState({ filter: value });
   }
 

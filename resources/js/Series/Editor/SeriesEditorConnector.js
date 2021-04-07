@@ -44,23 +44,23 @@ class SeriesEditorConnector extends Component {
   //
   // Listeners
 
-  onSortPress(sortKey) {
+  onSortPress = (sortKey) => {
     this.props.dispatchSetSeriesEditorSort({ sortKey });
   }
 
-  onFilterSelect(selectedFilterKey) {
+  onFilterSelect = (selectedFilterKey) => {
     this.props.dispatchSetSeriesEditorFilter({ selectedFilterKey });
   }
 
-  onTableOptionChange(payload) {
+  onTableOptionChange = (payload) => {
     this.props.dispatchSetSeriesEditorTableOption(payload);
   }
 
-  onSaveSelected(payload) {
+  onSaveSelected = (payload) => {
     this.props.dispatchSaveSeriesEditor(payload);
   }
 
-  onMoveSelected(payload) {
+  onMoveSelected = (payload) => {
     this.props.dispatchExecuteCommand({
       name: commandNames.MOVE_SERIES,
       ...payload

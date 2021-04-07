@@ -36,7 +36,7 @@ class EpisodeHistoryConnector extends Component {
   //
   // Listeners
 
-  onMarkAsFailedPress(historyId) {
+  onMarkAsFailedPress = (historyId) => {
     this.props.episodeHistoryMarkAsFailed({ historyId, episodeId: this.props.episodeId });
   }
 

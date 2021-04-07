@@ -90,7 +90,7 @@ class SeriesImage extends Component {
   //
   // Listeners
 
-  onError() {
+  onError = () => {
     this.setState({
       hasError: true
     });
@@ -100,7 +100,7 @@ class SeriesImage extends Component {
     }
   }
 
-  onLoad() {
+  onLoad = () => {
     this.setState({
       isLoaded: true,
       hasError: false

@@ -9,7 +9,7 @@ class SelectEpisodeRow extends Component {
   //
   // Listeners
 
-  onPress() {
+  onPress = () => {
     const {
       id,
       isSelected

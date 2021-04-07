@@ -71,42 +71,42 @@ class MissingConnector extends Component {
   //
   // Control
 
-  repopulate() {
+  repopulate = () => {
     this.props.fetchMissing();
   }
 
   //
   // Listeners
 
-  onFirstPagePress() {
+  onFirstPagePress = () => {
     this.props.gotoMissingFirstPage();
   }
 
-  onPreviousPagePress() {
+  onPreviousPagePress = () => {
     this.props.gotoMissingPreviousPage();
   }
 
-  onNextPagePress() {
+  onNextPagePress = () => {
     this.props.gotoMissingNextPage();
   }
 
-  onLastPagePress() {
+  onLastPagePress = () => {
     this.props.gotoMissingLastPage();
   }
 
-  onPageSelect(page) {
+  onPageSelect = (page) => {
     this.props.gotoMissingPage({ page });
   }
 
-  onSortPress(sortKey) {
+  onSortPress = (sortKey) => {
     this.props.setMissingSort({ sortKey });
   }
 
-  onFilterSelect(selectedFilterKey) {
+  onFilterSelect = (selectedFilterKey) => {
     this.props.setMissingFilter({ selectedFilterKey });
   }
 
-  onTableOptionChange(payload) {
+  onTableOptionChange = (payload) => {
     this.props.setMissingTableOption(payload);
 
     if (payload.pageSize) {
@@ -114,14 +114,14 @@ class MissingConnector extends Component {
     }
   }
 
-  onSearchSelectedPress(selected) {
+  onSearchSelectedPress = (selected) => {
     this.props.executeCommand({
       name: commandNames.EPISODE_SEARCH,
       episodeIds: selected
     });
   }
 
-  onSearchAllMissingPress(monitored) {
+  onSearchAllMissingPress = (monitored) => {
     this.props.executeCommand({
       name: commandNames.MISSING_EPISODE_SEARCH,
       monitored

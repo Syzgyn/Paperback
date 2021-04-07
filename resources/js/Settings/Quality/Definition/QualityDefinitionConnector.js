@@ -19,11 +19,11 @@ class QualityDefinitionConnector extends Component {
   //
   // Listeners
 
-  onTitleChange({ value }) {
+  onTitleChange = ({ value }) => {
     this.props.setQualityDefinitionValue({ id: this.props.id, name: 'title', value });
   }
 
-  onSizeChange({ minSize, maxSize }) {
+  onSizeChange = ({ minSize, maxSize }) => {
     const {
       id,
       minSize: currentMinSize,

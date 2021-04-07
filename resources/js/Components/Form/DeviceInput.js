@@ -9,7 +9,7 @@ import styles from './DeviceInput.css';
 
 class DeviceInput extends Component {
 
-  onTagAdd(device) {
+  onTagAdd = (device) => {
     const {
       name,
       value,
@@ -25,7 +25,7 @@ class DeviceInput extends Component {
     });
   }
 
-  onTagDelete({ index }) {
+  onTagDelete = ({ index }) => {
     const {
       name,
       value,

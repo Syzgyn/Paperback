@@ -28,7 +28,7 @@ class VirtualTableSelectCell extends Component {
   //
   // Listeners
 
-  onChange({ value, shiftKey }) {
+  onChange = ({ value, shiftKey }) => {
     const {
       id,
       onSelectedChange

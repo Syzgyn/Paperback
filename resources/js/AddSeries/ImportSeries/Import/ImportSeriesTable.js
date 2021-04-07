@@ -101,7 +101,7 @@ class ImportSeriesTable extends Component {
   //
   // Control
 
-  rowRenderer({ key, rowIndex, style }) {
+  rowRenderer = ({ key, rowIndex, style }) => {
     const {
       rootFolderId,
       items,

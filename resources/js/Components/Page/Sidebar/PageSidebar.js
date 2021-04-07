@@ -291,7 +291,7 @@ class PageSidebar extends Component {
   //
   // Control
 
-  _setSidebarRef(ref) {
+  _setSidebarRef = (ref) => {
     this._sidebarRef = ref;
   }
 
@@ -305,7 +305,7 @@ class PageSidebar extends Component {
   //
   // Listeners
 
-  onWindowClick(event) {
+  onWindowClick = (event) => {
     const sidebar = ReactDOM.findDOMNode(this._sidebarRef);
     const toggleButton = document.getElementById('sidebar-toggle-button');
 
@@ -324,11 +324,11 @@ class PageSidebar extends Component {
     }
   }
 
-  onWindowScroll() {
+  onWindowScroll = () => {
     this.setState(getPositioning());
   }
 
-  onTouchStart(event) {
+  onTouchStart = (event) => {
     const touches = event.touches;
     const touchStartX = touches[0].pageX;
     const touchStartY = touches[0].pageY;
@@ -348,7 +348,7 @@ class PageSidebar extends Component {
     this._touchStartY = touchStartY;
   }
 
-  onTouchMove(event) {
+  onTouchMove = (event) => {
     const touches = event.touches;
     const currentTouchX = touches[0].pageX;
     // const currentTouchY = touches[0].pageY;
@@ -385,7 +385,7 @@ class PageSidebar extends Component {
     });
   }
 
-  onTouchEnd(event) {
+  onTouchEnd = (event) => {
     const touches = event.changedTouches;
     const currentTouch = touches[0].pageX;
 
@@ -405,12 +405,12 @@ class PageSidebar extends Component {
     this._touchStartY = null;
   }
 
-  onTouchCancel(event) {
+  onTouchCancel = (event) => {
     this._touchStartX = null;
     this._touchStartY = null;
   }
 
-  onItemPress() {
+  onItemPress = () => {
     this.props.onSidebarVisibleChange(false);
   }
 

@@ -37,7 +37,7 @@ class SelectSeriesModalContentConnector extends Component {
   //
   // Listeners
 
-  onSeriesSelect(seriesId) {
+  onSeriesSelect = (seriesId) => {
     const {
       ids,
       items,

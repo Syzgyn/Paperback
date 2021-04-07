@@ -81,41 +81,41 @@ class CutoffUnmetConnector extends Component {
   //
   // Control
 
-  repopulate() {
+  repopulate = () => {
     this.props.fetchCutoffUnmet();
   }
   //
   // Listeners
 
-  onFirstPagePress() {
+  onFirstPagePress = () => {
     this.props.gotoCutoffUnmetFirstPage();
   }
 
-  onPreviousPagePress() {
+  onPreviousPagePress = () => {
     this.props.gotoCutoffUnmetPreviousPage();
   }
 
-  onNextPagePress() {
+  onNextPagePress = () => {
     this.props.gotoCutoffUnmetNextPage();
   }
 
-  onLastPagePress() {
+  onLastPagePress = () => {
     this.props.gotoCutoffUnmetLastPage();
   }
 
-  onPageSelect(page) {
+  onPageSelect = (page) => {
     this.props.gotoCutoffUnmetPage({ page });
   }
 
-  onSortPress(sortKey) {
+  onSortPress = (sortKey) => {
     this.props.setCutoffUnmetSort({ sortKey });
   }
 
-  onFilterSelect(selectedFilterKey) {
+  onFilterSelect = (selectedFilterKey) => {
     this.props.setCutoffUnmetFilter({ selectedFilterKey });
   }
 
-  onTableOptionChange(payload) {
+  onTableOptionChange = (payload) => {
     this.props.setCutoffUnmetTableOption(payload);
 
     if (payload.pageSize) {
@@ -123,14 +123,14 @@ class CutoffUnmetConnector extends Component {
     }
   }
 
-  onSearchSelectedPress(selected) {
+  onSearchSelectedPress = (selected) => {
     this.props.executeCommand({
       name: commandNames.EPISODE_SEARCH,
       episodeIds: selected
     });
   }
 
-  onSearchAllCutoffUnmetPress(monitored) {
+  onSearchAllCutoffUnmetPress = (monitored) => {
     this.props.executeCommand({
       name: commandNames.CUTOFF_UNMET_EPISODE_SEARCH,
       monitored

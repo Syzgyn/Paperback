@@ -30,15 +30,15 @@ class DeleteSeriesModalContent extends Component {
   //
   // Listeners
 
-  onDeleteFilesChange({ value }) {
+  onDeleteFilesChange = ({ value }) => {
     this.setState({ deleteFiles: value });
   }
 
-  onAddImportListExclusionChange({ value }) {
+  onAddImportListExclusionChange = ({ value }) => {
     this.setState({ addImportListExclusion: value });
   }
 
-  onDeleteSeriesConfirmed() {
+  onDeleteSeriesConfirmed = () => {
     const deleteFiles = this.state.deleteFiles;
     const addImportListExclusion = this.state.addImportListExclusion;
 

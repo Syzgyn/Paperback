@@ -80,7 +80,7 @@ class SeriesIndexPosterOptionsModalContent extends Component {
   //
   // Listeners
 
-  onChangePosterOption({ name, value }) {
+  onChangePosterOption = ({ name, value }) => {
     this.setState({
       [name]: value
     }, () => {

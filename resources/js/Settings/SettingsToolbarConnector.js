@@ -45,7 +45,7 @@ class SettingsToolbarConnector extends Component {
   //
   // Control
 
-  routerWillLeave(nextLocation, nextLocationAction) {
+  routerWillLeave = (nextLocation, nextLocationAction) => {
     if (this.state.confirmed) {
       this.setState({
         nextLocation: null,
@@ -71,11 +71,11 @@ class SettingsToolbarConnector extends Component {
   //
   // Listeners
 
-  onAdvancedSettingsPress() {
+  onAdvancedSettingsPress = () => {
     this.props.toggleAdvancedSettings();
   }
 
-  onConfirmNavigation() {
+  onConfirmNavigation = () => {
     const {
       nextLocation,
       nextLocationAction
@@ -100,7 +100,7 @@ class SettingsToolbarConnector extends Component {
     });
   }
 
-  onCancelNavigation() {
+  onCancelNavigation = () => {
     this.setState({
       nextLocation: null,
       nextLocationAction: null,

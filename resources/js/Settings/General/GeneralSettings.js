@@ -80,12 +80,12 @@ class GeneralSettings extends Component {
   //
   // Listeners
 
-  onConfirmRestart() {
+  onConfirmRestart = () => {
     this.setState({ isRestartRequiredModalOpen: false });
     this.props.onConfirmRestart();
   }
 
-  onCloseRestartRequiredModalOpen() {
+  onCloseRestartRequiredModalOpen = () => {
     this.setState({ isRestartRequiredModalOpen: false });
   }
 

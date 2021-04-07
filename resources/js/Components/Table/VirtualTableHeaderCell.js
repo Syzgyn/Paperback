@@ -27,7 +27,7 @@ class VirtualTableHeaderCell extends Component {
   //
   // Listeners
 
-  onPress() {
+  onPress = () => {
     const {
       name,
       fixedSortDirection

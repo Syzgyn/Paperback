@@ -59,34 +59,34 @@ class CutoffUnmet extends Component {
   //
   // Control
 
-  getSelectedIds() {
+  getSelectedIds = () => {
     return getSelectedIds(this.state.selectedState);
   }
 
   //
   // Listeners
 
-  onFilterMenuItemPress(filterKey, filterValue) {
+  onFilterMenuItemPress = (filterKey, filterValue) => {
     this.props.onFilterSelect(filterKey, filterValue);
   }
 
-  onSelectAllChange({ value }) {
+  onSelectAllChange = ({ value }) => {
     this.setState(selectAll(this.state.selectedState, value));
   }
 
-  onSelectedChange({ id, value, shiftKey = false }) {
+  onSelectedChange = ({ id, value, shiftKey = false }) => {
     this.setState((state) => {
       return toggleSelected(state, this.props.items, id, value, shiftKey);
     });
   }
 
-  onSearchSelectedPress() {
+  onSearchSelectedPress = () => {
     const selected = this.getSelectedIds();
 
     this.props.onSearchSelectedPress(selected);
   }
 
-  onToggleSelectedPress() {
+  onToggleSelectedPress = () => {
     const episodeIds = this.getSelectedIds();
 
     this.props.batchToggleCutoffUnmetEpisodes({
@@ -95,11 +95,11 @@ class CutoffUnmet extends Component {
     });
   }
 
-  onSearchAllCutoffUnmetPress() {
+  onSearchAllCutoffUnmetPress = () => {
     this.setState({ isConfirmSearchAllCutoffUnmetModalOpen: true });
   }
 
-  onSearchAllCutoffUnmetConfirmed() {
+  onSearchAllCutoffUnmetConfirmed = () => {
     const {
       selectedFilterKey,
       onSearchAllCutoffUnmetPress
@@ -112,7 +112,7 @@ class CutoffUnmet extends Component {
     this.setState({ isConfirmSearchAllCutoffUnmetModalOpen: false });
   }
 
-  onConfirmSearchAllCutoffUnmetModalClose() {
+  onConfirmSearchAllCutoffUnmetModalClose = () => {
     this.setState({ isConfirmSearchAllCutoffUnmetModalOpen: false });
   }
 

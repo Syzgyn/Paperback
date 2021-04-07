@@ -134,7 +134,7 @@ class EnhancedSelectInput extends Component {
   //
   // Listeners
 
-  onComputeMaxHeight(data) {
+  onComputeMaxHeight = (data) => {
     const {
       top,
       bottom
@@ -151,7 +151,7 @@ class EnhancedSelectInput extends Component {
     return data;
   }
 
-  onWindowClick(event) {
+  onWindowClick = (event) => {
     const button = document.getElementById(this._buttonId);
     const options = document.getElementById(this._optionsId);
 
@@ -170,14 +170,14 @@ class EnhancedSelectInput extends Component {
     }
   }
 
-  onFocus() {
+  onFocus = () => {
     if (this.state.isOpen) {
       this._removeListener();
       this.setState({ isOpen: false });
     }
   }
 
-  onBlur() {
+  onBlur = () => {
     if (!this.props.isEditable) {
       // Calling setState without this check prevents the click event from being properly handled on Chrome (it is on firefox)
       const origIndex = getSelectedIndex(this.props);
@@ -188,7 +188,7 @@ class EnhancedSelectInput extends Component {
     }
   }
 
-  onKeyDown(event) {
+  onKeyDown = (event) => {
     const {
       values
     } = this.props;
@@ -255,7 +255,7 @@ class EnhancedSelectInput extends Component {
     }
   }
 
-  onPress() {
+  onPress = () => {
     if (this.state.isOpen) {
       this._removeListener();
     } else {
@@ -269,7 +269,7 @@ class EnhancedSelectInput extends Component {
     this.setState({ isOpen: !this.state.isOpen });
   }
 
-  onSelect(value) {
+  onSelect = (value) => {
     if (Array.isArray(this.props.value)) {
       let newValue = null;
       const index = this.props.value.indexOf(value);
@@ -293,11 +293,11 @@ class EnhancedSelectInput extends Component {
     }
   }
 
-  onMeasure({ width }) {
+  onMeasure = ({ width }) => {
     this.setState({ width });
   }
 
-  onOptionsModalClose() {
+  onOptionsModalClose = () => {
     this.setState({ isOpen: false });
   }
 

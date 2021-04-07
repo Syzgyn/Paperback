@@ -47,7 +47,7 @@ class HistoryRowConnector extends Component {
   //
   // Listeners
 
-  onMarkAsFailedPress() {
+  onMarkAsFailedPress = () => {
     this.props.markAsFailed({ id: this.props.id });
   }
 

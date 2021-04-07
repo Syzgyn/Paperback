@@ -23,11 +23,11 @@ class EpisodeSearchCell extends Component {
   //
   // Listeners
 
-  onManualSearchPress() {
+  onManualSearchPress = () => {
     this.setState({ isDetailsModalOpen: true });
   }
 
-  onDetailsModalClose() {
+  onDetailsModalClose = () => {
     this.setState({ isDetailsModalOpen: false });
   }
 

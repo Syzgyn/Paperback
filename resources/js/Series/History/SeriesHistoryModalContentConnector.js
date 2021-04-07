@@ -44,7 +44,7 @@ class SeriesHistoryModalContentConnector extends Component {
   //
   // Listeners
 
-  onMarkAsFailedPress(historyId) {
+  onMarkAsFailedPress = (historyId) => {
     const {
       seriesId,
       seasonNumber

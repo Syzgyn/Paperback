@@ -25,26 +25,26 @@ class RemotePathMapping extends Component {
   //
   // Listeners
 
-  onEditRemotePathMappingPress() {
+  onEditRemotePathMappingPress = () => {
     this.setState({ isEditRemotePathMappingModalOpen: true });
   }
 
-  onEditRemotePathMappingModalClose() {
+  onEditRemotePathMappingModalClose = () => {
     this.setState({ isEditRemotePathMappingModalOpen: false });
   }
 
-  onDeleteRemotePathMappingPress() {
+  onDeleteRemotePathMappingPress = () => {
     this.setState({
       isEditRemotePathMappingModalOpen: false,
       isDeleteRemotePathMappingModalOpen: true
     });
   }
 
-  onDeleteRemotePathMappingModalClose() {
+  onDeleteRemotePathMappingModalClose = () => {
     this.setState({ isDeleteRemotePathMappingModalOpen: false });
   }
 
-  onConfirmDeleteRemotePathMapping() {
+  onConfirmDeleteRemotePathMapping = () => {
     this.props.onConfirmDeleteRemotePathMapping(this.props.id);
   }
 

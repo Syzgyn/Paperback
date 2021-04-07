@@ -60,11 +60,11 @@ class PathInput extends Component {
   //
   // Listeners
 
-  onInputChange({ value }) {
+  onInputChange = ({ value }) => {
     this.setState({ value });
   }
 
-  onInputKeyDown(event) {
+  onInputKeyDown = (event) => {
     if (event.key === 'Tab') {
       event.preventDefault();
       const path = this.props.paths[0];
@@ -82,7 +82,7 @@ class PathInput extends Component {
     }
   }
 
-  onInputBlur() {
+  onInputBlur = () => {
     this.props.onChange({
       name: this.props.name,
       value: this.state.value
@@ -91,24 +91,24 @@ class PathInput extends Component {
     this.props.onClearPaths();
   }
 
-  onSuggestionsFetchRequested({ value }) {
+  onSuggestionsFetchRequested = ({ value }) => {
     this.props.onFetchPaths(value);
   }
 
-  onSuggestionsClearRequested() {
+  onSuggestionsClearRequested = () => {
     // Required because props aren't always rendered, but no-op
     // because we don't want to reset the paths after a path is selected.
   }
 
-  onSuggestionSelected(event, { suggestionValue }) {
+  onSuggestionSelected = (event, { suggestionValue }) => {
     this.props.onFetchPaths(suggestionValue);
   }
 
-  onFileBrowserOpenPress() {
+  onFileBrowserOpenPress = () => {
     this.setState({ isFileBrowserModalOpen: true });
   }
 
-  onFileBrowserModalClose() {
+  onFileBrowserModalClose = () => {
     this.setState({ isFileBrowserModalOpen: false });
   }
 

@@ -80,7 +80,7 @@ class SeriesIndex extends Component {
   //
   // Control
 
-  setScrollerRef(ref) {
+  setScrollerRef = (ref) => {
     this.setState({ scroller: ref });
   }
 
@@ -131,23 +131,23 @@ class SeriesIndex extends Component {
   //
   // Listeners
 
-  onPosterOptionsPress() {
+  onPosterOptionsPress = () => {
     this.setState({ isPosterOptionsModalOpen: true });
   }
 
-  onPosterOptionsModalClose() {
+  onPosterOptionsModalClose = () => {
     this.setState({ isPosterOptionsModalOpen: false });
   }
 
-  onOverviewOptionsPress() {
+  onOverviewOptionsPress = () => {
     this.setState({ isOverviewOptionsModalOpen: true });
   }
 
-  onOverviewOptionsModalClose() {
+  onOverviewOptionsModalClose = () => {
     this.setState({ isOverviewOptionsModalOpen: false });
   }
 
-  onJumpBarItemPress(jumpToCharacter) {
+  onJumpBarItemPress = (jumpToCharacter) => {
     this.setState({ jumpToCharacter });
   }
 

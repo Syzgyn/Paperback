@@ -9,7 +9,7 @@ class Link extends Component {
   //
   // Listeners
 
-  onClick(event) {
+  onClick = (event) => {
     const {
       isDisabled,
       onPress

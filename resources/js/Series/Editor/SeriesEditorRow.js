@@ -16,7 +16,7 @@ class SeriesEditorRow extends Component {
   //
   // Listeners
 
-  onSeasonFolderChange() {
+  onSeasonFolderChange = () => {
     // Mock handler to satisfy `onChange` being required for `CheckInput`.
     //
   }

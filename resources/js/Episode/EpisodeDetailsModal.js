@@ -20,7 +20,7 @@ class EpisodeDetailsModal extends Component {
   //
   // Listeners
 
-  onTabChange(isSearch) {
+  onTabChange = (isSearch) => {
     this.setState({ closeOnBackgroundClick: !isSearch });
   }
 

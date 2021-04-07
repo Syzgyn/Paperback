@@ -38,20 +38,20 @@ class SecuritySettings extends Component {
   //
   // Listeners
 
-  onApikeyFocus(event) {
+  onApikeyFocus = (event) => {
     event.target.select();
   }
 
-  onResetApiKeyPress() {
+  onResetApiKeyPress = () => {
     this.setState({ isConfirmApiKeyResetModalOpen: true });
   }
 
-  onConfirmResetApiKey() {
+  onConfirmResetApiKey = () => {
     this.setState({ isConfirmApiKeyResetModalOpen: false });
     this.props.onConfirmResetApiKey();
   }
 
-  onCloseResetApiKeyModal() {
+  onCloseResetApiKeyModal = () => {
     this.setState({ isConfirmApiKeyResetModalOpen: false });
   }
 

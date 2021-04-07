@@ -28,11 +28,11 @@ class BlacklistRow extends Component {
   //
   // Listeners
 
-  onDetailsPress() {
+  onDetailsPress = () => {
     this.setState({ isDetailsModalOpen: true });
   }
 
-  onDetailsModalClose() {
+  onDetailsModalClose = () => {
     this.setState({ isDetailsModalOpen: false });
   }
 

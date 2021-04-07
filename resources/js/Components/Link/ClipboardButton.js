@@ -52,7 +52,7 @@ class ClipboardButton extends Component {
   //
   // Control
 
-  resetState() {
+  resetState = () => {
     this.setState({
       showSuccess: false,
       showError: false
@@ -62,13 +62,13 @@ class ClipboardButton extends Component {
   //
   // Listeners
 
-  onSuccess() {
+  onSuccess = () => {
     this.setState({
       showSuccess: true
     });
   }
 
-  onError() {
+  onError = () => {
     this.setState({
       showError: true
     });

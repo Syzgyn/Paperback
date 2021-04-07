@@ -77,11 +77,11 @@ class EditReleaseProfileModalContentConnector extends Component {
   //
   // Listeners
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     this.props.setReleaseProfileValue({ name, value });
   }
 
-  onSavePress() {
+  onSavePress = () => {
     this.props.saveReleaseProfile({ id: this.props.id });
   }
 

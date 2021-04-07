@@ -18,7 +18,7 @@ class EditMetadataModalConnector extends Component {
   //
   // Listeners
 
-  onModalClose() {
+  onModalClose = () => {
     this.props.dispatchClearPendingChanges({ section: 'metadata' });
     this.props.onModalClose();
   }

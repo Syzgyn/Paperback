@@ -22,7 +22,7 @@ class OrganizePreviewRow extends Component {
   //
   // Listeners
 
-  onSelectedChange({ value, shiftKey }) {
+  onSelectedChange = ({ value, shiftKey }) => {
     const {
       id,
       onSelectedChange

@@ -40,11 +40,11 @@ class MonitoringOptionsModalContentConnector extends Component {
   //
   // Listeners
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     this.setState({ name, value });
   }
 
-  onSavePress({ monitor }) {
+  onSavePress = ({ monitor }) => {
     this.props.dispatchUpdateMonitoringOptions({
       id: this.props.seriesId,
       monitor

@@ -36,7 +36,7 @@ class OrganizeSeriesModalContentConnector extends Component {
   //
   // Listeners
 
-  onOrganizeSeriesPress() {
+  onOrganizeSeriesPress = () => {
     this.props.executeCommand({
       name: commandNames.RENAME_SERIES,
       seriesIds: this.props.seriesIds

@@ -56,7 +56,7 @@ class AddNewSeriesConnector extends Component {
   //
   // Listeners
 
-  onSeriesLookupChange(term) {
+  onSeriesLookupChange = (term) => {
     if (this._seriesLookupTimeout) {
       clearTimeout(this._seriesLookupTimeout);
     }
@@ -70,7 +70,7 @@ class AddNewSeriesConnector extends Component {
     }
   }
 
-  onClearSeriesLookup() {
+  onClearSeriesLookup = () => {
     this.props.clearAddSeries();
   }
 

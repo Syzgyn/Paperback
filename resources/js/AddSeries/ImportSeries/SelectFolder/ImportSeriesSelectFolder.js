@@ -27,15 +27,15 @@ class ImportSeriesSelectFolder extends Component {
   //
   // Lifecycle
 
-  onAddNewRootFolderPress() {
+  onAddNewRootFolderPress = () => {
     this.setState({ isAddNewRootFolderModalOpen: true });
   }
 
-  onNewRootFolderSelect({ value }) {
+  onNewRootFolderSelect = ({ value }) => {
     this.props.onNewRootFolderSelect(value);
   }
 
-  onAddRootFolderModalClose() {
+  onAddRootFolderModalClose = () => {
     this.setState({ isAddNewRootFolderModalOpen: false });
   }
 

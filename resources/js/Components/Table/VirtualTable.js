@@ -71,14 +71,14 @@ class VirtualTable extends Component {
   //
   // Control
 
-  setGridRef(ref) {
+  setGridRef = (ref) => {
     this._grid = ref;
   }
 
   //
   // Listeners
 
-  onMeasure({ width }) {
+  onMeasure = ({ width }) => {
     this.setState({
       width
     });

@@ -47,7 +47,7 @@ class TagInput extends Component {
   //
   // Control
 
-  _setAutosuggestRef(ref) {
+  _setAutosuggestRef = (ref) => {
     this._autosuggestRef = ref;
   }
 
@@ -55,7 +55,7 @@ class TagInput extends Component {
     return name;
   }
 
-  shouldRenderSuggestions(value) {
+  shouldRenderSuggestions = (value) => {
     return value.length >= this.props.minQueryLength;
   }
 
@@ -63,31 +63,29 @@ class TagInput extends Component {
     return name;
   }
 
-  addTag(tag) {
-      _.debounce((tag) => {
-        this.props.onTagAdd(tag);
+  addTag = _.debounce((tag) => {
+    this.props.onTagAdd(tag);
 
-        this.setState({
-          value: '',
-          suggestions: []
-        });
-      }, 250, { leading: true, trailing: false })
-  }
+    this.setState({
+      value: '',
+      suggestions: []
+    });
+  }, 250, { leading: true, trailing: false })
 
   //
   // Listeners
 
-  onTagEdit({ value, ...otherProps }) {
+  onTagEdit = ({ value, ...otherProps }) => {
     this.setState({ value });
 
     this.props.onTagDelete(otherProps);
   }
 
-  onInputContainerPress() {
+  onInputContainerPress = () => {
     this._autosuggestRef.input.focus();
   }
 
-  onInputChange(event, { newValue, method }) {
+  onInputChange = (event, { newValue, method }) => {
     const value = _.isObject(newValue) ? newValue.name : newValue;
 
     if (method === 'type') {
@@ -95,7 +93,7 @@ class TagInput extends Component {
     }
   }
 
-  onInputKeyDown(event) {
+  onInputKeyDown = (event) => {
     const {
       tags,
       allowNew,
@@ -135,11 +133,11 @@ class TagInput extends Component {
     }
   }
 
-  onInputFocus() {
+  onInputFocus = () => {
     this.setState({ isFocused: true });
   }
 
-  onInputBlur() {
+  onInputBlur = () => {
     this.setState({ isFocused: false });
 
     if (!this._autosuggestRef) {
@@ -163,7 +161,7 @@ class TagInput extends Component {
     }
   }
 
-  onSuggestionsFetchRequested({ value }) {
+  onSuggestionsFetchRequested = ({ value }) => {
     const lowerCaseValue = value.toLowerCase();
 
     const {
@@ -180,19 +178,19 @@ class TagInput extends Component {
     this.setState({ suggestions });
   }
 
-  onSuggestionsClearRequested() {
+  onSuggestionsClearRequested = () => {
     // Required because props aren't always rendered, but no-op
     // because we don't want to reset the paths after a path is selected.
   }
 
-  onSuggestionSelected(event, { suggestion }) {
+  onSuggestionSelected = (event, { suggestion }) => {
     this.addTag(suggestion);
   }
 
   //
   // Render
 
-  renderInputComponent(inputProps, forwardedRef) {
+  renderInputComponent = (inputProps, forwardedRef) => {
     const {
       tags,
       kind,

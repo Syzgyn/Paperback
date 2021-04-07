@@ -29,16 +29,16 @@ class EpisodeSummary extends Component {
   //
   // Listeners
 
-  onRemoveEpisodeFilePress() {
+  onRemoveEpisodeFilePress = () => {
     this.setState({ isRemoveEpisodeFileModalOpen: true });
   }
 
-  onConfirmRemoveEpisodeFile() {
+  onConfirmRemoveEpisodeFile = () => {
     this.props.onDeleteEpisodeFile();
     this.setState({ isRemoveEpisodeFileModalOpen: false });
   }
 
-  onRemoveEpisodeFileModalClose() {
+  onRemoveEpisodeFileModalClose = () => {
     this.setState({ isRemoveEpisodeFileModalOpen: false });
   }
 

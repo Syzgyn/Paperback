@@ -12,7 +12,7 @@ class TagInputTag extends Component {
   //
   // Listeners
 
-  onDelete() {
+  onDelete = () => {
     const {
       index,
       tag,
@@ -25,7 +25,7 @@ class TagInputTag extends Component {
     });
   }
 
-  onEdit() {
+  onEdit = () => {
     const {
       index,
       tag,

@@ -136,7 +136,7 @@ class FilterBuilderRow extends Component {
   //
   // Listeners
 
-  onFilterKeyChange({ value: key }) {
+  onFilterKeyChange = ({ value: key }) => {
     const {
       index,
       filterBuilderProps,
@@ -156,7 +156,7 @@ class FilterBuilderRow extends Component {
     onFilterChange(index, filter);
   }
 
-  onFilterChange({ name, value }) {
+  onFilterChange = ({ name, value }) => {
     const {
       index,
       filterKey,
@@ -176,7 +176,7 @@ class FilterBuilderRow extends Component {
     onFilterChange(index, filter);
   }
 
-  onAddPress() {
+  onAddPress = () => {
     const {
       index,
       onAddPress
@@ -185,7 +185,7 @@ class FilterBuilderRow extends Component {
     onAddPress(index);
   }
 
-  onRemovePress() {
+  onRemovePress = () => {
     const {
       index,
       onRemovePress

@@ -33,7 +33,7 @@ class SeasonPassRowConnector extends Component {
   //
   // Listeners
 
-  onSeriesMonitoredPress() {
+  onSeriesMonitoredPress = () => {
     const {
       seriesId,
       monitored
@@ -45,7 +45,7 @@ class SeasonPassRowConnector extends Component {
     });
   }
 
-  onSeasonMonitoredPress(seasonNumber, monitored) {
+  onSeasonMonitoredPress = (seasonNumber, monitored) => {
     this.props.toggleSeasonMonitored({
       seriesId: this.props.seriesId,
       seasonNumber,

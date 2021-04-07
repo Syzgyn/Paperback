@@ -60,11 +60,11 @@ class FilterBuilderModalContent extends Component {
   //
   // Listeners
 
-  onLabelChange({ value }) {
+  onLabelChange = ({ value }) => {
     this.setState({ label: value });
   }
 
-  onFilterChange(index, filter) {
+  onFilterChange = (index, filter) => {
     const filters = [...this.state.filters];
     filters.splice(index, 1, filter);
 
@@ -73,7 +73,7 @@ class FilterBuilderModalContent extends Component {
     });
   }
 
-  onAddFilterPress() {
+  onAddFilterPress = () => {
     const filters = [...this.state.filters];
     filters.push({});
 
@@ -82,7 +82,7 @@ class FilterBuilderModalContent extends Component {
     });
   }
 
-  onRemoveFilterPress(index) {
+  onRemoveFilterPress = (index) => {
     const filters = [...this.state.filters];
     filters.splice(index, 1);
 
@@ -91,7 +91,7 @@ class FilterBuilderModalContent extends Component {
     });
   }
 
-  onSaveFilterPress() {
+  onSaveFilterPress = () => {
     const {
       id,
       customFilterType,

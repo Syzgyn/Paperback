@@ -31,15 +31,15 @@ class AddNewSeriesSearchResult extends Component {
   //
   // Listeners
 
-  onPress() {
+  onPress = () => {
     this.setState({ isNewAddSeriesModalOpen: true });
   }
 
-  onAddSeriesModalClose() {
+  onAddSeriesModalClose = () => {
     this.setState({ isNewAddSeriesModalOpen: false });
   }
 
-  onTVDBLinkPress(event) {
+  onTVDBLinkPress = (event) => {
     event.stopPropagation();
   }
 

@@ -39,7 +39,7 @@ class SeriesIndexTableOptions extends Component {
   //
   // Listeners
 
-  onTableOptionChange({ name, value }) {
+  onTableOptionChange = ({ name, value }) => {
     this.setState({
       [name]: value
     }, () => {

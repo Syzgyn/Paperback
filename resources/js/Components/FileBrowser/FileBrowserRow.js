@@ -26,7 +26,7 @@ class FileBrowserRow extends Component {
   //
   // Listeners
 
-  onPress() {
+  onPress = () => {
     this.props.onPress(this.props.path);
   }
 

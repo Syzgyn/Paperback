@@ -59,11 +59,11 @@ class LogFilesConnector extends Component {
   //
   // Listeners
 
-  onRefreshPress() {
+  onRefreshPress = () => {
     this.props.fetchLogFiles();
   }
 
-  onDeleteFilesPress() {
+  onDeleteFilesPress = () => {
     this.props.executeCommand({ name: commandNames.DELETE_LOG_FILES });
   }
 

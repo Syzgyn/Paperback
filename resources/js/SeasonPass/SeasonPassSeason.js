@@ -10,7 +10,7 @@ class SeasonPassSeason extends Component {
   //
   // Listeners
 
-  onSeasonMonitoredPress() {
+  onSeasonMonitoredPress = () => {
     const {
       seasonNumber,
       monitored

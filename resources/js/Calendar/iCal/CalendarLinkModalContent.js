@@ -77,7 +77,7 @@ class CalendarLinkModalContent extends Component {
   //
   // Listeners
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     const state = {
       ...this.state,
       [name]: value
@@ -91,7 +91,7 @@ class CalendarLinkModalContent extends Component {
     });
   }
 
-  onLinkFocus(event) {
+  onLinkFocus = (event) => {
     event.target.select();
   }
 

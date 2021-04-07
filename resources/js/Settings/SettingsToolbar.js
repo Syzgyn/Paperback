@@ -20,7 +20,7 @@ class SettingsToolbar extends Component {
   //
   // Control
 
-  saveSettings(event) {
+  saveSettings = (event) => {
     event.preventDefault();
 
     const {

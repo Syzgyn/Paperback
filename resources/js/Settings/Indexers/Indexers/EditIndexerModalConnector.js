@@ -28,7 +28,7 @@ class EditIndexerModalConnector extends Component {
   //
   // Listeners
 
-  onModalClose() {
+  onModalClose = () => {
     this.props.dispatchClearPendingChanges();
     this.props.dispatchCancelTestIndexer();
     this.props.dispatchCancelSaveIndexer();

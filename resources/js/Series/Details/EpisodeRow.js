@@ -31,15 +31,15 @@ class EpisodeRow extends Component {
   //
   // Listeners
 
-  onManualSearchPress() {
+  onManualSearchPress = () => {
     this.setState({ isDetailsModalOpen: true });
   }
 
-  onDetailsModalClose() {
+  onDetailsModalClose = () => {
     this.setState({ isDetailsModalOpen: false });
   }
 
-  onMonitorEpisodePress(monitored, options) {
+  onMonitorEpisodePress = (monitored, options) => {
     this.props.onMonitorEpisodePress(this.props.id, monitored, options);
   }
 

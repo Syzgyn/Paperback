@@ -83,66 +83,66 @@ class SeriesDetails extends Component {
   //
   // Listeners
 
-  onOrganizePress() {
+  onOrganizePress = () => {
     this.setState({ isOrganizeModalOpen: true });
   }
 
-  onOrganizeModalClose() {
+  onOrganizeModalClose = () => {
     this.setState({ isOrganizeModalOpen: false });
   }
 
-  onManageEpisodesPress() {
+  onManageEpisodesPress = () => {
     this.setState({ isManageEpisodesOpen: true });
   }
 
-  onManageEpisodesModalClose() {
+  onManageEpisodesModalClose = () => {
     this.setState({ isManageEpisodesOpen: false });
   }
 
-  onInteractiveImportPress() {
+  onInteractiveImportPress = () => {
     this.setState({ isInteractiveImportModalOpen: true });
   }
 
-  onInteractiveImportModalClose() {
+  onInteractiveImportModalClose = () => {
     this.setState({ isInteractiveImportModalOpen: false });
   }
 
-  onEditSeriesPress() {
+  onEditSeriesPress = () => {
     this.setState({ isEditSeriesModalOpen: true });
   }
 
-  onEditSeriesModalClose() {
+  onEditSeriesModalClose = () => {
     this.setState({ isEditSeriesModalOpen: false });
   }
 
-  onDeleteSeriesPress() {
+  onDeleteSeriesPress = () => {
     this.setState({
       isEditSeriesModalOpen: false,
       isDeleteSeriesModalOpen: true
     });
   }
 
-  onDeleteSeriesModalClose() {
+  onDeleteSeriesModalClose = () => {
     this.setState({ isDeleteSeriesModalOpen: false });
   }
 
-  onSeriesHistoryPress() {
+  onSeriesHistoryPress = () => {
     this.setState({ isSeriesHistoryModalOpen: true });
   }
 
-  onSeriesHistoryModalClose() {
+  onSeriesHistoryModalClose = () => {
     this.setState({ isSeriesHistoryModalOpen: false });
   }
 
-  onMonitorOptionsPress() {
+  onMonitorOptionsPress = () => {
     this.setState({ isMonitorOptionsModalOpen: true });
   }
 
-  onMonitorOptionsClose() {
+  onMonitorOptionsClose = () => {
     this.setState({ isMonitorOptionsModalOpen: false });
   }
 
-  onExpandAllPress() {
+  onExpandAllPress = () => {
     const {
       allExpanded,
       expandedState
@@ -151,7 +151,7 @@ class SeriesDetails extends Component {
     this.setState(getExpandedState(selectAll(expandedState, !allExpanded)));
   }
 
-  onExpandPress(seasonNumber, isExpanded) {
+  onExpandPress = (seasonNumber, isExpanded) => {
     this.setState((state) => {
       const convertedState = {
         allSelected: state.allExpanded,
@@ -165,7 +165,7 @@ class SeriesDetails extends Component {
     });
   }
 
-  onMeasure({ height }) {
+  onMeasure = ({ height }) => {
     this.setState({ overviewHeight: height });
   }
 

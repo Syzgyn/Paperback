@@ -26,11 +26,11 @@ class PageHeaderActionsMenuConnector extends Component {
   //
   // Listeners
 
-  onRestartPress() {
+  onRestartPress = () => {
     this.props.restart();
   }
 
-  onShutdownPress() {
+  onShutdownPress = () => {
     this.props.shutdown();
   }
 

@@ -103,7 +103,7 @@ class PageToolbarSection extends Component {
   //
   // Listeners
 
-  onMeasure({ width }) {
+  onMeasure = ({ width }) => {
     this.setState({
       isMeasured: true,
       width

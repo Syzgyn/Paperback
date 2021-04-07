@@ -87,19 +87,19 @@ class InteractiveImportModalContentConnector extends Component {
   //
   // Listeners
 
-  onSortPress(sortKey, sortDirection) {
+  onSortPress = (sortKey, sortDirection) => {
     this.props.dispatchSetInteractiveImportSort({ sortKey, sortDirection });
   }
 
-  onFilterExistingFilesChange(filterExistingFiles) {
+  onFilterExistingFilesChange = (filterExistingFiles) => {
     this.setState({ filterExistingFiles });
   }
 
-  onImportModeChange(importMode) {
+  onImportModeChange = (importMode) => {
     this.props.dispatchSetInteractiveImportMode({ importMode });
   }
 
-  onImportSelectedPress(selected, importMode) {
+  onImportSelectedPress = (selected, importMode) => {
     const files = [];
 
     _.forEach(this.props.items, (item) => {

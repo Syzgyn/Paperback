@@ -11,7 +11,7 @@ class PageSidebarItem extends Component {
   //
   // Listeners
 
-  onPress() {
+  onPress = () => {
     const {
       isChildItem,
       isParentItem,

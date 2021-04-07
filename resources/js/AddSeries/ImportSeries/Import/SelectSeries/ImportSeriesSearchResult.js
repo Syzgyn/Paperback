@@ -9,7 +9,7 @@ class ImportSeriesSearchResult extends Component {
   //
   // Listeners
 
-  onPress() {
+  onPress = () => {
     this.props.onPress(this.props.tvdbId);
   }
 

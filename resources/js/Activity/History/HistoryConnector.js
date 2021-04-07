@@ -76,42 +76,42 @@ class HistoryConnector extends Component {
   //
   // Control
 
-  repopulate() {
+  repopulate = () => {
     this.props.fetchHistory();
   }
 
   //
   // Listeners
 
-  onFirstPagePress() {
+  onFirstPagePress = () => {
     this.props.gotoHistoryFirstPage();
   }
 
-  onPreviousPagePress() {
+  onPreviousPagePress = () => {
     this.props.gotoHistoryPreviousPage();
   }
 
-  onNextPagePress() {
+  onNextPagePress = () => {
     this.props.gotoHistoryNextPage();
   }
 
-  onLastPagePress() {
+  onLastPagePress = () => {
     this.props.gotoHistoryLastPage();
   }
 
-  onPageSelect(page) {
+  onPageSelect = (page) => {
     this.props.gotoHistoryPage({ page });
   }
 
-  onSortPress(sortKey) {
+  onSortPress = (sortKey) => {
     this.props.setHistorySort({ sortKey });
   }
 
-  onFilterSelect(selectedFilterKey) {
+  onFilterSelect = (selectedFilterKey) => {
     this.props.setHistoryFilter({ selectedFilterKey });
   }
 
-  onTableOptionChange(payload) {
+  onTableOptionChange = (payload) => {
     this.props.setHistoryTableOption(payload);
 
     if (payload.pageSize) {

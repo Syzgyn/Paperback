@@ -29,7 +29,7 @@ class AutoSuggestInput extends Component {
   //
   // Control
 
-  renderInputComponent(inputProps) {
+  renderInputComponent = (inputProps) => {
     const { renderInputComponent } = this.props;
 
     return (
@@ -51,7 +51,7 @@ class AutoSuggestInput extends Component {
     );
   }
 
-  renderSuggestionsContainer({ containerProps, children }) {
+  renderSuggestionsContainer = ({ containerProps, children }) => {
     return (
       <Portal>
         <Popper
@@ -95,7 +95,7 @@ class AutoSuggestInput extends Component {
   //
   // Listeners
 
-  onComputeMaxHeight(data) {
+  onComputeMaxHeight = (data) => {
     const {
       top,
       bottom,
@@ -115,14 +115,14 @@ class AutoSuggestInput extends Component {
     return data;
   }
 
-  onInputChange(event, { newValue }) {
+  onInputChange = (event, { newValue }) => {
     this.props.onChange({
       name: this.props.name,
       value: newValue
     });
   }
 
-  onInputKeyDown(event) {
+  onInputKeyDown = (event) => {
     const {
       name,
       value,

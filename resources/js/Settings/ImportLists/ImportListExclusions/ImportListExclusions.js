@@ -25,11 +25,11 @@ class ImportListExclusions extends Component {
   //
   // Listeners
 
-  onAddImportListExclusionPress() {
+  onAddImportListExclusionPress = () => {
     this.setState({ isAddImportListExclusionModalOpen: true });
   }
 
-  onModalClose() {
+  onModalClose = () => {
     this.setState({ isAddImportListExclusionModalOpen: false });
   }
 

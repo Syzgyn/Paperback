@@ -33,7 +33,7 @@ class QueueOptions extends Component {
   //
   // Listeners
 
-  onOptionChange({ name, value }) {
+  onOptionChange = ({ name, value }) => {
     this.setState({
       [name]: value
     }, () => {

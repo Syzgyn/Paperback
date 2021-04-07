@@ -101,7 +101,7 @@ class ImportSeriesFooter extends Component {
   //
   // Listeners
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     this.setState({ [name]: value });
     this.props.onInputChange({ name, value });
   }

@@ -20,7 +20,7 @@ class KeyValueListInput extends Component {
   //
   // Listeners
 
-  onItemChange(index, itemValue) {
+  onItemChange = (index, itemValue) => {
     const {
       name,
       value,
@@ -41,7 +41,7 @@ class KeyValueListInput extends Component {
     });
   }
 
-  onRemoveItem(index) {
+  onRemoveItem = (index) => {
     const {
       name,
       value,
@@ -57,13 +57,13 @@ class KeyValueListInput extends Component {
     });
   }
 
-  onFocus() {
+  onFocus = () => {
     this.setState({
       isFocused: true
     });
   }
 
-  onBlur() {
+  onBlur = () => {
     this.setState({
       isFocused: false
     });

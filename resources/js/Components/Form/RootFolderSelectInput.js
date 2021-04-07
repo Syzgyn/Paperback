@@ -43,7 +43,7 @@ class RootFolderSelectInput extends Component {
   //
   // Listeners
 
-  onChange({ name, value }) {
+  onChange = ({ name, value }) => {
     if (value === 'addNew') {
       this.setState({ isAddNewRootFolderModalOpen: true });
     } else {
@@ -51,13 +51,13 @@ class RootFolderSelectInput extends Component {
     }
   }
 
-  onNewRootFolderSelect({ value }) {
+  onNewRootFolderSelect = ({ value }) => {
     this.setState({ newRootFolderPath: value }, () => {
       this.props.onNewRootFolderSelect(value);
     });
   }
 
-  onAddRootFolderModalClose() {
+  onAddRootFolderModalClose = () => {
     this.setState({ isAddNewRootFolderModalOpen: false });
   }
 

@@ -13,7 +13,7 @@ class AddDownloadClientItem extends Component {
   //
   // Listeners
 
-  onDownloadClientSelect() {
+  onDownloadClientSelect = () => {
     const {
       implementation
     } = this.props;

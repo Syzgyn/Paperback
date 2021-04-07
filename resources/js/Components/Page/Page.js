@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import locationShape from 'Helpers/Props/Shapes/locationShape';
+import SignalRConnector from 'Components/SignalRConnector';
 import ColorImpairedContext from 'App/ColorImpairedContext';
 import ConnectionLostModalConnector from 'App/ConnectionLostModalConnector';
 import AppUpdatedModalConnector from 'App/AppUpdatedModalConnector';
@@ -48,18 +49,18 @@ class Page extends Component {
   //
   // Listeners
 
-  onResize() {
+  onResize = () => {
     this.props.onResize({
       width: window.innerWidth,
       height: window.innerHeight
     });
   }
 
-  onUpdatedModalClose() {
+  onUpdatedModalClose = () => {
     this.setState({ isUpdatedModalOpen: false });
   }
 
-  onConnectionLostModalClose() {
+  onConnectionLostModalClose = () => {
     this.setState({ isConnectionLostModalOpen: false });
   }
 
@@ -81,6 +82,7 @@ class Page extends Component {
     return (
       <ColorImpairedContext.Provider value={enableColorImpairedMode}>
         <div className={className}>
+          <SignalRConnector />
 
           <PageHeader
             onSidebarToggle={onSidebarToggle}

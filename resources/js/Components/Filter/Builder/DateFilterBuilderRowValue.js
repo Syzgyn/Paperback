@@ -83,7 +83,7 @@ class DateFilterBuilderRowValue extends Component {
   //
   // Listeners
 
-  onValueChange({ value }) {
+  onValueChange = ({ value }) => {
     const {
       filterValue,
       onChange
@@ -104,7 +104,7 @@ class DateFilterBuilderRowValue extends Component {
     });
   }
 
-  onTimeChange({ value }) {
+  onTimeChange = ({ value }) => {
     const {
       filterValue,
       onChange

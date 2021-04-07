@@ -31,32 +31,32 @@ class SeriesIndexPoster extends Component {
   //
   // Listeners
 
-  onEditSeriesPress() {
+  onEditSeriesPress = () => {
     this.setState({ isEditSeriesModalOpen: true });
   }
 
-  onEditSeriesModalClose() {
+  onEditSeriesModalClose = () => {
     this.setState({ isEditSeriesModalOpen: false });
   }
 
-  onDeleteSeriesPress() {
+  onDeleteSeriesPress = () => {
     this.setState({
       isEditSeriesModalOpen: false,
       isDeleteSeriesModalOpen: true
     });
   }
 
-  onDeleteSeriesModalClose() {
+  onDeleteSeriesModalClose = () => {
     this.setState({ isDeleteSeriesModalOpen: false });
   }
 
-  onPosterLoad() {
+  onPosterLoad = () => {
     if (this.state.hasPosterError) {
       this.setState({ hasPosterError: false });
     }
   }
 
-  onPosterLoadError() {
+  onPosterLoadError = () => {
     if (!this.state.hasPosterError) {
       this.setState({ hasPosterError: true });
     }

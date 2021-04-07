@@ -22,7 +22,7 @@ class MonitorToggleButton extends Component {
   //
   // Listeners
 
-  onPress(event) {
+  onPress = (event) => {
     const shiftKey = event.nativeEvent.shiftKey;
 
     this.props.onPress(!this.props.monitored, { shiftKey });

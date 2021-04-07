@@ -28,7 +28,7 @@ class QualityProfileItems extends Component {
   //
   // Listeners
 
-  onMeasure({ height }) {
+  onMeasure = ({ height }) => {
     if (this.props.editGroups) {
       this.setState({
         qualitiesHeightEditGroups: height
@@ -38,7 +38,7 @@ class QualityProfileItems extends Component {
     }
   }
 
-  onToggleEditGroupsMode() {
+  onToggleEditGroupsMode = () => {
     this.props.onToggleEditGroupsMode();
   }
 

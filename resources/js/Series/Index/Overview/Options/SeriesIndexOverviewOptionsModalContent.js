@@ -110,7 +110,7 @@ class SeriesIndexOverviewOptionsModalContent extends Component {
   //
   // Listeners
 
-  onChangeOverviewOption({ name, value }) {
+  onChangeOverviewOption = ({ name, value }) => {
     this.setState({
       [name]: value
     }, () => {

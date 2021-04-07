@@ -11,7 +11,7 @@ class LanguageProfileItem extends Component {
   //
   // Listeners
 
-  onAllowedChange({ value }) {
+  onAllowedChange = ({ value }) => {
     const {
       languageId,
       onLanguageProfileItemAllowedChange

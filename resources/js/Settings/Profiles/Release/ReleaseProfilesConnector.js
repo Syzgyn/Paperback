@@ -43,7 +43,7 @@ class ReleaseProfilesConnector extends Component {
   //
   // Listeners
 
-  onConfirmDeleteReleaseProfile(id) {
+  onConfirmDeleteReleaseProfile = (id) => {
     this.props.deleteReleaseProfile({ id });
   }
 

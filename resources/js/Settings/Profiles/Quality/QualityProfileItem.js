@@ -12,7 +12,7 @@ class QualityProfileItem extends Component {
   //
   // Listeners
 
-  onAllowedChange({ value }) {
+  onAllowedChange = ({ value }) => {
     const {
       qualityId,
       onQualityProfileItemAllowedChange
@@ -21,7 +21,7 @@ class QualityProfileItem extends Component {
     onQualityProfileItemAllowedChange(qualityId, value);
   }
 
-  onCreateGroupPress() {
+  onCreateGroupPress = () => {
     const {
       qualityId,
       onCreateGroupPress

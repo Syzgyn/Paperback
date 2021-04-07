@@ -45,11 +45,11 @@ class UISettingsConnector extends Component {
   //
   // Listeners
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     this.props.setUISettingsValue({ name, value });
   }
 
-  onSavePress() {
+  onSavePress = () => {
     this.props.saveUISettings();
   }
 

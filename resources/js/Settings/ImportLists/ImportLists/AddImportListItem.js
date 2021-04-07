@@ -13,7 +13,7 @@ class AddImportListItem extends Component {
   //
   // Listeners
 
-  onImportListSelect() {
+  onImportListSelect = () => {
     const {
       implementation
     } = this.props;

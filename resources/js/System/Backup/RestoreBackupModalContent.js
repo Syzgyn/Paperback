@@ -91,14 +91,14 @@ class RestoreBackupModalContent extends Component {
   //
   // Listeners
 
-  onPathChange({ value, files }) {
+  onPathChange = ({ value, files }) => {
     this.setState({
       file: files[0],
       path: value
     });
   }
 
-  onRestorePress() {
+  onRestorePress = () => {
     const {
       id,
       onRestorePress

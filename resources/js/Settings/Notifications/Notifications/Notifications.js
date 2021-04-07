@@ -27,18 +27,18 @@ class Notifications extends Component {
   //
   // Listeners
 
-  onAddNotificationPress() {
+  onAddNotificationPress = () => {
     this.setState({ isAddNotificationModalOpen: true });
   }
 
-  onAddNotificationModalClose({ notificationSelected = false } = {}) {
+  onAddNotificationModalClose = ({ notificationSelected = false } = {}) => {
     this.setState({
       isAddNotificationModalOpen: false,
       isEditNotificationModalOpen: notificationSelected
     });
   }
 
-  onEditNotificationModalClose() {
+  onEditNotificationModalClose = () => {
     this.setState({ isEditNotificationModalOpen: false });
   }
 

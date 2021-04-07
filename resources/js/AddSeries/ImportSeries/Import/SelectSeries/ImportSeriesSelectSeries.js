@@ -52,7 +52,7 @@ class ImportSeriesSelectSeries extends Component {
   //
   // Listeners
 
-  onWindowClick(event) {
+  onWindowClick = (event) => {
     const button = document.getElementById(this._buttonId);
     const content = document.getElementById(this._contentId);
 
@@ -70,7 +70,7 @@ class ImportSeriesSelectSeries extends Component {
     }
   }
 
-  onPress() {
+  onPress = () => {
     if (this.state.isOpen) {
       this._removeListener();
     } else {
@@ -80,7 +80,7 @@ class ImportSeriesSelectSeries extends Component {
     this.setState({ isOpen: !this.state.isOpen });
   }
 
-  onSearchInputChange({ value }) {
+  onSearchInputChange = ({ value }) => {
     if (this._seriesLookupTimeout) {
       clearTimeout(this._seriesLookupTimeout);
     }
@@ -92,11 +92,11 @@ class ImportSeriesSelectSeries extends Component {
     });
   }
 
-  onRefreshPress() {
+  onRefreshPress = () => {
     this.props.onSearchInputChange(this.state.term);
   }
 
-  onSeriesSelect(tvdbId) {
+  onSeriesSelect = (tvdbId) => {
     this.setState({ isOpen: false });
 
     this.props.onSeriesSelect(tvdbId);

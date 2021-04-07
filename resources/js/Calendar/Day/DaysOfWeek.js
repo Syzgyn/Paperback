@@ -37,7 +37,7 @@ class DaysOfWeek extends Component {
   //
   // Control
 
-  scheduleUpdate() {
+  scheduleUpdate = () => {
     this.clearUpdateTimeout();
     const todaysDate = moment().startOf('day');
     const diff = todaysDate.clone().add(1, 'day').diff(moment());
@@ -49,7 +49,7 @@ class DaysOfWeek extends Component {
     this.updateTimeoutId = setTimeout(this.scheduleUpdate, diff);
   }
 
-  clearUpdateTimeout() {
+  clearUpdateTimeout = () => {
     if (this.updateTimeoutId) {
       clearTimeout(this.updateTimeoutId);
     }

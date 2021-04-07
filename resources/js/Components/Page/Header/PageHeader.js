@@ -29,14 +29,14 @@ class PageHeader extends Component {
   //
   // Control
 
-  onOpenKeyboardShortcutsModal() {
+  onOpenKeyboardShortcutsModal = () => {
     this.setState({ isKeyboardShortcutsModalOpen: true });
   }
 
   //
   // Listeners
 
-  onKeyboardShortcutsModalClose() {
+  onKeyboardShortcutsModalClose = () => {
     this.setState({ isKeyboardShortcutsModalOpen: false });
   }
 

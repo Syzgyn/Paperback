@@ -44,7 +44,7 @@ class TagSelectInputConnector extends Component {
   //
   // Listeners
 
-  onTagAdd(tag) {
+  onTagAdd = (tag) => {
     const {
       name,
       value,
@@ -62,7 +62,7 @@ class TagSelectInputConnector extends Component {
     this.props.onChange({ name, value: newValue });
   }
 
-  onTagDelete({ index }) {
+  onTagDelete = ({ index }) => {
     const {
       name,
       value

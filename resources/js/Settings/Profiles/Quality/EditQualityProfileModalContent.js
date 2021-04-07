@@ -62,20 +62,20 @@ class EditQualityProfileModalContent extends Component {
   //
   // Listeners
 
-  onHeaderMeasure({ height }) {
+  onHeaderMeasure = ({ height }) => {
     if (height > this.state.headerHeight) {
       this.setState({ headerHeight: height });
     }
   }
 
-  onBodyMeasure({ height }) {
+  onBodyMeasure = ({ height }) => {
 
     if (height > this.state.bodyHeight) {
       this.setState({ bodyHeight: height });
     }
   }
 
-  onFooterMeasure({ height }) {
+  onFooterMeasure = ({ height }) => {
     if (height > this.state.footerHeight) {
       this.setState({ footerHeight: height });
     }

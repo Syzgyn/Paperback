@@ -8,7 +8,7 @@ class PageJumpBarItem extends Component {
   //
   // Listeners
 
-  onPress() {
+  onPress = () => {
     const {
       label,
       onItemPress

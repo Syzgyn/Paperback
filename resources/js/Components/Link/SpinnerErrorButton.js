@@ -84,7 +84,7 @@ class SpinnerErrorButton extends Component {
   //
   // Control
 
-  resetState() {
+  resetState = () => {
     this.setState({
       wasSuccessful: false,
       hasWarning: false,

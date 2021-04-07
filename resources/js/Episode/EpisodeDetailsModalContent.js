@@ -36,7 +36,7 @@ class EpisodeDetailsModalContent extends Component {
   //
   // Listeners
 
-  onTabSelect(index, lastIndex) {
+  onTabSelect = (index, lastIndex) => {
     const selectedTab = tabs[index];
     this.props.onTabChange(selectedTab === 'search');
     this.setState({ selectedTab });

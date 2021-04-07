@@ -10,7 +10,7 @@ class TableHeaderCell extends Component {
   //
   // Listeners
 
-  onPress() {
+  onPress = () => {
     const {
       name,
       fixedSortDirection

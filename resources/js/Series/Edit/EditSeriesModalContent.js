@@ -30,7 +30,7 @@ class EditSeriesModalContent extends Component {
   //
   // Listeners
 
-  onSavePress() {
+  onSavePress = () => {
     const {
       isPathChanging,
       onSavePress
@@ -45,7 +45,7 @@ class EditSeriesModalContent extends Component {
     }
   }
 
-  onMoveSeriesPress() {
+  onMoveSeriesPress = () => {
     this.setState({ isConfirmMoveModalOpen: false });
 
     this.props.onSavePress(true);

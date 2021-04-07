@@ -21,20 +21,20 @@ class FilterModal extends Component {
   //
   // Listeners
 
-  onAddCustomFilter() {
+  onAddCustomFilter = () => {
     this.setState({
       filterBuilder: true
     });
   }
 
-  onEditCustomFilter(id) {
+  onEditCustomFilter = (id) => {
     this.setState({
       filterBuilder: true,
       id
     });
   }
 
-  onCancelPress() {
+  onCancelPress = () => {
     if (this.state.filterBuilder) {
       this.setState({
         filterBuilder: false,
@@ -45,7 +45,7 @@ class FilterModal extends Component {
     }
   }
 
-  onModalClose() {
+  onModalClose = () => {
     this.setState({
       filterBuilder: false,
       id: null

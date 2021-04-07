@@ -61,7 +61,7 @@ class SeriesEditorFooter extends Component {
   //
   // Listeners
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     this.setState({ [name]: value });
 
     if (value === NO_CHANGE) {
@@ -86,7 +86,7 @@ class SeriesEditorFooter extends Component {
     }
   }
 
-  onApplyTagsPress(tags, applyTags) {
+  onApplyTagsPress = (tags, applyTags) => {
     this.setState({
       savingTags: true,
       isTagsModalOpen: false
@@ -98,23 +98,23 @@ class SeriesEditorFooter extends Component {
     });
   }
 
-  onDeleteSelectedPress() {
+  onDeleteSelectedPress = () => {
     this.setState({ isDeleteSeriesModalOpen: true });
   }
 
-  onDeleteSeriesModalClose() {
+  onDeleteSeriesModalClose = () => {
     this.setState({ isDeleteSeriesModalOpen: false });
   }
 
-  onTagsPress() {
+  onTagsPress = () => {
     this.setState({ isTagsModalOpen: true });
   }
 
-  onTagsModalClose() {
+  onTagsModalClose = () => {
     this.setState({ isTagsModalOpen: false });
   }
 
-  onSaveRootFolderPress() {
+  onSaveRootFolderPress = () => {
     this.setState({
       isConfirmMoveModalOpen: false,
       destinationRootFolder: null
@@ -123,7 +123,7 @@ class SeriesEditorFooter extends Component {
     this.props.onSaveSelected({ rootFolderPath: this.state.destinationRootFolder });
   }
 
-  onMoveSeriesPress() {
+  onMoveSeriesPress = () => {
     this.setState({
       isConfirmMoveModalOpen: false,
       destinationRootFolder: null

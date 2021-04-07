@@ -93,7 +93,7 @@ class QualityDefinition extends Component {
   //
   // Listeners
 
-  onSliderChange([sliderMinSize, sliderMaxSize]) {
+  onSliderChange = ([sliderMinSize, sliderMaxSize]) => {
     this.setState({
       sliderMinSize,
       sliderMaxSize
@@ -105,7 +105,7 @@ class QualityDefinition extends Component {
     });
   }
 
-  onAfterSliderChange() {
+  onAfterSliderChange = () => {
     const {
       minSize,
       maxSize
@@ -117,7 +117,7 @@ class QualityDefinition extends Component {
     });
   }
 
-  onMinSizeChange({ value }) {
+  onMinSizeChange = ({ value }) => {
     const minSize = getValue(value);
 
     this.setState({
@@ -130,7 +130,7 @@ class QualityDefinition extends Component {
     });
   }
 
-  onMaxSizeChange({ value }) {
+  onMaxSizeChange = ({ value }) => {
     const maxSize = value === MAX ? null : getValue(value);
 
     this.setState({

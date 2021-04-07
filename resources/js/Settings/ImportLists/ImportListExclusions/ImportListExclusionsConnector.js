@@ -33,7 +33,7 @@ class ImportListExclusionsConnector extends Component {
   //
   // Listeners
 
-  onConfirmDeleteImportListExclusion(id) {
+  onConfirmDeleteImportListExclusion = (id) => {
     this.props.deleteImportListExclusion({ id });
   }
 

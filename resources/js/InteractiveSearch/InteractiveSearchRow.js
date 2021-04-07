@@ -59,7 +59,7 @@ class InteractiveSearchRow extends Component {
   //
   // Listeners
 
-  onGrabPress() {
+  onGrabPress = () => {
     const {
       guid,
       indexerId,
@@ -72,11 +72,11 @@ class InteractiveSearchRow extends Component {
     });
   }
 
-  onConfirmGrabPress() {
+  onConfirmGrabPress = () => {
     this.setState({ isConfirmGrabModalOpen: true });
   }
 
-  onGrabConfirm() {
+  onGrabConfirm = () => {
     this.setState({ isConfirmGrabModalOpen: false });
 
     const {
@@ -93,7 +93,7 @@ class InteractiveSearchRow extends Component {
     });
   }
 
-  onGrabCancel() {
+  onGrabCancel = () => {
     this.setState({ isConfirmGrabModalOpen: false });
   }
 

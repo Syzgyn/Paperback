@@ -13,7 +13,7 @@ class EditReleaseProfileModalConnector extends Component {
   //
   // Listeners
 
-  onModalClose() {
+  onModalClose = () => {
     this.props.clearPendingChanges({ section: 'settings.releaseProfiles' });
     this.props.onModalClose();
   }

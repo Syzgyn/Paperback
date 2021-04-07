@@ -29,7 +29,7 @@ class InteractiveImportSelectFolderModalContentConnector extends Component {
   //
   // Listeners
 
-  onQuickImportPress(folder) {
+  onQuickImportPress = (folder) => {
     this.props.addRecentFolder({ folder });
 
     this.props.executeCommand({
@@ -40,12 +40,12 @@ class InteractiveImportSelectFolderModalContentConnector extends Component {
     this.props.onModalClose();
   }
 
-  onInteractiveImportPress(folder) {
+  onInteractiveImportPress = (folder) => {
     this.props.addRecentFolder({ folder });
     this.props.onFolderSelect(folder);
   }
 
-  onRemoveRecentFolderPress(folder) {
+  onRemoveRecentFolderPress = (folder) => {
     this.props.removeRecentFolder({ folder });
   }
 

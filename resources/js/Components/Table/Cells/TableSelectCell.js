@@ -31,7 +31,7 @@ class TableSelectCell extends Component {
   //
   // Listeners
 
-  onChange({ value, shiftKey }, a, b, c, d) {
+  onChange = ({ value, shiftKey }, a, b, c, d) => {
     const {
       id,
       onSelectedChange

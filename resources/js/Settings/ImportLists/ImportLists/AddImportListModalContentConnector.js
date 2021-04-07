@@ -49,7 +49,7 @@ class AddImportListModalContentConnector extends Component {
   //
   // Listeners
 
-  onImportListSelect({ implementation, name }) {
+  onImportListSelect = ({ implementation, name }) => {
     this.props.selectImportListSchema({ implementation, presetName: name });
     this.props.onModalClose({ listSelected: true });
   }

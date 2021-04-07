@@ -18,11 +18,11 @@ class TableOptionsModalWrapper extends Component {
   //
   // Listeners
 
-  onTableOptionsPress() {
+  onTableOptionsPress = () => {
     this.setState({ isTableOptionsModalOpen: true });
   }
 
-  onTableOptionsModalClose() {
+  onTableOptionsModalClose = () => {
     this.setState({ isTableOptionsModalOpen: false });
   }
 

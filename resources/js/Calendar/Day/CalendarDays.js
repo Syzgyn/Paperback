@@ -52,7 +52,7 @@ class CalendarDays extends Component {
   //
   // Control
 
-  scheduleUpdate() {
+  scheduleUpdate = () => {
     this.clearUpdateTimeout();
     const todaysDate = moment().startOf('day');
     const diff = moment().diff(todaysDate.clone().add(1, 'day'));
@@ -62,7 +62,7 @@ class CalendarDays extends Component {
     this.updateTimeoutId = setTimeout(this.scheduleUpdate, diff);
   }
 
-  clearUpdateTimeout() {
+  clearUpdateTimeout = () => {
     if (this.updateTimeoutId) {
       clearTimeout(this.updateTimeoutId);
     }
@@ -71,11 +71,11 @@ class CalendarDays extends Component {
   //
   // Listeners
 
-  onEventModalOpenToggle(isEventModalOpen) {
+  onEventModalOpenToggle = (isEventModalOpen) => {
     this.setState({ isEventModalOpen });
   }
 
-  onTouchStart(event) {
+  onTouchStart = (event) => {
     const touches = event.touches;
     const touchStart = touches[0].pageX;
 
@@ -94,7 +94,7 @@ class CalendarDays extends Component {
     this._touchStart = touchStart;
   }
 
-  onTouchEnd(event) {
+  onTouchEnd = (event) => {
     const touches = event.changedTouches;
     const currentTouch = touches[0].pageX;
 
@@ -111,11 +111,11 @@ class CalendarDays extends Component {
     this._touchStart = null;
   }
 
-  onTouchCancel(event) {
+  onTouchCancel = (event) => {
     this._touchStart = null;
   }
 
-  onTouchMove(event) {
+  onTouchMove = (event) => {
     if (!this._touchStart) {
       return;
     }

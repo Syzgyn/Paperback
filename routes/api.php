@@ -66,6 +66,7 @@ Route::get('ddl/short', 'DDLController@short');
 Route::get('ddl/download', 'DDLController@download');
 
 Route::fallback(function () {
-    return response()->json([
-        'message' => 'Page Not Found.'], 404);
+    //return response()->json([
+    //    'message' => 'Page Not Found.'], 404);
+    return response()->json([]);
 });

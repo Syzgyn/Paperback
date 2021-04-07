@@ -41,14 +41,14 @@ class LogsTableRow extends Component {
   //
   // Listeners
 
-  onPress() {
+  onPress = () => {
     // Don't re-open the modal if it's already open
     if (!this.state.isDetailsModalOpen) {
       this.setState({ isDetailsModalOpen: true });
     }
   }
 
-  onModalClose() {
+  onModalClose = () => {
     this.setState({ isDetailsModalOpen: false });
   }
 

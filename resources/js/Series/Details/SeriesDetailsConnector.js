@@ -191,7 +191,7 @@ class SeriesDetailsConnector extends Component {
   //
   // Control
 
-  populate() {
+  populate = () => {
     const seriesId = this.props.id;
 
     this.props.fetchEpisodes({ seriesId });
@@ -199,7 +199,7 @@ class SeriesDetailsConnector extends Component {
     this.props.fetchQueueDetails({ seriesId });
   }
 
-  unpopulate() {
+  unpopulate = () => {
     this.props.clearEpisodes();
     this.props.clearEpisodeFiles();
     this.props.clearQueueDetails();
@@ -208,21 +208,21 @@ class SeriesDetailsConnector extends Component {
   //
   // Listeners
 
-  onMonitorTogglePress(monitored) {
+  onMonitorTogglePress = (monitored) => {
     this.props.toggleSeriesMonitored({
       seriesId: this.props.id,
       monitored
     });
   }
 
-  onRefreshPress() {
+  onRefreshPress = () => {
     this.props.executeCommand({
       name: commandNames.REFRESH_SERIES,
       seriesId: this.props.id
     });
   }
 
-  onSearchPress() {
+  onSearchPress = () => {
     this.props.executeCommand({
       name: commandNames.SERIES_SEARCH,
       seriesId: this.props.id

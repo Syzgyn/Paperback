@@ -52,11 +52,11 @@ class MediaManagementConnector extends Component {
   //
   // Listeners
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     this.props.setMediaManagementSettingsValue({ name, value });
   }
 
-  onSavePress() {
+  onSavePress = () => {
     this.props.saveMediaManagementSettings();
     this.props.saveNamingSettings();
   }

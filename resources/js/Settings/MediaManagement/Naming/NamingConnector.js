@@ -56,14 +56,14 @@ class NamingConnector extends Component {
   //
   // Control
 
-  _fetchNamingExamples() {
+  _fetchNamingExamples = () => {
     this.props.fetchNamingExamples();
   }
 
   //
   // Listeners
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     this.props.setNamingSettingsValue({ name, value });
 
     if (this._namingExampleTimeout) {

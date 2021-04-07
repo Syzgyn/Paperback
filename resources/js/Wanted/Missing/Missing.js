@@ -60,30 +60,30 @@ class Missing extends Component {
   //
   // Control
 
-  getSelectedIds() {
+  getSelectedIds = () => {
     return getSelectedIds(this.state.selectedState);
   }
 
   //
   // Listeners
 
-  onSelectAllChange({ value }) {
+  onSelectAllChange = ({ value }) => {
     this.setState(selectAll(this.state.selectedState, value));
   }
 
-  onSelectedChange({ id, value, shiftKey = false }) {
+  onSelectedChange = ({ id, value, shiftKey = false }) => {
     this.setState((state) => {
       return toggleSelected(state, this.props.items, id, value, shiftKey);
     });
   }
 
-  onSearchSelectedPress() {
+  onSearchSelectedPress = () => {
     const selected = this.getSelectedIds();
 
     this.props.onSearchSelectedPress(selected);
   }
 
-  onToggleSelectedPress() {
+  onToggleSelectedPress = () => {
     const episodeIds = this.getSelectedIds();
 
     this.props.batchToggleMissingEpisodes({
@@ -92,11 +92,11 @@ class Missing extends Component {
     });
   }
 
-  onSearchAllMissingPress() {
+  onSearchAllMissingPress = () => {
     this.setState({ isConfirmSearchAllMissingModalOpen: true });
   }
 
-  onSearchAllMissingConfirmed() {
+  onSearchAllMissingConfirmed = () => {
     const {
       selectedFilterKey,
       onSearchAllMissingPress
@@ -109,15 +109,15 @@ class Missing extends Component {
     this.setState({ isConfirmSearchAllMissingModalOpen: false });
   }
 
-  onConfirmSearchAllMissingModalClose() {
+  onConfirmSearchAllMissingModalClose = () => {
     this.setState({ isConfirmSearchAllMissingModalOpen: false });
   }
 
-  onInteractiveImportPress() {
+  onInteractiveImportPress = () => {
     this.setState({ isInteractiveImportModalOpen: true });
   }
 
-  onInteractiveImportModalClose() {
+  onInteractiveImportModalClose = () => {
     this.setState({ isInteractiveImportModalOpen: false });
   }
 

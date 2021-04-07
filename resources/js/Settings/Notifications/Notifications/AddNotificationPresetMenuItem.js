@@ -7,7 +7,7 @@ class AddNotificationPresetMenuItem extends Component {
   //
   // Listeners
 
-  onPress() {
+  onPress = () => {
     const {
       name,
       implementation

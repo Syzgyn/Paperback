@@ -28,29 +28,29 @@ class ImportSeries extends Component {
   //
   // Control
 
-  setScrollerRef(ref) {
+  setScrollerRef = (ref) => {
     this.setState({ scroller: ref });
   }
 
   //
   // Listeners
 
-  getSelectedIds() {
+  getSelectedIds = () => {
     return getSelectedIds(this.state.selectedState, { parseIds: false });
   }
 
-  onSelectAllChange({ value }) {
+  onSelectAllChange = ({ value }) => {
     // Only select non-dupes
     this.setState(selectAll(this.state.selectedState, value));
   }
 
-  onSelectedChange({ id, value, shiftKey = false }) {
+  onSelectedChange = ({ id, value, shiftKey = false }) => {
     this.setState((state) => {
       return toggleSelected(state, this.props.items, id, value, shiftKey);
     });
   }
 
-  onRemoveSelectedStateItem(id) {
+  onRemoveSelectedStateItem = (id) => {
     this.setState((state) => {
       const selectedState = Object.assign({}, state.selectedState);
       delete selectedState[id];
@@ -62,15 +62,15 @@ class ImportSeries extends Component {
     });
   }
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     this.props.onInputChange(this.getSelectedIds(), name, value);
   }
 
-  onImportPress() {
+  onImportPress = () => {
     this.props.onImportPress(this.getSelectedIds());
   }
 
-  onScroll({ scrollTop }) {
+  onScroll = ({ scrollTop }) => {
     this.setState({ scrollTop });
   }
 

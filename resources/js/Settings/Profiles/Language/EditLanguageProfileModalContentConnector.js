@@ -81,22 +81,22 @@ class EditLanguageProfileModalContentConnector extends Component {
   //
   // Listeners
 
-  onInputChange({ name, value }) {
+  onInputChange = ({ name, value }) => {
     this.props.setLanguageProfileValue({ name, value });
   }
 
-  onCutoffChange({ name, value }) {
+  onCutoffChange = ({ name, value }) => {
     const id = parseInt(value);
     const item = _.find(this.props.item.languages.value, (i) => i.language.id === id);
 
     this.props.setLanguageProfileValue({ name, value: item.language });
   }
 
-  onSavePress() {
+  onSavePress = () => {
     this.props.saveLanguageProfile({ id: this.props.id });
   }
 
-  onLanguageProfileItemAllowedChange(id, allowed) {
+  onLanguageProfileItemAllowedChange = (id, allowed) => {
     const languageProfile = _.cloneDeep(this.props.item);
 
     const item = _.find(languageProfile.languages.value, (i) => i.language.id === id);
@@ -117,7 +117,7 @@ class EditLanguageProfileModalContentConnector extends Component {
     }
   }
 
-  onLanguageProfileItemDragMove(dragIndex, dropIndex) {
+  onLanguageProfileItemDragMove = (dragIndex, dropIndex) => {
     if (this.state.dragIndex !== dragIndex || this.state.dropIndex !== dropIndex) {
       this.setState({
         dragIndex,
@@ -126,7 +126,7 @@ class EditLanguageProfileModalContentConnector extends Component {
     }
   }
 
-  onLanguageProfileItemDragEnd({ id }, didDrop) {
+  onLanguageProfileItemDragEnd = ({ id }, didDrop) => {
     const {
       dragIndex,
       dropIndex

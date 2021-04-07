@@ -24,22 +24,22 @@ class SeriesIndexActionsCell extends Component {
   //
   // Listeners
 
-  onEditSeriesPress() {
+  onEditSeriesPress = () => {
     this.setState({ isEditSeriesModalOpen: true });
   }
 
-  onEditSeriesModalClose() {
+  onEditSeriesModalClose = () => {
     this.setState({ isEditSeriesModalOpen: false });
   }
 
-  onDeleteSeriesPress() {
+  onDeleteSeriesPress = () => {
     this.setState({
       isEditSeriesModalOpen: false,
       isDeleteSeriesModalOpen: true
     });
   }
 
-  onDeleteSeriesModalClose() {
+  onDeleteSeriesModalClose = () => {
     this.setState({ isDeleteSeriesModalOpen: false });
   }
 

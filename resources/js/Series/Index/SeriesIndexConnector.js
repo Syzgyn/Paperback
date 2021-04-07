@@ -71,11 +71,11 @@ class SeriesIndexConnector extends Component {
   //
   // Listeners
 
-  onViewSelect(view) {
+  onViewSelect = (view) => {
     this.props.dispatchSetSeriesView(view);
   }
 
-  onScroll({ scrollTop }) {
+  onScroll = ({ scrollTop }) => {
     scrollPositions.seriesIndex = scrollTop;
   }
 

@@ -131,13 +131,13 @@ class QueuedTaskRow extends Component {
   //
   // Listeners
 
-  onCancelPress() {
+  onCancelPress = () => {
     this.setState({
       isCancelConfirmModalOpen: true
     });
   }
 
-  onAbortCancel() {
+  onAbortCancel = () => {
     this.setState({
       isCancelConfirmModalOpen: false
     });
