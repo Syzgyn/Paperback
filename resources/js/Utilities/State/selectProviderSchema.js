@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import getSectionState from 'Utilities/State/getSectionState';
-import updateSectionState from 'Utilities/State/updateSectionState';
+import getSectionState from '@/Utilities/State/getSectionState';
+import updateSectionState from '@/Utilities/State/updateSectionState';
 
 function applySchemaDefaults(selectedSchema, schemaDefaults) {
   if (!schemaDefaults) {

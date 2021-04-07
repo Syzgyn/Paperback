@@ -29,10 +29,10 @@ const ComicIndex = (props) => {
     const [scroller, setScroller] = useState(null);
     const [jumpBarItems, setJumpBarItemsState] = useState({ order: [] });
     const [jumpToCharacter, setJumpToCharacter] = useState(null);
-    const [isPosterOptionModalOpen, setIsPosterOptionModalOpen] = useState(false);
-    const [isOverviewOptionModalOpen, setIsOverviewOptionModalOpen] = useState(false);
+    const [isPosterOptionsModalOpen, setIsPosterOptionsModalOpen] = useState(false);
+    const [isOverviewOptionsModalOpen, setIsOverviewOptionsModalOpen] = useState(false);
 
-    const { items: comics, isLoading, isPopulated, view, sortKey, sortDir } = useSelector(
+    const { items, isLoading, isPopulated, view, sortKey, sortDir } = useSelector(
         sortedComicsSelector
     );
 
@@ -42,7 +42,7 @@ const ComicIndex = (props) => {
 		if (jumpToCharacter != null) {
             setJumpToCharacter(null);
 		}
-    }, [comics, sortKey, sortDir]);
+    }, [items, sortKey, sortDir]);
 
 	const getViewComponent = (view) => {
         if (view === 'posters') {
@@ -55,7 +55,6 @@ const ComicIndex = (props) => {
 
         return ComicIndexTable;
 	}
-	return null;
 
     const setJumpBarItems = () => {
         if (sortKey !== 'sortName') {
@@ -63,7 +62,7 @@ const ComicIndex = (props) => {
             return;
         }
 
-        const characters = _.reduce(comics, (acc, comic) => {
+        const characters = _.reduce(items, (acc, comic) => {
             let char = comic.name.charAt(0);
 
             if (!isNaN(char)) {
@@ -94,6 +93,27 @@ const ComicIndex = (props) => {
     }
 
     const ViewComponent = getViewComponent(view);
+    const {
+      isFetching,
+      error,
+      totalItems,
+      columns,
+      selectedFilterKey,
+      sortDirection,
+      filters,
+      customFilters,
+      isRefreshingComic,
+      isRssSyncExecuting,
+      onScroll,
+      onSortSelect,
+      onFilterSelect,
+      onViewSelect,
+      onRefreshComicPress,
+      onRssSyncPress,
+      ...otherProps
+    } = props;
+	const isLoaded = !!(!error && isPopulated && items.length && scroller);
+    const hasNoComic = !totalItems;
 
     return (
 		<PageContent>
@@ -103,16 +123,16 @@ const ComicIndex = (props) => {
 				  label="Update all"
 				  iconName={icons.REFRESH}
 				  spinningName={icons.REFRESH}
-				  isSpinning={isRefreshingSeries}
-				  isDisabled={hasNoSeries}
-				  onPress={onRefreshSeriesPress}
+				  isSpinning={isRefreshingComic}
+				  isDisabled={hasNoComic}
+				  onPress={onRefreshComicPress}
 				/>
 
 				<PageToolbarButton
 				  label="RSS Sync"
 				  iconName={icons.RSS}
 				  isSpinning={isRssSyncExecuting}
-				  isDisabled={hasNoSeries}
+				  isDisabled={hasNoComic}
 				  onPress={onRssSyncPress}
 				/>
 
@@ -127,7 +147,7 @@ const ComicIndex = (props) => {
 					<TableOptionsModalWrapper
 					  {...otherProps}
 					  columns={columns}
-					  optionsComponent={SeriesIndexTableOptionsConnector}
+					  optionsComponent={ComicIndexTableOptionsConnector}
 					>
 					  <PageToolbarButton
 						label="Options"
@@ -142,8 +162,8 @@ const ComicIndex = (props) => {
 					<PageToolbarButton
 					  label="Options"
 					  iconName={icons.POSTER}
-					  isDisabled={hasNoSeries}
-					  onPress={() => { setIsPosterOptionModalOpen(true); }}
+					  isDisabled={hasNoComic}
+					  onPress={() => { setIsPosterOptionsModalOpen(true); }}
 					/> :
 					null
 				}
@@ -153,32 +173,32 @@ const ComicIndex = (props) => {
 					<PageToolbarButton
 					  label="Options"
 					  iconName={icons.OVERVIEW}
-					  isDisabled={hasNoSeries}
-					  onPress={() => { setIsOverviewOptionModalOpen(true); }}
+					  isDisabled={hasNoComic}
+					  onPress={() => { setIsOverviewOptionsModalOpen(true); }}
 					/> :
 					null
 				}
 
 				<PageToolbarSeparator />
 
-				<SeriesIndexViewMenu
+				<ComicIndexViewMenu
 				  view={view}
-				  isDisabled={hasNoSeries}
+				  isDisabled={hasNoComic}
 				  onViewSelect={onViewSelect}
 				/>
 
-				<SeriesIndexSortMenu
+				<ComicIndexSortMenu
 				  sortKey={sortKey}
 				  sortDirection={sortDirection}
-				  isDisabled={hasNoSeries}
+				  isDisabled={hasNoComic}
 				  onSortSelect={onSortSelect}
 				/>
 
-				<SeriesIndexFilterMenu
+				<ComicIndexFilterMenu
 				  selectedFilterKey={selectedFilterKey}
 				  filters={filters}
 				  customFilters={customFilters}
-				  isDisabled={hasNoSeries}
+				  isDisabled={hasNoComic}
 				  onFilterSelect={onFilterSelect}
 				/>
 			  </PageToolbarSection>
@@ -186,7 +206,7 @@ const ComicIndex = (props) => {
 
 			<div className={styles.pageContentBodyWrapper}>
 			  <PageContentBody
-				registerScroller={setScrollerRef}
+				registerScroller={setScroller}
 				className={styles.contentBody}
 				innerClassName={styles[`${view}InnerContentBody`]}
 				onScroll={onScroll}
@@ -198,7 +218,7 @@ const ComicIndex = (props) => {
 
 				{
 				  !isFetching && !!error &&
-					<div>Unable to load series</div>
+					<div>Unable to load comic</div>
 				}
 
 				{
@@ -214,13 +234,13 @@ const ComicIndex = (props) => {
 						{...otherProps}
 					  />
 
-					  <SeriesIndexFooterConnector />
+					  <ComicIndexFooterConnector />
 					</div>
 				}
 
 				{
 				  !error && isPopulated && !items.length &&
-					<NoSeries totalItems={totalItems} />
+					<NoComic totalItems={totalItems} />
 				}
 			  </PageContentBody>
 
@@ -233,14 +253,14 @@ const ComicIndex = (props) => {
 			  }
 			</div>
 
-			<SeriesIndexPosterOptionsModal
+			<ComicIndexPosterOptionsModal
 			  isOpen={isPosterOptionsModalOpen}
-		 	  onModalClose={() => { setIsPosterOptionModalOpen(false); }}
+		 	  onModalClose={() => { setIsPosterOptionsModalOpen(false); }}
 			/>
 
-			<SeriesIndexOverviewOptionsModal
+			<ComicIndexOverviewOptionsModal
 			  isOpen={isOverviewOptionsModalOpen}
-		 	  onModalClose={() => { setIsOverviewOptionModalOpen(false); }}
+		 	  onModalClose={() => { setIsOverviewOptionsModalOpen(false); }}
 			/>
       	</PageContent>
     );

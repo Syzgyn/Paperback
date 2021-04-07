@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Button from 'Components/Link/Button';
-import ModalContent from 'Components/Modal/ModalContent';
-import ModalHeader from 'Components/Modal/ModalHeader';
-import ModalBody from 'Components/Modal/ModalBody';
-import ModalFooter from 'Components/Modal/ModalFooter';
+import Button from '@/Components/Link/Button';
+import ModalContent from '@/Components/Modal/ModalContent';
+import ModalHeader from '@/Components/Modal/ModalHeader';
+import ModalBody from '@/Components/Modal/ModalBody';
+import ModalFooter from '@/Components/Modal/ModalFooter';
 import CustomFilter from './CustomFilter';
-import styles from './CustomFiltersModalContent.css';
+import styles from './CustomFiltersModalContent.module.scss';
 
 function CustomFiltersModalContent(props) {
   const {

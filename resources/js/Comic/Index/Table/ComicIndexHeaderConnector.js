@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { setComicTableOption } from 'Store/Actions/comicIndexActions';
+import { setComicTableOption } from '@/Store/Slices/comicIndex';
 import ComicIndexHeader from './ComicIndexHeader';
 
 function createMapDispatchToProps(dispatch, props) {

@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { startOAuth, resetOAuth } from 'Store/Actions/oAuthActions';
 import OAuthInput from './OAuthInput';
 
 function createMapStateToProps() {
@@ -15,8 +14,6 @@ function createMapStateToProps() {
 }
 
 const mapDispatchToProps = {
-  startOAuth,
-  resetOAuth
 };
 
 class OAuthInputConnector extends Component {
@@ -40,7 +37,6 @@ class OAuthInputConnector extends Component {
   }
 
   componentWillUnmount() {
-    this.props.resetOAuth();
   }
 
   //
@@ -53,13 +49,6 @@ class OAuthInputConnector extends Component {
       providerData,
       section
     } = this.props;
-
-    this.props.startOAuth({
-      name,
-      provider,
-      providerData,
-      section
-    });
   }
 
   //
@@ -82,8 +71,6 @@ OAuthInputConnector.propTypes = {
   providerData: PropTypes.object.isRequired,
   section: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  startOAuth: PropTypes.func.isRequired,
-  resetOAuth: PropTypes.func.isRequired
 };
 
 export default connect(createMapStateToProps, mapDispatchToProps)(OAuthInputConnector);

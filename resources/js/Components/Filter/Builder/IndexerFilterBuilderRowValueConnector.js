@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import tagShape from 'Helpers/Props/Shapes/tagShape';
-import { fetchIndexers } from 'Store/Actions/settingsActions';
+import tagShape from '@/Helpers/Props/Shapes/tagShape';
+import { fetchIndexers } from '@/Store/Actions/settingsActions';
 import FilterBuilderRowValue from './FilterBuilderRowValue';
 
 function createMapStateToProps() {
@@ -43,7 +43,7 @@ class IndexerFilterBuilderRowValueConnector extends Component {
   //
   // Lifecycle
 
-  componentDidMount = () => {
+  componentDidMount() {
     if (!this.props.isPopulated) {
       this.props.dispatchFetchIndexers();
     }

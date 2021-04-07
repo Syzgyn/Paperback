@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { fetchOptions, clearOptions, defaultState } from 'Store/Actions/providerOptionActions';
+import { fetchOptions, clearOptions, defaultState } from '@/Store/Actions/providerOptionActions';
 import DeviceInput from './DeviceInput';
 
 function createMapStateToProps() {

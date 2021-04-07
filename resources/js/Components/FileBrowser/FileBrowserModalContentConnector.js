@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { fetchPaths, clearPaths } from '@/Store/Actions/pathActions';
+import { fetchPaths, clearPaths } from '@/Store/Slices/paths';
 import createSystemStatusSelector from '@/Store/Selectors/createSystemStatusSelector';
 import FileBrowserModalContent from './FileBrowserModalContent';
 

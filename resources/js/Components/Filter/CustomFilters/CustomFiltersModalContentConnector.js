@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { deleteCustomFilter } from 'Store/Actions/customFilterActions';
+import { deleteCustomFilter } from '@/Store/Actions/customFilterActions';
 import CustomFiltersModalContent from './CustomFiltersModalContent';
 
 function createMapStateToProps() {

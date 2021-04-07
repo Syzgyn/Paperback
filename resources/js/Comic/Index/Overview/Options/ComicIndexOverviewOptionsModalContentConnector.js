@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { setComicOverviewOption } from '@/Store/Actions/comicIndexActions';
+import { setComicOverviewOption } from '@/Store/Slices/comicIndex';
 import ComicIndexOverviewOptionsModalContent from './ComicIndexOverviewOptionsModalContent';
 
 function createMapStateToProps() {

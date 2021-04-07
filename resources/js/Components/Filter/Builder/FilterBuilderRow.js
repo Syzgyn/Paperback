@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { filterBuilderTypes, filterBuilderValueTypes, icons } from 'Helpers/Props';
-import SelectInput from 'Components/Form/SelectInput';
-import IconButton from 'Components/Link/IconButton';
+import { filterBuilderTypes, filterBuilderValueTypes, icons } from '@/Helpers/Props';
+import SelectInput from '@/Components/Form/SelectInput';
+import IconButton from '@/Components/Link/IconButton';
 import BoolFilterBuilderRowValue from './BoolFilterBuilderRowValue';
 import DateFilterBuilderRowValue from './DateFilterBuilderRowValue';
 import FilterBuilderRowValueConnector from './FilterBuilderRowValueConnector';
@@ -14,7 +14,7 @@ import QualityProfileFilterBuilderRowValueConnector from './QualityProfileFilter
 import SeriesStatusFilterBuilderRowValue from './SeriesStatusFilterBuilderRowValue';
 import SeriesTypeFilterBuilderRowValue from './SeriesTypeFilterBuilderRowValue';
 import TagFilterBuilderRowValueConnector from './TagFilterBuilderRowValueConnector';
-import styles from './FilterBuilderRow.css';
+import styles from './FilterBuilderRow.module.scss';
 
 function getselectedFilterBuilderProp(filterBuilderProps, name) {
   return filterBuilderProps.find((a) => {
@@ -136,7 +136,7 @@ class FilterBuilderRow extends Component {
   //
   // Listeners
 
-  onFilterKeyChange = ({ value: key }) => {
+  onFilterKeyChange({ value: key }) {
     const {
       index,
       filterBuilderProps,
@@ -156,7 +156,7 @@ class FilterBuilderRow extends Component {
     onFilterChange(index, filter);
   }
 
-  onFilterChange = ({ name, value }) => {
+  onFilterChange({ name, value }) {
     const {
       index,
       filterKey,
@@ -176,7 +176,7 @@ class FilterBuilderRow extends Component {
     onFilterChange(index, filter);
   }
 
-  onAddPress = () => {
+  onAddPress() {
     const {
       index,
       onAddPress
@@ -185,7 +185,7 @@ class FilterBuilderRow extends Component {
     onAddPress(index);
   }
 
-  onRemovePress = () => {
+  onRemovePress() {
     const {
       index,
       onRemovePress

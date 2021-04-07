@@ -12,20 +12,33 @@ const defaultState = {
     directories: [],
     files: [],
     currentPath: "",
+    error: null,
+    parent: null,
 };
 
 export const fetchPaths = createAsyncThunk(
     "paths/fetchPaths",
-    async (vars, { getState }) => {
-        const state = getState();
+    async (payload, { dispatch }) => {
+        const {
+            path,
+            allowFoldersWithoutTrailingSlashes = false,
+            includeFiles = false
+        } = payload;
         const response = await axios.get("/api/filesystem", {
-            params: { path: state.paths.currentPath },
+            params: {
+                path,
+                allowFoldersWithoutTrailingSlashes,
+                includeFiles,
+            },
         });
-        return response.data;
+        if (response.data) {
+            dispatch(updatePaths({path,  ...response.data}));
+        }
     }
 );
 
-export const setCurrentPath = createAction("paths/setCurrentPath");
+export const updatePaths = createAction("paths/updatePaths");
+export const clearPaths = createAction("paths/clearPaths");
 
 const slice = createSlice({
     name: "paths",
@@ -36,24 +49,24 @@ const slice = createSlice({
             state.isLoading = true;
         },
         [fetchPaths.fulfilled]: (state, action) => {
-            state.directories = action.payload.directories;
-            state.files = action.payload.files;
             state.isPopulated = true;
             state.isLoading = false;
         },
-        [fetchPaths.rejected]: (state) => {
+        [fetchPaths.rejected]: (state, action) => {
             state.isLoading = false;
+            state.error = action;
         },
-        [setCurrentPath]: (state, action) => {
-            if (action.payload == "..") {
-                const currentState = current(state);
-                state.currentPath = currentState.currentPath.slice(
-                    0,
-                    currentState.currentPath.lastIndexOf("/")
-                );
-            } else {
-                state.currentPath = action.payload;
-            }
+        [updatePaths]: (state, { payload }) => {
+            state.currentPath = payload.path;
+            state.directories = payload.directories;
+            state.files = payload.files;
+            state.parent = payload.parent;
+        },
+        [clearPaths]: (state) => {
+            state.currentPath = '';
+            state.directories = [];
+            state.files = [];
+            state.parent = '';
         },
     },
 });

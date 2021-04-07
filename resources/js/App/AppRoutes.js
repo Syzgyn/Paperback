@@ -5,15 +5,6 @@ import LoadingIndicator from "@/Components/Loading/LoadingIndicator";
 const ComicIndex = lazy(() =>
     import("@/Comic/Index/ComicIndex")
 );
-const AddNewComic = lazy(() =>
-    import("@/AddComic/AddNewComic/AddNewComic")
-);
-const ImportPage = lazy(() =>
-    import("@/AddComic/Import/Import")
-);
-const ImportComicsPage = lazy(() =>
-    import("@/AddComic/Import/ImportComics/ImportComics")
-);
 const ComicDetails = lazy(() => 
     import("@/Comic/Details/ComicDetails")
 );
@@ -36,15 +27,6 @@ function AppRoutes() {
             <Switch>
                 <Route exact path="/">
                     <ComicIndex />
-                </Route>
-                <Route path="/add/new">
-                    <AddNewComic />
-                </Route>
-                <Route path="/add/import/:folderId">
-                    <ImportComicsPage />
-                </Route>
-                <Route path="/add/import">
-                    <ImportPage />
                 </Route>
                 <Route path="/comic/:cvid">
                     <ComicDetails />

@@ -1,0 +1,5 @@
+.seasonFolder {
+  composes: cell from '~@/Components/Table/Cells/TableRowCell.module.scss';
+
+  width: 150px;
+}

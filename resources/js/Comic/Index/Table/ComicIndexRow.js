@@ -10,7 +10,7 @@ import IconButton from '@/Components/Link/IconButton';
 import Link from '@/Components/Link/Link';
 import SpinnerIconButton from '@/Components/Link/SpinnerIconButton';
 import ProgressBar from '@/Components/ProgressBar';
-import TagListConnector from '@/Components/TagListConnector';
+import TagList from '@/Components/TagList';
 import CheckInput from '@/Components/Form/CheckInput';
 import VirtualTableRowCell from '@/Components/Table/Cells/VirtualTableRowCell';
 import RelativeDateCellConnector from '@/Components/Table/Cells/RelativeDateCellConnector';
@@ -419,7 +419,7 @@ class ComicIndexRow extends Component {
                   key={name}
                   className={styles[name]}
                 >
-                  <TagListConnector
+                  <TagList
                     tags={tags}
                   />
                 </VirtualTableRowCell>

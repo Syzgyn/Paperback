@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { align } from '@/Helpers/Props';
 import FilterMenu from '@/Components/Menu/FilterMenu';
-import ComicIndexFilterModalConnector from '@/Comic/Index/ComicIndexFilterModal';
+import ComicIndexFilterModal from '@/Comic/Index/ComicIndexFilterModal';
 
 function ComicIndexFilterMenu(props) {
   const {

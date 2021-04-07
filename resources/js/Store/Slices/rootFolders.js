@@ -1,34 +1,31 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import createFetchHandler from "@/Store/Slices/Creators/createFetchHandler";
 
 const defaultState = {
     isLoading: false,
     isPopulated: false,
+    error: null,
+    isSaving: false,
+    saveError: null,
     items: [],
 };
 
-export const fetchItems = createAsyncThunk(
-    "rootFolders/fetchItems",
-    async () => {
-        const response = await axios.get("/api/rootFolder");
-        return response.data.data;
-    }
-);
-
-export const addItem = createAsyncThunk(
+export const fetchRootFolders = createFetchHandler("rootFolders/fetchRootFolders", "/api/rootFolder");
+export const addRootFolder = createAsyncThunk(
     "rootFolders/addItem",
     async (path, { dispatch }) => {
         const response = await axios.post("/api/rootFolder", { path });
-        dispatch(fetchItems());
+        dispatch(fetchRootFolders());
         return response.data;
     }
 );
 
-export const deleteItem = createAsyncThunk(
+export const deleteRootFolder = createAsyncThunk(
     "rootFolders/deleteItem",
     async (id, { dispatch }) => {
         const response = await axios.delete("/api/rootFolder/" + id);
-        dispatch(fetchItems());
+        dispatch(fetchRootFolders());
         return response.data;
     }
 );
@@ -38,15 +35,15 @@ const slice = createSlice({
     initialState: defaultState,
     reducers: {},
     extraReducers: {
-        [fetchItems.pending]: (state) => {
+        [fetchRootFolders.pending]: (state) => {
             state.isLoading = true;
         },
-        [fetchItems.fulfilled]: (state, action) => {
+        [fetchRootFolders.fulfilled]: (state, action) => {
             state.items = action.payload;
             state.isPopulated = true;
             state.isLoading = false;
         },
-        [fetchItems.rejected]: (state) => {
+        [fetchRootFolders.rejected]: (state) => {
             state.isLoading = false;
         },
     },

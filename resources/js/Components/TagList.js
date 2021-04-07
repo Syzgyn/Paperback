@@ -4,8 +4,14 @@ import React from 'react';
 import { kinds } from '@/Helpers/Props';
 import Label from './Label';
 import styles from './TagList.module.scss';
+import { useSelector } from "react-redux";
 
-function TagList({ tags, tagList }) {
+function TagList({ tags, tagListProp }) {
+  const tagList = Object.assign({}, tagListProp);
+
+  if (tagListProp === null) {
+    tagList = useSelector(tagsSelector);
+  }
   return (
     <div className={styles.tags}>
       {
@@ -32,7 +38,7 @@ function TagList({ tags, tagList }) {
 
 TagList.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.number).isRequired,
-  tagList: PropTypes.arrayOf(PropTypes.object).isRequired
+  tagList: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default TagList;

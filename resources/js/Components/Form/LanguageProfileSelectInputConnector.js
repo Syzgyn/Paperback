@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import sortByName from '@/Utilities/Array/sortByName';
-import createSortedSectionSelector from 'Store/Selectors/createSortedSectionSelector';
+import createSortedSectionSelector from '@/Store/Selectors/createSortedSectionSelector';
 import SelectInput from './SelectInput';
 
 function createMapStateToProps() {

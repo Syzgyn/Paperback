@@ -1,0 +1,16 @@
+@import "~sass/_colors.scss";
+
+.progress {
+  composes: container from '~@/Components/ProgressBar.module.scss';
+
+  border-radius: 0;
+  background-color: #5b5b5b;
+  color: $white;
+  transition: width 200ms ease;
+}
+
+.progressBar {
+  composes: progressBar from '~@/Components/ProgressBar.module.scss';
+
+  transition: width 200ms ease;
+}

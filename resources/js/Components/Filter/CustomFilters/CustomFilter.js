@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { icons } from 'Helpers/Props';
-import IconButton from 'Components/Link/IconButton';
-import SpinnerIconButton from 'Components/Link/SpinnerIconButton';
-import styles from './CustomFilter.css';
+import { icons } from '@/Helpers/Props';
+import IconButton from '@/Components/Link/IconButton';
+import SpinnerIconButton from '@/Components/Link/SpinnerIconButton';
+import styles from './CustomFilter.module.scss';
 
 class CustomFilter extends Component {
 
@@ -47,7 +47,7 @@ class CustomFilter extends Component {
   //
   // Listeners
 
-  onEditPress = () => {
+  onEditPress() {
     const {
       id,
       onEditPress
@@ -56,7 +56,7 @@ class CustomFilter extends Component {
     onEditPress(id);
   }
 
-  onRemovePress = () => {
+  onRemovePress() {
     const {
       id,
       dispatchDeleteCustomFilter

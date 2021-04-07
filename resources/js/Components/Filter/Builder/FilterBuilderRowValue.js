@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import convertToBytes from 'Utilities/Number/convertToBytes';
-import formatBytes from 'Utilities/Number/formatBytes';
-import { kinds, filterBuilderTypes, filterBuilderValueTypes } from 'Helpers/Props';
-import tagShape from 'Helpers/Props/Shapes/tagShape';
-import TagInput from 'Components/Form/TagInput';
+import convertToBytes from '@/Utilities/Number/convertToBytes';
+import formatBytes from '@/Utilities/Number/formatBytes';
+import { kinds, filterBuilderTypes, filterBuilderValueTypes } from '@/Helpers/Props';
+import tagShape from '@/Helpers/Props/Shapes/tagShape';
+import TagInput from '@/Components/Form/TagInput';
 import FilterBuilderRowValueTag from './FilterBuilderRowValueTag';
 
 export const NAME = 'value';
@@ -67,7 +67,7 @@ class FilterBuilderRowValue extends Component {
   //
   // Listeners
 
-  onTagAdd = (tag) => {
+  onTagAdd(tag) {
     const {
       filterValue,
       selectedFilterBuilderProp,
@@ -86,7 +86,7 @@ class FilterBuilderRowValue extends Component {
     });
   }
 
-  onTagDelete = ({ index }) => {
+  onTagDelete({ index }) {
     const {
       filterValue,
       onChange

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { setComicPosterOption } from 'Store/Actions/comicIndexActions';
+import { setComicPosterOption } from '@/Store/Slices/comicIndex';
 import ComicIndexPosterOptionsModalContent from './ComicIndexPosterOptionsModalContent';
 
 function createMapStateToProps() {

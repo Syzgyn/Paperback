@@ -98,6 +98,7 @@ class PageToolbarSection extends Component {
       buttons: [],
       overflowItems: []
     };
+    this.onMeasure = this.onMeasure.bind(this);
   }
 
   //

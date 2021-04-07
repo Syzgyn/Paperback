@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { inputTypes } from 'Helpers/Props';
-import FormInputGroup from 'Components/Form/FormInputGroup';
-import Button from 'Components/Link/Button';
-import SpinnerErrorButton from 'Components/Link/SpinnerErrorButton';
-import ModalContent from 'Components/Modal/ModalContent';
-import ModalHeader from 'Components/Modal/ModalHeader';
-import ModalBody from 'Components/Modal/ModalBody';
-import ModalFooter from 'Components/Modal/ModalFooter';
+import { inputTypes } from '@/Helpers/Props';
+import FormInputGroup from '@/Components/Form/FormInputGroup';
+import Button from '@/Components/Link/Button';
+import SpinnerErrorButton from '@/Components/Link/SpinnerErrorButton';
+import ModalContent from '@/Components/Modal/ModalContent';
+import ModalHeader from '@/Components/Modal/ModalHeader';
+import ModalBody from '@/Components/Modal/ModalBody';
+import ModalFooter from '@/Components/Modal/ModalFooter';
 import FilterBuilderRow from './FilterBuilderRow';
-import styles from './FilterBuilderModalContent.css';
+import styles from './FilterBuilderModalContent.module.scss';
 
 class FilterBuilderModalContent extends Component {
 
@@ -60,11 +60,11 @@ class FilterBuilderModalContent extends Component {
   //
   // Listeners
 
-  onLabelChange = ({ value }) => {
+  onLabelChange({ value }) {
     this.setState({ label: value });
   }
 
-  onFilterChange = (index, filter) => {
+  onFilterChange(index, filter) {
     const filters = [...this.state.filters];
     filters.splice(index, 1, filter);
 
@@ -73,7 +73,7 @@ class FilterBuilderModalContent extends Component {
     });
   }
 
-  onAddFilterPress = () => {
+  onAddFilterPress() {
     const filters = [...this.state.filters];
     filters.push({});
 
@@ -82,7 +82,7 @@ class FilterBuilderModalContent extends Component {
     });
   }
 
-  onRemoveFilterPress = (index) => {
+  onRemoveFilterPress(index) {
     const filters = [...this.state.filters];
     filters.splice(index, 1);
 
@@ -91,7 +91,7 @@ class FilterBuilderModalContent extends Component {
     });
   }
 
-  onSaveFilterPress = () => {
+  onSaveFilterPress() {
     const {
       id,
       customFilterType,

@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 const absUrlRegex = /^(https?:)?\/\//i;
-const apiRoot = window.Sonarr.apiRoot;
+const apiRoot = ''; 
 
 function isRelative(ajaxOptions) {
   return !absUrlRegex.test(ajaxOptions.url);
