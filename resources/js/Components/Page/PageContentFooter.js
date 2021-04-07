@@ -1,12 +1,25 @@
 import PropTypes from 'prop-types';
-import React from 'react';
-import styles from './PageContentFooter.module.scss';
+import React, { Component } from 'react';
+import styles from './PageContentFooter.css';
 
-const PageContentFooter = (props) => (
-    <div className={props.className}>
-        {props.children}
-    </div>
-);
+class PageContentFooter extends Component {
+
+  //
+  // Render
+
+  render() {
+    const {
+      className,
+      children
+    } = this.props;
+
+    return (
+      <div className={className}>
+        {children}
+      </div>
+    );
+  }
+}
 
 PageContentFooter.propTypes = {
   className: PropTypes.string,

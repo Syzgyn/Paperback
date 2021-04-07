@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import CheckInput from '@/Components/Form/CheckInput';
+import CheckInput from 'Components/Form/CheckInput';
 import VirtualTableHeaderCell from './VirtualTableHeaderCell';
-import styles from './VirtualTableSelectAllHeaderCell.module.scss';
+import styles from './VirtualTableSelectAllHeaderCell.css';
 
 function getValue(allSelected, allUnselected) {
   if (allSelected) {

@@ -1,36 +1,105 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { Button } from "reactstrap";
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { icons } from 'Helpers/Props';
+import keyboardShortcuts, { shortcuts } from 'Components/keyboardShortcuts';
+import PageToolbar from 'Components/Page/Toolbar/PageToolbar';
+import PageToolbarSection from 'Components/Page/Toolbar/PageToolbarSection';
+import PageToolbarButton from 'Components/Page/Toolbar/PageToolbarButton';
+import PendingChangesModal from './PendingChangesModal';
+import AdvancedSettingsButton from './AdvancedSettingsButton';
 
 class SettingsToolbar extends Component {
-    constructor() {
-        super();
-        this.saveSettings = this.saveSettings.bind(this);
+
+  //
+  // Lifecycle
+
+  componentDidMount() {
+    this.props.bindShortcut(shortcuts.SAVE_SETTINGS.key, this.saveSettings, { isGlobal: true });
+  }
+
+  //
+  // Control
+
+  saveSettings(event) {
+    event.preventDefault();
+
+    const {
+      hasPendingChanges,
+      onSavePress
+    } = this.props;
+
+    if (hasPendingChanges) {
+      onSavePress();
     }
+  }
 
-    saveSettings(event) {
-        event.preventDefault();
+  //
+  // Render
 
-        const { onSavePress } = this.props;
+  render() {
+    const {
+      advancedSettings,
+      showSave,
+      isSaving,
+      hasPendingChanges,
+      hasPendingLocation,
+      additionalButtons,
+      onSavePress,
+      onConfirmNavigation,
+      onCancelNavigation,
+      onAdvancedSettingsPress
+    } = this.props;
 
-        onSavePress();
-    }
+    return (
+      <PageToolbar>
+        <PageToolbarSection>
+          <AdvancedSettingsButton
+            advancedSettings={advancedSettings}
+            onAdvancedSettingsPress={onAdvancedSettingsPress}
+          />
 
-    render() {
-        const { onSavePress } = this.props;
+          {
+            showSave &&
+              <PageToolbarButton
+                label={hasPendingChanges ? 'Save Changes' : 'No Changes'}
+                iconName={icons.SAVE}
+                isSpinning={isSaving}
+                isDisabled={!hasPendingChanges}
+                onPress={onSavePress}
+              />
+          }
 
-        return (
-            <div className="row">
-                <div className="col-1 offset-11">
-                    <Button onClick={onSavePress}>Save</Button>
-                </div>
-            </div>
-        );
-    }
+          {
+            additionalButtons
+          }
+        </PageToolbarSection>
+
+        <PendingChangesModal
+          isOpen={hasPendingLocation}
+          onConfirm={onConfirmNavigation}
+          onCancel={onCancelNavigation}
+        />
+      </PageToolbar>
+    );
+  }
 }
 
 SettingsToolbar.propTypes = {
-    onSavePress: PropTypes.func.isRequired,
+  advancedSettings: PropTypes.bool.isRequired,
+  showSave: PropTypes.bool.isRequired,
+  isSaving: PropTypes.bool,
+  hasPendingLocation: PropTypes.bool.isRequired,
+  hasPendingChanges: PropTypes.bool,
+  additionalButtons: PropTypes.node,
+  onSavePress: PropTypes.func,
+  onAdvancedSettingsPress: PropTypes.func.isRequired,
+  onConfirmNavigation: PropTypes.func.isRequired,
+  onCancelNavigation: PropTypes.func.isRequired,
+  bindShortcut: PropTypes.func.isRequired
 };
 
-export default SettingsToolbar;
+SettingsToolbar.defaultProps = {
+  showSave: true
+};
+
+export default keyboardShortcuts(SettingsToolbar);

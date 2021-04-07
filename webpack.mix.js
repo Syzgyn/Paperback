@@ -11,7 +11,7 @@ const util = require('util');
  |
  */
 
-mix.js('resources/js/app.js', 'public/assets/bundle').react()
+mix.js('resources/js/index.js', 'public/assets/bundle').react()
     .sourceMaps(true, 'source-map')
     .sass('resources/sass/app.scss', 'public/css', {
         sassOptions: {
@@ -23,6 +23,10 @@ mix.js('resources/js/app.js', 'public/assets/bundle').react()
 
 mix.webpackConfig({
   resolve: {
+    modules: [
+        __dirname + '/resources/js',
+        'node_modules',
+    ],
     extensions: ['.js', '.json'],
     alias: {
       '@': __dirname + '/resources/js',

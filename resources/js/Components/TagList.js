@@ -1,17 +1,11 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { kinds } from '@/Helpers/Props';
+import { kinds } from 'Helpers/Props';
 import Label from './Label';
-import styles from './TagList.module.scss';
-import { useSelector } from "react-redux";
+import styles from './TagList.css';
 
-function TagList({ tags, tagListProp }) {
-  const tagList = Object.assign({}, tagListProp);
-
-  if (tagListProp === null) {
-    tagList = useSelector(tagsSelector);
-  }
+function TagList({ tags, tagList }) {
   return (
     <div className={styles.tags}>
       {
@@ -38,7 +32,7 @@ function TagList({ tags, tagListProp }) {
 
 TagList.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.number).isRequired,
-  tagList: PropTypes.arrayOf(PropTypes.object)
+  tagList: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default TagList;

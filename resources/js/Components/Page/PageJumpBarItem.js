@@ -1,33 +1,35 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import Link from '@/Components/Link/Link';
-import styles from './PageJumpBarItem.module.scss';
+import Link from 'Components/Link/Link';
+import styles from './PageJumpBarItem.css';
 
-const PageJumpBarItem = (props) => { 
+class PageJumpBarItem extends Component {
 
   //
   // Listeners
 
-  const onPress = () => {
+  onPress() {
     const {
       label,
       onItemPress
-    } = props;
+    } = this.props;
 
-    props.onItemPress(label);
+    onItemPress(label);
   }
 
   //
   // Render
 
+  render() {
     return (
-        <Link
-          className={styles.jumpBarItem}
-          onPress={onPress}
-        >
-            {props.label.toUpperCase()}
-        </Link>
+      <Link
+        className={styles.jumpBarItem}
+        onPress={this.onPress}
+      >
+        {this.props.label.toUpperCase()}
+      </Link>
     );
+  }
 }
 
 PageJumpBarItem.propTypes = {

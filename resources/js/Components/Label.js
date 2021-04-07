@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
-import { kinds, sizes } from '@/Helpers/Props';
-import styles from './Label.module.scss';
+import { kinds, sizes } from 'Helpers/Props';
+import styles from './Label.css';
 
 function Label(props) {
   const {

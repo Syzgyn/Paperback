@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Manager, Popper, Reference } from 'react-popper';
-import getUniqueElememtId from '@/Utilities/getUniqueElementId';
-import { align } from '@/Helpers/Props';
-import Portal from '@/Components/Portal';
-import styles from './Menu.module.scss';
+import getUniqueElememtId from 'Utilities/getUniqueElementId';
+import { align } from 'Helpers/Props';
+import Portal from 'Components/Portal';
+import styles from './Menu.css';
 
 const sharedPopperOptions = {
   modifiers: {

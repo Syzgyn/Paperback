@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import styles from './ModalHeader.module.scss';
+import styles from './ModalHeader.css';
 
 class ModalHeader extends Component {
 

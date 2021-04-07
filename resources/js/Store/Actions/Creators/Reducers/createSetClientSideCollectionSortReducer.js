@@ -1,6 +1,6 @@
 import { sortDirections } from 'Helpers/Props';
-import getSectionState from '@/Utilities/State/getSectionState';
-import updateSectionState from '@/Utilities/State/updateSectionState';
+import getSectionState from 'Utilities/State/getSectionState';
+import updateSectionState from 'Utilities/State/updateSectionState';
 
 function createSetClientSideCollectionSortReducer(section) {
   return (state, { payload }) => {

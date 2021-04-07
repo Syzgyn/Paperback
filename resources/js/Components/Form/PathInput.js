@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { icons } from '@/Helpers/Props';
-import Icon from '@/Components/Icon';
-import FileBrowserModal from '@/Components/FileBrowser/FileBrowserModal';
+import { icons } from 'Helpers/Props';
+import Icon from 'Components/Icon';
+import FileBrowserModal from 'Components/FileBrowser/FileBrowserModal';
 import AutoSuggestInput from './AutoSuggestInput';
 import FormInputButton from './FormInputButton';
-import styles from './PathInput.module.scss';
+import styles from './PathInput.css';
 
 class PathInput extends Component {
 

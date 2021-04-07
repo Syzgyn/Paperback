@@ -1,5 +1,6 @@
 import $ from 'jquery';
-import createAjaxRequest from '@/Utilities/createAjaxRequest';
+import { batchActions } from 'redux-batched-actions';
+import createAjaxRequest from 'Utilities/createAjaxRequest';
 import { set, removeItem } from '../baseActions';
 
 function createRemoveItemHandler(section, url) {
@@ -19,16 +20,15 @@ function createRemoveItemHandler(section, url) {
     const promise = createAjaxRequest(ajaxOptions).request;
 
     promise.done((data) => {
-      dispatch(
+      dispatch(batchActions([
         set({
           section,
           isDeleting: false,
           deleteError: null
-        }));
+        }),
 
-      dispatch(
         removeItem({ section, id })
-      );
+      ]));
     });
 
     promise.fail((xhr) => {

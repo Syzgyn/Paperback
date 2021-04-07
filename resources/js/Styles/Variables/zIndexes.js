@@ -1,4 +1,4 @@
 module.exports = {
-    modalZIndex: 1000,
-    popperZIndex: 2000
+  modalZIndex: 1000,
+  popperZIndex: 2000
 };

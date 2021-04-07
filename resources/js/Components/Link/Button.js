@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import { align, kinds, sizes } from '@/Helpers/Props';
+import { align, kinds, sizes } from 'Helpers/Props';
 import Link from './Link';
-import styles from './Button.module.scss';
+import styles from './Button.css';
 
 class Button extends Component {
 

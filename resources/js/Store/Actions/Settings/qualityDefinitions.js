@@ -1,12 +1,13 @@
 import _ from 'lodash';
-import { createAction } from '@reduxjs/toolkit';
-import createAjaxRequest from '@/Utilities/createAjaxRequest';
-import getSectionState from '@/Utilities/State/getSectionState';
-import updateSectionState from '@/Utilities/State/updateSectionState';
-import { createThunk } from '@/Store/thunks';
-import createFetchHandler from '@/Store/Actions/Creators/createFetchHandler';
-import createSaveHandler from '@/Store/Actions/Creators/createSaveHandler';
-import { clearPendingChanges, set, update } from '@/Store/Actions/baseActions';
+import { createAction } from 'redux-actions';
+import { batchActions } from 'redux-batched-actions';
+import createAjaxRequest from 'Utilities/createAjaxRequest';
+import getSectionState from 'Utilities/State/getSectionState';
+import updateSectionState from 'Utilities/State/updateSectionState';
+import { createThunk } from 'Store/thunks';
+import createFetchHandler from 'Store/Actions/Creators/createFetchHandler';
+import createSaveHandler from 'Store/Actions/Creators/createSaveHandler';
+import { clearPendingChanges, set, update } from 'Store/Actions/baseActions';
 
 //
 // Variables
@@ -81,20 +82,16 @@ export default {
       }).request;
 
       promise.done((data) => {
-        dispatch(
+        dispatch(batchActions([
           set({
             section,
             isSaving: false,
             saveError: null
-          })
-        );
+          }),
 
-        dispatch(
-          update({ section, data })
-        );
-        dispatch(
+          update({ section, data }),
           clearPendingChanges({ section })
-        );
+        ]));
       });
 
       promise.fail((xhr) => {

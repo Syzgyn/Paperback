@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Link from '@/Components/Link/Link';
+import Link from 'Components/Link/Link';
 import TableRowCell from './TableRowCell';
-import styles from './TableRowCellButton.module.scss';
+import styles from './TableRowCellButton.css';
 
 function TableRowCellButton({ className, ...otherProps }) {
   return (

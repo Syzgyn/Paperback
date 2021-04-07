@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { inputTypes } from '@/Helpers/Props';
-import Link from '@/Components/Link/Link';
+import { inputTypes } from 'Helpers/Props';
+import Link from 'Components/Link/Link';
 import AutoCompleteInput from './AutoCompleteInput';
 import CaptchaInputConnector from './CaptchaInputConnector';
 import CheckInput from './CheckInput';
@@ -16,7 +16,7 @@ import QualityProfileSelectInputConnector from './QualityProfileSelectInputConne
 import LanguageProfileSelectInputConnector from './LanguageProfileSelectInputConnector';
 import IndexerSelectInputConnector from './IndexerSelectInputConnector';
 import RootFolderSelectInputConnector from './RootFolderSelectInputConnector';
-import ComicTypeSelectInput from './ComicTypeSelectInput';
+import SeriesTypeSelectInput from './SeriesTypeSelectInput';
 import EnhancedSelectInput from './EnhancedSelectInput';
 import EnhancedSelectInputConnector from './EnhancedSelectInputConnector';
 import TagInputConnector from './TagInputConnector';
@@ -25,7 +25,7 @@ import TextTagInputConnector from './TextTagInputConnector';
 import TextInput from './TextInput';
 import UMaskInput from './UMaskInput';
 import FormInputHelpText from './FormInputHelpText';
-import styles from './FormInputGroup.module.scss';
+import styles from './FormInputGroup.css';
 
 function getComponent(type) {
   switch (type) {
@@ -78,7 +78,7 @@ function getComponent(type) {
       return EnhancedSelectInputConnector;
 
     case inputTypes.SERIES_TYPE_SELECT:
-      return ComicTypeSelectInput;
+      return SeriesTypeSelectInput;
 
     case inputTypes.TAG:
       return TagInputConnector;

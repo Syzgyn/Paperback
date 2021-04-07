@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
-import formatBytes from '@/Utilities/Number/formatBytes';
+import formatBytes from 'Utilities/Number/formatBytes';
 import EnhancedSelectInputOption from './EnhancedSelectInputOption';
-import styles from './RootFolderSelectInputOption.module.scss';
+import styles from './RootFolderSelectInputOption.css';
 
 function RootFolderSelectInputOption(props) {
   const {
@@ -11,7 +11,7 @@ function RootFolderSelectInputOption(props) {
     value,
     freeSpace,
     isMissing,
-    comicFolder,
+    seriesFolder,
     isMobile,
     isWindows,
     ...otherProps
@@ -34,10 +34,10 @@ function RootFolderSelectInputOption(props) {
           {value}
 
           {
-            comicFolder && id !== 'addNew' ?
-              <div className={styles.comicFolder}>
+            seriesFolder && id !== 'addNew' ?
+              <div className={styles.seriesFolder}>
                 {slashCharacter}
-                {comicFolder}
+                {seriesFolder}
               </div> :
               null
           }
@@ -68,7 +68,7 @@ RootFolderSelectInputOption.propTypes = {
   value: PropTypes.string.isRequired,
   freeSpace: PropTypes.number,
   isMissing: PropTypes.boolean,
-  comicFolder: PropTypes.string,
+  seriesFolder: PropTypes.string,
   isMobile: PropTypes.bool.isRequired,
   isWindows: PropTypes.bool
 };

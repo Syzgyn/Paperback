@@ -1,8 +1,17 @@
-import React from 'react';
-import styles from './PageToolbarSeparator.module.scss';
+import React, { Component } from 'react';
+import styles from './PageToolbarSeparator.css';
 
-const PageToolbarSeparator = () => (
-    <div className={styles.separator} />
-);
+class PageToolbarSeparator extends Component {
+
+  //
+  // Render
+
+  render() {
+    return (
+      <div className={styles.separator} />
+    );
+  }
+
+}
 
 export default PageToolbarSeparator;

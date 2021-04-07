@@ -1,13 +1,13 @@
 import _ from 'lodash';
-import { createAction } from '@reduxjs/toolkit';
-import createAjaxRequest from '@/Utilities/createAjaxRequest';
-import { createThunk } from '@/Store/thunks';
-import createSetSettingValueReducer from '@/Store/Actions/Creators/Reducers/createSetSettingValueReducer';
-import createFetchHandler from '@/Store/Actions/Creators/createFetchHandler';
-import createFetchSchemaHandler from '@/Store/Actions/Creators/createFetchSchemaHandler';
-import createSaveProviderHandler from '@/Store/Actions/Creators/createSaveProviderHandler';
-import createRemoveItemHandler from '@/Store/Actions/Creators/createRemoveItemHandler';
-import { update } from '@/Store/Actions/baseActions';
+import { createAction } from 'redux-actions';
+import createAjaxRequest from 'Utilities/createAjaxRequest';
+import { createThunk } from 'Store/thunks';
+import createSetSettingValueReducer from 'Store/Actions/Creators/Reducers/createSetSettingValueReducer';
+import createFetchHandler from 'Store/Actions/Creators/createFetchHandler';
+import createFetchSchemaHandler from 'Store/Actions/Creators/createFetchSchemaHandler';
+import createSaveProviderHandler from 'Store/Actions/Creators/createSaveProviderHandler';
+import createRemoveItemHandler from 'Store/Actions/Creators/createRemoveItemHandler';
+import { update } from 'Store/Actions/baseActions';
 
 //
 // Variables

@@ -2,14 +2,14 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
-import { icons, scrollDirections } from '@/Helpers/Props';
-import IconButton from '@/Components/Link/IconButton';
-import Scroller from '@/Components/Scroller/Scroller';
-import TableOptionsModalWrapper from '@/Components/Table/TableOptions/TableOptionsModalWrapper';
+import { icons, scrollDirections } from 'Helpers/Props';
+import IconButton from 'Components/Link/IconButton';
+import Scroller from 'Components/Scroller/Scroller';
+import TableOptionsModalWrapper from 'Components/Table/TableOptions/TableOptionsModalWrapper';
 import TableHeader from './TableHeader';
 import TableHeaderCell from './TableHeaderCell';
 import TableSelectAllHeaderCell from './TableSelectAllHeaderCell';
-import styles from './Table.module.scss';
+import styles from './Table.css';
 
 const tableHeaderCellProps = [
   'sortKey',

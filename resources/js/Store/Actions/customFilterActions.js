@@ -1,4 +1,4 @@
-import { createThunk, handleThunks } from '@/Store/thunks';
+import { createThunk, handleThunks } from 'Store/thunks';
 import createFetchHandler from './Creators/createFetchHandler';
 import createRemoveItemHandler from './Creators/createRemoveItemHandler';
 import createSaveProviderHandler from './Creators/createSaveProviderHandler';

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { icons } from '@/Helpers/Props';
+import { icons } from 'Helpers/Props';
 import IconButton from './IconButton';
 
 function SpinnerIconButton(props) {

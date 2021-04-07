@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import CheckInput from '@/Components/Form/CheckInput';
+import CheckInput from 'Components/Form/CheckInput';
 import VirtualTableRowCell from './VirtualTableRowCell';
-import styles from './VirtualTableSelectCell.module.scss';
+import styles from './VirtualTableSelectCell.css';
 
 export function virtualTableSelectCellRenderer(cellProps) {
   const {

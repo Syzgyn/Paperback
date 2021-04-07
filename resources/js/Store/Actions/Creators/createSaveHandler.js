@@ -1,5 +1,6 @@
-import createAjaxRequest from '@/Utilities/createAjaxRequest';
-import getSectionState from '@/Utilities/State/getSectionState';
+import { batchActions } from 'redux-batched-actions';
+import createAjaxRequest from 'Utilities/createAjaxRequest';
+import getSectionState from 'Utilities/State/getSectionState';
 import { set, update } from '../baseActions';
 
 function createSaveHandler(section, url) {
@@ -17,18 +18,16 @@ function createSaveHandler(section, url) {
     }).request;
 
     promise.done((data) => {
-      dispatch(
-        update({ section, data })
-        );
+      dispatch(batchActions([
+        update({ section, data }),
 
-      dispatch(
         set({
           section,
           isSaving: false,
           saveError: null,
           pendingChanges: {}
         })
-        );
+      ]));
     });
 
     promise.fail((xhr) => {

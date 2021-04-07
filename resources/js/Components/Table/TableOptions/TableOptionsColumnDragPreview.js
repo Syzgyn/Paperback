@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { DragLayer } from 'react-dnd';
-import dimensions from '@/Styles/Variables/dimensions.js';
-import { TABLE_COLUMN } from '@/Helpers/dragTypes';
-import DragPreviewLayer from '@/Components/DragPreviewLayer';
+import dimensions from 'Styles/Variables/dimensions.js';
+import { TABLE_COLUMN } from 'Helpers/dragTypes';
+import DragPreviewLayer from 'Components/DragPreviewLayer';
 import TableOptionsColumn from './TableOptionsColumn';
-import styles from './TableOptionsColumnDragPreview.module.scss';
+import styles from './TableOptionsColumnDragPreview.css';
 
 const formGroupSmallWidth = parseInt(dimensions.formGroupSmallWidth);
 const formLabelLargeWidth = parseInt(dimensions.formLabelLargeWidth);

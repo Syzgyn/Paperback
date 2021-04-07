@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { icons, kinds } from '@/Helpers/Props';
-import tagShape from '@/Helpers/Props/Shapes/tagShape';
-import Label from '@/Components/Label';
-import IconButton from '@/Components/Link/IconButton';
-import Link from '@/Components/Link/Link';
-import styles from './TagInputTag.module.scss';
+import { icons, kinds } from 'Helpers/Props';
+import tagShape from 'Helpers/Props/Shapes/tagShape';
+import Label from 'Components/Label';
+import IconButton from 'Components/Link/IconButton';
+import Link from 'Components/Link/Link';
+import styles from './TagInputTag.css';
 
 class TagInputTag extends Component {
 

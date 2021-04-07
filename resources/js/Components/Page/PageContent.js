@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-//import DocumentTitle from 'react-document-title';
-//import ErrorBoundary from 'Components/Error/ErrorBoundary';
-import PageContentError from '@/Components/Page/PageContentError';
-import styles from './PageContent.module.scss';
+import DocumentTitle from 'react-document-title';
+import ErrorBoundary from 'Components/Error/ErrorBoundary';
+import PageContentError from './PageContentError';
+import styles from './PageContent.css';
 
-const PageContent = (props) => {
+function PageContent(props) {
   const {
     className,
     title,
@@ -13,13 +13,13 @@ const PageContent = (props) => {
   } = props;
 
   return (
-    //<ErrorBoundary errorComponent={PageContentError}>
-    //  <DocumentTitle title={title ? `${title} - Sonarr` : 'Sonarr'}>
+    <ErrorBoundary errorComponent={PageContentError}>
+      <DocumentTitle title={title ? `${title} - Sonarr` : 'Sonarr'}>
         <div className={className}>
           {children}
         </div>
-    //  </DocumentTitle>
-    //</ErrorBoundary>
+      </DocumentTitle>
+    </ErrorBoundary>
   );
 }
 

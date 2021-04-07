@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import Link from '@/Components/Link/Link';
-import styles from './MenuItem.module.scss';
+import Link from 'Components/Link/Link';
+import styles from './MenuItem.css';
 
 class MenuItem extends Component {
 

@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import { batchActions } from 'redux-batched-actions';
-import createAjaxRequest from '@/Utilities/createAjaxRequest';
-import findSelectedFilters from '@/Utilities/Filter/findSelectedFilters';
-import getSectionState from '@/Utilities/State/getSectionState';
+import createAjaxRequest from 'Utilities/createAjaxRequest';
+import findSelectedFilters from 'Utilities/Filter/findSelectedFilters';
+import getSectionState from 'Utilities/State/getSectionState';
 import { set, updateServerSideCollection } from '../baseActions';
 
 function createFetchServerSideCollectionHandler(section, url, fetchDataAugmenter) {

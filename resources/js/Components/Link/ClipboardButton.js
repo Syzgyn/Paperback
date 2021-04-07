@@ -5,7 +5,7 @@ import { icons, kinds } from 'Helpers/Props';
 import getUniqueElememtId from 'Utilities/getUniqueElementId';
 import Icon from 'Components/Icon';
 import FormInputButton from 'Components/Form/FormInputButton';
-import styles from './ClipboardButton.module.scss';
+import styles from './ClipboardButton.css';
 
 class ClipboardButton extends Component {
 
@@ -52,7 +52,7 @@ class ClipboardButton extends Component {
   //
   // Control
 
-  resetState = () => {
+  resetState() {
     this.setState({
       showSuccess: false,
       showError: false
@@ -62,13 +62,13 @@ class ClipboardButton extends Component {
   //
   // Listeners
 
-  onSuccess = () => {
+  onSuccess() {
     this.setState({
       showSuccess: true
     });
   }
 
-  onError = () => {
+  onError() {
     this.setState({
       showError: true
     });

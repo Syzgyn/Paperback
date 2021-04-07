@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { icons } from '@/Helpers/Props';
-import Icon from '@/Components/Icon';
-import styles from './HeartRating.module.scss';
+import { icons } from 'Helpers/Props';
+import Icon from 'Components/Icon';
+import styles from './HeartRating.css';
 
 function HeartRating({ rating, iconSize }) {
   return (

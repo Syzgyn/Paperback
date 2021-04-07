@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
-import { kinds } from '@/Helpers/Props';
-import styles from './Alert.module.scss';
+import { kinds } from 'Helpers/Props';
+import styles from './Alert.css';
 
 function Alert({ className, kind, children, ...otherProps }) {
   return (

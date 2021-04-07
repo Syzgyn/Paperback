@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
-import { icons } from '@/Helpers/Props';
-import Icon from '@/Components/Icon';
+import { icons } from 'Helpers/Props';
+import Icon from 'Components/Icon';
 import Button from './Button';
-import styles from './SpinnerButton.module.scss';
+import styles from './SpinnerButton.css';
 
 function SpinnerButton(props) {
   const {

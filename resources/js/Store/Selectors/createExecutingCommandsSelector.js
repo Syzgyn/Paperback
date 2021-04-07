@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { isCommandExecuting } from '@/Utilities/Command';
+import { isCommandExecuting } from 'Utilities/Command';
 
 function createExecutingCommandsSelector() {
   return createSelector(

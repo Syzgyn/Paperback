@@ -1,4 +1,4 @@
-import getSectionState from '@/Utilities/State/getSectionState';
+import getSectionState from 'Utilities/State/getSectionState';
 import { sortDirections } from 'Helpers/Props';
 import { set } from '../baseActions';
 

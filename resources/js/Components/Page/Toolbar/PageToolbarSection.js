@@ -1,16 +1,16 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import { forEach } from '@/Helpers/elementChildren';
-import { align, icons } from '@/Helpers/Props';
-import dimensions from '@/Styles/Variables/dimensions';
-import SpinnerIcon from '@/Components/SpinnerIcon';
-import Measure from '@/Components/Measure';
-import Menu from '@/Components/Menu/Menu';
-import MenuContent from '@/Components/Menu/MenuContent';
-import MenuItem from '@/Components/Menu/MenuItem';
-import ToolbarMenuButton from '@/Components/Menu/ToolbarMenuButton';
-import styles from './PageToolbarSection.module.scss';
+import { forEach } from 'Helpers/elementChildren';
+import { align, icons } from 'Helpers/Props';
+import dimensions from 'Styles/Variables/dimensions';
+import SpinnerIcon from 'Components/SpinnerIcon';
+import Measure from 'Components/Measure';
+import Menu from 'Components/Menu/Menu';
+import MenuContent from 'Components/Menu/MenuContent';
+import MenuItem from 'Components/Menu/MenuItem';
+import ToolbarMenuButton from 'Components/Menu/ToolbarMenuButton';
+import styles from './PageToolbarSection.css';
 
 const BUTTON_WIDTH = parseInt(dimensions.toolbarButtonWidth);
 const SEPARATOR_MARGIN = parseInt(dimensions.toolbarSeparatorMargin);
@@ -98,7 +98,6 @@ class PageToolbarSection extends Component {
       buttons: [],
       overflowItems: []
     };
-    this.onMeasure = this.onMeasure.bind(this);
   }
 
   //

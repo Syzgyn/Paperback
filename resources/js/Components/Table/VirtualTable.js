@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { scrollDirections } from '@/Helpers/Props';
-import Measure from '@/Components/Measure';
-import Scroller from '@/Components/Scroller/Scroller';
+import { scrollDirections } from 'Helpers/Props';
+import Measure from 'Components/Measure';
+import Scroller from 'Components/Scroller/Scroller';
 import { WindowScroller, Grid } from 'react-virtualized';
-import hasDifferentItemsOrOrder from '@/Utilities/Object/hasDifferentItemsOrOrder';
-import styles from './VirtualTable.module.scss';
+import hasDifferentItemsOrOrder from 'Utilities/Object/hasDifferentItemsOrOrder';
+import styles from './VirtualTable.css';
 
 const ROW_HEIGHT = 38;
 

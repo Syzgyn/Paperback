@@ -4,14 +4,14 @@ import ReactDOM from 'react-dom';
 import FocusLock from 'react-focus-lock';
 import classNames from 'classnames';
 import elementClass from 'element-class';
-import getUniqueElememtId from '@/Utilities/getUniqueElementId';
-import { isIOS } from '@/Utilities/mobile';
-import { setScrollLock } from '@/Utilities/scrollLock';
-import * as keyCodes from '@/Utilities/Constants/keyCodes';
-import { sizes } from '@/Helpers/Props';
-import ErrorBoundary from '@/Components/Error/ErrorBoundary';
+import getUniqueElememtId from 'Utilities/getUniqueElementId';
+import { isIOS } from 'Utilities/mobile';
+import { setScrollLock } from 'Utilities/scrollLock';
+import * as keyCodes from 'Utilities/Constants/keyCodes';
+import { sizes } from 'Helpers/Props';
+import ErrorBoundary from 'Components/Error/ErrorBoundary';
 import ModalError from './ModalError';
-import styles from './Modal.module.scss';
+import styles from './Modal.css';
 
 const openModals = [];
 

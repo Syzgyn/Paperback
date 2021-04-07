@@ -9,10 +9,32 @@
     <title>Paperback</title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+      .app {
+        overflow: hidden;
+        height: 100%; /* needed for proper layout */
+      }
+
+      @media only screen and (max-width: 768px) {
+        .app {
+          display: flex;
+          flex-direction: column;
+          min-height: 100%;
+          height: auto;
+        }
+      }
+    </style>
 </head>
 <body>
     <div id="app"></div>
 
-    <script src="{{ asset('assets/bundle/app.js') }}"></script>
+    <script>
+        window.Sonarr = {
+            urlBase: '', 
+            version: '0.1',
+            apiRoot: '/api',
+        };
+    </script>
+    <script src="{{ asset('assets/bundle/index.js') }}"></script>
 </body>
 </html>

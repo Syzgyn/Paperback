@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { icons } from '@/Helpers/Props';
-import IconButton from '@/Components/Link/IconButton';
-import SpinnerIconButton from '@/Components/Link/SpinnerIconButton';
-import styles from './CustomFilter.module.scss';
+import { icons } from 'Helpers/Props';
+import IconButton from 'Components/Link/IconButton';
+import SpinnerIconButton from 'Components/Link/SpinnerIconButton';
+import styles from './CustomFilter.css';
 
 class CustomFilter extends Component {
 

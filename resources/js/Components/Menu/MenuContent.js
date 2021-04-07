@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import getUniqueElementId from '@/Utilities/getUniqueElementId';
-import Scroller from '@/Components/Scroller/Scroller';
-import styles from './MenuContent.module.scss';
+import getUniqueElementId from 'Utilities/getUniqueElementId';
+import Scroller from 'Components/Scroller/Scroller';
+import styles from './MenuContent.css';
 
 class MenuContent extends Component {
 

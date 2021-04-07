@@ -1,5 +1,5 @@
-import pages from '@/Utilities/pages';
-import getSectionState from '@/Utilities/State/getSectionState';
+import pages from 'Utilities/pages';
+import getSectionState from 'Utilities/State/getSectionState';
 
 function createSetServerSideCollectionPageHandler(section, page, fetchHandler) {
   return function(getState, payload, dispatch) {

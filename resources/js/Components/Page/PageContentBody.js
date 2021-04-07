@@ -1,19 +1,62 @@
 import PropTypes from 'prop-types';
-import React from 'react';
-//import { isMobile as isMobileUtil } from 'Utilities/mobile';
-//import { isLocked } from 'Utilities/scrollLock';
-//import { scrollDirections } from 'Helpers/Props';
-//import OverlayScroller from 'Components/Scroller/OverlayScroller';
-//import Scroller from 'Components/Scroller/Scroller';
-import styles from './PageContentBody.module.scss';
+import React, { Component } from 'react';
+import { isMobile as isMobileUtil } from 'Utilities/mobile';
+import { isLocked } from 'Utilities/scrollLock';
+import { scrollDirections } from 'Helpers/Props';
+import OverlayScroller from 'Components/Scroller/OverlayScroller';
+import Scroller from 'Components/Scroller/Scroller';
+import styles from './PageContentBody.css';
 
-const PageContentBody = (props) => (
-    <div className={props.className}>
-        <div className={props.innerClassName}>
-            {props.children}
+class PageContentBody extends Component {
+
+  //
+  // Lifecycle
+
+  constructor(props, context) {
+    super(props, context);
+
+    this._isMobile = isMobileUtil();
+  }
+
+  //
+  // Listeners
+
+  onScroll(props) {
+    const { onScroll } = this.props;
+
+    if (this.props.onScroll && !isLocked()) {
+      onScroll(props);
+    }
+  }
+
+  //
+  // Render
+
+  render() {
+    const {
+      className,
+      innerClassName,
+      children,
+      dispatch,
+      ...otherProps
+    } = this.props;
+
+    const ScrollerComponent = this._isMobile ? Scroller : OverlayScroller;
+
+    return (
+      <ScrollerComponent
+        className={className}
+        scrollDirection={scrollDirections.VERTICAL}
+        {...otherProps}
+        onScroll={this.onScroll}
+      >
+        <div className={innerClassName}>
+          {children}
         </div>
-    </div>
-);
+      </ScrollerComponent>
+    );
+  }
+}
 
 PageContentBody.propTypes = {
   className: PropTypes.string,

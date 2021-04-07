@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import monitorOptions from '@/Utilities/Comic/monitorOptions';
+import monitorOptions from 'Utilities/Series/monitorOptions';
 import SelectInput from './SelectInput';
 
 function MonitorEpisodesSelectInput(props) {

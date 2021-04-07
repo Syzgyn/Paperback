@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import { icons } from '@/Helpers/Props';
-import Icon from '@/Components/Icon';
-import Link from '@/Components/Link/Link';
+import { icons } from 'Helpers/Props';
+import Icon from 'Components/Icon';
+import Link from 'Components/Link/Link';
 import CheckInput from './CheckInput';
-import styles from './EnhancedSelectInputOption.module.scss';
+import styles from './EnhancedSelectInputOption.css';
 
 class EnhancedSelectInputOption extends Component {
 

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import Modal from '@/Components/Modal/Modal';
+import Modal from 'Components/Modal/Modal';
 import FilterBuilderModalContentConnector from './Builder/FilterBuilderModalContentConnector';
 import CustomFiltersModalContentConnector from './CustomFilters/CustomFiltersModalContentConnector';
 

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import createTags from '@/Store/Slices/tags';
+import createTagsSelector from 'Store/Selectors/createTagsSelector';
 import FilterBuilderRowValue from './FilterBuilderRowValue';
 
 function createMapStateToProps() {

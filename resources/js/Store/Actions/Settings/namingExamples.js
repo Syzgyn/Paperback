@@ -1,6 +1,7 @@
-import createAjaxRequest from '@/Utilities/createAjaxRequest';
-import { createThunk } from '@/Store/thunks';
-import { set, update } from '@/Store/Actions/baseActions';
+import { batchActions } from 'redux-batched-actions';
+import createAjaxRequest from 'Utilities/createAjaxRequest';
+import { createThunk } from 'Store/thunks';
+import { set, update } from 'Store/Actions/baseActions';
 
 //
 // Variables
@@ -47,18 +48,16 @@ export default {
       }).request;
 
       promise.done((data) => {
-        dispatch(
-          update({ section, data })
-        );
+        dispatch(batchActions([
+          update({ section, data }),
 
-        dispatch(
           set({
             section,
             isFetching: false,
             isPopulated: true,
             error: null
           })
-        );
+        ]));
       });
 
       promise.fail((xhr) => {

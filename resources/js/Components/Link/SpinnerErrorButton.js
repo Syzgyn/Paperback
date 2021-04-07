@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { icons, kinds } from '@/Helpers/Props';
-import Icon from '@/Components/Icon';
-import SpinnerButton from '@/Components/Link/SpinnerButton';
-import styles from './SpinnerErrorButton.module.scss';
+import { icons, kinds } from 'Helpers/Props';
+import Icon from 'Components/Icon';
+import SpinnerButton from 'Components/Link/SpinnerButton';
+import styles from './SpinnerErrorButton.css';
 
 function getTestResult(error) {
   if (!error) {

@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import { DragSource, DropTarget } from 'react-dnd';
 import classNames from 'classnames';
-import { TABLE_COLUMN } from '@/Helpers/dragTypes';
+import { TABLE_COLUMN } from 'Helpers/dragTypes';
 import TableOptionsColumn from './TableOptionsColumn';
-import styles from './TableOptionsColumnDragSource.module.scss';
+import styles from './TableOptionsColumnDragSource.css';
 
 const columnDragSource = {
   beginDrag(column) {

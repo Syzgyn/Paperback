@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import isString from '@/Utilities/String/isString';
-import { IN_LAST, NOT_IN_LAST, IN_NEXT, NOT_IN_NEXT } from '@/Helpers/Props/filterTypes';
-import NumberInput from '@/Components/Form/NumberInput';
-import SelectInput from '@/Components/Form/SelectInput';
-import TextInput from '@/Components/Form/TextInput';
+import isString from 'Utilities/String/isString';
+import { IN_LAST, NOT_IN_LAST, IN_NEXT, NOT_IN_NEXT } from 'Helpers/Props/filterTypes';
+import NumberInput from 'Components/Form/NumberInput';
+import SelectInput from 'Components/Form/SelectInput';
+import TextInput from 'Components/Form/TextInput';
 import { NAME } from './FilterBuilderRowValue';
-import styles from './DateFilterBuilderRowValue.module.scss';
+import styles from './DateFilterBuilderRowValue.css';
 
 const timeOptions = [
   { key: 'seconds', value: 'seconds' },

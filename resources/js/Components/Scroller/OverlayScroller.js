@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { scrollDirections } from '@/Helpers/Props';
-import styles from './OverlayScroller.module.scss';
+import { scrollDirections } from 'Helpers/Props';
+import styles from './OverlayScroller.css';
 
 const SCROLLBAR_SIZE = 10;
 
@@ -35,7 +35,7 @@ class OverlayScroller extends Component {
   //
   // Control
 
-  _setScrollRef = (ref) => {
+  _setScrollRef(ref) {
     this._scroller = ref;
 
     if (ref) {
@@ -43,7 +43,7 @@ class OverlayScroller extends Component {
     }
   }
 
-  _renderThumb = (props) => {
+  _renderThumb(props) {
     return (
       <div
         className={this.props.trackClassName}
@@ -52,7 +52,7 @@ class OverlayScroller extends Component {
     );
   }
 
-  _renderTrackHorizontal = ({ style, props }) => {
+  _renderTrackHorizontal({ style, props }) {
     const finalStyle = {
       ...style,
       right: 2,
@@ -71,7 +71,7 @@ class OverlayScroller extends Component {
     );
   }
 
-  _renderTrackVertical = ({ style, props }) => {
+  _renderTrackVertical({ style, props }) {
     const finalStyle = {
       ...style,
       right: 2,
@@ -90,7 +90,7 @@ class OverlayScroller extends Component {
     );
   }
 
-  _renderView = (props) => {
+  _renderView(props) {
     return (
       <div
         className={this.props.className}
@@ -102,15 +102,15 @@ class OverlayScroller extends Component {
   //
   // Listers
 
-  onScrollStart = () => {
+  onScrollStart() {
     this._isScrolling = true;
   }
 
-  onScrollStop = () => {
+  onScrollStop() {
     this._isScrolling = false;
   }
 
-  onScroll = (event) => {
+  onScroll(event) {
     const {
       scrollTop,
       scrollLeft

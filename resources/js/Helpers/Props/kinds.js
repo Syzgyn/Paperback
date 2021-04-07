@@ -21,3 +21,5 @@ export const all = [
   SUCCESS,
   WARNING
 ];
+
+export default DEFAULT;

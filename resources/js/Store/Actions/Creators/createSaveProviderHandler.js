@@ -1,7 +1,8 @@
 import $ from 'jquery';
 import _ from 'lodash';
-import createAjaxRequest from '@/Utilities/createAjaxRequest';
-import getProviderState from '@/Utilities/State/getProviderState';
+import { batchActions } from 'redux-batched-actions';
+import createAjaxRequest from 'Utilities/createAjaxRequest';
+import getProviderState from 'Utilities/State/getProviderState';
 import { set, updateItem } from '../baseActions';
 
 const abortCurrentRequests = {};
@@ -54,16 +55,16 @@ function createSaveProviderHandler(section, url, options = {}) {
     request.done((data) => {
       lastSaveData = null;
 
-      dispatch(
-        updateItem({ section, ...data }));
+      dispatch(batchActions([
+        updateItem({ section, ...data }),
 
-      dispatch(
         set({
           section,
           isSaving: false,
           saveError: null,
           pendingChanges: {}
-        }));
+        })
+      ]));
     });
 
     request.fail((xhr) => {

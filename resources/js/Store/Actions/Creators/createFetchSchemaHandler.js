@@ -1,4 +1,4 @@
-import createAjaxRequest from '@/Utilities/createAjaxRequest';
+import createAjaxRequest from 'Utilities/createAjaxRequest';
 import { set } from '../baseActions';
 
 function createFetchSchemaHandler(section, url) {

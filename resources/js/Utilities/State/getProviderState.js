@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import getSectionState from '@/Utilities/State/getSectionState';
+import getSectionState from 'Utilities/State/getSectionState';
 
 function getProviderState(payload, getState, section) {
   const {

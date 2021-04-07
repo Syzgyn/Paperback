@@ -1,9 +1,9 @@
 import moment from 'moment';
-import formatTime from '@/Utilities/Date/formatTime';
-import isInNextWeek from '@/Utilities/Date/isInNextWeek';
-import isToday from '@/Utilities/Date/isToday';
-import isTomorrow from '@/Utilities/Date/isTomorrow';
-import isYesterday from '@/Utilities/Date/isYesterday';
+import formatTime from 'Utilities/Date/formatTime';
+import isInNextWeek from 'Utilities/Date/isInNextWeek';
+import isToday from 'Utilities/Date/isToday';
+import isTomorrow from 'Utilities/Date/isTomorrow';
+import isYesterday from 'Utilities/Date/isYesterday';
 
 function getRelativeDate(date, shortDateFormat, showRelativeDates, { timeFormat, includeSeconds = false, timeForToday = false } = {}) {
   if (!date) {

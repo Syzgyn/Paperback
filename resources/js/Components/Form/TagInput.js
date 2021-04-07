@@ -2,12 +2,12 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import { kinds } from '@/Helpers/Props';
-import tagShape from '@/Helpers/Props/Shapes/tagShape';
+import { kinds } from 'Helpers/Props';
+import tagShape from 'Helpers/Props/Shapes/tagShape';
 import AutoSuggestInput from './AutoSuggestInput';
 import TagInputInput from './TagInputInput';
 import TagInputTag from './TagInputTag';
-import styles from './TagInput.module.scss';
+import styles from './TagInput.css';
 
 function getTag(value, selectedIndex, suggestions, allowNew) {
   if (selectedIndex == null && value) {
@@ -63,7 +63,7 @@ class TagInput extends Component {
     return name;
   }
 
-  addTag() {
+  addTag(tag) {
       _.debounce((tag) => {
         this.props.onTagAdd(tag);
 

@@ -1,5 +1,5 @@
-import createAjaxRequest from '@/Utilities/createAjaxRequest';
-import getProviderState from '@/Utilities/State/getProviderState';
+import createAjaxRequest from 'Utilities/createAjaxRequest';
+import getProviderState from 'Utilities/State/getProviderState';
 import { set } from '../baseActions';
 
 const abortCurrentRequests = {};

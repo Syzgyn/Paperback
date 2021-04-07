@@ -1,8 +1,8 @@
-import { createAction } from '@reduxjs/toolkit';
-import requestAction from '@/Utilities/requestAction';
-import getSectionState from '@/Utilities/State/getSectionState';
-import updateSectionState from '@/Utilities/State/updateSectionState';
-import { createThunk, handleThunks } from '@/Store/thunks';
+import { createAction } from 'redux-actions';
+import requestAction from 'Utilities/requestAction';
+import getSectionState from 'Utilities/State/getSectionState';
+import updateSectionState from 'Utilities/State/updateSectionState';
+import { createThunk, handleThunks } from 'Store/thunks';
 import createHandleActions from './Creators/createHandleActions';
 
 //

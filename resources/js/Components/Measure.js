@@ -1,31 +1,40 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
+import React, { Component } from 'react';
 import ReactMeasure from 'react-measure';
 
-const Measure = (props) => {
-    useEffect(() => {
-        const onMeasure = _.debounce((payload) => {
-            props.onMeasure(payload);
-        }, 250, { leading: true, trailing: false })
+class Measure extends Component {
 
-        return () => {
-            onMeasure.cancel();
-        }
-    });
+  //
+  // Lifecycle
 
-    //
-    // Render
+  componentWillUnmount() {
+    this.onMeasure.cancel();
+  }
 
+  //
+  // Listeners
+
+  onMeasure(payload) {
+      _.debounce((payload) => {
+        this.props.onMeasure(payload);
+      }, 250, { leading: true, trailing: false })
+  }
+
+  //
+  // Render
+
+  render() {
     return (
-        <ReactMeasure
-            {...props}
-        />
+      <ReactMeasure
+        {...this.props}
+      />
     );
+  }
 }
 
 Measure.propTypes = {
-    onMeasure: PropTypes.func.isRequired
+  onMeasure: PropTypes.func.isRequired
 };
 
 export default Measure;

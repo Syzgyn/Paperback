@@ -1,42 +1,50 @@
-import React from "react";
-import { Spinner } from "reactstrap";
+import PropTypes from 'prop-types';
+import React from 'react';
+import styles from './LoadingIndicator.css';
 
-function generateStyle(delay) {
-    return {
-        animationDelay: delay,
-    };
+function LoadingIndicator({ className, rippleClassName, size }) {
+  const sizeInPx = `${size}px`;
+  const width = sizeInPx;
+  const height = sizeInPx;
+
+  return (
+    <div
+      className={className}
+      style={{ height }}
+    >
+      <div
+        className={styles.rippleContainer}
+        style={{ width, height }}
+      >
+        <div
+          className={rippleClassName}
+          style={{ width, height }}
+        />
+
+        <div
+          className={rippleClassName}
+          style={{ width, height }}
+        />
+
+        <div
+          className={rippleClassName}
+          style={{ width, height }}
+        />
+      </div>
+    </div>
+  );
 }
 
-function LoadingIndicator() {
-    return (
-        <div className="text-center">
-            <Spinner
-                color="secondary"
-                type="grow"
-                style={generateStyle("0.1s")}
-            />
-            <Spinner
-                color="secondary"
-                type="grow"
-                style={generateStyle("0.2s")}
-            />
-            <Spinner
-                color="secondary"
-                type="grow"
-                style={generateStyle("0.3s")}
-            />
-            <Spinner
-                color="secondary"
-                type="grow"
-                style={generateStyle("0.4s")}
-            />
-            <Spinner
-                color="secondary"
-                type="grow"
-                style={generateStyle("0.5s")}
-            />
-        </div>
-    );
-}
+LoadingIndicator.propTypes = {
+  className: PropTypes.string,
+  rippleClassName: PropTypes.string,
+  size: PropTypes.number
+};
+
+LoadingIndicator.defaultProps = {
+  className: styles.loading,
+  rippleClassName: styles.ripple,
+  size: 50
+};
 
 export default LoadingIndicator;

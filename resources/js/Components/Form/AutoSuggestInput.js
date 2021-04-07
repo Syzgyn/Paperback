@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
 import { Manager, Popper, Reference } from 'react-popper';
 import classNames from 'classnames';
-import Portal from '@/Components/Portal';
-import styles from './AutoSuggestInput.module.scss';
+import Portal from 'Components/Portal';
+import styles from './AutoSuggestInput.css';
 
 class AutoSuggestInput extends Component {
 

@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { addTag, tagsSelector } from '@/Store/Slices/tags';
+import { addTag } from 'Store/Actions/tagActions';
+import createTagsSelector from 'Store/Selectors/createTagsSelector';
 import TagInput from './TagInput';
 
 const validTagRegex = new RegExp('[^-_a-z0-9]', 'i');
@@ -19,7 +20,7 @@ function isValidTag(tagName) {
 function createMapStateToProps() {
   return createSelector(
     (state, { value }) => value,
-    tagsSelector,
+    createTagsSelector(),
     (tags, tagList) => {
       const sortedTags = _.sortBy(tagList, 'label');
       const filteredTagList = _.filter(sortedTags, (tag) => _.indexOf(tags, tag.id) === -1);

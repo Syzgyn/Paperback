@@ -1,9 +1,9 @@
-import { createAction } from '@reduxjs/toolkit';
-import { createThunk } from '@/Store/thunks';
-import createSetSettingValueReducer from '@/Store/Actions/Creators/Reducers/createSetSettingValueReducer';
-import createSetProviderFieldValueReducer from '@/Store/Actions/Creators/Reducers/createSetProviderFieldValueReducer';
-import createFetchHandler from '@/Store/Actions/Creators/createFetchHandler';
-import createSaveProviderHandler from '@/Store/Actions/Creators/createSaveProviderHandler';
+import { createAction } from 'redux-actions';
+import { createThunk } from 'Store/thunks';
+import createSetSettingValueReducer from 'Store/Actions/Creators/Reducers/createSetSettingValueReducer';
+import createSetProviderFieldValueReducer from 'Store/Actions/Creators/Reducers/createSetProviderFieldValueReducer';
+import createFetchHandler from 'Store/Actions/Creators/createFetchHandler';
+import createSaveProviderHandler from 'Store/Actions/Creators/createSaveProviderHandler';
 
 //
 // Variables

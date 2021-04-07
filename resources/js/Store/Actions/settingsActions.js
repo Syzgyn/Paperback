@@ -1,5 +1,5 @@
-import { createAction } from '@reduxjs/toolkit';
-import { handleThunks } from '@/Store/thunks';
+import { createAction } from 'redux-actions';
+import { handleThunks } from 'Store/thunks';
 import createHandleActions from './Creators/createHandleActions';
 import delayProfiles from './Settings/delayProfiles';
 import downloadClients from './Settings/downloadClients';

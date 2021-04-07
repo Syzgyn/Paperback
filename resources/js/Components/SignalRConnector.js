@@ -120,7 +120,7 @@ class SignalRConnector extends Component {
   //
   // Control
 
-  retryConnection = () => {
+  retryConnection() {
     if (isAppDisconnected(this.disconnectedTime)) {
       this.setState({
         isDisconnected: true
@@ -138,7 +138,7 @@ class SignalRConnector extends Component {
     }, this.retryInterval * 1000);
   }
 
-  handleMessage = (message) => {
+  handleMessage(message) {
     const {
       name,
       body
@@ -154,7 +154,7 @@ class SignalRConnector extends Component {
     console.error(`signalR: Unable to find handler for ${name}`);
   }
 
-  handleCalendar = (body) => {
+  handleCalendar(body) {
     if (body.action === 'updated') {
       this.props.dispatchUpdateItem({
         section: 'calendar',
@@ -164,7 +164,7 @@ class SignalRConnector extends Component {
     }
   }
 
-  handleCommand = (body) => {
+  handleCommand(body) {
     if (body.action === 'sync') {
       this.props.dispatchFetchCommands();
       return;
@@ -183,7 +183,7 @@ class SignalRConnector extends Component {
     }
   }
 
-  handleEpisode = (body) => {
+  handleEpisode(body) {
     if (body.action === 'updated') {
       this.props.dispatchUpdateItem({
         section: 'episodes',
@@ -193,7 +193,7 @@ class SignalRConnector extends Component {
     }
   }
 
-  handleEpisodefile = (body) => {
+  handleEpisodefile(body) {
     const section = 'episodeFiles';
 
     if (body.action === 'updated') {
@@ -206,11 +206,11 @@ class SignalRConnector extends Component {
     }
   }
 
-  handleHealth = () => {
+  handleHealth() {
     this.props.dispatchFetchHealth();
   }
 
-  handleSeries = (body) => {
+  handleSeries(body) {
     const action = body.action;
     const section = 'series';
 
@@ -221,27 +221,27 @@ class SignalRConnector extends Component {
     }
   }
 
-  handleQueue = () => {
+  handleQueue() {
     if (this.props.isQueuePopulated) {
       this.props.dispatchFetchQueue();
     }
   }
 
-  handleQueueDetails = () => {
+  handleQueueDetails() {
     this.props.dispatchFetchQueueDetails();
   }
 
-  handleQueueStatus = (body) => {
+  handleQueueStatus(body) {
     this.props.dispatchUpdate({ section: 'queue.status', data: body.resource });
   }
 
-  handleVersion = (body) => {
+  handleVersion(body) {
     const version = body.Version;
 
     this.props.dispatchSetVersion({ version });
   }
 
-  handleWantedCutoff = (body) => {
+  handleWantedCutoff(body) {
     if (body.action === 'updated') {
       this.props.dispatchUpdateItem({
         section: 'cutoffUnmet',
@@ -251,7 +251,7 @@ class SignalRConnector extends Component {
     }
   }
 
-  handleWantedMissing = (body) => {
+  handleWantedMissing(body) {
     if (body.action === 'updated') {
       this.props.dispatchUpdateItem({
         section: 'missing',
@@ -261,15 +261,15 @@ class SignalRConnector extends Component {
     }
   }
 
-  handleSystemTask = () => {
+  handleSystemTask() {
     this.props.dispatchFetchCommands();
   }
 
-  handleRootfolder = () => {
+  handleRootfolder() {
     this.props.dispatchFetchRootFolders();
   }
 
-  handleTag = (body) => {
+  handleTag(body) {
     if (body.action === 'sync') {
       this.props.dispatchFetchTags();
       this.props.dispatchFetchTagDetails();
@@ -280,7 +280,7 @@ class SignalRConnector extends Component {
   //
   // Listeners
 
-  onStateChanged = (change) => {
+  onStateChanged(change) {
     const state = getState(change.newState);
     console.log(`signalR: ${state}`);
 
@@ -318,13 +318,13 @@ class SignalRConnector extends Component {
     }
   }
 
-  onReceived = (message) => {
+  onReceived(message) {
     console.debug('signalR: received', message.name, message.body);
 
     this.handleMessage(message);
   }
 
-  onReconnecting = () => {
+  onReconnecting() {
     if (window.Sonarr.unloading) {
       return;
     }
@@ -338,7 +338,7 @@ class SignalRConnector extends Component {
     });
   }
 
-  onDisconnected = () => {
+  onDisconnected() {
     if (window.Sonarr.unloading) {
       return;
     }

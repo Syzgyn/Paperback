@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { icons } from '@/Helpers/Props';
-import IconButton from '@/Components/Link/IconButton';
+import { icons } from 'Helpers/Props';
+import IconButton from 'Components/Link/IconButton';
 import TextInput from './TextInput';
-import styles from './KeyValueListInputItem.module.scss';
+import styles from './KeyValueListInputItem.css';
 
 class KeyValueListInputItem extends Component {
 

@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
-import Button from '@/Components/Link/Button';
-import SpinnerButton from '@/Components/Link/SpinnerButton';
-import { kinds } from '@/Helpers/Props';
-import styles from './FormInputButton.module.scss';
+import Button from 'Components/Link/Button';
+import SpinnerButton from 'Components/Link/SpinnerButton';
+import { kinds } from 'Helpers/Props';
+import styles from './FormInputButton.css';
 
 function FormInputButton(props) {
   const {

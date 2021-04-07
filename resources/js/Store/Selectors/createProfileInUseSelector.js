@@ -1,17 +1,17 @@
 import { createSelector } from 'reselect';
-import createAllComicSelector from './createAllSeriesSelector';
+import createAllSeriesSelector from './createAllSeriesSelector';
 
 function createProfileInUseSelector(profileProp) {
   return createSelector(
     (state, { id }) => id,
-    createAllComicSelector(),
+    createAllSeriesSelector(),
     (state) => state.settings.importLists.items,
-    (id, comic, lists) => {
+    (id, series, lists) => {
       if (!id) {
         return false;
       }
 
-      return comic.some((s) => s[profileProp] === id) || lists.some((list) => list[profileProp] === id);
+      return series.some((s) => s[profileProp] === id) || lists.some((list) => list[profileProp] === id);
     }
   );
 }

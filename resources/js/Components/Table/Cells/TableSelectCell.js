@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import CheckInput from '@/Components/Form/CheckInput';
+import CheckInput from 'Components/Form/CheckInput';
 import TableRowCell from './TableRowCell';
-import styles from './TableSelectCell.module.scss';
+import styles from './TableSelectCell.css';
 
 class TableSelectCell extends Component {
 

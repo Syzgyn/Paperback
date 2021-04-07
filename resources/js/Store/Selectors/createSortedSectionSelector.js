@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import getSectionState from '@/Utilities/State/getSectionState';
+import getSectionState from 'Utilities/State/getSectionState';
 function createSortedSectionSelector(section, comparer) {
   return createSelector(
     (state) => state,

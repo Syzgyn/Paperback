@@ -1,40 +1,133 @@
-import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import PropTypes from "prop-types";
-import PageHeader from "@/Components/Page/Header/PageHeader";
-import PageSidebar from "@/Components/Page/Sidebar/PageSidebar";
-import { useDispatch } from "react-redux";
-import { fetchComics } from "@/Store/Slices/comics";
-import locationShape from "@/Helpers/Props/Shapes/locationShape";
-import styles from "./Page.module.scss";
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import locationShape from 'Helpers/Props/Shapes/locationShape';
+import ColorImpairedContext from 'App/ColorImpairedContext';
+import ConnectionLostModalConnector from 'App/ConnectionLostModalConnector';
+import AppUpdatedModalConnector from 'App/AppUpdatedModalConnector';
+import PageHeader from './Header/PageHeader';
+import PageSidebar from './Sidebar/PageSidebar';
+import styles from './Page.css';
 
-const Page = (props) => {
-    const dispatch = useDispatch();
-    const location = useLocation();
-    useEffect(() => {
-        dispatch(fetchComics());
-    }, [dispatch]);
+class Page extends Component {
+
+  //
+  // Lifecycle
+
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {
+      isUpdatedModalOpen: false,
+      isConnectionLostModalOpen: false
+    };
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.onResize);
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      isDisconnected,
+      isUpdated
+    } = this.props;
+
+    if (!prevProps.isUpdated && isUpdated) {
+      this.setState({ isUpdatedModalOpen: true });
+    }
+
+    if (prevProps.isDisconnected !== isDisconnected) {
+      this.setState({ isConnectionLostModalOpen: isDisconnected });
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize);
+  }
+
+  //
+  // Listeners
+
+  onResize() {
+    this.props.onResize({
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
+  }
+
+  onUpdatedModalClose() {
+    this.setState({ isUpdatedModalOpen: false });
+  }
+
+  onConnectionLostModalClose() {
+    this.setState({ isConnectionLostModalOpen: false });
+  }
+
+  //
+  // Render
+
+  render() {
+    const {
+      className,
+      location,
+      children,
+      isSmallScreen,
+      isSidebarVisible,
+      enableColorImpairedMode,
+      onSidebarToggle,
+      onSidebarVisibleChange
+    } = this.props;
+
     return (
-        <div className={props.className}>
-            <PageHeader />
-            <div className={styles.main}>
-                <PageSidebar
-                    location={location}
-                />
-                {props.children}
-            </div>
+      <ColorImpairedContext.Provider value={enableColorImpairedMode}>
+        <div className={className}>
+
+          <PageHeader
+            onSidebarToggle={onSidebarToggle}
+          />
+
+          <div className={styles.main}>
+            <PageSidebar
+              location={location}
+              isSmallScreen={isSmallScreen}
+              isSidebarVisible={isSidebarVisible}
+              onSidebarVisibleChange={onSidebarVisibleChange}
+            />
+
+            {children}
+          </div>
+
+          <AppUpdatedModalConnector
+            isOpen={this.state.isUpdatedModalOpen}
+            onModalClose={this.onUpdatedModalClose}
+          />
+
+          <ConnectionLostModalConnector
+            isOpen={this.state.isConnectionLostModalOpen}
+            onModalClose={this.onConnectionLostModalClose}
+          />
         </div>
+      </ColorImpairedContext.Provider>
     );
-};
+  }
+}
 
 Page.propTypes = {
-    hasError: PropTypes.bool,
-    isPopulated: PropTypes.bool,
-    children: PropTypes.node,
+  className: PropTypes.string,
+  location: locationShape.isRequired,
+  children: PropTypes.node.isRequired,
+  isSmallScreen: PropTypes.bool.isRequired,
+  isSidebarVisible: PropTypes.bool.isRequired,
+  isUpdated: PropTypes.bool.isRequired,
+  isDisconnected: PropTypes.bool.isRequired,
+  enableColorImpairedMode: PropTypes.bool.isRequired,
+  onResize: PropTypes.func.isRequired,
+  onSidebarToggle: PropTypes.func.isRequired,
+  onSidebarVisibleChange: PropTypes.func.isRequired
 };
 
 Page.defaultProps = {
-    className: styles.page,
-}
+  className: styles.page
+};
 
 export default Page;

@@ -1,7 +1,8 @@
-import createAjaxRequest from '@/Utilities/createAjaxRequest';
-import { isSameCommand } from '@/Utilities/Command';
-import { messageTypes } from '@/Helpers/Props';
-import { createThunk, handleThunks } from '@/Store/thunks';
+import { batchActions } from 'redux-batched-actions';
+import createAjaxRequest from 'Utilities/createAjaxRequest';
+import { isSameCommand } from 'Utilities/Command';
+import { messageTypes } from 'Helpers/Props';
+import { createThunk, handleThunks } from 'Store/thunks';
 import createFetchHandler from './Creators/createFetchHandler';
 import createHandleActions from './Creators/createHandleActions';
 import createRemoveItemHandler from './Creators/createRemoveItemHandler';
@@ -109,8 +110,10 @@ function scheduleRemoveCommand(command, dispatch) {
   }
 
   removeCommandTimeoutIds[id] = setTimeout(() => {
-      dispatch(removeCommand({ section: 'commands', id }));
-      dispatch(hideMessage({ id }));
+    dispatch(batchActions([
+      removeCommand({ section: 'commands', id }),
+      hideMessage({ id })
+    ]));
 
     delete removeCommandTimeoutIds[id];
   }, 60000 * 5);

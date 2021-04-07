@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { addRootFolder } from '@/Store/Slices/rootFolders';
+import { addRootFolder } from 'Store/Actions/rootFolderActions';
 import RootFolderSelectInput from './RootFolderSelectInput';
 
 const ADD_NEW_KEY = 'addNew';

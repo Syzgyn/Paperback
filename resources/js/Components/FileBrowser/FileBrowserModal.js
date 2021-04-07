@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import Modal from '@/Components/Modal/Modal';
+import Modal from 'Components/Modal/Modal';
 import FileBrowserModalContentConnector from './FileBrowserModalContentConnector';
-import styles from './FileBrowserModal.module.scss';
+import styles from './FileBrowserModal.css';
 
 class FileBrowserModal extends Component {
 

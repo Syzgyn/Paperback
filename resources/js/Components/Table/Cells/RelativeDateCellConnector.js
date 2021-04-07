@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import UISettingsSelector from '@/Store/Slices/Settings/ui';
+import createUISettingsSelector from 'Store/Selectors/createUISettingsSelector';
 import RelativeDateCell from './RelativeDateCell';
 
 function createMapStateToProps() {
   return createSelector(
-    UISettingsSelector,
+    createUISettingsSelector(),
     (uiSettings) => {
       return _.pick(uiSettings, [
         'showRelativeDates',

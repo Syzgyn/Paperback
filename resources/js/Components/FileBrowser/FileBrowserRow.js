@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { icons } from '@/Helpers/Props';
-import Icon from '@/Components/Icon';
-import TableRowButton from '@/Components/Table/TableRowButton';
-import TableRowCell from '@/Components/Table/Cells/TableRowCell';
-import styles from './FileBrowserRow.module.scss';
+import { icons } from 'Helpers/Props';
+import Icon from 'Components/Icon';
+import TableRowButton from 'Components/Table/TableRowButton';
+import TableRowCell from 'Components/Table/Cells/TableRowCell';
+import styles from './FileBrowserRow.css';
 
 function getIconName(type) {
   switch (type) {

@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Icon from '@/Components/Icon';
-import MenuButton from '@/Components/Menu/MenuButton';
-import styles from './ToolbarMenuButton.module.scss';
+import Icon from 'Components/Icon';
+import MenuButton from 'Components/Menu/MenuButton';
+import styles from './ToolbarMenuButton.css';
 
 function ToolbarMenuButton(props) {
   const {

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import styles from './ErrorBoundaryError.module.scss';
+import styles from './ErrorBoundaryError.css';
 
 function ErrorBoundaryError(props) {
   const {

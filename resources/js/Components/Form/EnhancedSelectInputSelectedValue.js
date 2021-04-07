@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
-import styles from './EnhancedSelectInputSelectedValue.module.scss';
+import styles from './EnhancedSelectInputSelectedValue.css';
 
 function EnhancedSelectInputSelectedValue(props) {
   const {

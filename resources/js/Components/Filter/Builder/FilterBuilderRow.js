@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { filterBuilderTypes, filterBuilderValueTypes, icons } from '@/Helpers/Props';
-import SelectInput from '@/Components/Form/SelectInput';
-import IconButton from '@/Components/Link/IconButton';
+import { filterBuilderTypes, filterBuilderValueTypes, icons } from 'Helpers/Props';
+import SelectInput from 'Components/Form/SelectInput';
+import IconButton from 'Components/Link/IconButton';
 import BoolFilterBuilderRowValue from './BoolFilterBuilderRowValue';
 import DateFilterBuilderRowValue from './DateFilterBuilderRowValue';
 import FilterBuilderRowValueConnector from './FilterBuilderRowValueConnector';
@@ -14,7 +14,7 @@ import QualityProfileFilterBuilderRowValueConnector from './QualityProfileFilter
 import SeriesStatusFilterBuilderRowValue from './SeriesStatusFilterBuilderRowValue';
 import SeriesTypeFilterBuilderRowValue from './SeriesTypeFilterBuilderRowValue';
 import TagFilterBuilderRowValueConnector from './TagFilterBuilderRowValueConnector';
-import styles from './FilterBuilderRow.module.scss';
+import styles from './FilterBuilderRow.css';
 
 function getselectedFilterBuilderProp(filterBuilderProps, name) {
   return filterBuilderProps.find((a) => {

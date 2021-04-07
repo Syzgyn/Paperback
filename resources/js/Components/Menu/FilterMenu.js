@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { icons } from '@/Helpers/Props';
+import { icons } from 'Helpers/Props';
 import FilterMenuContent from './FilterMenuContent';
 import Menu from './Menu';
 import ToolbarMenuButton from './ToolbarMenuButton';
-import styles from './FilterMenu.module.scss';
+import styles from './FilterMenu.css';
 
 class FilterMenu extends Component {
 
@@ -41,13 +41,13 @@ class FilterMenu extends Component {
       filters,
       customFilters,
       buttonComponent: ButtonComponent,
-      filterModalComponent: FilterModalComponent,
-      filterModalComponentProps,
+      filterModalConnectorComponent: FilterModalConnectorComponent,
+      filterModalConnectorComponentProps,
       onFilterSelect,
       ...otherProps
     } = this.props;
 
-    const showCustomFilters = !!FilterModalComponent;
+    const showCustomFilters = !!FilterModalConnectorComponent;
 
     return (
       <div>
@@ -74,8 +74,8 @@ class FilterMenu extends Component {
 
         {
           showCustomFilters &&
-            <FilterModalComponent
-              {...filterModalComponentProps}
+            <FilterModalConnectorComponent
+              {...filterModalConnectorComponentProps}
               isOpen={this.state.isFilterModalOpen}
               selectedFilterKey={selectedFilterKey}
               filters={filters}
@@ -96,8 +96,8 @@ FilterMenu.propTypes = {
   filters: PropTypes.arrayOf(PropTypes.object).isRequired,
   customFilters: PropTypes.arrayOf(PropTypes.object).isRequired,
   buttonComponent: PropTypes.elementType.isRequired,
-  filterModalComponent: PropTypes.elementType,
-  filterModalComponentProps: PropTypes.object,
+  filterModalConnectorComponent: PropTypes.elementType,
+  filterModalConnectorComponentProps: PropTypes.object,
   onFilterSelect: PropTypes.func.isRequired
 };
 

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import TextInput from './TextInput';
-import styles from './PasswordInput.module.scss';
+import styles from './PasswordInput.css';
 
 // Prevent a user from copying (or cutting) the password from the input
 function onCopy(e) {

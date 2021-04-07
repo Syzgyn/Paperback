@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import styles from './DragPreviewLayer.module.scss';
+import styles from './DragPreviewLayer.css';
 
 function DragPreviewLayer({ children, ...otherProps }) {
   return (

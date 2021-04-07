@@ -1,7 +1,7 @@
 import React from 'react';
-import ErrorBoundaryError from '@/Components/Error/ErrorBoundaryError';
+import ErrorBoundaryError from 'Components/Error/ErrorBoundaryError';
 import PageContentBody from './PageContentBody';
-import styles from './PageContentError.module.scss';
+import styles from './PageContentError.css';
 
 function PageContentError(props) {
   return (

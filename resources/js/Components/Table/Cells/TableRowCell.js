@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import styles from './TableRowCell.module.scss';
+import styles from './TableRowCell.css';
 
 class TableRowCell extends Component {
 

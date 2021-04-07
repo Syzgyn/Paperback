@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { PureComponent } from 'react';
-import formatDateTime from '@/Utilities/Date/formatDateTime';
-import getRelativeDate from '@/Utilities/Date/getRelativeDate';
+import formatDateTime from 'Utilities/Date/formatDateTime';
+import getRelativeDate from 'Utilities/Date/getRelativeDate';
 import TableRowCell from './TableRowCell';
-import styles from './RelativeDateCell.module.scss';
+import styles from './RelativeDateCell.css';
 
 class RelativeDateCell extends PureComponent {
 

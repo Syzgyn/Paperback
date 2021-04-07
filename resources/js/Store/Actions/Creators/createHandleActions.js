@@ -1,6 +1,7 @@
 import _ from 'lodash';
-import getSectionState from '@/Utilities/State/getSectionState';
-import updateSectionState from '@/Utilities/State/updateSectionState';
+import { handleActions } from 'redux-actions';
+import getSectionState from 'Utilities/State/getSectionState';
+import updateSectionState from 'Utilities/State/updateSectionState';
 import {
   SET,
   UPDATE,
@@ -8,7 +9,7 @@ import {
   UPDATE_SERVER_SIDE_COLLECTION,
   CLEAR_PENDING_CHANGES,
   REMOVE_ITEM
-} from '@/Store/Actions/baseActions';
+} from 'Store/Actions/baseActions';
 
 const blacklistedProperties = [
   'section',
@@ -23,7 +24,6 @@ function createItemMap(data) {
 }
 
 export default function createHandleActions(handlers, defaultState, section) {
-/*
   return handleActions({
 
     [SET]: function(state, { payload }) {
@@ -167,5 +167,4 @@ export default function createHandleActions(handlers, defaultState, section) {
     ...handlers
 
   }, defaultState);
-*/
 }

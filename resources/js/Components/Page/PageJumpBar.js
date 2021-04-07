@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import dimensions from '@/Styles/Variables/dimensions';
-import Measure from '@/Components/Measure';
-import PageJumpBarItem from '@/Components/Page/PageJumpBarItem';
-import styles from './PageJumpBar.module.scss';
+import dimensions from 'Styles/Variables/dimensions';
+import Measure from 'Components/Measure';
+import PageJumpBarItem from './PageJumpBarItem';
+import styles from './PageJumpBar.css';
 
 const ITEM_HEIGHT = parseInt(dimensions.jumpBarItemHeight);
 

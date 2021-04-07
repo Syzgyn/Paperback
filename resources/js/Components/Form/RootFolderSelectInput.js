@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import FileBrowserModal from '@/Components/FileBrowser/FileBrowserModal';
+import FileBrowserModal from 'Components/FileBrowser/FileBrowserModal';
 import EnhancedSelectInput from './EnhancedSelectInput';
 import RootFolderSelectInputOption from './RootFolderSelectInputOption';
 import RootFolderSelectInputSelectedValue from './RootFolderSelectInputSelectedValue';

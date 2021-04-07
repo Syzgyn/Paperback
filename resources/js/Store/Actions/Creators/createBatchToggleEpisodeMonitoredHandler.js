@@ -1,6 +1,6 @@
-import createAjaxRequest from '@/Utilities/createAjaxRequest';
-import updateEpisodes from '@/Utilities/Episode/updateEpisodes';
-import getSectionState from '@/Utilities/State/getSectionState';
+import createAjaxRequest from 'Utilities/createAjaxRequest';
+import updateEpisodes from 'Utilities/Episode/updateEpisodes';
+import getSectionState from 'Utilities/State/getSectionState';
 
 function createBatchToggleEpisodeMonitoredHandler(section, fetchHandler) {
   return function(getState, payload, dispatch) {

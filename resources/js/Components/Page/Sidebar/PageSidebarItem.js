@@ -1,89 +1,106 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
-import Link from "@/Components/Link/Link";
-import classNames from "classnames";
-import Icon from "@/Components/Icon";
-import styles from "./PageSidebarItem.module.scss";
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import classNames from 'classnames';
+import { map } from 'Helpers/elementChildren';
+import Icon from 'Components/Icon';
+import Link from 'Components/Link/Link';
+import styles from './PageSidebarItem.css';
 
-const PageSidebarItem = (props) => {
-    const onPress = () => {
-        const {
-            isChildItem,
-            isParentItem,
-            onPress
-        } = props;
+class PageSidebarItem extends Component {
 
-        if (isChildItem || !isParentItem) {
-            onPress();
-        }
-    }
+  //
+  // Listeners
 
+  onPress() {
     const {
-        iconName,
-        title,
-        to,
-        isActive,
-        isActiveParent,
-        isChildItem,
-        statusComponent,
-        children
-    } = props;
+      isChildItem,
+      isParentItem,
+      onPress
+    } = this.props;
+
+    if (isChildItem || !isParentItem) {
+      onPress();
+    }
+  }
+
+  //
+  // Render
+
+  render() {
+    const {
+      iconName,
+      title,
+      to,
+      isActive,
+      isActiveParent,
+      isChildItem,
+      statusComponent: StatusComponent,
+      children
+    } = this.props;
 
     return (
-        <div
-            className={classNames(
-                styles.item,
-                isActiveParent && styles.isActiveItem
-            )}
+      <div
+        className={classNames(
+          styles.item,
+          isActiveParent && styles.isActiveItem
+        )}
+      >
+        <Link
+          className={classNames(
+            isChildItem ? styles.childLink : styles.link,
+            isActiveParent && styles.isActiveParentLink,
+            isActive && styles.isActiveLink
+          )}
+          to={to}
+          onPress={this.onPress}
         >
-            <Link
-                className={classNames(
-                    isChildItem ? styles.childLink : styles.link,
-                    isActiveParent && styles.isActiveParentLink,
-                    isActive && styles.isActiveLink
-                )}
-                to={to}
-                onPress={onPress}
-            >
-                {
-                    !!iconName &&
-                    <span className={styles.iconContainer}>
-                        <Icon
-                            name={iconName}
-                        />
-                    </span>
-                }
+          {
+            !!iconName &&
+              <span className={styles.iconContainer}>
+                <Icon
+                  name={iconName}
+                />
+              </span>
+          }
 
-                <span className={isChildItem ? styles.noIcon : null}>
-                    {title}
-                </span>
-            </Link>
+          <span className={isChildItem ? styles.noIcon : null}>
+            {title}
+          </span>
 
-            {
-                children &&
-                children.map((child) => {
-                    return React.cloneElement(child, { isChildItem: true });
-                })
-            }
-        </div>
+          {
+            !!StatusComponent &&
+              <span className={styles.status}>
+                <StatusComponent />
+              </span>
+          }
+        </Link>
+
+        {
+          children &&
+            map(children, (child) => {
+              return React.cloneElement(child, { isChildItem: true });
+            })
+        }
+      </div>
     );
-};
+  }
+}
 
 PageSidebarItem.propTypes = {
-	iconName: PropTypes.object,
-	title: PropTypes.string.isRequired,
-	to: PropTypes.string.isRequired,
-	isActive: PropTypes.bool,
-	isActiveParent: PropTypes.bool,
-	isParentItem: PropTypes.bool.isRequired,
-	isChildItem: PropTypes.bool.isRequired,
-	statusComponent: PropTypes.elementType,
-	children: PropTypes.node,
-	onPress: PropTypes.func
+  iconName: PropTypes.object,
+  title: PropTypes.string.isRequired,
+  to: PropTypes.string.isRequired,
+  isActive: PropTypes.bool,
+  isActiveParent: PropTypes.bool,
+  isParentItem: PropTypes.bool.isRequired,
+  isChildItem: PropTypes.bool.isRequired,
+  statusComponent: PropTypes.elementType,
+  children: PropTypes.node,
+  onPress: PropTypes.func
 };
 
 PageSidebarItem.defaultProps = {
-	isChildItem: false
+  isChildItem: false
 };
 
 export default PageSidebarItem;

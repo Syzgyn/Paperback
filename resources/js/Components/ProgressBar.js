@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
-import { kinds, sizes } from '@/Helpers/Props';
-import { ColorImpairedConsumer } from '@/App/ColorImpairedContext';
-import styles from './ProgressBar.module.scss';
+import { kinds, sizes } from 'Helpers/Props';
+import { ColorImpairedConsumer } from 'App/ColorImpairedContext';
+import styles from './ProgressBar.css';
 
 function ProgressBar(props) {
   const {

@@ -1,4 +1,4 @@
-import { createAction } from '@reduxjs/toolkit';
+import { createAction } from 'redux-actions';
 
 //
 // Action Types

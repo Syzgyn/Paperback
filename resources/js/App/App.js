@@ -1,35 +1,28 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import { ToastContainer } from "react-toastify";
-import AppRoutes from "./AppRoutes";
-import Page from "@/Components/Page/Page";
-import store, { history } from "@/Store/createStore";
-import { Provider } from "react-redux";
-import { ConnectedRouter } from "connected-react-router";
+import PropTypes from 'prop-types';
+import React from 'react';
+import DocumentTitle from 'react-document-title';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
+import PageConnector from 'Components/Page/PageConnector';
+import AppRoutes from './AppRoutes';
 
-class App extends Component {
-    render() {
-        return (
-            <Provider store={store}>
-                <ConnectedRouter history={history}>
-                    <Page>
-                        <AppRoutes />
-                        <ToastContainer
-                            position="bottom-right"
-                            autoClose={10000}
-                            hideProgressBar={true}
-                            newestOnTop={false}
-                            closeOnClick
-                            rtl={false}
-                            pauseOnFocusLoss
-                            draggable={false}
-                            pauseOnHover
-                        />
-                    </Page>
-                </ConnectedRouter>
-            </Provider>
-        );
-    }
+function App({ store, history }) {
+  return (
+    <DocumentTitle title="Sonarr">
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <PageConnector>
+            <AppRoutes app={App} />
+          </PageConnector>
+        </ConnectedRouter>
+      </Provider>
+    </DocumentTitle>
+  );
 }
 
-ReactDOM.render(<App />, document.getElementById("app"));
+App.propTypes = {
+  store: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
+};
+
+export default App;

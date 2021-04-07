@@ -27,7 +27,7 @@ class MessageConnector extends Component {
   //
   // Control
 
-  scheduleHideMessage = (hideAfter) => {
+  scheduleHideMessage(hideAfter) {
     if (this._hideTimeoutId) {
       clearTimeout(this._hideTimeoutId);
     }
@@ -37,7 +37,7 @@ class MessageConnector extends Component {
     }
   }
 
-  hideMessage = () => {
+  hideMessage() {
     this.props.hideMessage({ id: this.props.id });
   }
 

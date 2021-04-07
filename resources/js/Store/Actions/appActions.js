@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import { createAction } from '@reduxjs/toolkit';
-import createAjaxRequest from '@/Utilities/createAjaxRequest';
-import getSectionState from '@/Utilities/State/getSectionState';
-import updateSectionState from '@/Utilities/State/updateSectionState';
-import { createThunk, handleThunks } from '@/Store/thunks';
+import { createAction } from 'redux-actions';
+import createAjaxRequest from 'Utilities/createAjaxRequest';
+import getSectionState from 'Utilities/State/getSectionState';
+import updateSectionState from 'Utilities/State/updateSectionState';
+import { createThunk, handleThunks } from 'Store/thunks';
 import createHandleActions from './Creators/createHandleActions';
 
 function getDimensions(width, height) {
@@ -35,7 +35,7 @@ export const defaultState = {
   messages: {
     items: []
   },
-  version: 0, //window.Sonarr.version,
+  version: window.Sonarr.version,
   isUpdated: false,
   isConnected: true,
   isReconnecting: false,

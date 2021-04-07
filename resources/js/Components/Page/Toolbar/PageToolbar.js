@@ -1,12 +1,25 @@
 import PropTypes from 'prop-types';
-import React  from 'react';
-import styles from './PageToolbar.module.scss';
+import React, { Component } from 'react';
+import styles from './PageToolbar.css';
 
-const PageToolbar = (props) => (
-    <div className={props.className}>
-        {props.children}
-    </div>
-);
+class PageToolbar extends Component {
+
+  //
+  // Render
+
+  render() {
+    const {
+      className,
+      children
+    } = this.props;
+
+    return (
+      <div className={className}>
+        {children}
+      </div>
+    );
+  }
+}
 
 PageToolbar.propTypes = {
   className: PropTypes.string,

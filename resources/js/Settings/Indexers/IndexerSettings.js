@@ -1,21 +1,97 @@
-import React from "react";
-import SettingsMenuBar from "@/Settings/SettingsMenuBar";
-import SettingsToolbar from "@/Settings/SettingsToolbar";
-import IndexerList from "@/Settings/Indexers/IndexerList";
+import PropTypes from 'prop-types';
+import React, { Component, Fragment } from 'react';
+import { icons } from 'Helpers/Props';
+import PageContent from 'Components/Page/PageContent';
+import PageContentBody from 'Components/Page/PageContentBody';
+import PageToolbarButton from 'Components/Page/Toolbar/PageToolbarButton';
+import PageToolbarSeparator from 'Components/Page/Toolbar/PageToolbarSeparator';
+import SettingsToolbarConnector from 'Settings/SettingsToolbarConnector';
+import IndexersConnector from './Indexers/IndexersConnector';
+import IndexerOptionsConnector from './Options/IndexerOptionsConnector';
 
-const IndexerSettings = () => {
-    function onSavePress() {
-        //TODO: General indexers settings
+class IndexerSettings extends Component {
+
+  //
+  // Lifecycle
+
+  constructor(props, context) {
+    super(props, context);
+
+    this._saveCallback = null;
+
+    this.state = {
+      isSaving: false,
+      hasPendingChanges: false
+    };
+  }
+
+  //
+  // Listeners
+
+  onChildMounted(saveCallback) {
+    this._saveCallback = saveCallback;
+  }
+
+  onChildStateChange(payload) {
+    this.setState(payload);
+  }
+
+  onSavePress() {
+    if (this._saveCallback) {
+      this._saveCallback();
     }
+  }
+
+  // Render
+  //
+
+  render() {
+    const {
+      isTestingAll,
+      dispatchTestAllIndexers
+    } = this.props;
+
+    const {
+      isSaving,
+      hasPendingChanges
+    } = this.state;
 
     return (
-        <>
-            <SettingsMenuBar />
-            <SettingsToolbar onSavePress={onSavePress} />
-            <h2>Indexers</h2>
-            <IndexerList />
-        </>
+      <PageContent title="Indexer Settings">
+        <SettingsToolbarConnector
+          isSaving={isSaving}
+          hasPendingChanges={hasPendingChanges}
+          additionalButtons={
+            <Fragment>
+              <PageToolbarSeparator />
+
+              <PageToolbarButton
+                label="Test All Indexers"
+                iconName={icons.TEST}
+                isSpinning={isTestingAll}
+                onPress={dispatchTestAllIndexers}
+              />
+            </Fragment>
+          }
+          onSavePress={this.onSavePress}
+        />
+
+        <PageContentBody>
+          <IndexersConnector />
+
+          <IndexerOptionsConnector
+            onChildMounted={this.onChildMounted}
+            onChildStateChange={this.onChildStateChange}
+          />
+        </PageContentBody>
+      </PageContent>
     );
+  }
+}
+
+IndexerSettings.propTypes = {
+  isTestingAll: PropTypes.bool.isRequired,
+  dispatchTestAllIndexers: PropTypes.func.isRequired
 };
 
 export default IndexerSettings;
