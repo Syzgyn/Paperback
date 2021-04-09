@@ -21,25 +21,40 @@ class Comic extends JsonResource
     public function toArray($request)
     {
         return [
-            'name' => $this->name,
-            'sortName' => $this->getSortName(),
-            'displayDescription' => $this->truncatedDescription,
-            'description' => $this->description,
-            'descriptionIsTruncated' => $this->description !== $this->truncatedDescription,
-            'startYear' => $this->start_year,
+            'title' => $this->name,
+            'sortTitle' => $this->getSortName(),
+            'titleSlug' => \Slugify::slugify($this->name),
+            //'displayDescription' => $this->truncatedDescription,
+            'overview' => $this->description,
+            //'descriptionIsTruncated' => $this->description !== $this->truncatedDescription,
+            'year' => $this->start_year,
             'url' => $this->url,
-            'cvid' => $this->cvid,
-            'image' => $this->image,
-            'issues' => $this->issues,
-            'numIssues' => count($this->issues),
-            'downloadedIssues' => $this->downloadedIssuesCount,
+            'id' => $this->cvid,
+            'images' => [
+                ['coverType' => 'poster', 'url' => $this->image],
+            ],
+            //'issues' => $this->issues,
+            'statistics' => [
+                'issueCount' => count($this->issues),
+                'totalIssueCount' => count($this->issues),
+                'issueFileCount' => $this->downloadedIssuesCount,
+                'seasonCount' => 0,
+            ],
             'monitored' => $this->monitored,
+            'status' => 'ended',
+            'comicType' => 'standard',
+            'qualityProfile' => ['name' => 'remove me'],
+            'languageProfile' => ['name' => 'remove me'],
+            'path' => 'temp',
+            'ratings' => ['value' => 50],
+            'useSceneNumbering' => false,
         ];
     }
 
     protected function getSortName()
     {
         $name = strtolower($this->name);
+        $name = preg_replace('/[^a-z\d ]+/i', '', $name);
         if (substr($name, 0, 3) == 'the') {
             $name = substr($name, 3);
         }

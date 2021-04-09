@@ -9,6 +9,7 @@ use App\Services\DownloadService;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\ComicVineRepository;
 use App\Repositories\AppSettingsRepository;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -43,6 +44,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        JsonResource::withoutWrapping();
     }
 }

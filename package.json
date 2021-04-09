@@ -90,6 +90,7 @@
     "react-tabs": "^3.2.1",
     "react-text-truncate": "^0.16.0",
     "react-toastify": "^6.2.0",
+    "react-truncate-html": "^0.1.7",
     "react-virtualized": "^9.22.3",
     "redux": "^4.0.5",
     "redux-action-enhancer": "^3.0.3",

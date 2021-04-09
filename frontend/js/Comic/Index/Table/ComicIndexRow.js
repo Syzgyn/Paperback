@@ -537,7 +537,9 @@ ComicIndexRow.defaultProps = {
     totalIssueCount: 0
   },
   genres: [],
-  tags: []
+  tags: [],
+  qualityProfile: {name:'delete me'},
+  languageProfile: {name:'delete me'},
 };
 
 export default ComicIndexRow;

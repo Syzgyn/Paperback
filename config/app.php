@@ -176,6 +176,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
 
+        "Cocur\Slugify\Bridge\Laravel\SlugifyServiceProvider",
+
     ],
 
     /*
@@ -227,6 +229,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        "Slugify" => "Cocur\Slugify\Bridge\Laravel\SlugifyFacade",
 
     ],
 
