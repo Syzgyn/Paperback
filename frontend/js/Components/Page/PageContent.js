@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import DocumentTitle from 'react-document-title';
+import DocumentTitle from 'Components/DocumentTitle';
 import ErrorBoundary from 'Components/Error/ErrorBoundary';
 import PageContentError from './PageContentError';
 import styles from './PageContent.css';
