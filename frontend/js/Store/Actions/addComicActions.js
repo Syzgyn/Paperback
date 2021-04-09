@@ -37,8 +37,8 @@ export const defaultState = {
     languageProfileId: 0,
     comicType: comicTypes.STANDARD,
     seasonFolder: true,
-    searchForMissingEpisodes: false,
-    searchForCutoffUnmetEpisodes: false,
+    searchForMissingIssues: false,
+    searchForCutoffUnmetIssues: false,
     tags: []
   }
 };

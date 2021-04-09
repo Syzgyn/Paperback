@@ -7,17 +7,17 @@ function ComicTypePopoverContent() {
     <DescriptionList>
       <DescriptionListItem
         title="Anime"
-        data="Episodes released using an absolute episode number"
+        data="Issues released using an absolute issue number"
       />
 
       <DescriptionListItem
         title="Daily"
-        data="Episodes released daily or less frequently that use year-month-day (2017-05-25)"
+        data="Issues released daily or less frequently that use year-month-day (2017-05-25)"
       />
 
       <DescriptionListItem
         title="Standard"
-        data="Episodes released with SxxEyy pattern"
+        data="Issues released with SxxEyy pattern"
       />
     </DescriptionList>
   );

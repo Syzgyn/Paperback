@@ -101,21 +101,21 @@ function ComicIndexSortMenu(props) {
         </SortMenuItem>
 
         <SortMenuItem
-          name="episodeProgress"
+          name="issueProgress"
           sortKey={sortKey}
           sortDirection={sortDirection}
           onPress={onSortSelect}
         >
-          Episodes
+          Issues
         </SortMenuItem>
 
         <SortMenuItem
-          name="episodeCount"
+          name="issueCount"
           sortKey={sortKey}
           sortDirection={sortDirection}
           onPress={onSortSelect}
         >
-          Episode Count
+          Issue Count
         </SortMenuItem>
 
         <SortMenuItem

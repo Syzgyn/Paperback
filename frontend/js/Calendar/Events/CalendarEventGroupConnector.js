@@ -6,11 +6,11 @@ import CalendarEventGroup from './CalendarEventGroup';
 
 function createIsDownloadingSelector() {
   return createSelector(
-    (state, { episodeIds }) => episodeIds,
+    (state, { issueIds }) => issueIds,
     (state) => state.queue.details,
-    (episodeIds, details) => {
+    (issueIds, details) => {
       return details.items.some((item) => {
-        return item.episode && episodeIds.includes(item.episode.id);
+        return item.issue && issueIds.includes(item.issue.id);
       });
     }
   );

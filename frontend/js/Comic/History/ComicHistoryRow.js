@@ -8,10 +8,10 @@ import RelativeDateCellConnector from 'Components/Table/Cells/RelativeDateCellCo
 import TableRow from 'Components/Table/TableRow';
 import TableRowCell from 'Components/Table/Cells/TableRowCell';
 import Popover from 'Components/Tooltip/Popover';
-import EpisodeLanguage from 'Episode/EpisodeLanguage';
-import EpisodeQuality from 'Episode/EpisodeQuality';
-import EpisodeNumber from 'Episode/EpisodeNumber';
-import SeasonEpisodeNumber from 'Episode/SeasonEpisodeNumber';
+import IssueLanguage from 'Issue/IssueLanguage';
+import IssueQuality from 'Issue/IssueQuality';
+import IssueNumber from 'Issue/IssueNumber';
+import SeasonIssueNumber from 'Issue/SeasonIssueNumber';
 import HistoryDetailsConnector from 'Activity/History/Details/HistoryDetailsConnector';
 import HistoryEventTypeCell from 'Activity/History/HistoryEventTypeCell';
 import styles from './ComicHistoryRow.css';
@@ -22,8 +22,8 @@ function getTitle(eventType) {
     case 'comicFolderImported': return 'Comic Folder Imported';
     case 'downloadFolderImported': return 'Download Folder Imported';
     case 'downloadFailed': return 'Download Failed';
-    case 'episodeFileDeleted': return 'Episode File Deleted';
-    case 'episodeFileRenamed': return 'Episode File Renamed';
+    case 'issueFileDeleted': return 'Issue File Deleted';
+    case 'issueFileRenamed': return 'Issue File Renamed';
     default: return 'Unknown';
   }
 }
@@ -72,14 +72,14 @@ class ComicHistoryRow extends Component {
       data,
       fullComic,
       comic,
-      episode
+      issue
     } = this.props;
 
     const {
       isMarkAsFailedModalOpen
     } = this.state;
 
-    const EpisodeComponent = fullComic ? SeasonEpisodeNumber : EpisodeNumber;
+    const IssueComponent = fullComic ? SeasonIssueNumber : IssueNumber;
 
     return (
       <TableRow>
@@ -89,15 +89,15 @@ class ComicHistoryRow extends Component {
         />
 
         <TableRowCell key={name}>
-          <EpisodeComponent
-            seasonNumber={episode.seasonNumber}
-            episodeNumber={episode.episodeNumber}
-            absoluteEpisodeNumber={episode.absoluteEpisodeNumber}
+          <IssueComponent
+            seasonNumber={issue.seasonNumber}
+            issueNumber={issue.issueNumber}
+            absoluteIssueNumber={issue.absoluteIssueNumber}
             comicType={comic.comicType}
             alternateTitles={comic.alternateTitles}
-            sceneSeasonNumber={episode.sceneSeasonNumber}
-            sceneEpisodeNumber={episode.sceneEpisodeNumber}
-            sceneAbsoluteEpisodeNumber={episode.sceneAbsoluteEpisodeNumber}
+            sceneSeasonNumber={issue.sceneSeasonNumber}
+            sceneIssueNumber={issue.sceneIssueNumber}
+            sceneAbsoluteIssueNumber={issue.sceneAbsoluteIssueNumber}
           />
         </TableRowCell>
 
@@ -106,14 +106,14 @@ class ComicHistoryRow extends Component {
         </TableRowCell>
 
         <TableRowCell>
-          <EpisodeLanguage
+          <IssueLanguage
             language={language}
             isCutoffNotMet={languageCutoffNotMet}
           />
         </TableRowCell>
 
         <TableRowCell>
-          <EpisodeQuality
+          <IssueQuality
             quality={quality}
             isCutoffNotMet={qualityCutoffNotMet}
           />
@@ -179,7 +179,7 @@ ComicHistoryRow.propTypes = {
   data: PropTypes.object.isRequired,
   fullComic: PropTypes.bool.isRequired,
   comic: PropTypes.object.isRequired,
-  episode: PropTypes.object.isRequired,
+  issue: PropTypes.object.isRequired,
   onMarkAsFailedPress: PropTypes.func.isRequired
 };
 

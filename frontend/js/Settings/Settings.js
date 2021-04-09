@@ -76,7 +76,7 @@ function Settings() {
         </Link>
 
         <div className={styles.summary}>
-          Import from another Sonarr instance or Trakt lists and manage list exclusions
+          Import from another Paperback instance or Trakt lists and manage list exclusions
         </div>
 
         <Link
@@ -98,7 +98,7 @@ function Settings() {
         </Link>
 
         <div className={styles.summary}>
-          Create metadata files when episodes are imported or comic are refreshed
+          Create metadata files when issues are imported or comic are refreshed
         </div>
 
         <Link

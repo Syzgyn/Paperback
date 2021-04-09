@@ -55,12 +55,12 @@ class Queue extends Component {
   componentDidUpdate(prevProps) {
     const {
       items,
-      isEpisodesFetching
+      isIssuesFetching
     } = this.props;
 
     if (
-      (!isEpisodesFetching && prevProps.isEpisodesFetching) ||
-      (hasDifferentItems(prevProps.items, items) && !items.some((e) => e.episodeId))
+      (!isIssuesFetching && prevProps.isIssuesFetching) ||
+      (hasDifferentItems(prevProps.items, items) && !items.some((e) => e.issueId))
     ) {
       this.setState((state) => {
         return {
@@ -135,9 +135,9 @@ class Queue extends Component {
       isFetching,
       isPopulated,
       error,
-      isEpisodesFetching,
-      isEpisodesPopulated,
-      episodesError,
+      isIssuesFetching,
+      isIssuesPopulated,
+      issuesError,
       columns,
       totalRecords,
       isGrabbing,
@@ -156,9 +156,9 @@ class Queue extends Component {
       items
     } = this.state;
 
-    const isRefreshing = isFetching || isEpisodesFetching || isRefreshMonitoredDownloadsExecuting;
-    const isAllPopulated = isPopulated && (isEpisodesPopulated || !items.length || items.every((e) => !e.episodeId));
-    const hasError = error || episodesError;
+    const isRefreshing = isFetching || isIssuesFetching || isRefreshMonitoredDownloadsExecuting;
+    const isAllPopulated = isPopulated && (isIssuesPopulated || !items.length || items.every((e) => !e.issueId));
+    const hasError = error || issuesError;
     const selectedIds = this.getSelectedIds();
     const selectedCount = selectedIds.length;
     const disableSelectedActions = selectedCount === 0;
@@ -247,7 +247,7 @@ class Queue extends Component {
                         return (
                           <QueueRowConnector
                             key={item.id}
-                            episodeId={item.episodeId}
+                            issueId={item.issueId}
                             isSelected={selectedState[item.id]}
                             columns={columns}
                             {...item}
@@ -276,7 +276,7 @@ class Queue extends Component {
             selectedIds.every((id) => {
               const item = items.find((i) => i.id === id);
 
-              return !!(item && item.comicId && item.episodeId);
+              return !!(item && item.comicId && item.issueId);
             })
           )}
           onRemovePress={this.onRemoveSelectedConfirmed}
@@ -292,9 +292,9 @@ Queue.propTypes = {
   isPopulated: PropTypes.bool.isRequired,
   error: PropTypes.object,
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
-  isEpisodesFetching: PropTypes.bool.isRequired,
-  isEpisodesPopulated: PropTypes.bool.isRequired,
-  episodesError: PropTypes.object,
+  isIssuesFetching: PropTypes.bool.isRequired,
+  isIssuesPopulated: PropTypes.bool.isRequired,
+  issuesError: PropTypes.object,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   totalRecords: PropTypes.number,
   isGrabbing: PropTypes.bool.isRequired,

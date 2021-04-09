@@ -16,10 +16,10 @@ import Missing from './Missing';
 function createMapStateToProps() {
   return createSelector(
     (state) => state.wanted.missing,
-    createCommandExecutingSelector(commandNames.MISSING_EPISODE_SEARCH),
-    (missing, isSearchingForMissingEpisodes) => {
+    createCommandExecutingSelector(commandNames.MISSING_ISSUE_SEARCH),
+    (missing, isSearchingForMissingIssues) => {
       return {
-        isSearchingForMissingEpisodes,
+        isSearchingForMissingIssues,
         isSaving: missing.items.filter((m) => m.isSaving).length > 1,
         ...missing
       };
@@ -46,7 +46,7 @@ class MissingConnector extends Component {
       gotoMissingFirstPage
     } = this.props;
 
-    registerPagePopulator(this.repopulate, ['episodeFileUpdated']);
+    registerPagePopulator(this.repopulate, ['issueFileUpdated']);
 
     if (useCurrentPage) {
       fetchMissing();
@@ -57,8 +57,8 @@ class MissingConnector extends Component {
 
   componentDidUpdate(prevProps) {
     if (hasDifferentItems(prevProps.items, this.props.items)) {
-      const episodeIds = selectUniqueIds(this.props.items, 'id');
-      this.props.fetchQueueDetails({ episodeIds });
+      const issueIds = selectUniqueIds(this.props.items, 'id');
+      this.props.fetchQueueDetails({ issueIds });
     }
   }
 
@@ -116,14 +116,14 @@ class MissingConnector extends Component {
 
   onSearchSelectedPress = (selected) => {
     this.props.executeCommand({
-      name: commandNames.EPISODE_SEARCH,
-      episodeIds: selected
+      name: commandNames.ISSUE_SEARCH,
+      issueIds: selected
     });
   }
 
   onSearchAllMissingPress = (monitored) => {
     this.props.executeCommand({
-      name: commandNames.MISSING_EPISODE_SEARCH,
+      name: commandNames.MISSING_ISSUE_SEARCH,
       monitored
     });
   }

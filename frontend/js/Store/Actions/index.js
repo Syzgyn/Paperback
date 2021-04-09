@@ -5,9 +5,9 @@ import * as calendar from './calendarActions';
 import * as captcha from './captchaActions';
 import * as customFilters from './customFilterActions';
 import * as commands from './commandActions';
-import * as episodes from './episodeActions';
-import * as episodeFiles from './episodeFileActions';
-import * as episodeHistory from './episodeHistoryActions';
+import * as issues from './issueActions';
+import * as issueFiles from './issueFileActions';
+import * as issueHistory from './issueHistoryActions';
 import * as history from './historyActions';
 import * as importComic from './importComicActions';
 import * as interactiveImportActions from './interactiveImportActions';
@@ -36,9 +36,9 @@ export default [
   captcha,
   commands,
   customFilters,
-  episodes,
-  episodeFiles,
-  episodeHistory,
+  issues,
+  issueFiles,
+  issueHistory,
   history,
   importComic,
   interactiveImportActions,

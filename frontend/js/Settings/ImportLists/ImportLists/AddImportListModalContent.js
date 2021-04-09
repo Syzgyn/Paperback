@@ -52,7 +52,7 @@ class AddImportListModalContent extends Component {
               <div>
 
                 <Alert kind={kinds.INFO}>
-                  <div>Sonarr supports multiple lists for importing Comic into the database.</div>
+                  <div>Paperback supports multiple lists for importing Comic into the database.</div>
                   <div>For more information on the individual lists, click on the info buttons.</div>
                 </Alert>
                 {

@@ -108,7 +108,7 @@ class RemoveQueueItemModal extends Component {
                 type={inputTypes.CHECK}
                 name="blacklist"
                 value={blacklist}
-                helpText="Starts a search for this episode again and prevents this release from being grabbed again"
+                helpText="Starts a search for this issue again and prevents this release from being grabbed again"
                 onChange={this.onBlacklistChange}
               />
             </FormGroup>

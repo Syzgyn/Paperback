@@ -1,4 +1,4 @@
-const sonarrBlue = '#35c5f4';
+const paperbackBlue = '#35c5f4';
 
 module.exports = {
   textColor: '#515253',
@@ -13,10 +13,10 @@ module.exports = {
   successColor: '#27c24c',
   dangerColor: '#f05050',
   warningColor: '#ffa500',
-  infoColor: sonarrBlue,
+  infoColor: paperbackBlue,
   purple: '#7a43b6',
   pink: '#ff69b4',
-  sonarrBlue,
+  paperbackBlue,
   helpTextColor: '#909293',
   darkGray: '#888',
   gray: '#adadad',
@@ -25,7 +25,7 @@ module.exports = {
 
   // Theme Colors
 
-  themeBlue: sonarrBlue,
+  themeBlue: paperbackBlue,
   themeAlternateBlue: '#2193b5',
   themeRed: '#c4273c',
   themeDarkColor: '#3a3f51',

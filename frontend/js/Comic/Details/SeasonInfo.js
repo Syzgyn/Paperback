@@ -7,9 +7,9 @@ import styles from './SeasonInfo.css';
 
 function SeasonInfo(props) {
   const {
-    totalEpisodeCount,
-    monitoredEpisodeCount,
-    episodeFileCount,
+    totalIssueCount,
+    monitoredIssueCount,
+    issueFileCount,
     sizeOnDisk
   } = props;
 
@@ -19,21 +19,21 @@ function SeasonInfo(props) {
         titleClassName={styles.title}
         descriptionClassName={styles.description}
         title="Total"
-        data={totalEpisodeCount}
+        data={totalIssueCount}
       />
 
       <DescriptionListItem
         titleClassName={styles.title}
         descriptionClassName={styles.description}
         title="Monitored"
-        data={monitoredEpisodeCount}
+        data={monitoredIssueCount}
       />
 
       <DescriptionListItem
         titleClassName={styles.title}
         descriptionClassName={styles.description}
         title="With Files"
-        data={episodeFileCount}
+        data={issueFileCount}
       />
 
       <DescriptionListItem
@@ -47,9 +47,9 @@ function SeasonInfo(props) {
 }
 
 SeasonInfo.propTypes = {
-  totalEpisodeCount: PropTypes.number.isRequired,
-  monitoredEpisodeCount: PropTypes.number.isRequired,
-  episodeFileCount: PropTypes.number.isRequired,
+  totalIssueCount: PropTypes.number.isRequired,
+  monitoredIssueCount: PropTypes.number.isRequired,
+  issueFileCount: PropTypes.number.isRequired,
   sizeOnDisk: PropTypes.number.isRequired
 };
 

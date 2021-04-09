@@ -34,8 +34,8 @@ function createMapDispatchToProps(dispatch, props) {
     },
 
     onFilterSelect(selectedFilterKey) {
-      const action = props.type === 'episode' ?
-        releaseActions.setEpisodeReleasesFilter :
+      const action = props.type === 'issue' ?
+        releaseActions.setIssueReleasesFilter :
         releaseActions.setSeasonReleasesFilter;
 
       dispatch(action({ selectedFilterKey }));

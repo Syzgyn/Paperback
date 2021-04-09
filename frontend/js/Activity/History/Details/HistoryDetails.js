@@ -194,7 +194,7 @@ function HistoryDetails(props) {
     );
   }
 
-  if (eventType === 'episodeFileDeleted') {
+  if (eventType === 'issueFileDeleted') {
     const {
       reason,
       preferredWordScore
@@ -207,7 +207,7 @@ function HistoryDetails(props) {
         reasonMessage = 'File was deleted by via UI';
         break;
       case 'MissingFromDisk':
-        reasonMessage = 'Sonarr was unable to find the file on disk so it was removed';
+        reasonMessage = 'Paperback was unable to find the file on disk so it was removed';
         break;
       case 'Upgrade':
         reasonMessage = 'File was deleted to import an upgrade';
@@ -240,7 +240,7 @@ function HistoryDetails(props) {
     );
   }
 
-  if (eventType === 'episodeFileRenamed') {
+  if (eventType === 'issueFileRenamed') {
     const {
       sourcePath,
       sourceRelativePath,

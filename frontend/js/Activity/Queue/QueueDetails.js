@@ -104,7 +104,7 @@ function QueueDetails(props) {
     return (
       <Icon
         name={icons.DOWNLOADING}
-        title={`Episode is downloading - ${progress.toFixed(1)}% ${title}`}
+        title={`Issue is downloading - ${progress.toFixed(1)}% ${title}`}
       />
     );
   }

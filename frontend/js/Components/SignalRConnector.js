@@ -96,9 +96,9 @@ class SignalRConnector extends Component {
   componentDidMount() {
     console.log('Starting signalR');
 
-    const url = `${window.Sonarr.urlBase}/signalr`;
+    const url = `${window.Paperback.urlBase}/signalr`;
 
-    this.signalRconnection = $.connection(url, { apiKey: window.Sonarr.apiKey });
+    this.signalRconnection = $.connection(url, { apiKey: window.Paperback.apiKey });
 
     this.signalRconnection.stateChanged(this.onStateChanged);
     this.signalRconnection.received(this.onReceived);
@@ -183,24 +183,24 @@ class SignalRConnector extends Component {
     }
   }
 
-  handleEpisode = (body) => {
+  handleIssue = (body) => {
     if (body.action === 'updated') {
       this.props.dispatchUpdateItem({
-        section: 'episodes',
+        section: 'issues',
         updateOnly: true,
         ...body.resource
       });
     }
   }
 
-  handleEpisodefile = (body) => {
-    const section = 'episodeFiles';
+  handleIssuefile = (body) => {
+    const section = 'issueFiles';
 
     if (body.action === 'updated') {
       this.props.dispatchUpdateItem({ section, ...body.resource });
 
       // Repopulate the page to handle recently imported file
-      repopulatePage('episodeFileUpdated');
+      repopulatePage('issueFileUpdated');
     } else if (body.action === 'deleted') {
       this.props.dispatchRemoveItem({ section, id: body.resource.id });
     }
@@ -325,7 +325,7 @@ class SignalRConnector extends Component {
   }
 
   onReconnecting = () => {
-    if (window.Sonarr.unloading) {
+    if (window.Paperback.unloading) {
       return;
     }
 
@@ -339,7 +339,7 @@ class SignalRConnector extends Component {
   }
 
   onDisconnected = () => {
-    if (window.Sonarr.unloading) {
+    if (window.Paperback.unloading) {
       return;
     }
 

@@ -9,15 +9,15 @@ function ComicIndexProgressBar(props) {
   const {
     monitored,
     status,
-    episodeCount,
-    episodeFileCount,
-    totalEpisodeCount,
+    issueCount,
+    issueFileCount,
+    totalIssueCount,
     posterWidth,
     detailedProgressBar
   } = props;
 
-  const progress = episodeCount ? episodeFileCount / episodeCount * 100 : 100;
-  const text = `${episodeFileCount} / ${episodeCount}`;
+  const progress = issueCount ? issueFileCount / issueCount * 100 : 100;
+  const text = `${issueFileCount} / ${issueCount}`;
 
   return (
     <ProgressBar
@@ -28,7 +28,7 @@ function ComicIndexProgressBar(props) {
       size={detailedProgressBar ? sizes.MEDIUM : sizes.SMALL}
       showText={detailedProgressBar}
       text={text}
-      title={`${episodeFileCount} / ${episodeCount} (Total: ${totalEpisodeCount})`}
+      title={`${issueFileCount} / ${issueCount} (Total: ${totalIssueCount})`}
       width={posterWidth}
     />
   );
@@ -37,9 +37,9 @@ function ComicIndexProgressBar(props) {
 ComicIndexProgressBar.propTypes = {
   monitored: PropTypes.bool.isRequired,
   status: PropTypes.string.isRequired,
-  episodeCount: PropTypes.number.isRequired,
-  episodeFileCount: PropTypes.number.isRequired,
-  totalEpisodeCount: PropTypes.number.isRequired,
+  issueCount: PropTypes.number.isRequired,
+  issueFileCount: PropTypes.number.isRequired,
+  totalIssueCount: PropTypes.number.isRequired,
   posterWidth: PropTypes.number.isRequired,
   detailedProgressBar: PropTypes.bool.isRequired
 };

@@ -44,16 +44,16 @@ function EditNotificationModalContent(props) {
     onUpgrade,
     onRename,
     onComicDelete,
-    onEpisodeFileDelete,
-    onEpisodeFileDeleteForUpgrade,
+    onIssueFileDelete,
+    onIssueFileDeleteForUpgrade,
     onHealthIssue,
     supportsOnGrab,
     supportsOnDownload,
     supportsOnUpgrade,
     supportsOnRename,
     supportsOnComicDelete,
-    supportsOnEpisodeFileDelete,
-    supportsOnEpisodeFileDeleteForUpgrade,
+    supportsOnIssueFileDelete,
+    supportsOnIssueFileDeleteForUpgrade,
     supportsOnHealthIssue,
     includeHealthWarnings,
     tags,
@@ -108,7 +108,7 @@ function EditNotificationModalContent(props) {
                 <div className={styles.triggers}>
                   <FormInputHelpText
                     text="Select which events should trigger this conection"
-                    link="https://wiki.servarr.com/Sonarr_Settings#Connections"
+                    link="https://wiki.servarr.com/Paperback_Settings#Connections"
                   />
 
                   <div className={styles.triggerEvents}>
@@ -163,21 +163,21 @@ function EditNotificationModalContent(props) {
 
                     <FormInputGroup
                       type={inputTypes.CHECK}
-                      name="onEpisodeFileDelete"
-                      helpText="On Episode File Delete"
-                      isDisabled={!supportsOnEpisodeFileDelete.value}
-                      {...onEpisodeFileDelete}
+                      name="onIssueFileDelete"
+                      helpText="On Issue File Delete"
+                      isDisabled={!supportsOnIssueFileDelete.value}
+                      {...onIssueFileDelete}
                       onChange={onInputChange}
                     />
 
                     {
-                      onEpisodeFileDelete.value ?
+                      onIssueFileDelete.value ?
                         <FormInputGroup
                           type={inputTypes.CHECK}
-                          name="onEpisodeFileDeleteForUpgrade"
-                          helpText="On Episode File Delete For Upgrade"
-                          isDisabled={!supportsOnEpisodeFileDeleteForUpgrade.value}
-                          {...onEpisodeFileDeleteForUpgrade}
+                          name="onIssueFileDeleteForUpgrade"
+                          helpText="On Issue File Delete For Upgrade"
+                          isDisabled={!supportsOnIssueFileDeleteForUpgrade.value}
+                          {...onIssueFileDeleteForUpgrade}
                           onChange={onInputChange}
                         /> :
                         null

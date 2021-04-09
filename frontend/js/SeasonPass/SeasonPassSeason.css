@@ -13,12 +13,12 @@
   padding: 0 4px;
 }
 
-.episodes {
+.issues {
   padding: 0 4px;
   background-color: $white;
   color: $defaultColor;
 }
 
-.allEpisodes {
+.allIssues {
   background-color: #e0ffe0;
 }

@@ -89,7 +89,7 @@
   flex: 0 0 100px;
 }
 
-.episodeProgress,
+.issueProgress,
 .latestSeason {
   composes: cell;
 
@@ -99,7 +99,7 @@
   flex-direction: column;
 }
 
-.episodeCount {
+.issueCount {
   composes: cell;
 
   flex: 0 0 130px;

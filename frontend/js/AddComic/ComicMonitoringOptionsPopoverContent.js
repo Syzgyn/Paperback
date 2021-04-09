@@ -6,38 +6,38 @@ function ComicMonitoringOptionsPopoverContent() {
   return (
     <DescriptionList>
       <DescriptionListItem
-        title="All Episodes"
-        data="Monitor all episodes except specials"
+        title="All Issues"
+        data="Monitor all issues except specials"
       />
 
       <DescriptionListItem
-        title="Future Episodes"
-        data="Monitor episodes that have not aired yet"
+        title="Future Issues"
+        data="Monitor issues that have not aired yet"
       />
 
       <DescriptionListItem
-        title="Missing Episodes"
-        data="Monitor episodes that do not have files or have not aired yet"
+        title="Missing Issues"
+        data="Monitor issues that do not have files or have not aired yet"
       />
 
       <DescriptionListItem
-        title="Existing Episodes"
-        data="Monitor episodes that have files or have not aired yet"
+        title="Existing Issues"
+        data="Monitor issues that have files or have not aired yet"
       />
 
       <DescriptionListItem
         title="First Season"
-        data="Monitor all episodes of the first season. All other seasons will be ignored"
+        data="Monitor all issues of the first season. All other seasons will be ignored"
       />
 
       <DescriptionListItem
         title="Latest Season"
-        data="Monitor all episodes of the latest season and future seasons"
+        data="Monitor all issues of the latest season and future seasons"
       />
 
       <DescriptionListItem
         title="None"
-        data="No episodes will be monitored"
+        data="No issues will be monitored"
       />
     </DescriptionList>
   );

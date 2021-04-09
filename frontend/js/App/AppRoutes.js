@@ -53,7 +53,7 @@ function AppRoutes(props) {
       />
 
       {
-        window.Sonarr.urlBase &&
+        window.Paperback.urlBase &&
         <Route
           exact={true}
           path="/"

@@ -53,7 +53,7 @@ class SelectComicModalContentConnector extends Component {
         id,
         comic,
         seasonNumber: undefined,
-        episodes: []
+        issues: []
       });
     });
 

@@ -42,13 +42,13 @@ export const defaultState = {
       isVisible: true
     },
     {
-      name: 'episode',
-      label: 'Episode',
+      name: 'issue',
+      label: 'Issue',
       isVisible: true
     },
     {
-      name: 'episodeTitle',
-      label: 'Episode Title',
+      name: 'issueTitle',
+      label: 'Issue Title',
       isVisible: true
     },
     {

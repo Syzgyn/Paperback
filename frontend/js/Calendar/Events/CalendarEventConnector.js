@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import createEpisodeFileSelector from 'Store/Selectors/createEpisodeFileSelector';
+import createIssueFileSelector from 'Store/Selectors/createIssueFileSelector';
 import createComicSelector from 'Store/Selectors/createComicSelector';
 import createQueueItemSelector from 'Store/Selectors/createQueueItemSelector';
 import createUISettingsSelector from 'Store/Selectors/createUISettingsSelector';
@@ -10,13 +10,13 @@ function createMapStateToProps() {
   return createSelector(
     (state) => state.calendar.options,
     createComicSelector(),
-    createEpisodeFileSelector(),
+    createIssueFileSelector(),
     createQueueItemSelector(),
     createUISettingsSelector(),
-    (calendarOptions, comic, episodeFile, queueItem, uiSettings) => {
+    (calendarOptions, comic, issueFile, queueItem, uiSettings) => {
       return {
         comic,
-        episodeFile,
+        issueFile,
         queueItem,
         ...calendarOptions,
         timeFormat: uiSettings.timeFormat,

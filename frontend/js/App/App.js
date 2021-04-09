@@ -9,7 +9,7 @@ import CircularProgressBar from 'Components/CircularProgressBar';
 
 function App({ store, history }) {
   return (
-    <DocumentTitle title="Sonarr">
+    <DocumentTitle title="Paperback">
        <Provider store={store}>
         <ConnectedRouter history={history}>
           <PageConnector>

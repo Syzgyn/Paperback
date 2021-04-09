@@ -4,7 +4,7 @@ import { filterTypes, sortDirections } from 'Helpers/Props';
 import { createThunk, handleThunks } from 'Store/thunks';
 import createClearReducer from './Creators/Reducers/createClearReducer';
 import createSetTableOptionReducer from './Creators/Reducers/createSetTableOptionReducer';
-import createBatchToggleEpisodeMonitoredHandler from './Creators/createBatchToggleEpisodeMonitoredHandler';
+import createBatchToggleIssueMonitoredHandler from './Creators/createBatchToggleIssueMonitoredHandler';
 import createServerSideCollectionHandlers from './Creators/createServerSideCollectionHandlers';
 import createHandleActions from './Creators/createHandleActions';
 
@@ -34,13 +34,13 @@ export const defaultState = {
         isVisible: true
       },
       {
-        name: 'episode',
-        label: 'Episode',
+        name: 'issue',
+        label: 'Issue',
         isVisible: true
       },
       {
-        name: 'episodeTitle',
-        label: 'Episode Title',
+        name: 'issueTitle',
+        label: 'Issue Title',
         isVisible: true
       },
       {
@@ -106,13 +106,13 @@ export const defaultState = {
         isVisible: true
       },
       {
-        name: 'episode',
-        label: 'Episode',
+        name: 'issue',
+        label: 'Issue',
         isVisible: true
       },
       {
-        name: 'episodeTitle',
-        label: 'Episode Title',
+        name: 'issueTitle',
+        label: 'Issue Title',
         isVisible: true
       },
       {
@@ -195,7 +195,7 @@ export const SET_MISSING_FILTER = 'wanted/missing/setMissingFilter';
 export const SET_MISSING_TABLE_OPTION = 'wanted/missing/setMissingTableOption';
 export const CLEAR_MISSING = 'wanted/missing/clearMissing';
 
-export const BATCH_TOGGLE_MISSING_EPISODES = 'wanted/missing/batchToggleMissingEpisodes';
+export const BATCH_TOGGLE_MISSING_ISSUES = 'wanted/missing/batchToggleMissingIssues';
 
 export const FETCH_CUTOFF_UNMET = 'wanted/cutoffUnmet/fetchCutoffUnmet';
 export const GOTO_FIRST_CUTOFF_UNMET_PAGE = 'wanted/cutoffUnmet/gotoCutoffUnmetFirstPage';
@@ -208,7 +208,7 @@ export const SET_CUTOFF_UNMET_FILTER = 'wanted/cutoffUnmet/setCutoffUnmetFilter'
 export const SET_CUTOFF_UNMET_TABLE_OPTION = 'wanted/cutoffUnmet/setCutoffUnmetTableOption';
 export const CLEAR_CUTOFF_UNMET = 'wanted/cutoffUnmet/clearCutoffUnmet';
 
-export const BATCH_TOGGLE_CUTOFF_UNMET_EPISODES = 'wanted/cutoffUnmet/batchToggleCutoffUnmetEpisodes';
+export const BATCH_TOGGLE_CUTOFF_UNMET_ISSUES = 'wanted/cutoffUnmet/batchToggleCutoffUnmetIssues';
 
 //
 // Action Creators
@@ -224,7 +224,7 @@ export const setMissingFilter = createThunk(SET_MISSING_FILTER);
 export const setMissingTableOption = createAction(SET_MISSING_TABLE_OPTION);
 export const clearMissing = createAction(CLEAR_MISSING);
 
-export const batchToggleMissingEpisodes = createThunk(BATCH_TOGGLE_MISSING_EPISODES);
+export const batchToggleMissingIssues = createThunk(BATCH_TOGGLE_MISSING_ISSUES);
 
 export const fetchCutoffUnmet = createThunk(FETCH_CUTOFF_UNMET);
 export const gotoCutoffUnmetFirstPage = createThunk(GOTO_FIRST_CUTOFF_UNMET_PAGE);
@@ -237,7 +237,7 @@ export const setCutoffUnmetFilter = createThunk(SET_CUTOFF_UNMET_FILTER);
 export const setCutoffUnmetTableOption = createAction(SET_CUTOFF_UNMET_TABLE_OPTION);
 export const clearCutoffUnmet = createAction(CLEAR_CUTOFF_UNMET);
 
-export const batchToggleCutoffUnmetEpisodes = createThunk(BATCH_TOGGLE_CUTOFF_UNMET_EPISODES);
+export const batchToggleCutoffUnmetIssues = createThunk(BATCH_TOGGLE_CUTOFF_UNMET_ISSUES);
 
 //
 // Action Handlers
@@ -260,7 +260,7 @@ export const actionHandlers = handleThunks({
     }
   ),
 
-  [BATCH_TOGGLE_MISSING_EPISODES]: createBatchToggleEpisodeMonitoredHandler('wanted.missing', fetchMissing),
+  [BATCH_TOGGLE_MISSING_ISSUES]: createBatchToggleIssueMonitoredHandler('wanted.missing', fetchMissing),
 
   ...createServerSideCollectionHandlers(
     'wanted.cutoffUnmet',
@@ -278,7 +278,7 @@ export const actionHandlers = handleThunks({
     }
   ),
 
-  [BATCH_TOGGLE_CUTOFF_UNMET_EPISODES]: createBatchToggleEpisodeMonitoredHandler('wanted.cutoffUnmet', fetchCutoffUnmet)
+  [BATCH_TOGGLE_CUTOFF_UNMET_ISSUES]: createBatchToggleIssueMonitoredHandler('wanted.cutoffUnmet', fetchCutoffUnmet)
 
 });
 

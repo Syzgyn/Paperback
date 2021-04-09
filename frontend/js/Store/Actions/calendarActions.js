@@ -40,8 +40,8 @@ export const defaultState = {
   searchMissingCommandId: null,
 
   options: {
-    collapseMultipleEpisodes: false,
-    showEpisodeInformation: true,
+    collapseMultipleIssues: false,
+    showIssueInformation: true,
     showFinaleIcon: false,
     showSpecialIcon: false,
     showCutoffUnmetIcon: false,
@@ -349,11 +349,11 @@ export const actionHandlers = handleThunks({
   },
 
   [SEARCH_MISSING]: function(getState, payload, dispatch) {
-    const { episodeIds } = payload;
+    const { issueIds } = payload;
 
     const commandPayload = {
-      name: commandNames.EPISODE_SEARCH,
-      episodeIds
+      name: commandNames.ISSUE_SEARCH,
+      issueIds
     };
 
     executeCommandHelper(commandPayload, dispatch).then((data) => {

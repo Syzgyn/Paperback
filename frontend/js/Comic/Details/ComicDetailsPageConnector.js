@@ -38,7 +38,7 @@ class ComicDetailsPageConnector extends Component {
 
   componentDidUpdate(prevProps) {
     if (!this.props.titleSlug) {
-      this.props.push(`${window.Sonarr.urlBase}/`);
+      this.props.push(`${window.Paperback.urlBase}/`);
       return;
     }
   }

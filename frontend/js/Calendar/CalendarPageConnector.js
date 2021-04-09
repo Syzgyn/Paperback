@@ -13,24 +13,24 @@ import createCommandsSelector from 'Store/Selectors/createCommandsSelector';
 import createCommandExecutingSelector from 'Store/Selectors/createCommandExecutingSelector';
 import CalendarPage from './CalendarPage';
 
-function createMissingEpisodeIdsSelector() {
+function createMissingIssueIdsSelector() {
   return createSelector(
     (state) => state.calendar.start,
     (state) => state.calendar.end,
     (state) => state.calendar.items,
     (state) => state.queue.details.items,
-    (start, end, episodes, queueDetails) => {
-      return episodes.reduce((acc, episode) => {
-        const airDateUtc = episode.airDateUtc;
+    (start, end, issues, queueDetails) => {
+      return issues.reduce((acc, issue) => {
+        const airDateUtc = issue.airDateUtc;
 
         if (
-          !episode.episodeFileId &&
+          !issue.issueFileId &&
           moment(airDateUtc).isAfter(start) &&
           moment(airDateUtc).isBefore(end) &&
-          isBefore(episode.airDateUtc) &&
-          !queueDetails.some((details) => !!details.episode && details.episode.id === episode.id)
+          isBefore(issue.airDateUtc) &&
+          !queueDetails.some((details) => !!details.issue && details.issue.id === issue.id)
         ) {
-          acc.push(episode.id);
+          acc.push(issue.id);
         }
 
         return acc;
@@ -61,7 +61,7 @@ function createMapStateToProps() {
     (state) => state.calendar.filters,
     createComicCountSelector(),
     createUISettingsSelector(),
-    createMissingEpisodeIdsSelector(),
+    createMissingIssueIdsSelector(),
     createCommandExecutingSelector(commandNames.RSS_SYNC),
     createIsSearchingSelector(),
     (
@@ -69,7 +69,7 @@ function createMapStateToProps() {
       filters,
       comicCount,
       uiSettings,
-      missingEpisodeIds,
+      missingIssueIds,
       isRssSyncExecuting,
       isSearchingForMissing
     ) => {
@@ -78,7 +78,7 @@ function createMapStateToProps() {
         filters,
         colorImpairedMode: uiSettings.enableColorImpairedMode,
         hasComic: !!comicCount,
-        missingEpisodeIds,
+        missingIssueIds,
         isRssSyncExecuting,
         isSearchingForMissing
       };
@@ -94,8 +94,8 @@ function createMapDispatchToProps(dispatch, props) {
       }));
     },
 
-    onSearchMissingPress(episodeIds) {
-      dispatch(searchMissing({ episodeIds }));
+    onSearchMissingPress(issueIds) {
+      dispatch(searchMissing({ issueIds }));
     },
 
     onDaysCountChange(dayCount) {

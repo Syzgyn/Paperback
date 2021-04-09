@@ -111,9 +111,9 @@ class ComicIndexRow extends Component {
 
     const {
       seasonCount,
-      episodeCount,
-      episodeFileCount,
-      totalEpisodeCount,
+      issueCount,
+      issueFileCount,
+      totalIssueCount,
       sizeOnDisk
     } = statistics;
 
@@ -278,8 +278,8 @@ class ComicIndexRow extends Component {
               );
             }
 
-            if (name === 'episodeProgress') {
-              const progress = episodeCount ? episodeFileCount / episodeCount * 100 : 100;
+            if (name === 'issueProgress') {
+              const progress = issueCount ? issueFileCount / issueCount * 100 : 100;
 
               return (
                 <VirtualTableRowCell
@@ -290,8 +290,8 @@ class ComicIndexRow extends Component {
                     progress={progress}
                     kind={getProgressBarKind(status, monitored, progress)}
                     showText={true}
-                    text={`${episodeFileCount} / ${episodeCount}`}
-                    title={`${episodeFileCount} / ${episodeCount} (Total: ${totalEpisodeCount})`}
+                    text={`${issueFileCount} / ${issueCount}`}
+                    title={`${issueFileCount} / ${issueCount} (Total: ${totalIssueCount})`}
                     width={125}
                   />
                 </VirtualTableRowCell>
@@ -309,8 +309,8 @@ class ComicIndexRow extends Component {
               }
 
               const seasonStatistics = latestSeason.statistics || {};
-              const progress = seasonStatistics.episodeCount ?
-                seasonStatistics.episodeFileCount / seasonStatistics.episodeCount * 100 :
+              const progress = seasonStatistics.issueCount ?
+                seasonStatistics.issueFileCount / seasonStatistics.issueCount * 100 :
                 100;
 
               return (
@@ -322,21 +322,21 @@ class ComicIndexRow extends Component {
                     progress={progress}
                     kind={getProgressBarKind(status, monitored, progress)}
                     showText={true}
-                    text={`${seasonStatistics.episodeFileCount} / ${seasonStatistics.episodeCount}`}
-                    title={`${seasonStatistics.episodeFileCount} / ${seasonStatistics.episodeCount} (Total: ${seasonStatistics.totalEpisodeCount})`}
+                    text={`${seasonStatistics.issueFileCount} / ${seasonStatistics.issueCount}`}
+                    title={`${seasonStatistics.issueFileCount} / ${seasonStatistics.issueCount} (Total: ${seasonStatistics.totalIssueCount})`}
                     width={125}
                   />
                 </VirtualTableRowCell>
               );
             }
 
-            if (name === 'episodeCount') {
+            if (name === 'issueCount') {
               return (
                 <VirtualTableRowCell
                   key={name}
                   className={styles[name]}
                 >
-                  {totalEpisodeCount}
+                  {totalIssueCount}
                 </VirtualTableRowCell>
               );
             }
@@ -461,7 +461,7 @@ class ComicIndexRow extends Component {
                       <SpinnerIconButton
                         className={styles.action}
                         name={icons.SEARCH}
-                        title="Search for monitored episodes"
+                        title="Search for monitored issues"
                         isSpinning={isSearchingComic}
                         onPress={onSearchPress}
                       />
@@ -532,9 +532,9 @@ ComicIndexRow.propTypes = {
 ComicIndexRow.defaultProps = {
   statistics: {
     seasonCount: 0,
-    episodeCount: 0,
-    episodeFileCount: 0,
-    totalEpisodeCount: 0
+    issueCount: 0,
+    issueFileCount: 0,
+    totalIssueCount: 0
   },
   genres: [],
   tags: []

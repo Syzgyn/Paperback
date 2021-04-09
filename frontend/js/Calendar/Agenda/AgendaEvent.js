@@ -8,8 +8,8 @@ import { icons, kinds } from 'Helpers/Props';
 import getStatusStyle from 'Calendar/getStatusStyle';
 import Icon from 'Components/Icon';
 import Link from 'Components/Link/Link';
-import episodeEntities from 'Episode/episodeEntities';
-import EpisodeDetailsModal from 'Episode/EpisodeDetailsModal';
+import issueEntities from 'Issue/issueEntities';
+import IssueDetailsModal from 'Issue/IssueDetailsModal';
 import CalendarEventQueueDetails from 'Calendar/Events/CalendarEventQueueDetails';
 import styles from './AgendaEvent.css';
 
@@ -43,18 +43,18 @@ class AgendaEvent extends Component {
     const {
       id,
       comic,
-      episodeFile,
+      issueFile,
       title,
       seasonNumber,
-      episodeNumber,
-      absoluteEpisodeNumber,
+      issueNumber,
+      absoluteIssueNumber,
       airDateUtc,
       monitored,
       hasFile,
       grabbed,
       queueItem,
       showDate,
-      showEpisodeInformation,
+      showIssueInformation,
       showFinaleIcon,
       showSpecialIcon,
       showCutoffUnmetIcon,
@@ -68,7 +68,7 @@ class AgendaEvent extends Component {
     const downloading = !!(queueItem || grabbed);
     const isMonitored = comic.monitored && monitored;
     const statusStyle = getStatusStyle(hasFile, downloading, startTime, endTime, isMonitored);
-    const missingAbsoluteNumber = comic.comicType === 'anime' && seasonNumber > 0 && !absoluteEpisodeNumber;
+    const missingAbsoluteNumber = comic.comicType === 'anime' && seasonNumber > 0 && !absoluteIssueNumber;
     const season = comic.seasons.find((s) => s.seasonNumber === seasonNumber);
     const seasonStatistics = season.statistics || {};
 
@@ -102,22 +102,22 @@ class AgendaEvent extends Component {
             </div>
 
             {
-              showEpisodeInformation &&
-                <div className={styles.seasonEpisodeNumber}>
-                  {seasonNumber}x{padNumber(episodeNumber, 2)}
+              showIssueInformation &&
+                <div className={styles.seasonIssueNumber}>
+                  {seasonNumber}x{padNumber(issueNumber, 2)}
 
                   {
-                    comic.comicType === 'anime' && absoluteEpisodeNumber &&
-                      <span className={styles.absoluteEpisodeNumber}>({absoluteEpisodeNumber})</span>
+                    comic.comicType === 'anime' && absoluteIssueNumber &&
+                      <span className={styles.absoluteIssueNumber}>({absoluteIssueNumber})</span>
                   }
 
-                  <div className={styles.episodeSeparator}> - </div>
+                  <div className={styles.issueSeparator}> - </div>
                 </div>
             }
 
-            <div className={styles.episodeTitle}>
+            <div className={styles.issueTitle}>
               {
-                showEpisodeInformation &&
+                showIssueInformation &&
                 title
               }
             </div>
@@ -127,7 +127,7 @@ class AgendaEvent extends Component {
                 <Icon
                   className={styles.statusIcon}
                   name={icons.WARNING}
-                  title="Episode does not have an absolute episode number"
+                  title="Issue does not have an absolute issue number"
                 />
             }
 
@@ -137,7 +137,7 @@ class AgendaEvent extends Component {
                   <CalendarEventQueueDetails
                     comicType={comic.comicType}
                     seasonNumber={seasonNumber}
-                    absoluteEpisodeNumber={absoluteEpisodeNumber}
+                    absoluteIssueNumber={absoluteIssueNumber}
                     {...queueItem}
                   />
                 </span>
@@ -148,17 +148,17 @@ class AgendaEvent extends Component {
                 <Icon
                   className={styles.statusIcon}
                   name={icons.DOWNLOADING}
-                  title="Episode is downloading"
+                  title="Issue is downloading"
                 />
             }
 
             {
               showCutoffUnmetIcon &&
-              !!episodeFile &&
-              episodeFile.qualityCutoffNotMet &&
+              !!issueFile &&
+              issueFile.qualityCutoffNotMet &&
                 <Icon
                   className={styles.statusIcon}
-                  name={icons.EPISODE_FILE}
+                  name={icons.ISSUE_FILE}
                   kind={kinds.WARNING}
                   title="Quality cutoff has not been met"
                 />
@@ -166,19 +166,19 @@ class AgendaEvent extends Component {
 
             {
               showCutoffUnmetIcon &&
-              !!episodeFile &&
-              episodeFile.languageCutoffNotMet &&
-              !episodeFile.qualityCutoffNotMet &&
+              !!issueFile &&
+              issueFile.languageCutoffNotMet &&
+              !issueFile.qualityCutoffNotMet &&
                 <Icon
                   className={styles.statusIcon}
-                  name={icons.EPISODE_FILE}
+                  name={icons.ISSUE_FILE}
                   kind={kinds.WARNING}
                   title="Language cutoff has not been met"
                 />
             }
 
             {
-              episodeNumber === 1 && seasonNumber > 0 &&
+              issueNumber === 1 && seasonNumber > 0 &&
                 <Icon
                   className={styles.statusIcon}
                   name={icons.INFO}
@@ -189,9 +189,9 @@ class AgendaEvent extends Component {
 
             {
               showFinaleIcon &&
-              episodeNumber !== 1 &&
+              issueNumber !== 1 &&
               seasonNumber > 0 &&
-              episodeNumber === seasonStatistics.totalEpisodeCount &&
+              issueNumber === seasonStatistics.totalIssueCount &&
                 <Icon
                   className={styles.statusIcon}
                   name={icons.INFO}
@@ -202,7 +202,7 @@ class AgendaEvent extends Component {
 
             {
               showSpecialIcon &&
-              (episodeNumber === 0 || seasonNumber === 0) &&
+              (issueNumber === 0 || seasonNumber === 0) &&
                 <Icon
                   className={styles.statusIcon}
                   name={icons.INFO}
@@ -213,12 +213,12 @@ class AgendaEvent extends Component {
           </div>
         </Link>
 
-        <EpisodeDetailsModal
+        <IssueDetailsModal
           isOpen={this.state.isDetailsModalOpen}
-          episodeId={id}
-          episodeEntity={episodeEntities.CALENDAR}
+          issueId={id}
+          issueEntity={issueEntities.CALENDAR}
           comicId={comic.id}
-          episodeTitle={title}
+          issueTitle={title}
           showOpenComicButton={true}
           onModalClose={this.onDetailsModalClose}
         />
@@ -230,18 +230,18 @@ class AgendaEvent extends Component {
 AgendaEvent.propTypes = {
   id: PropTypes.number.isRequired,
   comic: PropTypes.object.isRequired,
-  episodeFile: PropTypes.object,
+  issueFile: PropTypes.object,
   title: PropTypes.string.isRequired,
   seasonNumber: PropTypes.number.isRequired,
-  episodeNumber: PropTypes.number.isRequired,
-  absoluteEpisodeNumber: PropTypes.number,
+  issueNumber: PropTypes.number.isRequired,
+  absoluteIssueNumber: PropTypes.number,
   airDateUtc: PropTypes.string.isRequired,
   monitored: PropTypes.bool.isRequired,
   hasFile: PropTypes.bool.isRequired,
   grabbed: PropTypes.bool,
   queueItem: PropTypes.object,
   showDate: PropTypes.bool.isRequired,
-  showEpisodeInformation: PropTypes.bool.isRequired,
+  showIssueInformation: PropTypes.bool.isRequired,
   showFinaleIcon: PropTypes.bool.isRequired,
   showSpecialIcon: PropTypes.bool.isRequired,
   showCutoffUnmetIcon: PropTypes.bool.isRequired,

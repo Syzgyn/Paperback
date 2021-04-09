@@ -58,8 +58,8 @@ function UpdateSettings(props) {
         <FormInputGroup
           type={inputTypes.AUTO_COMPLETE}
           name="branch"
-          helpText={usingExternalUpdateMechanism ? 'Branch used by external update mechanism' : 'Branch to use to update Sonarr'}
-          helpLink="https://wiki.servarr.com/Sonarr_Settings#Updates"
+          helpText={usingExternalUpdateMechanism ? 'Branch used by external update mechanism' : 'Branch to use to update Paperback'}
+          helpLink="https://wiki.servarr.com/Paperback_Settings#Updates"
           {...branch}
           values={branchValues}
           onChange={onInputChange}
@@ -96,8 +96,8 @@ function UpdateSettings(props) {
                 type={inputTypes.SELECT}
                 name="updateMechanism"
                 values={updateOptions}
-                helpText="Use Sonarr's built-in updater or a script"
-                helpLink="https://wiki.servarr.com/Sonarr_Settings#Updates"
+                helpText="Use Paperback's built-in updater or a script"
+                helpLink="https://wiki.servarr.com/Paperback_Settings#Updates"
                 onChange={onInputChange}
                 {...updateMechanism}
               />

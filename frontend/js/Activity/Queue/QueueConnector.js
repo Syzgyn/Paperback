@@ -9,21 +9,21 @@ import withCurrentPage from 'Components/withCurrentPage';
 import createCommandExecutingSelector from 'Store/Selectors/createCommandExecutingSelector';
 import { executeCommand } from 'Store/Actions/commandActions';
 import * as queueActions from 'Store/Actions/queueActions';
-import { fetchEpisodes, clearEpisodes } from 'Store/Actions/episodeActions';
+import { fetchIssues, clearIssues } from 'Store/Actions/issueActions';
 import * as commandNames from 'Commands/commandNames';
 import Queue from './Queue';
 
 function createMapStateToProps() {
   return createSelector(
-    (state) => state.episodes,
+    (state) => state.issues,
     (state) => state.queue.options,
     (state) => state.queue.paged,
     createCommandExecutingSelector(commandNames.REFRESH_MONITORED_DOWNLOADS),
-    (episodes, options, queue, isRefreshMonitoredDownloadsExecuting) => {
+    (issues, options, queue, isRefreshMonitoredDownloadsExecuting) => {
       return {
-        isEpisodesFetching: episodes.isFetching,
-        isEpisodesPopulated: episodes.isPopulated,
-        episodesError: episodes.error,
+        isIssuesFetching: issues.isFetching,
+        isIssuesPopulated: issues.isPopulated,
+        issuesError: issues.error,
         isRefreshMonitoredDownloadsExecuting,
         ...options,
         ...queue
@@ -34,8 +34,8 @@ function createMapStateToProps() {
 
 const mapDispatchToProps = {
   ...queueActions,
-  fetchEpisodes,
-  clearEpisodes,
+  fetchIssues,
+  clearIssues,
   executeCommand
 };
 
@@ -62,12 +62,12 @@ class QueueConnector extends Component {
 
   componentDidUpdate(prevProps) {
     if (hasDifferentItems(prevProps.items, this.props.items)) {
-      const episodeIds = selectUniqueIds(this.props.items, 'episodeId');
+      const issueIds = selectUniqueIds(this.props.items, 'issueId');
 
-      if (episodeIds.length) {
-        this.props.fetchEpisodes({ episodeIds });
+      if (issueIds.length) {
+        this.props.fetchIssues({ issueIds });
       } else {
-        this.props.clearEpisodes();
+        this.props.clearIssues();
       }
     }
 
@@ -82,7 +82,7 @@ class QueueConnector extends Component {
   componentWillUnmount() {
     unregisterPagePopulator(this.repopulate);
     this.props.clearQueue();
-    this.props.clearEpisodes();
+    this.props.clearIssues();
   }
 
   //
@@ -178,8 +178,8 @@ QueueConnector.propTypes = {
   clearQueue: PropTypes.func.isRequired,
   grabQueueItems: PropTypes.func.isRequired,
   removeQueueItems: PropTypes.func.isRequired,
-  fetchEpisodes: PropTypes.func.isRequired,
-  clearEpisodes: PropTypes.func.isRequired,
+  fetchIssues: PropTypes.func.isRequired,
+  clearIssues: PropTypes.func.isRequired,
   executeCommand: PropTypes.func.isRequired
 };
 

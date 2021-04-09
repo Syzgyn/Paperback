@@ -8,54 +8,54 @@ import { registerPagePopulator, unregisterPagePopulator } from 'Utilities/pagePo
 import filterAlternateTitles from 'Utilities/Comic/filterAlternateTitles';
 import createAllComicSelector from 'Store/Selectors/createAllComicSelector';
 import createCommandsSelector from 'Store/Selectors/createCommandsSelector';
-import { fetchEpisodes, clearEpisodes } from 'Store/Actions/episodeActions';
-import { fetchEpisodeFiles, clearEpisodeFiles } from 'Store/Actions/episodeFileActions';
+import { fetchIssues, clearIssues } from 'Store/Actions/issueActions';
+import { fetchIssueFiles, clearIssueFiles } from 'Store/Actions/issueFileActions';
 import { toggleComicMonitored } from 'Store/Actions/comicActions';
 import { fetchQueueDetails, clearQueueDetails } from 'Store/Actions/queueActions';
 import { executeCommand } from 'Store/Actions/commandActions';
 import * as commandNames from 'Commands/commandNames';
 import ComicDetails from './ComicDetails';
 
-const selectEpisodes = createSelector(
-  (state) => state.episodes,
-  (episodes) => {
+const selectIssues = createSelector(
+  (state) => state.issues,
+  (issues) => {
     const {
       items,
       isFetching,
       isPopulated,
       error
-    } = episodes;
+    } = issues;
 
-    const hasEpisodes = !!items.length;
-    const hasMonitoredEpisodes = items.some((e) => e.monitored);
+    const hasIssues = !!items.length;
+    const hasMonitoredIssues = items.some((e) => e.monitored);
 
     return {
-      isEpisodesFetching: isFetching,
-      isEpisodesPopulated: isPopulated,
-      episodesError: error,
-      hasEpisodes,
-      hasMonitoredEpisodes
+      isIssuesFetching: isFetching,
+      isIssuesPopulated: isPopulated,
+      issuesError: error,
+      hasIssues,
+      hasMonitoredIssues
     };
   }
 );
 
-const selectEpisodeFiles = createSelector(
-  (state) => state.episodeFiles,
-  (episodeFiles) => {
+const selectIssueFiles = createSelector(
+  (state) => state.issueFiles,
+  (issueFiles) => {
     const {
       items,
       isFetching,
       isPopulated,
       error
-    } = episodeFiles;
+    } = issueFiles;
 
-    const hasEpisodeFiles = !!items.length;
+    const hasIssueFiles = !!items.length;
 
     return {
-      isEpisodeFilesFetching: isFetching,
-      isEpisodeFilesPopulated: isPopulated,
-      episodeFilesError: error,
-      hasEpisodeFiles
+      isIssueFilesFetching: isFetching,
+      isIssueFilesPopulated: isPopulated,
+      issueFilesError: error,
+      hasIssueFiles
     };
   }
 );
@@ -63,11 +63,11 @@ const selectEpisodeFiles = createSelector(
 function createMapStateToProps() {
   return createSelector(
     (state, { titleSlug }) => titleSlug,
-    selectEpisodes,
-    selectEpisodeFiles,
+    selectIssues,
+    selectIssueFiles,
     createAllComicSelector(),
     createCommandsSelector(),
-    (titleSlug, episodes, episodeFiles, allComic, commands) => {
+    (titleSlug, issues, issueFiles, allComic, commands) => {
       const sortedComic = _.orderBy(allComic, 'sortTitle');
       const comicIndex = _.findIndex(sortedComic, { titleSlug });
       const comic = sortedComic[comicIndex];
@@ -77,19 +77,19 @@ function createMapStateToProps() {
       }
 
       const {
-        isEpisodesFetching,
-        isEpisodesPopulated,
-        episodesError,
-        hasEpisodes,
-        hasMonitoredEpisodes
-      } = episodes;
+        isIssuesFetching,
+        isIssuesPopulated,
+        issuesError,
+        hasIssues,
+        hasMonitoredIssues
+      } = issues;
 
       const {
-        isEpisodeFilesFetching,
-        isEpisodeFilesPopulated,
-        episodeFilesError,
-        hasEpisodeFiles
-      } = episodeFiles;
+        isIssueFilesFetching,
+        isIssueFilesPopulated,
+        issueFilesError,
+        hasIssueFiles
+      } = issueFiles;
 
       const previousComic = sortedComic[comicIndex - 1] || _.last(sortedComic);
       const nextComic = sortedComic[comicIndex + 1] || _.first(sortedComic);
@@ -108,8 +108,8 @@ function createMapStateToProps() {
         isRenamingComicCommand.body.comicIds.indexOf(comic.id) > -1
       );
 
-      const isFetching = isEpisodesFetching || isEpisodeFilesFetching;
-      const isPopulated = isEpisodesPopulated && isEpisodeFilesPopulated;
+      const isFetching = isIssuesFetching || isIssueFilesFetching;
+      const isPopulated = isIssuesPopulated && isIssueFilesPopulated;
       const alternateTitles = filterAlternateTitles(comic.alternateTitles, comic.title, comic.useSceneNumbering);
 
       return {
@@ -123,11 +123,11 @@ function createMapStateToProps() {
         isRenamingComic,
         isFetching,
         isPopulated,
-        episodesError,
-        episodeFilesError,
-        hasEpisodes,
-        hasMonitoredEpisodes,
-        hasEpisodeFiles,
+        issuesError,
+        issueFilesError,
+        hasIssues,
+        hasMonitoredIssues,
+        hasIssueFiles,
         previousComic,
         nextComic
       };
@@ -136,10 +136,10 @@ function createMapStateToProps() {
 }
 
 const mapDispatchToProps = {
-  fetchEpisodes,
-  clearEpisodes,
-  fetchEpisodeFiles,
-  clearEpisodeFiles,
+  fetchIssues,
+  clearIssues,
+  fetchIssueFiles,
+  clearIssueFiles,
   toggleComicMonitored,
   fetchQueueDetails,
   clearQueueDetails,
@@ -174,7 +174,7 @@ class ComicDetailsConnector extends Component {
       this.populate();
     }
 
-    // If the id has changed we need to clear the episodes/episode
+    // If the id has changed we need to clear the issues/issue
     // files and fetch from the server.
 
     if (prevProps.id !== id) {
@@ -194,14 +194,14 @@ class ComicDetailsConnector extends Component {
   populate = () => {
     const comicId = this.props.id;
 
-    this.props.fetchEpisodes({ comicId });
-    this.props.fetchEpisodeFiles({ comicId });
+    this.props.fetchIssues({ comicId });
+    this.props.fetchIssueFiles({ comicId });
     this.props.fetchQueueDetails({ comicId });
   }
 
   unpopulate = () => {
-    this.props.clearEpisodes();
-    this.props.clearEpisodeFiles();
+    this.props.clearIssues();
+    this.props.clearIssueFiles();
     this.props.clearQueueDetails();
   }
 
@@ -252,10 +252,10 @@ ComicDetailsConnector.propTypes = {
   isRefreshing: PropTypes.bool.isRequired,
   isRenamingFiles: PropTypes.bool.isRequired,
   isRenamingComic: PropTypes.bool.isRequired,
-  fetchEpisodes: PropTypes.func.isRequired,
-  clearEpisodes: PropTypes.func.isRequired,
-  fetchEpisodeFiles: PropTypes.func.isRequired,
-  clearEpisodeFiles: PropTypes.func.isRequired,
+  fetchIssues: PropTypes.func.isRequired,
+  clearIssues: PropTypes.func.isRequired,
+  fetchIssueFiles: PropTypes.func.isRequired,
+  clearIssueFiles: PropTypes.func.isRequired,
   toggleComicMonitored: PropTypes.func.isRequired,
   fetchQueueDetails: PropTypes.func.isRequired,
   clearQueueDetails: PropTypes.func.isRequired,

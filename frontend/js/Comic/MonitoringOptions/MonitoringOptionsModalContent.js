@@ -87,7 +87,7 @@ class MonitoringOptionsModalContent extends Component {
               <FormLabel>Monitoring</FormLabel>
 
               <FormInputGroup
-                type={inputTypes.MONITOR_EPISODES_SELECT}
+                type={inputTypes.MONITOR_ISSUES_SELECT}
                 name="monitor"
                 value={monitor}
                 includeNoChange={true}

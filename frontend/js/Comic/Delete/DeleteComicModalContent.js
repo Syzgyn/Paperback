@@ -58,16 +58,16 @@ class DeleteComicModalContent extends Component {
     } = this.props;
 
     const {
-      episodeFileCount,
+      issueFileCount,
       sizeOnDisk
     } = statistics;
 
     const deleteFiles = this.state.deleteFiles;
     const addImportListExclusion = this.state.addImportListExclusion;
-    let deleteFilesLabel = `Delete ${episodeFileCount} Episode Files`;
-    let deleteFilesHelpText = 'Delete the episode files and comic folder';
+    let deleteFilesLabel = `Delete ${issueFileCount} Issue Files`;
+    let deleteFilesHelpText = 'Delete the issue files and comic folder';
 
-    if (episodeFileCount === 0) {
+    if (issueFileCount === 0) {
       deleteFilesLabel = 'Delete Comic Folder';
       deleteFilesHelpText = 'Delete the comic folder and its contents';
     }
@@ -97,7 +97,7 @@ class DeleteComicModalContent extends Component {
               type={inputTypes.CHECK}
               name="addImportListExclusion"
               value={addImportListExclusion}
-              helpText="Prevent comic from being added to Sonarr by lists"
+              helpText="Prevent comic from being added to Paperback by lists"
               onChange={this.onAddImportListExclusionChange}
             />
           </FormGroup>
@@ -121,8 +121,8 @@ class DeleteComicModalContent extends Component {
                 <div>The comic folder <strong>{path}</strong> and all of its content will be deleted.</div>
 
                 {
-                  !!episodeFileCount &&
-                    <div>{episodeFileCount} episode files totaling {formatBytes(sizeOnDisk)}</div>
+                  !!issueFileCount &&
+                    <div>{issueFileCount} issue files totaling {formatBytes(sizeOnDisk)}</div>
                 }
               </div>
           }
@@ -156,7 +156,7 @@ DeleteComicModalContent.propTypes = {
 
 DeleteComicModalContent.defaultProps = {
   statistics: {
-    episodeFileCount: 0
+    issueFileCount: 0
   }
 };
 

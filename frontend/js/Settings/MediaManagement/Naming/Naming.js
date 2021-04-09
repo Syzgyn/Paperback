@@ -32,9 +32,9 @@ class Naming extends Component {
     this.setState({
       isNamingModalOpen: true,
       namingModalOptions: {
-        name: 'standardEpisodeFormat',
+        name: 'standardIssueFormat',
         season: true,
-        episode: true,
+        issue: true,
         additional: true
       }
     });
@@ -44,9 +44,9 @@ class Naming extends Component {
     this.setState({
       isNamingModalOpen: true,
       namingModalOptions: {
-        name: 'dailyEpisodeFormat',
+        name: 'dailyIssueFormat',
         season: true,
-        episode: true,
+        issue: true,
         daily: true,
         additional: true
       }
@@ -57,9 +57,9 @@ class Naming extends Component {
     this.setState({
       isNamingModalOpen: true,
       namingModalOptions: {
-        name: 'animeEpisodeFormat',
+        name: 'animeIssueFormat',
         season: true,
-        episode: true,
+        issue: true,
         anime: true,
         additional: true
       }
@@ -119,9 +119,9 @@ class Naming extends Component {
       namingModalOptions
     } = this.state;
 
-    const renameEpisodes = hasSettings && settings.renameEpisodes.value;
+    const renameIssues = hasSettings && settings.renameIssues.value;
 
-    const multiEpisodeStyleOptions = [
+    const multiIssueStyleOptions = [
       { key: 0, value: 'Extend', hint: 'S01E01-02-03' },
       { key: 1, value: 'Duplicate', hint: 'S01E01.S01E02' },
       { key: 2, value: 'Repeat', hint: 'S01E01E02E03' },
@@ -130,12 +130,12 @@ class Naming extends Component {
       { key: 5, value: 'Prefixed Range', hint: 'S01E01-E03' }
     ];
 
-    const standardEpisodeFormatHelpTexts = [];
-    const standardEpisodeFormatErrors = [];
-    const dailyEpisodeFormatHelpTexts = [];
-    const dailyEpisodeFormatErrors = [];
-    const animeEpisodeFormatHelpTexts = [];
-    const animeEpisodeFormatErrors = [];
+    const standardIssueFormatHelpTexts = [];
+    const standardIssueFormatErrors = [];
+    const dailyIssueFormatHelpTexts = [];
+    const dailyIssueFormatErrors = [];
+    const animeIssueFormatHelpTexts = [];
+    const animeIssueFormatErrors = [];
     const comicFolderFormatHelpTexts = [];
     const comicFolderFormatErrors = [];
     const seasonFolderFormatHelpTexts = [];
@@ -144,34 +144,34 @@ class Naming extends Component {
     const specialsFolderFormatErrors = [];
 
     if (examplesPopulated) {
-      if (examples.singleEpisodeExample) {
-        standardEpisodeFormatHelpTexts.push(`Single Episode: ${examples.singleEpisodeExample}`);
+      if (examples.singleIssueExample) {
+        standardIssueFormatHelpTexts.push(`Single Issue: ${examples.singleIssueExample}`);
       } else {
-        standardEpisodeFormatErrors.push({ message: 'Single Episode: Invalid Format' });
+        standardIssueFormatErrors.push({ message: 'Single Issue: Invalid Format' });
       }
 
-      if (examples.multiEpisodeExample) {
-        standardEpisodeFormatHelpTexts.push(`Multi Episode: ${examples.multiEpisodeExample}`);
+      if (examples.multiIssueExample) {
+        standardIssueFormatHelpTexts.push(`Multi Issue: ${examples.multiIssueExample}`);
       } else {
-        standardEpisodeFormatErrors.push({ message: 'Multi Episode: Invalid Format' });
+        standardIssueFormatErrors.push({ message: 'Multi Issue: Invalid Format' });
       }
 
-      if (examples.dailyEpisodeExample) {
-        dailyEpisodeFormatHelpTexts.push(`Example: ${examples.dailyEpisodeExample}`);
+      if (examples.dailyIssueExample) {
+        dailyIssueFormatHelpTexts.push(`Example: ${examples.dailyIssueExample}`);
       } else {
-        dailyEpisodeFormatErrors.push({ message: 'Invalid Format' });
+        dailyIssueFormatErrors.push({ message: 'Invalid Format' });
       }
 
-      if (examples.animeEpisodeExample) {
-        animeEpisodeFormatHelpTexts.push(`Single Episode: ${examples.animeEpisodeExample}`);
+      if (examples.animeIssueExample) {
+        animeIssueFormatHelpTexts.push(`Single Issue: ${examples.animeIssueExample}`);
       } else {
-        animeEpisodeFormatErrors.push({ message: 'Single Episode: Invalid Format' });
+        animeIssueFormatErrors.push({ message: 'Single Issue: Invalid Format' });
       }
 
-      if (examples.animeMultiEpisodeExample) {
-        animeEpisodeFormatHelpTexts.push(`Multi Episode: ${examples.animeMultiEpisodeExample}`);
+      if (examples.animeMultiIssueExample) {
+        animeIssueFormatHelpTexts.push(`Multi Issue: ${examples.animeMultiIssueExample}`);
       } else {
-        animeEpisodeFormatErrors.push({ message: 'Multi Episode: Invalid Format' });
+        animeIssueFormatErrors.push({ message: 'Multi Issue: Invalid Format' });
       }
 
       if (examples.comicFolderExample) {
@@ -194,7 +194,7 @@ class Naming extends Component {
     }
 
     return (
-      <FieldSet legend="Episode Naming">
+      <FieldSet legend="Issue Naming">
         {
           isFetching &&
             <LoadingIndicator />
@@ -209,14 +209,14 @@ class Naming extends Component {
           hasSettings && !isFetching && !error &&
             <Form>
               <FormGroup size={sizes.MEDIUM}>
-                <FormLabel>Rename Episodes</FormLabel>
+                <FormLabel>Rename Issues</FormLabel>
 
                 <FormInputGroup
                   type={inputTypes.CHECK}
-                  name="renameEpisodes"
-                  helpText="Sonarr will use the existing file name if renaming is disabled"
+                  name="renameIssues"
+                  helpText="Paperback will use the existing file name if renaming is disabled"
                   onChange={onInputChange}
-                  {...settings.renameEpisodes}
+                  {...settings.renameIssues}
                 />
               </FormGroup>
 
@@ -226,57 +226,57 @@ class Naming extends Component {
                 <FormInputGroup
                   type={inputTypes.CHECK}
                   name="replaceIllegalCharacters"
-                  helpText="Replace illegal characters. If unchecked, Sonarr will remove them instead"
+                  helpText="Replace illegal characters. If unchecked, Paperback will remove them instead"
                   onChange={onInputChange}
                   {...settings.replaceIllegalCharacters}
                 />
               </FormGroup>
 
               {
-                renameEpisodes &&
+                renameIssues &&
                   <div>
                     <FormGroup size={sizes.LARGE}>
-                      <FormLabel>Standard Episode Format</FormLabel>
+                      <FormLabel>Standard Issue Format</FormLabel>
 
                       <FormInputGroup
                         inputClassName={styles.namingInput}
                         type={inputTypes.TEXT}
-                        name="standardEpisodeFormat"
+                        name="standardIssueFormat"
                         buttons={<FormInputButton onPress={this.onStandardNamingModalOpenClick}>?</FormInputButton>}
                         onChange={onInputChange}
-                        {...settings.standardEpisodeFormat}
-                        helpTexts={standardEpisodeFormatHelpTexts}
-                        errors={[...standardEpisodeFormatErrors, ...settings.standardEpisodeFormat.errors]}
+                        {...settings.standardIssueFormat}
+                        helpTexts={standardIssueFormatHelpTexts}
+                        errors={[...standardIssueFormatErrors, ...settings.standardIssueFormat.errors]}
                       />
                     </FormGroup>
 
                     <FormGroup size={sizes.LARGE}>
-                      <FormLabel>Daily Episode Format</FormLabel>
+                      <FormLabel>Daily Issue Format</FormLabel>
 
                       <FormInputGroup
                         inputClassName={styles.namingInput}
                         type={inputTypes.TEXT}
-                        name="dailyEpisodeFormat"
+                        name="dailyIssueFormat"
                         buttons={<FormInputButton onPress={this.onDailyNamingModalOpenClick}>?</FormInputButton>}
                         onChange={onInputChange}
-                        {...settings.dailyEpisodeFormat}
-                        helpTexts={dailyEpisodeFormatHelpTexts}
-                        errors={[...dailyEpisodeFormatErrors, ...settings.dailyEpisodeFormat.errors]}
+                        {...settings.dailyIssueFormat}
+                        helpTexts={dailyIssueFormatHelpTexts}
+                        errors={[...dailyIssueFormatErrors, ...settings.dailyIssueFormat.errors]}
                       />
                     </FormGroup>
 
                     <FormGroup size={sizes.LARGE}>
-                      <FormLabel>Anime Episode Format</FormLabel>
+                      <FormLabel>Anime Issue Format</FormLabel>
 
                       <FormInputGroup
                         inputClassName={styles.namingInput}
                         type={inputTypes.TEXT}
-                        name="animeEpisodeFormat"
+                        name="animeIssueFormat"
                         buttons={<FormInputButton onPress={this.onAnimeNamingModalOpenClick}>?</FormInputButton>}
                         onChange={onInputChange}
-                        {...settings.animeEpisodeFormat}
-                        helpTexts={animeEpisodeFormatHelpTexts}
-                        errors={[...animeEpisodeFormatErrors, ...settings.animeEpisodeFormat.errors]}
+                        {...settings.animeIssueFormat}
+                        helpTexts={animeIssueFormatHelpTexts}
+                        errors={[...animeIssueFormatErrors, ...settings.animeIssueFormat.errors]}
                       />
                     </FormGroup>
                   </div>
@@ -334,14 +334,14 @@ class Naming extends Component {
               </FormGroup>
 
               <FormGroup>
-                <FormLabel>Multi-Episode Style</FormLabel>
+                <FormLabel>Multi-Issue Style</FormLabel>
 
                 <FormInputGroup
                   type={inputTypes.SELECT}
-                  name="multiEpisodeStyle"
-                  values={multiEpisodeStyleOptions}
+                  name="multiIssueStyle"
+                  values={multiIssueStyleOptions}
                   onChange={onInputChange}
-                  {...settings.multiEpisodeStyle}
+                  {...settings.multiIssueStyle}
                 />
               </FormGroup>
 

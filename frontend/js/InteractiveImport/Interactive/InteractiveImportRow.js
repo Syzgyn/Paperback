@@ -10,11 +10,11 @@ import TableRowCell from 'Components/Table/Cells/TableRowCell';
 import TableRowCellButton from 'Components/Table/Cells/TableRowCellButton';
 import TableSelectCell from 'Components/Table/Cells/TableSelectCell';
 import Popover from 'Components/Tooltip/Popover';
-import EpisodeQuality from 'Episode/EpisodeQuality';
-import EpisodeLanguage from 'Episode/EpisodeLanguage';
+import IssueQuality from 'Issue/IssueQuality';
+import IssueLanguage from 'Issue/IssueLanguage';
 import SelectComicModal from 'InteractiveImport/Comic/SelectComicModal';
 import SelectSeasonModal from 'InteractiveImport/Season/SelectSeasonModal';
-import SelectEpisodeModal from 'InteractiveImport/Episode/SelectEpisodeModal';
+import SelectIssueModal from 'InteractiveImport/Issue/SelectIssueModal';
 import SelectQualityModal from 'InteractiveImport/Quality/SelectQualityModal';
 import SelectLanguageModal from 'InteractiveImport/Language/SelectLanguageModal';
 import InteractiveImportRowCellPlaceholder from './InteractiveImportRowCellPlaceholder';
@@ -31,7 +31,7 @@ class InteractiveImportRow extends Component {
     this.state = {
       isSelectComicModalOpen: false,
       isSelectSeasonModalOpen: false,
-      isSelectEpisodeModalOpen: false,
+      isSelectIssueModalOpen: false,
       isSelectQualityModalOpen: false,
       isSelectLanguageModalOpen: false
     };
@@ -42,7 +42,7 @@ class InteractiveImportRow extends Component {
       id,
       comic,
       seasonNumber,
-      episodes,
+      issues,
       quality,
       language
     } = this.props;
@@ -50,7 +50,7 @@ class InteractiveImportRow extends Component {
     if (
       comic &&
       seasonNumber != null &&
-      episodes.length &&
+      issues.length &&
       quality &&
       language
     ) {
@@ -63,7 +63,7 @@ class InteractiveImportRow extends Component {
       id,
       comic,
       seasonNumber,
-      episodes,
+      issues,
       quality,
       language,
       isSelected,
@@ -73,7 +73,7 @@ class InteractiveImportRow extends Component {
     if (
       prevProps.comic === comic &&
       prevProps.seasonNumber === seasonNumber &&
-      !hasDifferentItems(prevProps.episodes, episodes) &&
+      !hasDifferentItems(prevProps.issues, issues) &&
       prevProps.quality === quality &&
       prevProps.language === language &&
       prevProps.isSelected === isSelected
@@ -84,7 +84,7 @@ class InteractiveImportRow extends Component {
     const isValid = !!(
       comic &&
       seasonNumber != null &&
-      episodes.length &&
+      issues.length &&
       quality &&
       language
     );
@@ -121,8 +121,8 @@ class InteractiveImportRow extends Component {
     this.setState({ isSelectSeasonModalOpen: true });
   }
 
-  onSelectEpisodePress = () => {
-    this.setState({ isSelectEpisodeModalOpen: true });
+  onSelectIssuePress = () => {
+    this.setState({ isSelectIssueModalOpen: true });
   }
 
   onSelectQualityPress = () => {
@@ -143,8 +143,8 @@ class InteractiveImportRow extends Component {
     this.selectRowAfterChange(changed);
   }
 
-  onSelectEpisodeModalClose = (changed) => {
-    this.setState({ isSelectEpisodeModalOpen: false });
+  onSelectIssueModalClose = (changed) => {
+    this.setState({ isSelectIssueModalOpen: false });
     this.selectRowAfterChange(changed);
   }
 
@@ -168,7 +168,7 @@ class InteractiveImportRow extends Component {
       relativePath,
       comic,
       seasonNumber,
-      episodes,
+      issues,
       quality,
       language,
       size,
@@ -181,7 +181,7 @@ class InteractiveImportRow extends Component {
     const {
       isSelectComicModalOpen,
       isSelectSeasonModalOpen,
-      isSelectEpisodeModalOpen,
+      isSelectIssueModalOpen,
       isSelectQualityModalOpen,
       isSelectLanguageModalOpen
     } = this.state;
@@ -189,19 +189,19 @@ class InteractiveImportRow extends Component {
     const comicTitle = comic ? comic.title : '';
     const isAnime = comic ? comic.comicType === 'anime' : false;
 
-    const episodeInfo = episodes.map((episode) => {
+    const issueInfo = issues.map((issue) => {
       return (
-        <div key={episode.id}>
-          {episode.episodeNumber}
-          {isAnime ? ` (${episode.absoluteEpisodeNumber})` : ''}
-          {` - ${episode.title}`}
+        <div key={issue.id}>
+          {issue.issueNumber}
+          {isAnime ? ` (${issue.absoluteIssueNumber})` : ''}
+          {` - ${issue.title}`}
         </div>
       );
     });
 
     const showComicPlaceholder = isSelected && !comic;
     const showSeasonNumberPlaceholder = isSelected && !!comic && isNaN(seasonNumber) && !isReprocessing;
-    const showEpisodeNumbersPlaceholder = isSelected && Number.isInteger(seasonNumber) && !episodes.length;
+    const showIssueNumbersPlaceholder = isSelected && Number.isInteger(seasonNumber) && !issues.length;
     const showQualityPlaceholder = isSelected && !quality;
     const showLanguagePlaceholder = isSelected && !language;
 
@@ -251,11 +251,11 @@ class InteractiveImportRow extends Component {
 
         <TableRowCellButton
           isDisabled={!comic || isNaN(seasonNumber)}
-          title={comic && !isNaN(seasonNumber) ? 'Click to change episode' : undefined}
-          onPress={this.onSelectEpisodePress}
+          title={comic && !isNaN(seasonNumber) ? 'Click to change issue' : undefined}
+          onPress={this.onSelectIssuePress}
         >
           {
-            showEpisodeNumbersPlaceholder ? <InteractiveImportRowCellPlaceholder /> : episodeInfo
+            showIssueNumbersPlaceholder ? <InteractiveImportRowCellPlaceholder /> : issueInfo
           }
         </TableRowCellButton>
 
@@ -271,7 +271,7 @@ class InteractiveImportRow extends Component {
 
           {
             !showQualityPlaceholder && !!quality &&
-              <EpisodeQuality
+              <IssueQuality
                 className={styles.label}
                 quality={quality}
               />
@@ -290,7 +290,7 @@ class InteractiveImportRow extends Component {
 
           {
             !showLanguagePlaceholder && !!language &&
-              <EpisodeLanguage
+              <IssueLanguage
                 className={styles.label}
                 language={language}
               />
@@ -344,14 +344,14 @@ class InteractiveImportRow extends Component {
           onModalClose={this.onSelectSeasonModalClose}
         />
 
-        <SelectEpisodeModal
-          isOpen={isSelectEpisodeModalOpen}
+        <SelectIssueModal
+          isOpen={isSelectIssueModalOpen}
           ids={[id]}
           comicId={comic && comic.id}
           isAnime={isAnime}
           seasonNumber={seasonNumber}
           relativePath={relativePath}
-          onModalClose={this.onSelectEpisodeModalClose}
+          onModalClose={this.onSelectIssueModalClose}
         />
 
         <SelectQualityModal
@@ -381,7 +381,7 @@ InteractiveImportRow.propTypes = {
   relativePath: PropTypes.string.isRequired,
   comic: PropTypes.object,
   seasonNumber: PropTypes.number,
-  episodes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  issues: PropTypes.arrayOf(PropTypes.object).isRequired,
   quality: PropTypes.object,
   language: PropTypes.object,
   size: PropTypes.number.isRequired,
@@ -393,7 +393,7 @@ InteractiveImportRow.propTypes = {
 };
 
 InteractiveImportRow.defaultProps = {
-  episodes: []
+  issues: []
 };
 
 export default InteractiveImportRow;

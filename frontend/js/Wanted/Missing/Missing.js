@@ -84,10 +84,10 @@ class Missing extends Component {
   }
 
   onToggleSelectedPress = () => {
-    const episodeIds = this.getSelectedIds();
+    const issueIds = this.getSelectedIds();
 
-    this.props.batchToggleMissingEpisodes({
-      episodeIds,
+    this.props.batchToggleMissingIssues({
+      issueIds,
       monitored: !getMonitoredValue(this.props)
     });
   }
@@ -134,7 +134,7 @@ class Missing extends Component {
       filters,
       columns,
       totalRecords,
-      isSearchingForMissingEpisodes,
+      isSearchingForMissingIssues,
       isSaving,
       onFilterSelect,
       ...otherProps
@@ -158,7 +158,7 @@ class Missing extends Component {
             <PageToolbarButton
               label="Search Selected"
               iconName={icons.SEARCH}
-              isDisabled={!itemsSelected || isSearchingForMissingEpisodes}
+              isDisabled={!itemsSelected || isSearchingForMissingIssues}
               onPress={this.onSearchSelectedPress}
             />
 
@@ -176,7 +176,7 @@ class Missing extends Component {
               label="Search All"
               iconName={icons.SEARCH}
               isDisabled={!items.length}
-              isSpinning={isSearchingForMissingEpisodes}
+              isSpinning={isSearchingForMissingIssues}
               onPress={this.onSearchAllMissingPress}
             />
 
@@ -258,14 +258,14 @@ class Missing extends Component {
                 <ConfirmModal
                   isOpen={isConfirmSearchAllMissingModalOpen}
                   kind={kinds.DANGER}
-                  title="Search for all missing episodes"
+                  title="Search for all missing issues"
                   message={
                     <div>
                       <div>
-                        Are you sure you want to search for all {totalRecords} missing episodes?
+                        Are you sure you want to search for all {totalRecords} missing issues?
                       </div>
                       <div>
-                        This cannot be cancelled once started without restarting Sonarr.
+                        This cannot be cancelled once started without restarting Paperback.
                       </div>
                     </div>
                   }
@@ -295,11 +295,11 @@ Missing.propTypes = {
   filters: PropTypes.arrayOf(PropTypes.object).isRequired,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   totalRecords: PropTypes.number,
-  isSearchingForMissingEpisodes: PropTypes.bool.isRequired,
+  isSearchingForMissingIssues: PropTypes.bool.isRequired,
   isSaving: PropTypes.bool.isRequired,
   onFilterSelect: PropTypes.func.isRequired,
   onSearchSelectedPress: PropTypes.func.isRequired,
-  batchToggleMissingEpisodes: PropTypes.func.isRequired,
+  batchToggleMissingIssues: PropTypes.func.isRequired,
   onSearchAllMissingPress: PropTypes.func.isRequired
 };
 

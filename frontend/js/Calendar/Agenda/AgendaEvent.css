@@ -31,26 +31,26 @@
 }
 
 .comicTitle,
-.episodeTitle {
+.issueTitle {
   @add-mixin truncate;
 
   flex: 0 1 300px;
   margin-right: 10px;
 }
 
-.episodeTitle {
+.issueTitle {
   flex: 1 1 1px;
 }
 
-.seasonEpisodeNumber {
+.seasonIssueNumber {
   flex: 0 0 100px;
 }
 
-.episodeSeparator {
+.issueSeparator {
   display: none;
 }
 
-.absoluteEpisodeNumber {
+.absoluteIssueNumber {
   margin-left: 3px;
 }
 
@@ -106,11 +106,11 @@
     flex: 0 0 100%;
   }
 
-  .seasonEpisodeNumber {
+  .seasonIssueNumber {
     flex: 0 0 auto;
   }
 
-  .episodeSeparator {
+  .issueSeparator {
     display: inline-block;
     margin: 0 5px;
   }

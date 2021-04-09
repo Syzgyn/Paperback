@@ -2,16 +2,16 @@ import { createSelector } from 'reselect';
 
 function createQueueItemSelector() {
   return createSelector(
-    (state, { episodeId }) => episodeId,
+    (state, { issueId }) => issueId,
     (state) => state.queue.details.items,
-    (episodeId, details) => {
-      if (!episodeId || !details) {
+    (issueId, details) => {
+      if (!issueId || !details) {
         return null;
       }
 
       return details.find((item) => {
-        if (item.episode) {
-          return item.episode.id === episodeId;
+        if (item.issue) {
+          return item.issue.id === issueId;
         }
 
         return false;

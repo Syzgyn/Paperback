@@ -10,17 +10,17 @@ import createCommandExecutingSelector from 'Store/Selectors/createCommandExecuti
 import * as wantedActions from 'Store/Actions/wantedActions';
 import { executeCommand } from 'Store/Actions/commandActions';
 import { fetchQueueDetails, clearQueueDetails } from 'Store/Actions/queueActions';
-import { fetchEpisodeFiles, clearEpisodeFiles } from 'Store/Actions/episodeFileActions';
+import { fetchIssueFiles, clearIssueFiles } from 'Store/Actions/issueFileActions';
 import * as commandNames from 'Commands/commandNames';
 import CutoffUnmet from './CutoffUnmet';
 
 function createMapStateToProps() {
   return createSelector(
     (state) => state.wanted.cutoffUnmet,
-    createCommandExecutingSelector(commandNames.CUTOFF_UNMET_EPISODE_SEARCH),
-    (cutoffUnmet, isSearchingForCutoffUnmetEpisodes) => {
+    createCommandExecutingSelector(commandNames.CUTOFF_UNMET_ISSUE_SEARCH),
+    (cutoffUnmet, isSearchingForCutoffUnmetIssues) => {
       return {
-        isSearchingForCutoffUnmetEpisodes,
+        isSearchingForCutoffUnmetIssues,
         isSaving: cutoffUnmet.items.filter((m) => m.isSaving).length > 1,
         ...cutoffUnmet
       };
@@ -33,8 +33,8 @@ const mapDispatchToProps = {
   executeCommand,
   fetchQueueDetails,
   clearQueueDetails,
-  fetchEpisodeFiles,
-  clearEpisodeFiles
+  fetchIssueFiles,
+  clearIssueFiles
 };
 
 class CutoffUnmetConnector extends Component {
@@ -49,7 +49,7 @@ class CutoffUnmetConnector extends Component {
       gotoCutoffUnmetFirstPage
     } = this.props;
 
-    registerPagePopulator(this.repopulate, ['episodeFileUpdated']);
+    registerPagePopulator(this.repopulate, ['issueFileUpdated']);
 
     if (useCurrentPage) {
       fetchCutoffUnmet();
@@ -60,13 +60,13 @@ class CutoffUnmetConnector extends Component {
 
   componentDidUpdate(prevProps) {
     if (hasDifferentItems(prevProps.items, this.props.items)) {
-      const episodeIds = selectUniqueIds(this.props.items, 'id');
-      const episodeFileIds = selectUniqueIds(this.props.items, 'episodeFileId');
+      const issueIds = selectUniqueIds(this.props.items, 'id');
+      const issueFileIds = selectUniqueIds(this.props.items, 'issueFileId');
 
-      this.props.fetchQueueDetails({ episodeIds });
+      this.props.fetchQueueDetails({ issueIds });
 
-      if (episodeFileIds.length) {
-        this.props.fetchEpisodeFiles({ episodeFileIds });
+      if (issueFileIds.length) {
+        this.props.fetchIssueFiles({ issueFileIds });
       }
     }
   }
@@ -75,7 +75,7 @@ class CutoffUnmetConnector extends Component {
     unregisterPagePopulator(this.repopulate);
     this.props.clearCutoffUnmet();
     this.props.clearQueueDetails();
-    this.props.clearEpisodeFiles();
+    this.props.clearIssueFiles();
   }
 
   //
@@ -125,14 +125,14 @@ class CutoffUnmetConnector extends Component {
 
   onSearchSelectedPress = (selected) => {
     this.props.executeCommand({
-      name: commandNames.EPISODE_SEARCH,
-      episodeIds: selected
+      name: commandNames.ISSUE_SEARCH,
+      issueIds: selected
     });
   }
 
   onSearchAllCutoffUnmetPress = (monitored) => {
     this.props.executeCommand({
-      name: commandNames.CUTOFF_UNMET_EPISODE_SEARCH,
+      name: commandNames.CUTOFF_UNMET_ISSUE_SEARCH,
       monitored
     });
   }
@@ -176,8 +176,8 @@ CutoffUnmetConnector.propTypes = {
   executeCommand: PropTypes.func.isRequired,
   fetchQueueDetails: PropTypes.func.isRequired,
   clearQueueDetails: PropTypes.func.isRequired,
-  fetchEpisodeFiles: PropTypes.func.isRequired,
-  clearEpisodeFiles: PropTypes.func.isRequired
+  fetchIssueFiles: PropTypes.func.isRequired,
+  clearIssueFiles: PropTypes.func.isRequired
 };
 
 export default withCurrentPage(

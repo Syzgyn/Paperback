@@ -107,8 +107,8 @@ export default {
         selectedSchema.onUpgrade = selectedSchema.supportsOnUpgrade;
         selectedSchema.onRename = selectedSchema.supportsOnRename;
         selectedSchema.OnComicDelete = selectedSchema.supportsOnComicDelete;
-        selectedSchema.OnEpisodeFileDelete = selectedSchema.supportsOnEpisodeFileDelete;
-        selectedSchema.OnEpisodeFileDeleteForUpgrade = selectedSchema.supportsOnEpisodeFileDeleteForUpgrade;
+        selectedSchema.OnIssueFileDelete = selectedSchema.supportsOnIssueFileDelete;
+        selectedSchema.OnIssueFileDeleteForUpgrade = selectedSchema.supportsOnIssueFileDeleteForUpgrade;
 
         return selectedSchema;
       });

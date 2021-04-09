@@ -16,22 +16,22 @@ class MoreInfo extends Component {
         <DescriptionList>
           <DescriptionListItemTitle>Home page</DescriptionListItemTitle>
           <DescriptionListItemDescription>
-            <Link to="https://sonarr.tv/">sonarr.tv</Link>
+            <Link to="https://paperback.tv/">paperback.tv</Link>
           </DescriptionListItemDescription>
 
           <DescriptionListItemTitle>Wiki</DescriptionListItemTitle>
           <DescriptionListItemDescription>
-            <Link to="https://wiki.servarr.com/Sonarr">wiki.servarr.com/Sonarr</Link>
+            <Link to="https://wiki.servarr.com/Paperback">wiki.servarr.com/Paperback</Link>
           </DescriptionListItemDescription>
 
           <DescriptionListItemTitle>Forums</DescriptionListItemTitle>
           <DescriptionListItemDescription>
-            <Link to="https://forums.sonarr.tv/">forums.sonarr.tv</Link>
+            <Link to="https://forums.paperback.tv/">forums.paperback.tv</Link>
           </DescriptionListItemDescription>
 
           <DescriptionListItemTitle>Twitter</DescriptionListItemTitle>
           <DescriptionListItemDescription>
-            <Link to="https://sonarr.tv/">@sonarrtv</Link>
+            <Link to="https://paperback.tv/">@paperbacktv</Link>
           </DescriptionListItemDescription>
 
           <DescriptionListItemTitle>Discord</DescriptionListItemTitle>
@@ -41,28 +41,28 @@ class MoreInfo extends Component {
 
           <DescriptionListItemTitle>IRC</DescriptionListItemTitle>
           <DescriptionListItemDescription>
-            <Link to="irc://irc.freenode.net/#sonarr">#sonarr on Freenode</Link>
+            <Link to="irc://irc.freenode.net/#paperback">#paperback on Freenode</Link>
           </DescriptionListItemDescription>
           <DescriptionListItemDescription>
-            <Link to="http://webchat.freenode.net/?channels=#sonarr">Freenode webchat</Link>
+            <Link to="http://webchat.freenode.net/?channels=#paperback">Freenode webchat</Link>
           </DescriptionListItemDescription>
 
           <DescriptionListItemTitle>Donations</DescriptionListItemTitle>
           <DescriptionListItemDescription>
-            <Link to="https://sonarr.tv/donate">sonarr.tv/donate</Link>
+            <Link to="https://paperback.tv/donate">paperback.tv/donate</Link>
           </DescriptionListItemDescription>
 
           <DescriptionListItemTitle>Source</DescriptionListItemTitle>
           <DescriptionListItemDescription>
-            <Link to="https://github.com/Sonarr/Sonarr/">github.com/Sonarr/Sonarr</Link>
+            <Link to="https://github.com/Paperback/Paperback/">github.com/Paperback/Paperback</Link>
           </DescriptionListItemDescription>
 
           <DescriptionListItemTitle>Feature Requests</DescriptionListItemTitle>
           <DescriptionListItemDescription>
-            <Link to="https://forums.sonarr.tv/">forums.sonarr.tv</Link>
+            <Link to="https://forums.paperback.tv/">forums.paperback.tv</Link>
           </DescriptionListItemDescription>
           <DescriptionListItemDescription>
-            <Link to="https://github.com/Sonarr/Sonarr/issues">github.com/Sonarr/Sonarr/issues</Link>
+            <Link to="https://github.com/Paperback/Paperback/issues">github.com/Paperback/Paperback/issues</Link>
           </DescriptionListItemDescription>
 
         </DescriptionList>

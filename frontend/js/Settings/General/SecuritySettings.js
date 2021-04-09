@@ -84,7 +84,7 @@ class SecuritySettings extends Component {
             type={inputTypes.SELECT}
             name="authenticationMethod"
             values={authenticationMethodOptions}
-            helpText="Require Username and Password to access Sonarr"
+            helpText="Require Username and Password to access Paperback"
             helpTextWarning="Requires restart to take effect"
             onChange={onInputChange}
             {...authenticationMethod}

@@ -59,16 +59,16 @@ class Notification extends Component {
       onUpgrade,
       onRename,
       onComicDelete,
-      onEpisodeFileDelete,
-      onEpisodeFileDeleteForUpgrade,
+      onIssueFileDelete,
+      onIssueFileDeleteForUpgrade,
       onHealthIssue,
       supportsOnGrab,
       supportsOnDownload,
       supportsOnUpgrade,
       supportsOnRename,
       supportsOnComicDelete,
-      supportsOnEpisodeFileDelete,
-      supportsOnEpisodeFileDeleteForUpgrade,
+      supportsOnIssueFileDelete,
+      supportsOnIssueFileDeleteForUpgrade,
       supportsOnHealthIssue
     } = this.props;
 
@@ -131,23 +131,23 @@ class Notification extends Component {
         }
 
         {
-          supportsOnEpisodeFileDelete && onEpisodeFileDelete ?
+          supportsOnIssueFileDelete && onIssueFileDelete ?
             <Label kind={kinds.SUCCESS}>
-              On Episode File Delete
+              On Issue File Delete
             </Label> :
             null
         }
 
         {
-          supportsOnEpisodeFileDeleteForUpgrade && onEpisodeFileDelete && onEpisodeFileDeleteForUpgrade ?
+          supportsOnIssueFileDeleteForUpgrade && onIssueFileDelete && onIssueFileDeleteForUpgrade ?
             <Label kind={kinds.SUCCESS}>
-              On Episode File Delete For Upgrade
+              On Issue File Delete For Upgrade
             </Label> :
             null
         }
 
         {
-          !onGrab && !onDownload && !onRename && !onHealthIssue && !onComicDelete && !onEpisodeFileDelete ?
+          !onGrab && !onDownload && !onRename && !onHealthIssue && !onComicDelete && !onIssueFileDelete ?
             <Label
               kind={kinds.DISABLED}
               outline={true}
@@ -186,14 +186,14 @@ Notification.propTypes = {
   onUpgrade: PropTypes.bool.isRequired,
   onRename: PropTypes.bool.isRequired,
   onComicDelete: PropTypes.bool.isRequired,
-  onEpisodeFileDelete: PropTypes.bool.isRequired,
-  onEpisodeFileDeleteForUpgrade: PropTypes.bool.isRequired,
+  onIssueFileDelete: PropTypes.bool.isRequired,
+  onIssueFileDeleteForUpgrade: PropTypes.bool.isRequired,
   onHealthIssue: PropTypes.bool.isRequired,
   supportsOnGrab: PropTypes.bool.isRequired,
   supportsOnDownload: PropTypes.bool.isRequired,
   supportsOnComicDelete: PropTypes.bool.isRequired,
-  supportsOnEpisodeFileDelete: PropTypes.bool.isRequired,
-  supportsOnEpisodeFileDeleteForUpgrade: PropTypes.bool.isRequired,
+  supportsOnIssueFileDelete: PropTypes.bool.isRequired,
+  supportsOnIssueFileDeleteForUpgrade: PropTypes.bool.isRequired,
   supportsOnUpgrade: PropTypes.bool.isRequired,
   supportsOnRename: PropTypes.bool.isRequired,
   supportsOnHealthIssue: PropTypes.bool.isRequired,

@@ -14,16 +14,16 @@ $fullColorGradient: rgba(244, 245, 246, 0.2);
 }
 
 .info,
-.episodeInfo {
+.issueInfo {
   display: flex;
 }
 
-.episodeInfo {
+.issueInfo {
   color: $calendarTextDim;
 }
 
 .comicTitle,
-.episodeTitle {
+.issueTitle {
   @add-mixin truncate;
   flex: 1 0 1px;
   margin-right: 10px;
@@ -34,7 +34,7 @@ $fullColorGradient: rgba(244, 245, 246, 0.2);
   font-size: $defaultFontSize;
 }
 
-.absoluteEpisodeNumber {
+.absoluteIssueNumber {
   margin-left: 3px;
 }
 

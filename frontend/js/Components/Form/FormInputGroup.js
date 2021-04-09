@@ -7,7 +7,7 @@ import CaptchaInputConnector from './CaptchaInputConnector';
 import CheckInput from './CheckInput';
 import DeviceInputConnector from './DeviceInputConnector';
 import KeyValueListInput from './KeyValueListInput';
-import MonitorEpisodesSelectInput from './MonitorEpisodesSelectInput';
+import MonitorIssuesSelectInput from './MonitorIssuesSelectInput';
 import NumberInput from './NumberInput';
 import OAuthInputConnector from './OAuthInputConnector';
 import PasswordInput from './PasswordInput';
@@ -44,8 +44,8 @@ function getComponent(type) {
     case inputTypes.KEY_VALUE_LIST:
       return KeyValueListInput;
 
-    case inputTypes.MONITOR_EPISODES_SELECT:
-      return MonitorEpisodesSelectInput;
+    case inputTypes.MONITOR_ISSUES_SELECT:
+      return MonitorIssuesSelectInput;
 
     case inputTypes.NUMBER:
       return NumberInput;

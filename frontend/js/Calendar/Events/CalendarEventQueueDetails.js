@@ -29,7 +29,7 @@ function CalendarEventQueueDetails(props) {
       trackedDownloadStatus={trackedDownloadStatus}
       errorMessage={errorMessage}
       progressBar={
-        <div title={`Episode is downloading - ${progress.toFixed(1)}% ${title}`}>
+        <div title={`Issue is downloading - ${progress.toFixed(1)}% ${title}`}>
           <CircularProgressBar
             progress={progress}
             size={20}

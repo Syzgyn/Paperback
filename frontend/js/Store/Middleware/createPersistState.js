@@ -93,7 +93,7 @@ const config = {
   slicer,
   serialize,
   merge,
-  key: 'sonarr'
+  key: 'paperback'
 };
 
 export default function createPersistState() {

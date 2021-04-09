@@ -75,7 +75,7 @@ class DeleteComicModalContent extends Component {
                 type={inputTypes.CHECK}
                 name="addImportListExclusion"
                 value={addImportListExclusion}
-                helpText="Prevent comic from being added to Sonarr by lists"
+                helpText="Prevent comic from being added to Paperback by lists"
                 onChange={this.onAddImportListExclusionChange}
               />
             </FormGroup>

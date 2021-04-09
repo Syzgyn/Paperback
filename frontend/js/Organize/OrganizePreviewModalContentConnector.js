@@ -19,8 +19,8 @@ function createMapStateToProps() {
       props.isFetching = organizePreview.isFetching || naming.isFetching;
       props.isPopulated = organizePreview.isPopulated && naming.isPopulated;
       props.error = organizePreview.error || naming.error;
-      props.renameEpisodes = naming.item.renameEpisodes;
-      props.episodeFormat = naming.item[`${comic.comicType}EpisodeFormat`];
+      props.renameIssues = naming.item.renameIssues;
+      props.issueFormat = naming.item[`${comic.comicType}IssueFormat`];
       props.path = comic.path;
 
       return props;

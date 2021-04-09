@@ -20,7 +20,7 @@ import ModalBody from 'Components/Modal/ModalBody';
 import ModalFooter from 'Components/Modal/ModalFooter';
 import Table from 'Components/Table/Table';
 import TableBody from 'Components/Table/TableBody';
-import SelectEpisodeModal from 'InteractiveImport/Episode/SelectEpisodeModal';
+import SelectIssueModal from 'InteractiveImport/Issue/SelectIssueModal';
 import SelectLanguageModal from 'InteractiveImport/Language/SelectLanguageModal';
 import SelectQualityModal from 'InteractiveImport/Quality/SelectQualityModal';
 import SelectComicModal from 'InteractiveImport/Comic/SelectComicModal';
@@ -47,8 +47,8 @@ const columns = [
     isVisible: true
   },
   {
-    name: 'episodes',
-    label: 'Episode(s)',
+    name: 'issues',
+    label: 'Issue(s)',
     isVisible: true
   },
   {
@@ -92,7 +92,7 @@ const importModeOptions = [
 const SELECT = 'select';
 const COMIC = 'comic';
 const SEASON = 'season';
-const EPISODE = 'episode';
+const ISSUE = 'issue';
 const LANGUAGE = 'language';
 const QUALITY = 'quality';
 
@@ -229,7 +229,7 @@ class InteractiveImportModalContent extends Component {
     const bulkSelectOptions = [
       { key: SELECT, value: 'Select...', disabled: true },
       { key: SEASON, value: 'Select Season' },
-      { key: EPISODE, value: 'Select Episode(s)' },
+      { key: ISSUE, value: 'Select Issue(s)' },
       { key: LANGUAGE, value: 'Select Language' },
       { key: QUALITY, value: 'Select Quality' }
     ];
@@ -391,8 +391,8 @@ class InteractiveImportModalContent extends Component {
           onModalClose={this.onSelectModalClose}
         />
 
-        <SelectEpisodeModal
-          isOpen={selectModalOpen === EPISODE}
+        <SelectIssueModal
+          isOpen={selectModalOpen === ISSUE}
           ids={orderedSelectedIds}
           comicId={selectedItem && selectedItem.comic && selectedItem.comic.id}
           seasonNumber={selectedItem && selectedItem.seasonNumber}

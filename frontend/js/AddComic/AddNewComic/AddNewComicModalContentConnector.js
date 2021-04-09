@@ -63,8 +63,8 @@ class AddNewComicModalContentConnector extends Component {
       qualityProfileId,
       languageProfileId,
       seasonFolder,
-      searchForMissingEpisodes,
-      searchForCutoffUnmetEpisodes,
+      searchForMissingIssues,
+      searchForCutoffUnmetIssues,
       tags
     } = this.props;
 
@@ -76,8 +76,8 @@ class AddNewComicModalContentConnector extends Component {
       languageProfileId: languageProfileId.value,
       comicType,
       seasonFolder: seasonFolder.value,
-      searchForMissingEpisodes: searchForMissingEpisodes.value,
-      searchForCutoffUnmetEpisodes: searchForCutoffUnmetEpisodes.value,
+      searchForMissingIssues: searchForMissingIssues.value,
+      searchForCutoffUnmetIssues: searchForCutoffUnmetIssues.value,
       tags: tags.value
     });
   }
@@ -104,8 +104,8 @@ AddNewComicModalContentConnector.propTypes = {
   languageProfileId: PropTypes.object,
   comicType: PropTypes.object.isRequired,
   seasonFolder: PropTypes.object.isRequired,
-  searchForMissingEpisodes: PropTypes.object.isRequired,
-  searchForCutoffUnmetEpisodes: PropTypes.object.isRequired,
+  searchForMissingIssues: PropTypes.object.isRequired,
+  searchForCutoffUnmetIssues: PropTypes.object.isRequired,
   tags: PropTypes.object.isRequired,
   onModalClose: PropTypes.func.isRequired,
   setAddComicDefault: PropTypes.func.isRequired,

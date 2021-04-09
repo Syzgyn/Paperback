@@ -92,7 +92,7 @@ function EditImportListModalContent(props) {
                 <FormInputGroup
                   type={inputTypes.CHECK}
                   name="enableAutomaticAdd"
-                  helpText={'Add comic to Sonarr when syncs are performed via the UI or by Sonarr'}
+                  helpText={'Add comic to Paperback when syncs are performed via the UI or by Paperback'}
                   {...enableAutomaticAdd}
                   onChange={onInputChange}
                 />
@@ -116,7 +116,7 @@ function EditImportListModalContent(props) {
                 </FormLabel>
 
                 <FormInputGroup
-                  type={inputTypes.MONITOR_EPISODES_SELECT}
+                  type={inputTypes.MONITOR_ISSUES_SELECT}
                   name="shouldMonitor"
                   onChange={onInputChange}
                   {...shouldMonitor}
@@ -197,7 +197,7 @@ function EditImportListModalContent(props) {
               </FormGroup>
 
               <FormGroup>
-                <FormLabel>Sonarr Tags</FormLabel>
+                <FormLabel>Paperback Tags</FormLabel>
 
                 <FormInputGroup
                   type={inputTypes.TAG}

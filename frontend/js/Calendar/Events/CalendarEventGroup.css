@@ -25,12 +25,12 @@
   color: $calendarTextDim;
 }
 
-.episodeInfo {
+.issueInfo {
   margin-left: 10px;
   color: $calendarTextDim;
 }
 
-.absoluteEpisodeNumber {
+.absoluteIssueNumber {
   margin-left: 3px;
 }
 

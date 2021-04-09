@@ -63,12 +63,12 @@ function AppUpdatedModalContent(props) {
   return (
     <ModalContent onModalClose={onModalClose}>
       <ModalHeader>
-        Sonarr Updated
+        Paperback Updated
       </ModalHeader>
 
       <ModalBody>
         <div>
-          Sonarr has been updated to version <span className={styles.version}>{version}</span>, in order to get the latest changes you'll need to reload Sonarr.
+          Paperback has been updated to version <span className={styles.version}>{version}</span>, in order to get the latest changes you'll need to reload Paperback.
         </div>
 
         {

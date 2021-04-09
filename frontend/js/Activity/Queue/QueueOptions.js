@@ -60,7 +60,7 @@ class QueueOptions extends Component {
             type={inputTypes.CHECK}
             name="includeUnknownComicItems"
             value={includeUnknownComicItems}
-            helpText="Show items without a comic in the queue, this could include removed comic, movies or anything else in Sonarr's category"
+            helpText="Show items without a comic in the queue, this could include removed comic, movies or anything else in Paperback's category"
             onChange={this.onOptionChange}
           />
         </FormGroup>

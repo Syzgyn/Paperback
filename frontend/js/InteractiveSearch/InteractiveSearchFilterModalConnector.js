@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { setEpisodeReleasesFilter, setSeasonReleasesFilter } from 'Store/Actions/releaseActions';
+import { setIssueReleasesFilter, setSeasonReleasesFilter } from 'Store/Actions/releaseActions';
 import FilterModal from 'Components/Filter/FilterModal';
 
 function createMapStateToProps() {
@@ -20,8 +20,8 @@ function createMapStateToProps() {
 function createMapDispatchToProps(dispatch, props) {
   return {
     dispatchSetFilter(payload) {
-      const action = props.type === 'episode' ?
-        setEpisodeReleasesFilter:
+      const action = props.type === 'issue' ?
+        setIssueReleasesFilter:
         setSeasonReleasesFilter;
 
       dispatch(action(payload));

@@ -31,9 +31,9 @@ class SeasonPassSeason extends Component {
     } = this.props;
 
     const {
-      episodeFileCount,
-      totalEpisodeCount,
-      percentOfEpisodes
+      issueFileCount,
+      totalIssueCount,
+      percentOfIssues
     } = statistics;
 
     return (
@@ -54,13 +54,13 @@ class SeasonPassSeason extends Component {
 
         <div
           className={classNames(
-            styles.episodes,
-            percentOfEpisodes === 100 && styles.allEpisodes
+            styles.issues,
+            percentOfIssues === 100 && styles.allIssues
           )}
-          title={`${episodeFileCount}/${totalEpisodeCount} episodes downloaded`}
+          title={`${issueFileCount}/${totalIssueCount} issues downloaded`}
         >
           {
-            totalEpisodeCount === 0 ? '0/0' : `${episodeFileCount}/${totalEpisodeCount}`
+            totalIssueCount === 0 ? '0/0' : `${issueFileCount}/${totalIssueCount}`
           }
         </div>
       </div>
@@ -79,9 +79,9 @@ SeasonPassSeason.propTypes = {
 SeasonPassSeason.defaultProps = {
   isSaving: false,
   statistics: {
-    episodeFileCount: 0,
-    totalEpisodeCount: 0,
-    percentOfEpisodes: 0
+    issueFileCount: 0,
+    totalIssueCount: 0,
+    percentOfIssues: 0
   }
 };
 

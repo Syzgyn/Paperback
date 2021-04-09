@@ -142,7 +142,7 @@ class ImportComicFooter extends Component {
           </div>
 
           <FormInputGroup
-            type={inputTypes.MONITOR_EPISODES_SELECT}
+            type={inputTypes.MONITOR_ISSUES_SELECT}
             name="monitor"
             value={monitor}
             isDisabled={!selectedCount}

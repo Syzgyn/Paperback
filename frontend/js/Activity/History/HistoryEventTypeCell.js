@@ -15,9 +15,9 @@ function getIconName(eventType) {
       return icons.DOWNLOADED;
     case 'downloadFailed':
       return icons.DOWNLOADING;
-    case 'episodeFileDeleted':
+    case 'issueFileDeleted':
       return icons.DELETE;
-    case 'episodeFileRenamed':
+    case 'issueFileRenamed':
       return icons.ORGANIZE;
     case 'downloadIgnored':
       return icons.IGNORE;
@@ -38,19 +38,19 @@ function getIconKind(eventType) {
 function getTooltip(eventType, data) {
   switch (eventType) {
     case 'grabbed':
-      return `Episode grabbed from ${data.indexer} and sent to ${data.downloadClient}`;
+      return `Issue grabbed from ${data.indexer} and sent to ${data.downloadClient}`;
     case 'comicFolderImported':
-      return 'Episode imported from comic folder';
+      return 'Issue imported from comic folder';
     case 'downloadFolderImported':
-      return 'Episode downloaded successfully and picked up from download client';
+      return 'Issue downloaded successfully and picked up from download client';
     case 'downloadFailed':
-      return 'Episode download failed';
-    case 'episodeFileDeleted':
-      return 'Episode file deleted';
-    case 'episodeFileRenamed':
-      return 'Episode file renamed';
+      return 'Issue download failed';
+    case 'issueFileDeleted':
+      return 'Issue file deleted';
+    case 'issueFileRenamed':
+      return 'Issue file renamed';
     case 'downloadIgnored':
-      return 'Episode Download Ignored';
+      return 'Issue Download Ignored';
     default:
       return 'Unknown event';
   }

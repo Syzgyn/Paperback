@@ -49,7 +49,7 @@ class Link extends Component {
         linkProps.target = target || '_self';
       } else {
         el = RouterLink;
-        linkProps.to = `${window.Sonarr.urlBase}/${to.replace(/^\//, '')}`;
+        linkProps.to = `${window.Paperback.urlBase}/${to.replace(/^\//, '')}`;
         linkProps.target = target;
       }
     }

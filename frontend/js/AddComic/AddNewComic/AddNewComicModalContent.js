@@ -77,8 +77,8 @@ class AddNewComicModalContent extends Component {
       languageProfileId,
       comicType,
       seasonFolder,
-      searchForMissingEpisodes,
-      searchForCutoffUnmetEpisodes,
+      searchForMissingIssues,
+      searchForCutoffUnmetIssues,
       folder,
       tags,
       showLanguageProfile,
@@ -162,7 +162,7 @@ class AddNewComicModalContent extends Component {
                   </FormLabel>
 
                   <FormInputGroup
-                    type={inputTypes.MONITOR_EPISODES_SELECT}
+                    type={inputTypes.MONITOR_ISSUES_SELECT}
                     name="monitor"
                     onChange={onInputChange}
                     {...monitor}
@@ -247,29 +247,29 @@ class AddNewComicModalContent extends Component {
           <div>
             <label className={styles.searchLabelContainer}>
               <span className={styles.searchLabel}>
-                Start search for missing episodes
+                Start search for missing issues
               </span>
 
               <CheckInput
                 containerClassName={styles.searchInputContainer}
                 className={styles.searchInput}
-                name="searchForMissingEpisodes"
+                name="searchForMissingIssues"
                 onChange={onInputChange}
-                {...searchForMissingEpisodes}
+                {...searchForMissingIssues}
               />
             </label>
 
             <label className={styles.searchLabelContainer}>
               <span className={styles.searchLabel}>
-                Start search for cutoff unmet episodes
+                Start search for cutoff unmet issues
               </span>
 
               <CheckInput
                 containerClassName={styles.searchInputContainer}
                 className={styles.searchInput}
-                name="searchForCutoffUnmetEpisodes"
+                name="searchForCutoffUnmetIssues"
                 onChange={onInputChange}
-                {...searchForCutoffUnmetEpisodes}
+                {...searchForCutoffUnmetIssues}
               />
             </label>
           </div>
@@ -302,8 +302,8 @@ AddNewComicModalContent.propTypes = {
   languageProfileId: PropTypes.object,
   comicType: PropTypes.object.isRequired,
   seasonFolder: PropTypes.object.isRequired,
-  searchForMissingEpisodes: PropTypes.object.isRequired,
-  searchForCutoffUnmetEpisodes: PropTypes.object.isRequired,
+  searchForMissingIssues: PropTypes.object.isRequired,
+  searchForCutoffUnmetIssues: PropTypes.object.isRequired,
   folder: PropTypes.string.isRequired,
   tags: PropTypes.object.isRequired,
   showLanguageProfile: PropTypes.bool.isRequired,

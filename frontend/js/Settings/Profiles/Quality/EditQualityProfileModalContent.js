@@ -184,7 +184,7 @@ class EditQualityProfileModalContent extends Component {
                                 name="cutoff"
                                 {...cutoff}
                                 values={qualities}
-                                helpText="Once this quality is reached Sonarr will no longer download episodes"
+                                helpText="Once this quality is reached Paperback will no longer download issues"
                                 onChange={onCutoffChange}
                               />
                             </FormGroup>

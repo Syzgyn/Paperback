@@ -15,10 +15,10 @@ function getEventsInfo(events) {
   let files = 0;
   let queued = 0;
   let monitored = 0;
-  let absoluteEpisodeNumbers = 0;
+  let absoluteIssueNumbers = 0;
 
   events.forEach((event) => {
-    if (event.episodeFileId) {
+    if (event.issueFileId) {
       files++;
     }
 
@@ -30,8 +30,8 @@ function getEventsInfo(events) {
       monitored++;
     }
 
-    if (event.absoluteEpisodeNumber) {
-      absoluteEpisodeNumbers++;
+    if (event.absoluteIssueNumber) {
+      absoluteIssueNumbers++;
     }
   });
 
@@ -39,7 +39,7 @@ function getEventsInfo(events) {
     allDownloaded: files === events.length,
     anyQueued: queued > 0,
     anyMonitored: monitored > 0,
-    allAbsoluteEpisodeNumbers: absoluteEpisodeNumbers === events.length
+    allAbsoluteIssueNumbers: absoluteIssueNumbers === events.length
   };
 }
 
@@ -71,7 +71,7 @@ class CalendarEventGroup extends Component {
       comic,
       events,
       isDownloading,
-      showEpisodeInformation,
+      showIssueInformation,
       showFinaleIcon,
       timeFormat,
       fullColorEvents,
@@ -84,17 +84,17 @@ class CalendarEventGroup extends Component {
       allDownloaded,
       anyQueued,
       anyMonitored,
-      allAbsoluteEpisodeNumbers
+      allAbsoluteIssueNumbers
     } = getEventsInfo(events);
     const anyDownloading = isDownloading || anyQueued;
-    const firstEpisode = events[0];
-    const lastEpisode = events[events.length -1];
-    const airDateUtc = firstEpisode.airDateUtc;
+    const firstIssue = events[0];
+    const lastIssue = events[events.length -1];
+    const airDateUtc = firstIssue.airDateUtc;
     const startTime = moment(airDateUtc);
-    const endTime = moment(lastEpisode.airDateUtc).add(comic.runtime, 'minutes');
-    const seasonNumber = firstEpisode.seasonNumber;
+    const endTime = moment(lastIssue.airDateUtc).add(comic.runtime, 'minutes');
+    const seasonNumber = firstIssue.seasonNumber;
     const statusStyle = getStatusStyle(allDownloaded, anyDownloading, startTime, endTime, anyMonitored);
-    const isMissingAbsoluteNumber = comic.comicType === 'anime' && seasonNumber > 0 && !allAbsoluteEpisodeNumbers;
+    const isMissingAbsoluteNumber = comic.comicType === 'anime' && seasonNumber > 0 && !allAbsoluteIssueNumbers;
 
     if (isExpanded) {
       return (
@@ -108,7 +108,7 @@ class CalendarEventGroup extends Component {
               return (
                 <CalendarEventConnector
                   key={event.id}
-                  episodeId={event.id}
+                  issueId={event.id}
                   {...event}
                   onEventModalOpenToggle={onEventModalOpenToggle}
                 />
@@ -148,7 +148,7 @@ class CalendarEventGroup extends Component {
               <Icon
                 containerClassName={styles.statusIcon}
                 name={icons.WARNING}
-                title="Episode does not have an absolute episode number"
+                title="Issue does not have an absolute issue number"
               />
           }
 
@@ -157,12 +157,12 @@ class CalendarEventGroup extends Component {
               <Icon
                 containerClassName={styles.statusIcon}
                 name={icons.DOWNLOADING}
-                title="An episode is downloading"
+                title="An issue is downloading"
               />
           }
 
           {
-            firstEpisode.episodeNumber === 1 && seasonNumber > 0 &&
+            firstIssue.issueNumber === 1 && seasonNumber > 0 &&
               <Icon
                 containerClassName={styles.statusIcon}
                 name={icons.INFO}
@@ -174,9 +174,9 @@ class CalendarEventGroup extends Component {
 
           {
             showFinaleIcon &&
-            lastEpisode.episodeNumber !== 1 &&
+            lastIssue.issueNumber !== 1 &&
             seasonNumber > 0 &&
-            lastEpisode.episodeNumber === comic.seasons.find((season) => season.seasonNumber === seasonNumber).statistics.totalEpisodeCount &&
+            lastIssue.issueNumber === comic.seasons.find((season) => season.seasonNumber === seasonNumber).statistics.totalIssueCount &&
               <Icon
                 containerClassName={styles.statusIcon}
                 name={icons.INFO}
@@ -192,16 +192,16 @@ class CalendarEventGroup extends Component {
           </div>
 
           {
-            showEpisodeInformation ?
-              <div className={styles.episodeInfo}>
-                {seasonNumber}x{padNumber(firstEpisode.episodeNumber, 2)}-{padNumber(lastEpisode.episodeNumber, 2)}
+            showIssueInformation ?
+              <div className={styles.issueInfo}>
+                {seasonNumber}x{padNumber(firstIssue.issueNumber, 2)}-{padNumber(lastIssue.issueNumber, 2)}
 
                 {
                   comic.comicType === 'anime' &&
-                  firstEpisode.absoluteEpisodeNumber &&
-                  lastEpisode.absoluteEpisodeNumber &&
-                    <span className={styles.absoluteEpisodeNumber}>
-                      ({firstEpisode.absoluteEpisodeNumber}-{lastEpisode.absoluteEpisodeNumber})
+                  firstIssue.absoluteIssueNumber &&
+                  lastIssue.absoluteIssueNumber &&
+                    <span className={styles.absoluteIssueNumber}>
+                      ({firstIssue.absoluteIssueNumber}-{lastIssue.absoluteIssueNumber})
                     </span>
                 }
               </div> :
@@ -218,7 +218,7 @@ class CalendarEventGroup extends Component {
         </div>
 
         {
-          showEpisodeInformation &&
+          showIssueInformation &&
             <Link
               className={styles.expandContainer}
               component="div"
@@ -238,7 +238,7 @@ CalendarEventGroup.propTypes = {
   comic: PropTypes.object.isRequired,
   events: PropTypes.arrayOf(PropTypes.object).isRequired,
   isDownloading: PropTypes.bool.isRequired,
-  showEpisodeInformation: PropTypes.bool.isRequired,
+  showIssueInformation: PropTypes.bool.isRequired,
   showFinaleIcon: PropTypes.bool.isRequired,
   fullColorEvents: PropTypes.bool.isRequired,
   timeFormat: PropTypes.string.isRequired,

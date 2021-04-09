@@ -109,7 +109,7 @@ class InteractiveImportModalContentConnector extends Component {
         const {
           comic,
           seasonNumber,
-          episodes,
+          issues,
           quality,
           language
         } = item;
@@ -124,8 +124,8 @@ class InteractiveImportModalContentConnector extends Component {
           return false;
         }
 
-        if (!episodes || !episodes.length) {
-          this.setState({ interactiveImportErrorMessage: 'One or more episodes must be chosen for each selected file' });
+        if (!issues || !issues.length) {
+          this.setState({ interactiveImportErrorMessage: 'One or more issues must be chosen for each selected file' });
           return false;
         }
 
@@ -143,7 +143,7 @@ class InteractiveImportModalContentConnector extends Component {
           path: item.path,
           folderName: item.folderName,
           comicId: comic.id,
-          episodeIds: episodes.map((e) => e.id),
+          issueIds: issues.map((e) => e.id),
           quality,
           language,
           downloadId: this.props.downloadId

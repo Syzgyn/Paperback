@@ -7,7 +7,7 @@ import createDimensionsSelector from 'Store/Selectors/createDimensionsSelector';
 import createComicSelector from 'Store/Selectors/createComicSelector';
 import createCommandsSelector from 'Store/Selectors/createCommandsSelector';
 import { toggleSeasonMonitored } from 'Store/Actions/comicActions';
-import { toggleEpisodesMonitored, setEpisodesTableOption } from 'Store/Actions/episodeActions';
+import { toggleIssuesMonitored, setIssuesTableOption } from 'Store/Actions/issueActions';
 import { executeCommand } from 'Store/Actions/commandActions';
 import * as commandNames from 'Commands/commandNames';
 import ComicDetailsSeason from './ComicDetailsSeason';
@@ -15,23 +15,23 @@ import ComicDetailsSeason from './ComicDetailsSeason';
 function createMapStateToProps() {
   return createSelector(
     (state, { seasonNumber }) => seasonNumber,
-    (state) => state.episodes,
+    (state) => state.issues,
     createComicSelector(),
     createCommandsSelector(),
     createDimensionsSelector(),
-    (seasonNumber, episodes, comic, commands, dimensions) => {
+    (seasonNumber, issues, comic, commands, dimensions) => {
       const isSearching = isCommandExecuting(findCommand(commands, {
         name: commandNames.SEASON_SEARCH,
         comicId: comic.id,
         seasonNumber
       }));
 
-      const episodesInSeason = episodes.items.filter((episode) => episode.seasonNumber === seasonNumber);
-      const sortedEpisodes = episodesInSeason.sort((a, b) => b.episodeNumber - a.episodeNumber);
+      const issuesInSeason = issues.items.filter((issue) => issue.seasonNumber === seasonNumber);
+      const sortedIssues = issuesInSeason.sort((a, b) => b.issueNumber - a.issueNumber);
 
       return {
-        items: sortedEpisodes,
-        columns: episodes.columns,
+        items: sortedIssues,
+        columns: issues.columns,
         isSearching,
         comicMonitored: comic.monitored,
         isSmallScreen: dimensions.isSmallScreen
@@ -42,8 +42,8 @@ function createMapStateToProps() {
 
 const mapDispatchToProps = {
   toggleSeasonMonitored,
-  toggleEpisodesMonitored,
-  setEpisodesTableOption,
+  toggleIssuesMonitored,
+  setIssuesTableOption,
   executeCommand
 };
 
@@ -53,7 +53,7 @@ class ComicDetailsSeasonConnector extends Component {
   // Listeners
 
   onTableOptionChange = (payload) => {
-    this.props.setEpisodesTableOption(payload);
+    this.props.setIssuesTableOption(payload);
   }
 
   onMonitorSeasonPress = (monitored) => {
@@ -82,9 +82,9 @@ class ComicDetailsSeasonConnector extends Component {
     });
   }
 
-  onMonitorEpisodePress = (episodeIds, monitored) => {
-    this.props.toggleEpisodesMonitored({
-      episodeIds,
+  onMonitorIssuePress = (issueIds, monitored) => {
+    this.props.toggleIssuesMonitored({
+      issueIds,
       monitored
     });
   }
@@ -99,7 +99,7 @@ class ComicDetailsSeasonConnector extends Component {
         onTableOptionChange={this.onTableOptionChange}
         onMonitorSeasonPress={this.onMonitorSeasonPress}
         onSearchPress={this.onSearchPress}
-        onMonitorEpisodePress={this.onMonitorEpisodePress}
+        onMonitorIssuePress={this.onMonitorIssuePress}
       />
     );
   }
@@ -109,8 +109,8 @@ ComicDetailsSeasonConnector.propTypes = {
   comicId: PropTypes.number.isRequired,
   seasonNumber: PropTypes.number.isRequired,
   toggleSeasonMonitored: PropTypes.func.isRequired,
-  toggleEpisodesMonitored: PropTypes.func.isRequired,
-  setEpisodesTableOption: PropTypes.func.isRequired,
+  toggleIssuesMonitored: PropTypes.func.isRequired,
+  setIssuesTableOption: PropTypes.func.isRequired,
   executeCommand: PropTypes.func.isRequired
 };
 

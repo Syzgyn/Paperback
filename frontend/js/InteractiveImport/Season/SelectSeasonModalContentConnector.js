@@ -37,7 +37,7 @@ class SelectSeasonModalContentConnector extends Component {
       this.props.updateInteractiveImportItem({
         id,
         seasonNumber,
-        episodes: []
+        issues: []
       });
     });
 

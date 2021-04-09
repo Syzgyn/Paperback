@@ -35,7 +35,7 @@ export const defaultState = {
   messages: {
     items: []
   },
-  version: window.Sonarr.version,
+  version: window.Paperback.version,
   isUpdated: false,
   isConnected: true,
   isReconnecting: false,

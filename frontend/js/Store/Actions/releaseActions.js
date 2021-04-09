@@ -11,7 +11,7 @@ import createHandleActions from './Creators/createHandleActions';
 // Variables
 
 export const section = 'releases';
-export const episodeSection = 'releases.episode';
+export const issueSection = 'releases.issue';
 export const seasonSection = 'releases.season';
 
 let abortCurrentRequest = null;
@@ -174,7 +174,7 @@ export const defaultState = {
     }
   ],
 
-  episode: {
+  issue: {
     selectedFilterKey: 'all'
   },
 
@@ -185,7 +185,7 @@ export const defaultState = {
 
 export const persistState = [
   'releases.selectedFilterKey',
-  'releases.episode.customFilters',
+  'releases.issue.customFilters',
   'releases.season.customFilters'
 ];
 
@@ -198,7 +198,7 @@ export const SET_RELEASES_SORT = 'releases/setReleasesSort';
 export const CLEAR_RELEASES = 'releases/clearReleases';
 export const GRAB_RELEASE = 'releases/grabRelease';
 export const UPDATE_RELEASE = 'releases/updateRelease';
-export const SET_EPISODE_RELEASES_FILTER = 'releases/setEpisodeReleasesFilter';
+export const SET_ISSUE_RELEASES_FILTER = 'releases/setIssueReleasesFilter';
 export const SET_SEASON_RELEASES_FILTER = 'releases/setSeasonReleasesFilter';
 
 //
@@ -210,7 +210,7 @@ export const setReleasesSort = createAction(SET_RELEASES_SORT);
 export const clearReleases = createAction(CLEAR_RELEASES);
 export const grabRelease = createThunk(GRAB_RELEASE);
 export const updateRelease = createAction(UPDATE_RELEASE);
-export const setEpisodeReleasesFilter = createAction(SET_EPISODE_RELEASES_FILTER);
+export const setIssueReleasesFilter = createAction(SET_ISSUE_RELEASES_FILTER);
 export const setSeasonReleasesFilter = createAction(SET_SEASON_RELEASES_FILTER);
 
 //
@@ -276,7 +276,7 @@ export const reducers = createHandleActions({
 
   [CLEAR_RELEASES]: (state) => {
     const {
-      episode,
+      issue,
       season,
       ...otherDefaultState
     } = defaultState;
@@ -303,7 +303,7 @@ export const reducers = createHandleActions({
   },
 
   [SET_RELEASES_SORT]: createSetClientSideCollectionSortReducer(section),
-  [SET_EPISODE_RELEASES_FILTER]: createSetClientSideCollectionFilterReducer(episodeSection),
+  [SET_ISSUE_RELEASES_FILTER]: createSetClientSideCollectionFilterReducer(issueSection),
   [SET_SEASON_RELEASES_FILTER]: createSetClientSideCollectionFilterReducer(seasonSection)
 
 }, defaultState, section);

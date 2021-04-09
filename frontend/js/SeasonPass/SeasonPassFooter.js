@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { kinds } from 'Helpers/Props';
 import SpinnerButton from 'Components/Link/SpinnerButton';
-import MonitorEpisodesSelectInput from 'Components/Form/MonitorEpisodesSelectInput';
+import MonitorIssuesSelectInput from 'Components/Form/MonitorIssuesSelectInput';
 import SelectInput from 'Components/Form/SelectInput';
 import PageContentFooter from 'Components/Page/PageContentFooter';
 import styles from './SeasonPassFooter.css';
@@ -103,10 +103,10 @@ class SeasonPassFooter extends Component {
 
         <div className={styles.inputContainer}>
           <div className={styles.label}>
-            Monitor Episodes
+            Monitor Issues
           </div>
 
-          <MonitorEpisodesSelectInput
+          <MonitorIssuesSelectInput
             name="monitor"
             value={monitor}
             includeNoChange={true}

@@ -91,7 +91,7 @@ class EditComicModalContent extends Component {
               <FormInputGroup
                 type={inputTypes.CHECK}
                 name="monitored"
-                helpText="Download monitored episodes in this comic"
+                helpText="Download monitored issues in this comic"
                 {...monitored}
                 onChange={onInputChange}
               />
@@ -103,7 +103,7 @@ class EditComicModalContent extends Component {
               <FormInputGroup
                 type={inputTypes.CHECK}
                 name="seasonFolder"
-                helpText="Sort episodes into season folders"
+                helpText="Sort issues into season folders"
                 {...seasonFolder}
                 onChange={onInputChange}
               />

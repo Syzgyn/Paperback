@@ -29,16 +29,16 @@ const caseOptions = [
 
 const fileNameTokens = [
   {
-    token: '{Comic Title} - S{season:00}E{episode:00} - {Episode Title} {Quality Full}',
-    example: 'Comic Title (2010) - S01E01 - Episode Title HDTV-720p Proper'
+    token: '{Comic Title} - S{season:00}E{issue:00} - {Issue Title} {Quality Full}',
+    example: 'Comic Title (2010) - S01E01 - Issue Title HDTV-720p Proper'
   },
   {
-    token: '{Comic Title} - {season:0}x{episode:00} - {Episode Title} {Quality Full}',
-    example: 'Comic Title (2010) - 1x01 - Episode Title HDTV-720p Proper'
+    token: '{Comic Title} - {season:0}x{issue:00} - {Issue Title} {Quality Full}',
+    example: 'Comic Title (2010) - 1x01 - Issue Title HDTV-720p Proper'
   },
   {
-    token: '{Comic.Title}.S{season:00}E{episode:00}.{EpisodeClean.Title}.{Quality.Full}',
-    example: 'Comic.Title.(2010).S01E01.Episode.Title.HDTV-720p'
+    token: '{Comic.Title}.S{season:00}E{issue:00}.{IssueClean.Title}.{Quality.Full}',
+    example: 'Comic.Title.(2010).S01E01.Issue.Title.HDTV-720p'
   }
 ];
 
@@ -64,9 +64,9 @@ const seasonTokens = [
   { token: '{season:00}', example: '01' }
 ];
 
-const episodeTokens = [
-  { token: '{episode:0}', example: '1' },
-  { token: '{episode:00}', example: '01' }
+const issueTokens = [
+  { token: '{issue:0}', example: '1' },
+  { token: '{issue:00}', example: '01' }
 ];
 
 const airDateTokens = [
@@ -80,9 +80,9 @@ const absoluteTokens = [
   { token: '{absolute:000}', example: '001' }
 ];
 
-const episodeTitleTokens = [
-  { token: '{Episode Title}', example: 'Episode Title' },
-  { token: '{Episode CleanTitle}', example: 'Episode Title' }
+const issueTitleTokens = [
+  { token: '{Issue Title}', example: 'Issue Title' },
+  { token: '{Issue CleanTitle}', example: 'Issue Title' }
 ];
 
 const qualityTokens = [
@@ -185,7 +185,7 @@ class NamingModal extends Component {
       isOpen,
       advancedSettings,
       season,
-      episode,
+      issue,
       anime,
       additional,
       onInputChange,
@@ -323,12 +323,12 @@ class NamingModal extends Component {
             }
 
             {
-              episode &&
+              issue &&
                 <div>
-                  <FieldSet legend="Episode">
+                  <FieldSet legend="Issue">
                     <div className={styles.groups}>
                       {
-                        episodeTokens.map(({ token, example }) => {
+                        issueTokens.map(({ token, example }) => {
                           return (
                             <NamingOption
                               key={token}
@@ -371,7 +371,7 @@ class NamingModal extends Component {
 
                   {
                     anime &&
-                      <FieldSet legend="Absolute Episode Number">
+                      <FieldSet legend="Absolute Issue Number">
                         <div className={styles.groups}>
                           {
                             absoluteTokens.map(({ token, example }) => {
@@ -399,10 +399,10 @@ class NamingModal extends Component {
             {
               additional &&
                 <div>
-                  <FieldSet legend="Episode Title">
+                  <FieldSet legend="Issue Title">
                     <div className={styles.groups}>
                       {
-                        episodeTitleTokens.map(({ token, example }) => {
+                        issueTitleTokens.map(({ token, example }) => {
                           return (
                             <NamingOption
                               key={token}
@@ -545,7 +545,7 @@ NamingModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   advancedSettings: PropTypes.bool.isRequired,
   season: PropTypes.bool.isRequired,
-  episode: PropTypes.bool.isRequired,
+  issue: PropTypes.bool.isRequired,
   daily: PropTypes.bool.isRequired,
   anime: PropTypes.bool.isRequired,
   additional: PropTypes.bool.isRequired,
@@ -555,7 +555,7 @@ NamingModal.propTypes = {
 
 NamingModal.defaultProps = {
   season: false,
-  episode: false,
+  issue: false,
   daily: false,
   anime: false,
   additional: false

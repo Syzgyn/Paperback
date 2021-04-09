@@ -20,13 +20,13 @@ function createCalendarEventsConnector() {
   return createSelector(
     (state, { date }) => date,
     (state) => state.calendar.items,
-    (state) => state.calendar.options.collapseMultipleEpisodes,
-    (date, items, collapseMultipleEpisodes) => {
+    (state) => state.calendar.options.collapseMultipleIssues,
+    (date, items, collapseMultipleIssues) => {
       const filtered = _.filter(items, (item) => {
         return moment(date).isSame(moment(item.airDateUtc), 'day');
       });
 
-      if (!collapseMultipleEpisodes) {
+      if (!collapseMultipleIssues) {
         return sort(filtered);
       }
 
@@ -43,7 +43,7 @@ function createCalendarEventsConnector() {
             isGroup: true,
             comicId: events[0].comicId,
             seasonNumber: events[0].seasonNumber,
-            episodeIds: events.map((event) => event.id),
+            issueIds: events.map((event) => event.id),
             events: _.sortBy(events, (item) => moment(item.airDateUtc).unix())
           });
         }

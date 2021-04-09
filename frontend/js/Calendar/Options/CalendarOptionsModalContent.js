@@ -93,8 +93,8 @@ class CalendarOptionsModalContent extends Component {
 
   render() {
     const {
-      collapseMultipleEpisodes,
-      showEpisodeInformation,
+      collapseMultipleIssues,
+      showIssueInformation,
       showFinaleIcon,
       showSpecialIcon,
       showCutoffUnmetIcon,
@@ -119,25 +119,25 @@ class CalendarOptionsModalContent extends Component {
           <FieldSet legend="Local">
             <Form>
               <FormGroup>
-                <FormLabel>Collapse Multiple Episodes</FormLabel>
+                <FormLabel>Collapse Multiple Issues</FormLabel>
 
                 <FormInputGroup
                   type={inputTypes.CHECK}
-                  name="collapseMultipleEpisodes"
-                  value={collapseMultipleEpisodes}
-                  helpText="Collapse multiple episodes airing on the same day"
+                  name="collapseMultipleIssues"
+                  value={collapseMultipleIssues}
+                  helpText="Collapse multiple issues airing on the same day"
                   onChange={this.onOptionInputChange}
                 />
               </FormGroup>
 
               <FormGroup>
-                <FormLabel>Show Episode Information</FormLabel>
+                <FormLabel>Show Issue Information</FormLabel>
 
                 <FormInputGroup
                   type={inputTypes.CHECK}
-                  name="showEpisodeInformation"
-                  value={showEpisodeInformation}
-                  helpText="Show episode title and number"
+                  name="showIssueInformation"
+                  value={showIssueInformation}
+                  helpText="Show issue title and number"
                   onChange={this.onOptionInputChange}
                 />
               </FormGroup>
@@ -149,7 +149,7 @@ class CalendarOptionsModalContent extends Component {
                   type={inputTypes.CHECK}
                   name="showFinaleIcon"
                   value={showFinaleIcon}
-                  helpText="Show icon for comic/season finales based on available episode information"
+                  helpText="Show icon for comic/season finales based on available issue information"
                   onChange={this.onOptionInputChange}
                 />
               </FormGroup>
@@ -161,7 +161,7 @@ class CalendarOptionsModalContent extends Component {
                   type={inputTypes.CHECK}
                   name="showSpecialIcon"
                   value={showSpecialIcon}
-                  helpText="Show icon for special episodes (season 0)"
+                  helpText="Show icon for special issues (season 0)"
                   onChange={this.onOptionInputChange}
                 />
               </FormGroup>
@@ -257,8 +257,8 @@ class CalendarOptionsModalContent extends Component {
 }
 
 CalendarOptionsModalContent.propTypes = {
-  collapseMultipleEpisodes: PropTypes.bool.isRequired,
-  showEpisodeInformation: PropTypes.bool.isRequired,
+  collapseMultipleIssues: PropTypes.bool.isRequired,
+  showIssueInformation: PropTypes.bool.isRequired,
   showFinaleIcon: PropTypes.bool.isRequired,
   showSpecialIcon: PropTypes.bool.isRequired,
   showCutoffUnmetIcon: PropTypes.bool.isRequired,

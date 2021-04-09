@@ -12,8 +12,8 @@ import ConfirmModal from 'Components/Modal/ConfirmModal';
 import TableRow from 'Components/Table/TableRow';
 import TableRowCell from 'Components/Table/Cells/TableRowCell';
 import Popover from 'Components/Tooltip/Popover';
-import EpisodeLanguage from 'Episode/EpisodeLanguage';
-import EpisodeQuality from 'Episode/EpisodeQuality';
+import IssueLanguage from 'Issue/IssueLanguage';
+import IssueQuality from 'Issue/IssueQuality';
 import ProtocolLabel from 'Activity/Queue/ProtocolLabel';
 import ReleaseSceneIndicator from './ReleaseSceneIndicator';
 import Peers from './Peers';
@@ -118,13 +118,13 @@ class InteractiveSearchRow extends Component {
       preferredWordScore,
       sceneMapping,
       seasonNumber,
-      episodeNumbers,
-      absoluteEpisodeNumbers,
+      issueNumbers,
+      absoluteIssueNumbers,
       mappedSeasonNumber,
-      mappedEpisodeNumbers,
-      mappedAbsoluteEpisodeNumbers,
+      mappedIssueNumbers,
+      mappedAbsoluteIssueNumbers,
       rejections,
-      episodeRequested,
+      issueRequested,
       downloadAllowed,
       isDaily,
       isGrabbing,
@@ -156,13 +156,13 @@ class InteractiveSearchRow extends Component {
           <ReleaseSceneIndicator
             className={styles.sceneMapping}
             seasonNumber={mappedSeasonNumber}
-            episodeNumbers={mappedEpisodeNumbers}
-            absoluteEpisodeNumbers={mappedAbsoluteEpisodeNumbers}
+            issueNumbers={mappedIssueNumbers}
+            absoluteIssueNumbers={mappedAbsoluteIssueNumbers}
             sceneSeasonNumber={seasonNumber}
-            sceneEpisodeNumbers={episodeNumbers}
-            sceneAbsoluteEpisodeNumbers={absoluteEpisodeNumbers}
+            sceneIssueNumbers={issueNumbers}
+            sceneAbsoluteIssueNumbers={absoluteIssueNumbers}
             sceneMapping={sceneMapping}
-            episodeRequested={episodeRequested}
+            issueRequested={issueRequested}
             isDaily={isDaily}
           />
         </TableRowCell>
@@ -186,11 +186,11 @@ class InteractiveSearchRow extends Component {
         </TableRowCell>
 
         <TableRowCell className={styles.language}>
-          <EpisodeLanguage language={language} />
+          <IssueLanguage language={language} />
         </TableRowCell>
 
         <TableRowCell className={styles.quality}>
-          <EpisodeQuality quality={quality} />
+          <IssueQuality quality={quality} />
         </TableRowCell>
 
         <TableRowCell className={styles.preferredWordScore}>
@@ -240,7 +240,7 @@ class InteractiveSearchRow extends Component {
           isOpen={this.state.isConfirmGrabModalOpen}
           kind={kinds.WARNING}
           title="Grab Release"
-          message={`Sonarr was unable to determine which comic and episode this release was for. Sonarr may be unable to automatically import this release. Do you want to grab '${title}'?`}
+          message={`Paperback was unable to determine which comic and issue this release was for. Paperback may be unable to automatically import this release. Do you want to grab '${title}'?`}
           confirmLabel="Grab"
           onConfirm={this.onGrabConfirm}
           onCancel={this.onGrabCancel}
@@ -269,13 +269,13 @@ InteractiveSearchRow.propTypes = {
   preferredWordScore: PropTypes.number.isRequired,
   sceneMapping: PropTypes.object,
   seasonNumber: PropTypes.number,
-  episodeNumbers: PropTypes.arrayOf(PropTypes.number),
-  absoluteEpisodeNumbers: PropTypes.arrayOf(PropTypes.number),
+  issueNumbers: PropTypes.arrayOf(PropTypes.number),
+  absoluteIssueNumbers: PropTypes.arrayOf(PropTypes.number),
   mappedSeasonNumber: PropTypes.number,
-  mappedEpisodeNumbers: PropTypes.arrayOf(PropTypes.number),
-  mappedAbsoluteEpisodeNumbers: PropTypes.arrayOf(PropTypes.number),
+  mappedIssueNumbers: PropTypes.arrayOf(PropTypes.number),
+  mappedAbsoluteIssueNumbers: PropTypes.arrayOf(PropTypes.number),
   rejections: PropTypes.arrayOf(PropTypes.string).isRequired,
-  episodeRequested: PropTypes.bool.isRequired,
+  issueRequested: PropTypes.bool.isRequired,
   downloadAllowed: PropTypes.bool.isRequired,
   isDaily: PropTypes.bool.isRequired,
   isGrabbing: PropTypes.bool.isRequired,

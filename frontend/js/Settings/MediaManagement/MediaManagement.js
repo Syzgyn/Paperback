@@ -14,7 +14,7 @@ import RootFoldersConnector from 'RootFolder/RootFoldersConnector';
 import NamingConnector from './Naming/NamingConnector';
 import AddRootFolderConnector from './RootFolder/AddRootFolderConnector';
 
-const episodeTitleRequiredOptions = [
+const issueTitleRequiredOptions = [
   { key: 'always', value: 'Always' },
   { key: 'bulkSeasonReleases', value: 'Only for Bulk Season Releases' },
   { key: 'never', value: 'Never' }
@@ -116,7 +116,7 @@ class MediaManagement extends Component {
                         <FormInputGroup
                           type={inputTypes.CHECK}
                           name="deleteEmptyFolders"
-                          helpText="Delete empty comic and season folders during disk scan and when episode files are deleted"
+                          helpText="Delete empty comic and season folders during disk scan and when issue files are deleted"
                           onChange={onInputChange}
                           {...settings.deleteEmptyFolders}
                         />
@@ -134,15 +134,15 @@ class MediaManagement extends Component {
                         isAdvanced={true}
                         size={sizes.SMALL}
                       >
-                        <FormLabel>Episode Title Required</FormLabel>
+                        <FormLabel>Issue Title Required</FormLabel>
 
                         <FormInputGroup
                           type={inputTypes.SELECT}
-                          name="episodeTitleRequired"
-                          helpText="Prevent importing for up to 24 hours if the episode title is in the naming format and the episode title is TBA"
-                          values={episodeTitleRequiredOptions}
+                          name="issueTitleRequired"
+                          helpText="Prevent importing for up to 24 hours if the issue title is in the naming format and the issue title is TBA"
+                          values={issueTitleRequiredOptions}
                           onChange={onInputChange}
-                          {...settings.episodeTitleRequired}
+                          {...settings.issueTitleRequired}
                         />
                       </FormGroup>
 
@@ -158,7 +158,7 @@ class MediaManagement extends Component {
                             <FormInputGroup
                               type={inputTypes.CHECK}
                               name="skipFreeSpaceCheckWhenImporting"
-                              helpText="Use when Sonarr is unable to detect free space from your comic root folder"
+                              helpText="Use when Paperback is unable to detect free space from your comic root folder"
                               onChange={onInputChange}
                               {...settings.skipFreeSpaceCheckWhenImporting}
                             />
@@ -193,7 +193,7 @@ class MediaManagement extends Component {
                           type={inputTypes.CHECK}
                           name="copyUsingHardlinks"
                           helpText="Use Hardlinks when trying to copy files from torrents that are still being seeded"
-                          helpTextWarning="Occasionally, file locks may prevent renaming files that are being seeded. You may temporarily disable seeding and use Sonarr's rename function as a work around."
+                          helpTextWarning="Occasionally, file locks may prevent renaming files that are being seeded. You may temporarily disable seeding and use Paperback's rename function as a work around."
                           onChange={onInputChange}
                           {...settings.copyUsingHardlinks}
                         />
@@ -205,7 +205,7 @@ class MediaManagement extends Component {
                         <FormInputGroup
                           type={inputTypes.CHECK}
                           name="importExtraFiles"
-                          helpText="Import matching extra files (subtitles, nfo, etc) after importing an episode file"
+                          helpText="Import matching extra files (subtitles, nfo, etc) after importing an issue file"
                           onChange={onInputChange}
                           {...settings.importExtraFiles}
                         />
@@ -238,14 +238,14 @@ class MediaManagement extends Component {
                   legend="File Management"
                 >
                   <FormGroup size={sizes.MEDIUM}>
-                    <FormLabel>Unmonitor Deleted Episodes</FormLabel>
+                    <FormLabel>Unmonitor Deleted Issues</FormLabel>
 
                     <FormInputGroup
                       type={inputTypes.CHECK}
-                      name="autoUnmonitorPreviouslyDownloadedEpisodes"
-                      helpText="Episodes deleted from disk are automatically unmonitored in Sonarr"
+                      name="autoUnmonitorPreviouslyDownloadedIssues"
+                      helpText="Issues deleted from disk are automatically unmonitored in Paperback"
                       onChange={onInputChange}
-                      {...settings.autoUnmonitorPreviouslyDownloadedEpisodes}
+                      {...settings.autoUnmonitorPreviouslyDownloadedIssues}
                     />
                   </FormGroup>
 
@@ -284,7 +284,7 @@ class MediaManagement extends Component {
                     <FormInputGroup
                       type={inputTypes.CHECK}
                       name="enableMediaInfo"
-                      helpText="Extract video information such as resolution, runtime and codec information from files. This requires Sonarr to read parts of the file which may cause high disk or network activity during scans."
+                      helpText="Extract video information such as resolution, runtime and codec information from files. This requires Paperback to read parts of the file which may cause high disk or network activity during scans."
                       onChange={onInputChange}
                       {...settings.enableMediaInfo}
                     />
@@ -300,7 +300,7 @@ class MediaManagement extends Component {
                       type={inputTypes.SELECT}
                       name="rescanAfterRefresh"
                       helpText="Rescan the comic folder after refreshing the comic"
-                      helpTextWarning="Sonarr will not automatically detect changes to files when not set to 'Always'"
+                      helpTextWarning="Paperback will not automatically detect changes to files when not set to 'Always'"
                       values={rescanAfterRefreshOptions}
                       onChange={onInputChange}
                       {...settings.rescanAfterRefresh}
@@ -332,7 +332,7 @@ class MediaManagement extends Component {
                     <FormInputGroup
                       type={inputTypes.PATH}
                       name="recycleBin"
-                      helpText="Episode files will go here when deleted instead of being permanently deleted"
+                      helpText="Issue files will go here when deleted instead of being permanently deleted"
                       onChange={onInputChange}
                       {...settings.recycleBin}
                     />
@@ -388,7 +388,7 @@ class MediaManagement extends Component {
                           type={inputTypes.UMASK}
                           name="chmodFolder"
                           helpText="Octal, applied during import/rename to media folders and files (without execute bits)"
-                          helpTextWarning="This only works if the user running sonarr is the owner of the file. It's better to ensure the download client sets the permissions properly."
+                          helpTextWarning="This only works if the user running paperback is the owner of the file. It's better to ensure the download client sets the permissions properly."
                           onChange={onInputChange}
                           {...settings.chmodFolder}
                         />
@@ -404,7 +404,7 @@ class MediaManagement extends Component {
                           type={inputTypes.TEXT}
                           name="chownGroup"
                           helpText="Group name or gid. Use gid for remote file systems."
-                          helpTextWarning="This only works if the user running sonarr is the owner of the file. It's better to ensure the download client uses the same group as sonarr."
+                          helpTextWarning="This only works if the user running paperback is the owner of the file. It's better to ensure the download client uses the same group as paperback."
                           values={fileDateOptions}
                           onChange={onInputChange}
                           {...settings.chownGroup}

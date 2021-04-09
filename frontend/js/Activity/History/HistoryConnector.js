@@ -7,19 +7,19 @@ import hasDifferentItems from 'Utilities/Object/hasDifferentItems';
 import selectUniqueIds from 'Utilities/Object/selectUniqueIds';
 import withCurrentPage from 'Components/withCurrentPage';
 import * as historyActions from 'Store/Actions/historyActions';
-import { fetchEpisodes, clearEpisodes } from 'Store/Actions/episodeActions';
-import { clearEpisodeFiles } from 'Store/Actions/episodeFileActions';
+import { fetchIssues, clearIssues } from 'Store/Actions/issueActions';
+import { clearIssueFiles } from 'Store/Actions/issueFileActions';
 import History from './History';
 
 function createMapStateToProps() {
   return createSelector(
     (state) => state.history,
-    (state) => state.episodes,
-    (history, episodes) => {
+    (state) => state.issues,
+    (history, issues) => {
       return {
-        isEpisodesFetching: episodes.isFetching,
-        isEpisodesPopulated: episodes.isPopulated,
-        episodesError: episodes.error,
+        isIssuesFetching: issues.isFetching,
+        isIssuesPopulated: issues.isPopulated,
+        issuesError: issues.error,
         ...history
       };
     }
@@ -28,9 +28,9 @@ function createMapStateToProps() {
 
 const mapDispatchToProps = {
   ...historyActions,
-  fetchEpisodes,
-  clearEpisodes,
-  clearEpisodeFiles
+  fetchIssues,
+  clearIssues,
+  clearIssueFiles
 };
 
 class HistoryConnector extends Component {
@@ -56,12 +56,12 @@ class HistoryConnector extends Component {
 
   componentDidUpdate(prevProps) {
     if (hasDifferentItems(prevProps.items, this.props.items)) {
-      const episodeIds = selectUniqueIds(this.props.items, 'episodeId');
+      const issueIds = selectUniqueIds(this.props.items, 'issueId');
 
-      if (episodeIds.length) {
-        this.props.fetchEpisodes({ episodeIds });
+      if (issueIds.length) {
+        this.props.fetchIssues({ issueIds });
       } else {
-        this.props.clearEpisodes();
+        this.props.clearIssues();
       }
     }
   }
@@ -69,8 +69,8 @@ class HistoryConnector extends Component {
   componentWillUnmount() {
     unregisterPagePopulator(this.repopulate);
     this.props.clearHistory();
-    this.props.clearEpisodes();
-    this.props.clearEpisodeFiles();
+    this.props.clearIssues();
+    this.props.clearIssueFiles();
   }
 
   //
@@ -152,9 +152,9 @@ HistoryConnector.propTypes = {
   setHistoryFilter: PropTypes.func.isRequired,
   setHistoryTableOption: PropTypes.func.isRequired,
   clearHistory: PropTypes.func.isRequired,
-  fetchEpisodes: PropTypes.func.isRequired,
-  clearEpisodes: PropTypes.func.isRequired,
-  clearEpisodeFiles: PropTypes.func.isRequired
+  fetchIssues: PropTypes.func.isRequired,
+  clearIssues: PropTypes.func.isRequired,
+  clearIssueFiles: PropTypes.func.isRequired
 };
 
 export default withCurrentPage(

@@ -15,8 +15,8 @@ class ComicIndexFooter extends PureComponent {
   render() {
     const { comic } = this.props;
     const count = comic.length;
-    let episodes = 0;
-    let episodeFiles = 0;
+    let issues = 0;
+    let issueFiles = 0;
     let ended = 0;
     let continuing = 0;
     let monitored = 0;
@@ -26,13 +26,13 @@ class ComicIndexFooter extends PureComponent {
       const { statistics = {} } = s;
 
       const {
-        episodeCount = 0,
-        episodeFileCount = 0,
+        issueCount = 0,
+        issueFileCount = 0,
         sizeOnDisk = 0
       } = statistics;
 
-      episodes += episodeCount;
-      episodeFiles += episodeFileCount;
+      issues += issueCount;
+      issueFiles += issueFileCount;
 
       if (s.status === 'ended') {
         ended++;
@@ -60,7 +60,7 @@ class ComicIndexFooter extends PureComponent {
                       enableColorImpairedMode && 'colorImpaired'
                     )}
                   />
-                  <div>Continuing (All episodes downloaded)</div>
+                  <div>Continuing (All issues downloaded)</div>
                 </div>
 
                 <div className={styles.legendItem}>
@@ -70,7 +70,7 @@ class ComicIndexFooter extends PureComponent {
                       enableColorImpairedMode && 'colorImpaired'
                     )}
                   />
-                  <div>Ended (All episodes downloaded)</div>
+                  <div>Ended (All issues downloaded)</div>
                 </div>
 
                 <div className={styles.legendItem}>
@@ -80,7 +80,7 @@ class ComicIndexFooter extends PureComponent {
                       enableColorImpairedMode && 'colorImpaired'
                     )}
                   />
-                  <div>Missing Episodes (Comic monitored)</div>
+                  <div>Missing Issues (Comic monitored)</div>
                 </div>
 
                 <div className={styles.legendItem}>
@@ -90,7 +90,7 @@ class ComicIndexFooter extends PureComponent {
                       enableColorImpairedMode && 'colorImpaired'
                     )}
                   />
-                  <div>Missing Episodes (Comic not monitored)</div>
+                  <div>Missing Issues (Comic not monitored)</div>
                 </div>
               </div>
 
@@ -126,13 +126,13 @@ class ComicIndexFooter extends PureComponent {
 
                 <DescriptionList>
                   <DescriptionListItem
-                    title="Episodes"
-                    data={episodes}
+                    title="Issues"
+                    data={issues}
                   />
 
                   <DescriptionListItem
                     title="Files"
-                    data={episodeFiles}
+                    data={issueFiles}
                   />
                 </DescriptionList>
 

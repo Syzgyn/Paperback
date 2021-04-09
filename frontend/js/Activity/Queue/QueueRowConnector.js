@@ -4,16 +4,16 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { grabQueueItem, removeQueueItem } from 'Store/Actions/queueActions';
 import createComicSelector from 'Store/Selectors/createComicSelector';
-import createEpisodeSelector from 'Store/Selectors/createEpisodeSelector';
+import createIssueSelector from 'Store/Selectors/createIssueSelector';
 import createUISettingsSelector from 'Store/Selectors/createUISettingsSelector';
 import QueueRow from './QueueRow';
 
 function createMapStateToProps() {
   return createSelector(
     createComicSelector(),
-    createEpisodeSelector(),
+    createIssueSelector(),
     createUISettingsSelector(),
-    (comic, episode, uiSettings) => {
+    (comic, issue, uiSettings) => {
       const result = {
         showRelativeDates: uiSettings.showRelativeDates,
         shortDateFormat: uiSettings.shortDateFormat,
@@ -21,7 +21,7 @@ function createMapStateToProps() {
       };
 
       result.comic = comic;
-      result.episode = episode;
+      result.issue = issue;
 
       return result;
     }
@@ -62,7 +62,7 @@ class QueueRowConnector extends Component {
 
 QueueRowConnector.propTypes = {
   id: PropTypes.number.isRequired,
-  episode: PropTypes.object,
+  issue: PropTypes.object,
   grabQueueItem: PropTypes.func.isRequired,
   removeQueueItem: PropTypes.func.isRequired
 };

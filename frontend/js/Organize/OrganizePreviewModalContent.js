@@ -76,8 +76,8 @@ class OrganizePreviewModalContent extends Component {
       error,
       items,
       seasonNumber,
-      renameEpisodes,
-      episodeFormat,
+      renameIssues,
+      issueFormat,
       path,
       onModalClose
     } = this.props;
@@ -111,7 +111,7 @@ class OrganizePreviewModalContent extends Component {
             !isFetching && isPopulated && !items.length &&
               <div>
                 {
-                  renameEpisodes ?
+                  renameIssues ?
                     <div>Success! My work is done, no files to rename.</div> :
                     <div>Renaming is disabled, nothing to rename</div>
                 }
@@ -131,8 +131,8 @@ class OrganizePreviewModalContent extends Component {
 
                   <div>
                     Naming pattern:
-                    <span className={styles.episodeFormat}>
-                      {episodeFormat}
+                    <span className={styles.issueFormat}>
+                      {issueFormat}
                     </span>
                   </div>
                 </Alert>
@@ -142,11 +142,11 @@ class OrganizePreviewModalContent extends Component {
                     items.map((item) => {
                       return (
                         <OrganizePreviewRow
-                          key={item.episodeFileId}
-                          id={item.episodeFileId}
+                          key={item.issueFileId}
+                          id={item.issueFileId}
                           existingPath={item.existingPath}
                           newPath={item.newPath}
-                          isSelected={selectedState[item.episodeFileId]}
+                          isSelected={selectedState[item.issueFileId]}
                           onSelectedChange={this.onSelectedChange}
                         />
                       );
@@ -194,8 +194,8 @@ OrganizePreviewModalContent.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   seasonNumber: PropTypes.string.isRequired,
   path: PropTypes.string.isRequired,
-  renameEpisodes: PropTypes.bool,
-  episodeFormat: PropTypes.string,
+  renameIssues: PropTypes.bool,
+  issueFormat: PropTypes.string,
   onOrganizePress: PropTypes.func.isRequired,
   onModalClose: PropTypes.func.isRequired
 };

@@ -22,7 +22,7 @@ import PageToolbarSeparator from 'Components/Page/Toolbar/PageToolbarSeparator';
 import PageToolbarButton from 'Components/Page/Toolbar/PageToolbarButton';
 import Popover from 'Components/Tooltip/Popover';
 import Tooltip from 'Components/Tooltip/Tooltip';
-import EpisodeFileEditorModal from 'EpisodeFile/Editor/EpisodeFileEditorModal';
+import IssueFileEditorModal from 'IssueFile/Editor/IssueFileEditorModal';
 import InteractiveImportModal from 'InteractiveImport/InteractiveImportModal';
 import OrganizePreviewModalConnector from 'Organize/OrganizePreviewModalConnector';
 import QualityProfileNameConnector from 'Settings/Profiles/Quality/QualityProfileNameConnector';
@@ -67,7 +67,7 @@ class ComicDetails extends Component {
 
     this.state = {
       isOrganizeModalOpen: false,
-      isManageEpisodesOpen: false,
+      isManageIssuesOpen: false,
       isEditComicModalOpen: false,
       isDeleteComicModalOpen: false,
       isComicHistoryModalOpen: false,
@@ -91,12 +91,12 @@ class ComicDetails extends Component {
     this.setState({ isOrganizeModalOpen: false });
   }
 
-  onManageEpisodesPress = () => {
-    this.setState({ isManageEpisodesOpen: true });
+  onManageIssuesPress = () => {
+    this.setState({ isManageIssuesOpen: true });
   }
 
-  onManageEpisodesModalClose = () => {
-    this.setState({ isManageEpisodesOpen: false });
+  onManageIssuesModalClose = () => {
+    this.setState({ isManageIssuesOpen: false });
   }
 
   onInteractiveImportPress = () => {
@@ -197,11 +197,11 @@ class ComicDetails extends Component {
       isSearching,
       isFetching,
       isPopulated,
-      episodesError,
-      episodeFilesError,
-      hasEpisodes,
-      hasMonitoredEpisodes,
-      hasEpisodeFiles,
+      issuesError,
+      issueFilesError,
+      hasIssues,
+      hasMonitoredIssues,
+      hasIssueFiles,
       previousComic,
       nextComic,
       onMonitorTogglePress,
@@ -210,13 +210,13 @@ class ComicDetails extends Component {
     } = this.props;
 
     const {
-      episodeFileCount,
+      issueFileCount,
       sizeOnDisk
     } = statistics;
 
     const {
       isOrganizeModalOpen,
-      isManageEpisodesOpen,
+      isManageIssuesOpen,
       isEditComicModalOpen,
       isDeleteComicModalOpen,
       isComicHistoryModalOpen,
@@ -230,12 +230,12 @@ class ComicDetails extends Component {
 
     const statusDetails = getComicStatusDetails(status);
 
-    let episodeFilesCountMessage = 'No episode files';
+    let issueFilesCountMessage = 'No issue files';
 
-    if (episodeFileCount === 1) {
-      episodeFilesCountMessage = '1 episode file';
-    } else if (episodeFileCount > 1) {
-      episodeFilesCountMessage = `${episodeFileCount} episode files`;
+    if (issueFileCount === 1) {
+      issueFilesCountMessage = '1 issue file';
+    } else if (issueFileCount > 1) {
+      issueFilesCountMessage = `${issueFileCount} issue files`;
     }
 
     let expandIcon = icons.EXPAND_INDETERMINATE;
@@ -262,9 +262,9 @@ class ComicDetails extends Component {
             <PageToolbarButton
               label="Search Monitored"
               iconName={icons.SEARCH}
-              isDisabled={!monitored || !hasMonitoredEpisodes || !hasEpisodes}
+              isDisabled={!monitored || !hasMonitoredIssues || !hasIssues}
               isSpinning={isSearching}
-              title={hasMonitoredEpisodes ? undefined : 'No monitored episodes in this comic'}
+              title={hasMonitoredIssues ? undefined : 'No monitored issues in this comic'}
               onPress={onSearchPress}
             />
 
@@ -273,21 +273,21 @@ class ComicDetails extends Component {
             <PageToolbarButton
               label="Preview Rename"
               iconName={icons.ORGANIZE}
-              isDisabled={!hasEpisodeFiles}
+              isDisabled={!hasIssueFiles}
               onPress={this.onOrganizePress}
             />
 
             <PageToolbarButton
-              label="Manage Episodes"
-              iconName={icons.EPISODE_FILE}
-              isDisabled={!hasEpisodeFiles}
-              onPress={this.onManageEpisodesPress}
+              label="Manage Issues"
+              iconName={icons.ISSUE_FILE}
+              isDisabled={!hasIssueFiles}
+              onPress={this.onManageIssuesPress}
             />
 
             <PageToolbarButton
               label="History"
               iconName={icons.HISTORY}
-              isDisabled={!hasEpisodes}
+              isDisabled={!hasIssues}
               onPress={this.onComicHistoryPress}
             />
 
@@ -452,7 +452,7 @@ class ComicDetails extends Component {
                     }
                     tooltip={
                       <span>
-                        {episodeFilesCountMessage}
+                        {issueFilesCountMessage}
                       </span>
                     }
                     kind={kinds.INVERSE}
@@ -592,18 +592,18 @@ class ComicDetails extends Component {
 
           <div className={styles.contentContainer}>
             {
-              !isPopulated && !episodesError && !episodeFilesError &&
+              !isPopulated && !issuesError && !issueFilesError &&
                 <LoadingIndicator />
             }
 
             {
-              !isFetching && episodesError &&
-                <div>Loading episodes failed</div>
+              !isFetching && issuesError &&
+                <div>Loading issues failed</div>
             }
 
             {
-              !isFetching && episodeFilesError &&
-                <div>Loading episode files failed</div>
+              !isFetching && issueFilesError &&
+                <div>Loading issue files failed</div>
             }
 
             {
@@ -628,7 +628,7 @@ class ComicDetails extends Component {
             {
               isPopulated && !seasons.length &&
                 <div>
-                  No episode information is available.
+                  No issue information is available.
                 </div>
             }
 
@@ -640,10 +640,10 @@ class ComicDetails extends Component {
             onModalClose={this.onOrganizeModalClose}
           />
 
-          <EpisodeFileEditorModal
-            isOpen={isManageEpisodesOpen}
+          <IssueFileEditorModal
+            isOpen={isManageIssuesOpen}
             comicId={id}
-            onModalClose={this.onManageEpisodesModalClose}
+            onModalClose={this.onManageIssuesModalClose}
           />
 
           <ComicHistoryModal
@@ -712,11 +712,11 @@ ComicDetails.propTypes = {
   isSearching: PropTypes.bool.isRequired,
   isFetching: PropTypes.bool.isRequired,
   isPopulated: PropTypes.bool.isRequired,
-  episodesError: PropTypes.object,
-  episodeFilesError: PropTypes.object,
-  hasEpisodes: PropTypes.bool.isRequired,
-  hasMonitoredEpisodes: PropTypes.bool.isRequired,
-  hasEpisodeFiles: PropTypes.bool.isRequired,
+  issuesError: PropTypes.object,
+  issueFilesError: PropTypes.object,
+  hasIssues: PropTypes.bool.isRequired,
+  hasMonitoredIssues: PropTypes.bool.isRequired,
+  hasIssueFiles: PropTypes.bool.isRequired,
   previousComic: PropTypes.object.isRequired,
   nextComic: PropTypes.object.isRequired,
   onMonitorTogglePress: PropTypes.func.isRequired,

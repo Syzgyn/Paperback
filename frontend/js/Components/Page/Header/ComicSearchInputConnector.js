@@ -57,11 +57,11 @@ function createMapStateToProps() {
 function createMapDispatchToProps(dispatch, props) {
   return {
     onGoToComic(titleSlug) {
-      dispatch(push(`${window.Sonarr.urlBase}/comic/${titleSlug}`));
+      dispatch(push(`${window.Paperback.urlBase}/comic/${titleSlug}`));
     },
 
     onGoToAddNewComic(query) {
-      dispatch(push(`${window.Sonarr.urlBase}/add/new?term=${encodeURIComponent(query)}`));
+      dispatch(push(`${window.Paperback.urlBase}/add/new?term=${encodeURIComponent(query)}`));
     }
   };
 }

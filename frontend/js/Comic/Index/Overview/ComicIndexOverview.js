@@ -99,9 +99,9 @@ class ComicIndexOverview extends Component {
 
     const {
       seasonCount,
-      episodeCount,
-      episodeFileCount,
-      totalEpisodeCount,
+      issueCount,
+      issueFileCount,
+      totalIssueCount,
       sizeOnDisk
     } = statistics;
 
@@ -152,9 +152,9 @@ class ComicIndexOverview extends Component {
             <ComicIndexProgressBar
               monitored={monitored}
               status={status}
-              episodeCount={episodeCount}
-              episodeFileCount={episodeFileCount}
-              totalEpisodeCount={totalEpisodeCount}
+              issueCount={issueCount}
+              issueFileCount={issueFileCount}
+              totalIssueCount={totalIssueCount}
               posterWidth={posterWidth}
               detailedProgressBar={overviewOptions.detailedProgressBar}
             />
@@ -182,7 +182,7 @@ class ComicIndexOverview extends Component {
                     <SpinnerIconButton
                       className={styles.action}
                       name={icons.SEARCH}
-                      title="Search for monitored episodes"
+                      title="Search for monitored issues"
                       isSpinning={isSearchingComic}
                       onPress={onSearchPress}
                     />
@@ -272,9 +272,9 @@ ComicIndexOverview.propTypes = {
 ComicIndexOverview.defaultProps = {
   statistics: {
     seasonCount: 0,
-    episodeCount: 0,
-    episodeFileCount: 0,
-    totalEpisodeCount: 0
+    issueCount: 0,
+    issueFileCount: 0,
+    totalIssueCount: 0
   }
 };
 

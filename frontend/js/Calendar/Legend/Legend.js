@@ -36,7 +36,7 @@ function Legend(props) {
         icon={icons.INFO}
         kind={kinds.PINK}
         darken={fullColorEvents}
-        tooltip="Special episode"
+        tooltip="Special issue"
       />
     );
   }
@@ -45,7 +45,7 @@ function Legend(props) {
     iconsToShow.push(
       <LegendIconItem
         name="Cutoff Not Met"
-        icon={icons.EPISODE_FILE}
+        icon={icons.ISSUE_FILE}
         kind={fullColorEvents ? kinds.DEFAULT : kinds.WARNING}
         tooltip="Quality or language cutoff has not been met"
       />
@@ -57,7 +57,7 @@ function Legend(props) {
       <div>
         <LegendItem
           status="unaired"
-          tooltip="Episode hasn't aired yet"
+          tooltip="Issue hasn't aired yet"
           isAgendaView={isAgendaView}
           fullColorEvents={fullColorEvents}
           colorImpairedMode={colorImpairedMode}
@@ -65,7 +65,7 @@ function Legend(props) {
 
         <LegendItem
           status="unmonitored"
-          tooltip="Episode is unmonitored"
+          tooltip="Issue is unmonitored"
           isAgendaView={isAgendaView}
           fullColorEvents={fullColorEvents}
           colorImpairedMode={colorImpairedMode}
@@ -76,7 +76,7 @@ function Legend(props) {
         <LegendItem
           status="onAir"
           name="On Air"
-          tooltip="Episode is currently airing"
+          tooltip="Issue is currently airing"
           isAgendaView={isAgendaView}
           fullColorEvents={fullColorEvents}
           colorImpairedMode={colorImpairedMode}
@@ -84,7 +84,7 @@ function Legend(props) {
 
         <LegendItem
           status="missing"
-          tooltip="Episode has aired and is missing from disk"
+          tooltip="Issue has aired and is missing from disk"
           isAgendaView={isAgendaView}
           fullColorEvents={fullColorEvents}
           colorImpairedMode={colorImpairedMode}
@@ -94,7 +94,7 @@ function Legend(props) {
       <div>
         <LegendItem
           status="downloading"
-          tooltip="Episode is currently downloading"
+          tooltip="Issue is currently downloading"
           isAgendaView={isAgendaView}
           fullColorEvents={fullColorEvents}
           colorImpairedMode={colorImpairedMode}
@@ -102,7 +102,7 @@ function Legend(props) {
 
         <LegendItem
           status="downloaded"
-          tooltip="Episode was downloaded and sorted"
+          tooltip="Issue was downloaded and sorted"
           isAgendaView={isAgendaView}
           fullColorEvents={fullColorEvents}
           colorImpairedMode={colorImpairedMode}

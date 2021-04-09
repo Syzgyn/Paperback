@@ -34,7 +34,7 @@ function BackupSettings(props) {
         <FormInputGroup
           type={inputTypes.PATH}
           name="backupFolder"
-          helpText="Relative paths will be under Sonarr's AppData directory"
+          helpText="Relative paths will be under Paperback's AppData directory"
           onChange={onInputChange}
           {...backupFolder}
         />

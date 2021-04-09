@@ -6,7 +6,7 @@ export function getComicStatusDetails(status) {
   let statusDetails = {
     icon: icons.COMIC_CONTINUING,
     title: 'Continuing',
-    message: 'More episodes/another season is expected'
+    message: 'More issues/another season is expected'
   };
 
   if (status === 'deleted') {
@@ -19,7 +19,7 @@ export function getComicStatusDetails(status) {
     statusDetails = {
       icon: icons.COMIC_ENDED,
       title: 'Ended',
-      message: 'No additional episodes or seasons are expected'
+      message: 'No additional issues or seasons are expected'
     };
   } else if (status === 'upcoming') {
     statusDetails = {

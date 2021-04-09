@@ -8,14 +8,14 @@ function getNewComic(comic, payload) {
     comicType,
     seasonFolder,
     tags,
-    searchForMissingEpisodes = false,
-    searchForCutoffUnmetEpisodes = false
+    searchForMissingIssues = false,
+    searchForCutoffUnmetIssues = false
   } = payload;
 
   const addOptions = {
     monitor,
-    searchForMissingEpisodes,
-    searchForCutoffUnmetEpisodes
+    searchForMissingIssues,
+    searchForCutoffUnmetIssues
   };
 
   comic.addOptions = addOptions;

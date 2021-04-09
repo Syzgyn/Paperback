@@ -14,7 +14,7 @@ function PageContent(props) {
 
   return (
     <ErrorBoundary errorComponent={PageContentError}>
-      <DocumentTitle title={title ? `${title} - Sonarr` : 'Sonarr'}>
+      <DocumentTitle title={title ? `${title} - Paperback` : 'Paperback'}>
         <div className={className}>
           {children}
         </div>

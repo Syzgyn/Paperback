@@ -29,13 +29,12 @@
     <div id="root" class="root"></div>
 
     <script>
-        window.Sonarr = {
+        window.Paperback = {
             urlBase: '', 
             version: '0.1',
             apiRoot: '/api',
         };
     </script>
     <script src="{{ asset('assets/bundle/index.bundle.js') }}"></script>
-    <script>console.log('test');</script>
 </body>
 </html>

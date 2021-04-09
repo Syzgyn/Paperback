@@ -9,10 +9,10 @@ import RelativeDateCellConnector from 'Components/Table/Cells/RelativeDateCellCo
 import TableRowCell from 'Components/Table/Cells/TableRowCell';
 import TableSelectCell from 'Components/Table/Cells/TableSelectCell';
 import ProtocolLabel from 'Activity/Queue/ProtocolLabel';
-import EpisodeTitleLink from 'Episode/EpisodeTitleLink';
-import EpisodeLanguage from 'Episode/EpisodeLanguage';
-import EpisodeQuality from 'Episode/EpisodeQuality';
-import SeasonEpisodeNumber from 'Episode/SeasonEpisodeNumber';
+import IssueTitleLink from 'Issue/IssueTitleLink';
+import IssueLanguage from 'Issue/IssueLanguage';
+import IssueQuality from 'Issue/IssueQuality';
+import SeasonIssueNumber from 'Issue/SeasonIssueNumber';
 import InteractiveImportModal from 'InteractiveImport/InteractiveImportModal';
 import ComicTitleLink from 'Comic/ComicTitleLink';
 import QueueStatusCell from './QueueStatusCell';
@@ -85,7 +85,7 @@ class QueueRow extends Component {
       statusMessages,
       errorMessage,
       comic,
-      episode,
+      issue,
       language,
       quality,
       protocol,
@@ -165,21 +165,21 @@ class QueueRow extends Component {
               );
             }
 
-            if (name === 'episode') {
+            if (name === 'issue') {
               return (
                 <TableRowCell key={name}>
                   {
-                    episode ?
-                      <SeasonEpisodeNumber
-                        seasonNumber={episode.seasonNumber}
-                        episodeNumber={episode.episodeNumber}
-                        absoluteEpisodeNumber={episode.absoluteEpisodeNumber}
+                    issue ?
+                      <SeasonIssueNumber
+                        seasonNumber={issue.seasonNumber}
+                        issueNumber={issue.issueNumber}
+                        absoluteIssueNumber={issue.absoluteIssueNumber}
                         comicType={comic.comicType}
                         alternateTitles={comic.alternateTitles}
-                        sceneSeasonNumber={episode.sceneSeasonNumber}
-                        sceneEpisodeNumber={episode.sceneEpisodeNumber}
-                        sceneAbsoluteEpisodeNumber={episode.sceneAbsoluteEpisodeNumber}
-                        unverifiedSceneNumbering={episode.unverifiedSceneNumbering}
+                        sceneSeasonNumber={issue.sceneSeasonNumber}
+                        sceneIssueNumber={issue.sceneIssueNumber}
+                        sceneAbsoluteIssueNumber={issue.sceneAbsoluteIssueNumber}
+                        unverifiedSceneNumbering={issue.unverifiedSceneNumbering}
                       /> :
                       '-'
                   }
@@ -187,16 +187,16 @@ class QueueRow extends Component {
               );
             }
 
-            if (name === 'episode.title') {
+            if (name === 'issue.title') {
               return (
                 <TableRowCell key={name}>
                   {
-                    episode ?
-                      <EpisodeTitleLink
-                        episodeId={episode.id}
+                    issue ?
+                      <IssueTitleLink
+                        issueId={issue.id}
                         comicId={comic.id}
-                        episodeFileId={episode.episodeFileId}
-                        episodeTitle={episode.title}
+                        issueFileId={issue.issueFileId}
+                        issueTitle={issue.title}
                         showOpenComicButton={true}
                       /> :
                       '-'
@@ -205,12 +205,12 @@ class QueueRow extends Component {
               );
             }
 
-            if (name === 'episode.airDateUtc') {
-              if (episode) {
+            if (name === 'issue.airDateUtc') {
+              if (issue) {
                 return (
                   <RelativeDateCellConnector
                     key={name}
-                    date={episode.airDateUtc}
+                    date={issue.airDateUtc}
                   />
                 );
               }
@@ -225,7 +225,7 @@ class QueueRow extends Component {
             if (name === 'language') {
               return (
                 <TableRowCell key={name}>
-                  <EpisodeLanguage
+                  <IssueLanguage
                     language={language}
                   />
                 </TableRowCell>
@@ -237,7 +237,7 @@ class QueueRow extends Component {
                 <TableRowCell key={name}>
                   {
                     quality ?
-                      <EpisodeQuality
+                      <IssueQuality
                         quality={quality}
                       /> :
                       null
@@ -389,7 +389,7 @@ QueueRow.propTypes = {
   statusMessages: PropTypes.arrayOf(PropTypes.object),
   errorMessage: PropTypes.string,
   comic: PropTypes.object,
-  episode: PropTypes.object,
+  issue: PropTypes.object,
   language: PropTypes.object.isRequired,
   quality: PropTypes.object.isRequired,
   protocol: PropTypes.string.isRequired,

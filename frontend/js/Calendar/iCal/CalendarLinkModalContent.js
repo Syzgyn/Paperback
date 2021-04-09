@@ -22,7 +22,7 @@ function getUrls(state) {
     tags
   } = state;
 
-  let icalUrl = `${window.location.host}${window.Sonarr.urlBase}/feed/calendar/Sonarr.ics?`;
+  let icalUrl = `${window.location.host}${window.Paperback.urlBase}/feed/calendar/Paperback.ics?`;
 
   if (unmonitored) {
     icalUrl += 'unmonitored=true&';
@@ -40,7 +40,7 @@ function getUrls(state) {
     icalUrl += `tags=${tags.toString()}&`;
   }
 
-  icalUrl += `apikey=${window.Sonarr.apiKey}`;
+  icalUrl += `apikey=${window.Paperback.apiKey}`;
 
   const iCalHttpUrl = `${window.location.protocol}//${icalUrl}`;
   const iCalWebCalUrl = `webcal://${icalUrl}`;
@@ -115,7 +115,7 @@ class CalendarLinkModalContent extends Component {
     return (
       <ModalContent onModalClose={onModalClose}>
         <ModalHeader>
-          Sonarr Calendar Feed
+          Paperback Calendar Feed
         </ModalHeader>
 
         <ModalBody>
@@ -127,7 +127,7 @@ class CalendarLinkModalContent extends Component {
                 type={inputTypes.CHECK}
                 name="unmonitored"
                 value={unmonitored}
-                helpText="Include unmonitored episodes in the iCal feed"
+                helpText="Include unmonitored issues in the iCal feed"
                 onChange={this.onInputChange}
               />
             </FormGroup>
@@ -139,7 +139,7 @@ class CalendarLinkModalContent extends Component {
                 type={inputTypes.CHECK}
                 name="premieresOnly"
                 value={premieresOnly}
-                helpText="Only the first episode in a season will be in the feed"
+                helpText="Only the first issue in a season will be in the feed"
                 onChange={this.onInputChange}
               />
             </FormGroup>

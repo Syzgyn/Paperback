@@ -114,14 +114,14 @@ export const defaultState = {
       isVisible: true
     },
     {
-      name: 'episodeProgress',
-      label: 'Episodes',
+      name: 'issueProgress',
+      label: 'Issues',
       isSortable: true,
       isVisible: true
     },
     {
-      name: 'episodeCount',
-      label: 'Episode Count',
+      name: 'issueCount',
+      label: 'Issue Count',
       isSortable: true,
       isVisible: false
     },
@@ -210,23 +210,23 @@ export const defaultState = {
       return Number.MAX_VALUE;
     },
 
-    episodeProgress: function(item) {
+    issueProgress: function(item) {
       const { statistics = {} } = item;
 
       const {
-        episodeCount = 0,
-        episodeFileCount
+        issueCount = 0,
+        issueFileCount
       } = statistics;
 
-      const progress = episodeCount ? episodeFileCount / episodeCount * 100 : 100;
+      const progress = issueCount ? issueFileCount / issueCount * 100 : 100;
 
-      return progress + episodeCount / 1000000;
+      return progress + issueCount / 1000000;
     },
 
-    episodeCount: function(item) {
+    issueCount: function(item) {
       const { statistics = {} } = item;
 
-      return statistics.totalEpisodeCount || 0;
+      return statistics.totalIssueCount || 0;
     },
 
     seasonCount: function(item) {

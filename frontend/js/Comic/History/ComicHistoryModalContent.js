@@ -16,8 +16,8 @@ const columns = [
     isVisible: true
   },
   {
-    name: 'episode',
-    label: 'Episode',
+    name: 'issue',
+    label: 'Issue',
     isVisible: true
   },
   {

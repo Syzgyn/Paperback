@@ -4,19 +4,19 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { fetchHistory, markAsFailed } from 'Store/Actions/historyActions';
 import createComicSelector from 'Store/Selectors/createComicSelector';
-import createEpisodeSelector from 'Store/Selectors/createEpisodeSelector';
+import createIssueSelector from 'Store/Selectors/createIssueSelector';
 import createUISettingsSelector from 'Store/Selectors/createUISettingsSelector';
 import HistoryRow from './HistoryRow';
 
 function createMapStateToProps() {
   return createSelector(
     createComicSelector(),
-    createEpisodeSelector(),
+    createIssueSelector(),
     createUISettingsSelector(),
-    (comic, episode, uiSettings) => {
+    (comic, issue, uiSettings) => {
       return {
         comic,
-        episode,
+        issue,
         shortDateFormat: uiSettings.shortDateFormat,
         timeFormat: uiSettings.timeFormat
       };

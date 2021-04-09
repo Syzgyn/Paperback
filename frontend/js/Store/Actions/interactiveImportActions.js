@@ -15,7 +15,7 @@ import { set, update, updateItem } from './baseActions';
 
 export const section = 'interactiveImport';
 
-const episodesSection = `${section}.episodes`;
+const issuesSection = `${section}.issues`;
 let abortCurrentRequest = null;
 let currentIds = [];
 
@@ -51,12 +51,12 @@ export const defaultState = {
     }
   },
 
-  episodes: {
+  issues: {
     isFetching: false,
     isReprocessing: false,
     isPopulated: false,
     error: null,
-    sortKey: 'episodeNumber',
+    sortKey: 'issueNumber',
     sortDirection: sortDirections.ASCENDING,
     items: []
   }
@@ -82,9 +82,9 @@ export const ADD_RECENT_FOLDER = 'interactiveImport/addRecentFolder';
 export const REMOVE_RECENT_FOLDER = 'interactiveImport/removeRecentFolder';
 export const SET_INTERACTIVE_IMPORT_MODE = 'interactiveImport/setInteractiveImportMode';
 
-export const FETCH_INTERACTIVE_IMPORT_EPISODES = 'interactiveImport/fetchInteractiveImportEpisodes';
-export const SET_INTERACTIVE_IMPORT_EPISODES_SORT = 'interactiveImport/setInteractiveImportEpisodesSort';
-export const CLEAR_INTERACTIVE_IMPORT_EPISODES = 'interactiveImport/clearInteractiveImportEpisodes';
+export const FETCH_INTERACTIVE_IMPORT_ISSUES = 'interactiveImport/fetchInteractiveImportIssues';
+export const SET_INTERACTIVE_IMPORT_ISSUES_SORT = 'interactiveImport/setInteractiveImportIssuesSort';
+export const CLEAR_INTERACTIVE_IMPORT_ISSUES = 'interactiveImport/clearInteractiveImportIssues';
 
 //
 // Action Creators
@@ -99,9 +99,9 @@ export const addRecentFolder = createAction(ADD_RECENT_FOLDER);
 export const removeRecentFolder = createAction(REMOVE_RECENT_FOLDER);
 export const setInteractiveImportMode = createAction(SET_INTERACTIVE_IMPORT_MODE);
 
-export const fetchInteractiveImportEpisodes = createThunk(FETCH_INTERACTIVE_IMPORT_EPISODES);
-export const setInteractiveImportEpisodesSort = createAction(SET_INTERACTIVE_IMPORT_EPISODES_SORT);
-export const clearInteractiveImportEpisodes = createAction(CLEAR_INTERACTIVE_IMPORT_EPISODES);
+export const fetchInteractiveImportIssues = createThunk(FETCH_INTERACTIVE_IMPORT_ISSUES);
+export const setInteractiveImportIssuesSort = createAction(SET_INTERACTIVE_IMPORT_ISSUES_SORT);
+export const clearInteractiveImportIssues = createAction(CLEAR_INTERACTIVE_IMPORT_ISSUES);
 
 //
 // Action Handlers
@@ -172,7 +172,7 @@ export const actionHandlers = handleThunks({
         path: item.path,
         comicId: item.comic ? item.comic.id : undefined,
         seasonNumber: item.seasonNumber,
-        episodeIds: (item.episodes || []).map((e) => e.id),
+        issueIds: (item.issues || []).map((e) => e.id),
         quality: item.quality,
         language: item.language,
         downloadId: item.downloadId
@@ -216,7 +216,7 @@ export const actionHandlers = handleThunks({
     });
   },
 
-  [FETCH_INTERACTIVE_IMPORT_EPISODES]: createFetchHandler('interactiveImport.episodes', '/episode')
+  [FETCH_INTERACTIVE_IMPORT_ISSUES]: createFetchHandler('interactiveImport.issues', '/issue')
 });
 
 //
@@ -297,11 +297,11 @@ export const reducers = createHandleActions({
     return Object.assign({}, state, { importMode: payload.importMode });
   },
 
-  [SET_INTERACTIVE_IMPORT_EPISODES_SORT]: createSetClientSideCollectionSortReducer(episodesSection),
+  [SET_INTERACTIVE_IMPORT_ISSUES_SORT]: createSetClientSideCollectionSortReducer(issuesSection),
 
-  [CLEAR_INTERACTIVE_IMPORT_EPISODES]: (state) => {
-    return updateSectionState(state, episodesSection, {
-      ...defaultState.episodes
+  [CLEAR_INTERACTIVE_IMPORT_ISSUES]: (state) => {
+    return updateSectionState(state, issuesSection, {
+      ...defaultState.issues
     });
   }
 

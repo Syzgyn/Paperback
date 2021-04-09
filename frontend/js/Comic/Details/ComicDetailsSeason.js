@@ -20,51 +20,51 @@ import MenuItem from 'Components/Menu/MenuItem';
 import Table from 'Components/Table/Table';
 import TableBody from 'Components/Table/TableBody';
 import Popover from 'Components/Tooltip/Popover';
-import EpisodeFileEditorModal from 'EpisodeFile/Editor/EpisodeFileEditorModal';
+import IssueFileEditorModal from 'IssueFile/Editor/IssueFileEditorModal';
 import OrganizePreviewModalConnector from 'Organize/OrganizePreviewModalConnector';
 import ComicHistoryModal from 'Comic/History/ComicHistoryModal';
 import SeasonInteractiveSearchModalConnector from 'Comic/Search/SeasonInteractiveSearchModalConnector';
-import EpisodeRowConnector from './EpisodeRowConnector';
+import IssueRowConnector from './IssueRowConnector';
 import SeasonInfo from './SeasonInfo';
 import styles from './ComicDetailsSeason.css';
 
-function getSeasonStatistics(episodes) {
-  let episodeCount = 0;
-  let episodeFileCount = 0;
-  let totalEpisodeCount = 0;
-  let monitoredEpisodeCount = 0;
-  let hasMonitoredEpisodes = false;
+function getSeasonStatistics(issues) {
+  let issueCount = 0;
+  let issueFileCount = 0;
+  let totalIssueCount = 0;
+  let monitoredIssueCount = 0;
+  let hasMonitoredIssues = false;
   const sizeOnDisk = 0;
 
-  episodes.forEach((episode) => {
-    if (episode.episodeFileId || (episode.monitored && isBefore(episode.airDateUtc))) {
-      episodeCount++;
+  issues.forEach((issue) => {
+    if (issue.issueFileId || (issue.monitored && isBefore(issue.airDateUtc))) {
+      issueCount++;
     }
 
-    if (episode.episodeFileId) {
-      episodeFileCount++;
+    if (issue.issueFileId) {
+      issueFileCount++;
     }
 
-    if (episode.monitored) {
-      monitoredEpisodeCount++;
-      hasMonitoredEpisodes = true;
+    if (issue.monitored) {
+      monitoredIssueCount++;
+      hasMonitoredIssues = true;
     }
 
-    totalEpisodeCount++;
+    totalIssueCount++;
   });
 
   return {
-    episodeCount,
-    episodeFileCount,
-    totalEpisodeCount,
-    monitoredEpisodeCount,
-    hasMonitoredEpisodes,
+    issueCount,
+    issueFileCount,
+    totalIssueCount,
+    monitoredIssueCount,
+    hasMonitoredIssues,
     sizeOnDisk
   };
 }
 
-function getEpisodeCountKind(monitored, episodeFileCount, episodeCount) {
-  if (episodeFileCount === episodeCount && episodeCount > 0) {
+function getIssueCountKind(monitored, issueFileCount, issueCount) {
+  if (issueFileCount === issueCount && issueCount > 0) {
     return kinds.SUCCESS;
   }
 
@@ -85,10 +85,10 @@ class ComicDetailsSeason extends Component {
 
     this.state = {
       isOrganizeModalOpen: false,
-      isManageEpisodesOpen: false,
+      isManageIssuesOpen: false,
       isHistoryModalOpen: false,
       isInteractiveSearchModalOpen: false,
-      lastToggledEpisode: null
+      lastToggledIssue: null
     };
   }
 
@@ -108,12 +108,12 @@ class ComicDetailsSeason extends Component {
     }
 
     if (
-      getSeasonStatistics(prevProps.items).episodeFileCount > 0 &&
-      getSeasonStatistics(items).episodeFileCount === 0
+      getSeasonStatistics(prevProps.items).issueFileCount > 0 &&
+      getSeasonStatistics(items).issueFileCount === 0
     ) {
       this.setState({
         isOrganizeModalOpen: false,
-        isManageEpisodesOpen: false
+        isManageIssuesOpen: false
       });
     }
   }
@@ -147,12 +147,12 @@ class ComicDetailsSeason extends Component {
     this.setState({ isOrganizeModalOpen: false });
   }
 
-  onManageEpisodesPress = () => {
-    this.setState({ isManageEpisodesOpen: true });
+  onManageIssuesPress = () => {
+    this.setState({ isManageIssuesOpen: true });
   }
 
-  onManageEpisodesModalClose = () => {
-    this.setState({ isManageEpisodesOpen: false });
+  onManageIssuesModalClose = () => {
+    this.setState({ isManageIssuesOpen: false });
   }
 
   onHistoryPress = () => {
@@ -180,22 +180,22 @@ class ComicDetailsSeason extends Component {
     this.props.onExpandPress(seasonNumber, !isExpanded);
   }
 
-  onMonitorEpisodePress = (episodeId, monitored, { shiftKey }) => {
-    const lastToggled = this.state.lastToggledEpisode;
-    const episodeIds = [episodeId];
+  onMonitorIssuePress = (issueId, monitored, { shiftKey }) => {
+    const lastToggled = this.state.lastToggledIssue;
+    const issueIds = [issueId];
 
     if (shiftKey && lastToggled) {
-      const { lower, upper } = getToggledRange(this.props.items, episodeId, lastToggled);
+      const { lower, upper } = getToggledRange(this.props.items, issueId, lastToggled);
       const items = this.props.items;
 
       for (let i = lower; i < upper; i++) {
-        episodeIds.push(items[i].id);
+        issueIds.push(items[i].id);
       }
     }
 
-    this.setState({ lastToggledEpisode: episodeId });
+    this.setState({ lastToggledIssue: issueId });
 
-    this.props.onMonitorEpisodePress(_.uniq(episodeIds), monitored);
+    this.props.onMonitorIssuePress(_.uniq(issueIds), monitored);
   }
 
   //
@@ -220,16 +220,16 @@ class ComicDetailsSeason extends Component {
     } = this.props;
 
     const {
-      episodeCount,
-      episodeFileCount,
-      totalEpisodeCount,
-      monitoredEpisodeCount,
-      hasMonitoredEpisodes
+      issueCount,
+      issueFileCount,
+      totalIssueCount,
+      monitoredIssueCount,
+      hasMonitoredIssues
     } = getSeasonStatistics(items);
 
     const {
       isOrganizeModalOpen,
-      isManageEpisodesOpen,
+      isManageIssuesOpen,
       isHistoryModalOpen,
       isInteractiveSearchModalOpen
     } = this.state;
@@ -259,22 +259,22 @@ class ComicDetailsSeason extends Component {
             }
 
             <Popover
-              className={styles.episodeCountTooltip}
+              className={styles.issueCountTooltip}
               anchor={
                 <Label
-                  kind={getEpisodeCountKind(monitored, episodeFileCount, episodeCount)}
+                  kind={getIssueCountKind(monitored, issueFileCount, issueCount)}
                   size={sizes.LARGE}
                 >
-                  <span>{episodeFileCount} / {episodeCount}</span>
+                  <span>{issueFileCount} / {issueCount}</span>
                 </Label>
               }
               title="Season Information"
               body={
                 <div>
                   <SeasonInfo
-                    totalEpisodeCount={totalEpisodeCount}
-                    monitoredEpisodeCount={monitoredEpisodeCount}
-                    episodeFileCount={episodeFileCount}
+                    totalIssueCount={totalIssueCount}
+                    monitoredIssueCount={monitoredIssueCount}
+                    issueFileCount={issueFileCount}
                     sizeOnDisk={statistics.sizeOnDisk}
                   />
                 </div>
@@ -298,7 +298,7 @@ class ComicDetailsSeason extends Component {
             <Icon
               className={styles.expandButtonIcon}
               name={isExpanded ? icons.COLLAPSE : icons.EXPAND}
-              title={isExpanded ? 'Hide episodes' : 'Show episodes'}
+              title={isExpanded ? 'Hide issues' : 'Show issues'}
               size={24}
             />
             {
@@ -323,7 +323,7 @@ class ComicDetailsSeason extends Component {
 
                 <MenuContent className={styles.actionsMenuContent}>
                   <MenuItem
-                    isDisabled={isSearching || !hasMonitoredEpisodes || !comicMonitored}
+                    isDisabled={isSearching || !hasMonitoredIssues || !comicMonitored}
                     onPress={onSearchPress}
                   >
                     <SpinnerIcon
@@ -337,7 +337,7 @@ class ComicDetailsSeason extends Component {
 
                   <MenuItem
                     onPress={this.onInteractiveSearchPress}
-                    isDisabled={!totalEpisodeCount}
+                    isDisabled={!totalIssueCount}
                   >
                     <Icon
                       className={styles.actionMenuIcon}
@@ -349,7 +349,7 @@ class ComicDetailsSeason extends Component {
 
                   <MenuItem
                     onPress={this.onOrganizePress}
-                    isDisabled={!episodeFileCount}
+                    isDisabled={!issueFileCount}
                   >
                     <Icon
                       className={styles.actionMenuIcon}
@@ -360,20 +360,20 @@ class ComicDetailsSeason extends Component {
                   </MenuItem>
 
                   <MenuItem
-                    onPress={this.onManageEpisodesPress}
-                    isDisabled={!episodeFileCount}
+                    onPress={this.onManageIssuesPress}
+                    isDisabled={!issueFileCount}
                   >
                     <Icon
                       className={styles.actionMenuIcon}
-                      name={icons.EPISODE_FILE}
+                      name={icons.ISSUE_FILE}
                     />
 
-                    Manage Episodes
+                    Manage Issues
                   </MenuItem>
 
                   <MenuItem
                     onPress={this.onHistoryPress}
-                    isDisabled={!totalEpisodeCount}
+                    isDisabled={!totalIssueCount}
                   >
                     <Icon
                       className={styles.actionMenuIcon}
@@ -389,19 +389,19 @@ class ComicDetailsSeason extends Component {
                 <SpinnerIconButton
                   className={styles.actionButton}
                   name={icons.SEARCH}
-                  title={hasMonitoredEpisodes && comicMonitored ? 'Search for monitored episodes in this season' : 'No monitored episodes in this season'}
+                  title={hasMonitoredIssues && comicMonitored ? 'Search for monitored issues in this season' : 'No monitored issues in this season'}
                   size={24}
                   isSpinning={isSearching}
-                  isDisabled={isSearching || !hasMonitoredEpisodes || !comicMonitored}
+                  isDisabled={isSearching || !hasMonitoredIssues || !comicMonitored}
                   onPress={onSearchPress}
                 />
 
                 <IconButton
                   className={styles.actionButton}
                   name={icons.INTERACTIVE}
-                  title="Interactive search for all episodes in this season"
+                  title="Interactive search for all issues in this season"
                   size={24}
-                  isDisabled={!totalEpisodeCount}
+                  isDisabled={!totalIssueCount}
                   onPress={this.onInteractiveSearchPress}
                 />
 
@@ -410,17 +410,17 @@ class ComicDetailsSeason extends Component {
                   name={icons.ORGANIZE}
                   title="Preview rename for this season"
                   size={24}
-                  isDisabled={!episodeFileCount}
+                  isDisabled={!issueFileCount}
                   onPress={this.onOrganizePress}
                 />
 
                 <IconButton
                   className={styles.actionButton}
-                  name={icons.EPISODE_FILE}
-                  title="Manage episode files in this season"
+                  name={icons.ISSUE_FILE}
+                  title="Manage issue files in this season"
                   size={24}
-                  isDisabled={!episodeFileCount}
-                  onPress={this.onManageEpisodesPress}
+                  isDisabled={!issueFileCount}
+                  onPress={this.onManageIssuesPress}
                 />
 
                 <IconButton
@@ -428,7 +428,7 @@ class ComicDetailsSeason extends Component {
                   name={icons.HISTORY}
                   title="View history for this season"
                   size={24}
-                  isDisabled={!totalEpisodeCount}
+                  isDisabled={!totalIssueCount}
                   onPress={this.onHistoryPress}
                 />
               </div>
@@ -439,7 +439,7 @@ class ComicDetailsSeason extends Component {
         <div>
           {
             isExpanded &&
-              <div className={styles.episodes}>
+              <div className={styles.issues}>
                 {
                   items.length ?
                     <Table
@@ -450,11 +450,11 @@ class ComicDetailsSeason extends Component {
                         {
                           items.map((item) => {
                             return (
-                              <EpisodeRowConnector
+                              <IssueRowConnector
                                 key={item.id}
                                 columns={columns}
                                 {...item}
-                                onMonitorEpisodePress={this.onMonitorEpisodePress}
+                                onMonitorIssuePress={this.onMonitorIssuePress}
                               />
                             );
                           })
@@ -462,8 +462,8 @@ class ComicDetailsSeason extends Component {
                       </TableBody>
                     </Table> :
 
-                    <div className={styles.noEpisodes}>
-                      No episodes in this season
+                    <div className={styles.noIssues}>
+                      No issues in this season
                     </div>
                 }
                 <div className={styles.collapseButtonContainer}>
@@ -471,7 +471,7 @@ class ComicDetailsSeason extends Component {
                     iconClassName={styles.collapseButtonIcon}
                     name={icons.COLLAPSE}
                     size={20}
-                    title="Hide episodes"
+                    title="Hide issues"
                     onPress={this.onExpandPress}
                   />
                 </div>
@@ -486,11 +486,11 @@ class ComicDetailsSeason extends Component {
           onModalClose={this.onOrganizeModalClose}
         />
 
-        <EpisodeFileEditorModal
-          isOpen={isManageEpisodesOpen}
+        <IssueFileEditorModal
+          isOpen={isManageIssuesOpen}
           comicId={comicId}
           seasonNumber={seasonNumber}
-          onModalClose={this.onManageEpisodesModalClose}
+          onModalClose={this.onManageIssuesModalClose}
         />
 
         <ComicHistoryModal
@@ -526,7 +526,7 @@ ComicDetailsSeason.propTypes = {
   onTableOptionChange: PropTypes.func.isRequired,
   onMonitorSeasonPress: PropTypes.func.isRequired,
   onExpandPress: PropTypes.func.isRequired,
-  onMonitorEpisodePress: PropTypes.func.isRequired,
+  onMonitorIssuePress: PropTypes.func.isRequired,
   onSearchPress: PropTypes.func.isRequired
 };
 

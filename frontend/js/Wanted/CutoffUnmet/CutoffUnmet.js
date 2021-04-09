@@ -87,10 +87,10 @@ class CutoffUnmet extends Component {
   }
 
   onToggleSelectedPress = () => {
-    const episodeIds = this.getSelectedIds();
+    const issueIds = this.getSelectedIds();
 
-    this.props.batchToggleCutoffUnmetEpisodes({
-      episodeIds,
+    this.props.batchToggleCutoffUnmetIssues({
+      issueIds,
       monitored: !getMonitoredValue(this.props)
     });
   }
@@ -129,7 +129,7 @@ class CutoffUnmet extends Component {
       filters,
       columns,
       totalRecords,
-      isSearchingForCutoffUnmetEpisodes,
+      isSearchingForCutoffUnmetIssues,
       isSaving,
       onFilterSelect,
       ...otherProps
@@ -152,7 +152,7 @@ class CutoffUnmet extends Component {
             <PageToolbarButton
               label="Search Selected"
               iconName={icons.SEARCH}
-              isDisabled={!itemsSelected || isSearchingForCutoffUnmetEpisodes}
+              isDisabled={!itemsSelected || isSearchingForCutoffUnmetIssues}
               onPress={this.onSearchSelectedPress}
             />
 
@@ -170,7 +170,7 @@ class CutoffUnmet extends Component {
               label="Search All"
               iconName={icons.SEARCH}
               isDisabled={!items.length}
-              isSpinning={isSearchingForCutoffUnmetEpisodes}
+              isSpinning={isSearchingForCutoffUnmetIssues}
               onPress={this.onSearchAllCutoffUnmetPress}
             />
 
@@ -245,14 +245,14 @@ class CutoffUnmet extends Component {
                 <ConfirmModal
                   isOpen={isConfirmSearchAllCutoffUnmetModalOpen}
                   kind={kinds.DANGER}
-                  title="Search for all Cutoff Unmet episodes"
+                  title="Search for all Cutoff Unmet issues"
                   message={
                     <div>
                       <div>
-                        Are you sure you want to search for all {totalRecords} Cutoff Unmet episodes?
+                        Are you sure you want to search for all {totalRecords} Cutoff Unmet issues?
                       </div>
                       <div>
-                        This cannot be cancelled once started without restarting Sonarr.
+                        This cannot be cancelled once started without restarting Paperback.
                       </div>
                     </div>
                   }
@@ -277,11 +277,11 @@ CutoffUnmet.propTypes = {
   filters: PropTypes.arrayOf(PropTypes.object).isRequired,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   totalRecords: PropTypes.number,
-  isSearchingForCutoffUnmetEpisodes: PropTypes.bool.isRequired,
+  isSearchingForCutoffUnmetIssues: PropTypes.bool.isRequired,
   isSaving: PropTypes.bool.isRequired,
   onFilterSelect: PropTypes.func.isRequired,
   onSearchSelectedPress: PropTypes.func.isRequired,
-  batchToggleCutoffUnmetEpisodes: PropTypes.func.isRequired,
+  batchToggleCutoffUnmetIssues: PropTypes.func.isRequired,
   onSearchAllCutoffUnmetPress: PropTypes.func.isRequired
 };
 

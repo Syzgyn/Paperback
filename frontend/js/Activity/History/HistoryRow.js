@@ -6,11 +6,11 @@ import IconButton from 'Components/Link/IconButton';
 import RelativeDateCellConnector from 'Components/Table/Cells/RelativeDateCellConnector';
 import TableRow from 'Components/Table/TableRow';
 import TableRowCell from 'Components/Table/Cells/TableRowCell';
-import episodeEntities from 'Episode/episodeEntities';
-import SeasonEpisodeNumber from 'Episode/SeasonEpisodeNumber';
-import EpisodeTitleLink from 'Episode/EpisodeTitleLink';
-import EpisodeLanguage from 'Episode/EpisodeLanguage';
-import EpisodeQuality from 'Episode/EpisodeQuality';
+import issueEntities from 'Issue/issueEntities';
+import SeasonIssueNumber from 'Issue/SeasonIssueNumber';
+import IssueTitleLink from 'Issue/IssueTitleLink';
+import IssueLanguage from 'Issue/IssueLanguage';
+import IssueQuality from 'Issue/IssueQuality';
 import ComicTitleLink from 'Comic/ComicTitleLink';
 import HistoryEventTypeCell from './HistoryEventTypeCell';
 import HistoryDetailsModal from './Details/HistoryDetailsModal';
@@ -55,9 +55,9 @@ class HistoryRow extends Component {
 
   render() {
     const {
-      episodeId,
+      issueId,
       comic,
-      episode,
+      issue,
       language,
       languageCutoffNotMet,
       quality,
@@ -73,7 +73,7 @@ class HistoryRow extends Component {
       onMarkAsFailedPress
     } = this.props;
 
-    if (!episode) {
+    if (!issue) {
       return null;
     }
 
@@ -111,31 +111,31 @@ class HistoryRow extends Component {
               );
             }
 
-            if (name === 'episode') {
+            if (name === 'issue') {
               return (
                 <TableRowCell key={name}>
-                  <SeasonEpisodeNumber
-                    seasonNumber={episode.seasonNumber}
-                    episodeNumber={episode.episodeNumber}
-                    absoluteEpisodeNumber={episode.absoluteEpisodeNumber}
+                  <SeasonIssueNumber
+                    seasonNumber={issue.seasonNumber}
+                    issueNumber={issue.issueNumber}
+                    absoluteIssueNumber={issue.absoluteIssueNumber}
                     comicType={comic.comicType}
                     alternateTitles={comic.alternateTitles}
-                    sceneSeasonNumber={episode.sceneSeasonNumber}
-                    sceneEpisodeNumber={episode.sceneEpisodeNumber}
-                    sceneAbsoluteEpisodeNumber={episode.sceneAbsoluteEpisodeNumber}
+                    sceneSeasonNumber={issue.sceneSeasonNumber}
+                    sceneIssueNumber={issue.sceneIssueNumber}
+                    sceneAbsoluteIssueNumber={issue.sceneAbsoluteIssueNumber}
                   />
                 </TableRowCell>
               );
             }
 
-            if (name === 'episodeTitle') {
+            if (name === 'issueTitle') {
               return (
                 <TableRowCell key={name}>
-                  <EpisodeTitleLink
-                    episodeId={episodeId}
-                    episodeEntity={episodeEntities.EPISODES}
+                  <IssueTitleLink
+                    issueId={issueId}
+                    issueEntity={issueEntities.ISSUES}
                     comicId={comic.id}
-                    episodeTitle={episode.title}
+                    issueTitle={issue.title}
                     showOpenComicButton={true}
                   />
                 </TableRowCell>
@@ -145,7 +145,7 @@ class HistoryRow extends Component {
             if (name === 'language') {
               return (
                 <TableRowCell key={name}>
-                  <EpisodeLanguage
+                  <IssueLanguage
                     language={language}
                     isCutoffMet={languageCutoffNotMet}
                   />
@@ -156,7 +156,7 @@ class HistoryRow extends Component {
             if (name === 'quality') {
               return (
                 <TableRowCell key={name}>
-                  <EpisodeQuality
+                  <IssueQuality
                     quality={quality}
                     isCutoffMet={qualityCutoffNotMet}
                   />
@@ -253,9 +253,9 @@ class HistoryRow extends Component {
 }
 
 HistoryRow.propTypes = {
-  episodeId: PropTypes.number,
+  issueId: PropTypes.number,
   comic: PropTypes.object.isRequired,
-  episode: PropTypes.object,
+  issue: PropTypes.object,
   language: PropTypes.object.isRequired,
   languageCutoffNotMet: PropTypes.bool.isRequired,
   quality: PropTypes.object.isRequired,

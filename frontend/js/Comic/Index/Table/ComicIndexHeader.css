@@ -53,14 +53,14 @@
   flex: 0 0 100px;
 }
 
-.episodeProgress,
+.issueProgress,
 .latestSeason {
   composes: headerCell from '~Components/Table/VirtualTableHeaderCell.css';
 
   flex: 0 0 150px;
 }
 
-.episodeCount {
+.issueCount {
   composes: headerCell from '~Components/Table/VirtualTableHeaderCell.css';
 
   flex: 0 0 130px;

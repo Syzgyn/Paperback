@@ -9,19 +9,19 @@ import DescriptionListItem from 'Components/DescriptionList/DescriptionListItem'
 import Popover from 'Components/Tooltip/Popover';
 import Icon from 'Components/Icon';
 
-function formatReleaseNumber(seasonNumber, episodeNumbers, absoluteEpisodeNumbers) {
-  if (episodeNumbers && episodeNumbers.length) {
-    if (episodeNumbers.length > 1) {
-      return `${seasonNumber}x${episodeNumbers[0]}-${episodeNumbers[episodeNumbers.length - 1]}`;
+function formatReleaseNumber(seasonNumber, issueNumbers, absoluteIssueNumbers) {
+  if (issueNumbers && issueNumbers.length) {
+    if (issueNumbers.length > 1) {
+      return `${seasonNumber}x${issueNumbers[0]}-${issueNumbers[issueNumbers.length - 1]}`;
     }
-    return `${seasonNumber}x${episodeNumbers[0]}`;
+    return `${seasonNumber}x${issueNumbers[0]}`;
   }
 
-  if (absoluteEpisodeNumbers && absoluteEpisodeNumbers.length) {
-    if (absoluteEpisodeNumbers.length > 1) {
-      return `${absoluteEpisodeNumbers[0]}-${absoluteEpisodeNumbers[absoluteEpisodeNumbers.length - 1]}`;
+  if (absoluteIssueNumbers && absoluteIssueNumbers.length) {
+    if (absoluteIssueNumbers.length > 1) {
+      return `${absoluteIssueNumbers[0]}-${absoluteIssueNumbers[absoluteIssueNumbers.length - 1]}`;
     }
-    return absoluteEpisodeNumbers[0];
+    return absoluteIssueNumbers[0];
   }
 
   if (seasonNumber !== undefined) {
@@ -35,13 +35,13 @@ function ReleaseSceneIndicator(props) {
   const {
     className,
     seasonNumber,
-    episodeNumbers,
-    absoluteEpisodeNumbers,
+    issueNumbers,
+    absoluteIssueNumbers,
     sceneSeasonNumber,
-    sceneEpisodeNumbers,
-    sceneAbsoluteEpisodeNumbers,
+    sceneIssueNumbers,
+    sceneAbsoluteIssueNumbers,
     sceneMapping,
-    episodeRequested,
+    issueRequested,
     isDaily
   } = props;
 
@@ -57,18 +57,18 @@ function ReleaseSceneIndicator(props) {
 
   let mappingDifferent = (sceneSeasonNumber !== undefined && seasonNumber !== sceneSeasonNumber);
 
-  if (sceneEpisodeNumbers !== undefined) {
-    mappingDifferent = mappingDifferent || !_.isEqual(sceneEpisodeNumbers, episodeNumbers);
-  } else if (sceneAbsoluteEpisodeNumbers !== undefined) {
-    mappingDifferent = mappingDifferent || !_.isEqual(sceneAbsoluteEpisodeNumbers, absoluteEpisodeNumbers);
+  if (sceneIssueNumbers !== undefined) {
+    mappingDifferent = mappingDifferent || !_.isEqual(sceneIssueNumbers, issueNumbers);
+  } else if (sceneAbsoluteIssueNumbers !== undefined) {
+    mappingDifferent = mappingDifferent || !_.isEqual(sceneAbsoluteIssueNumbers, absoluteIssueNumbers);
   }
 
   if (!sceneMapping && !mappingDifferent) {
     return null;
   }
 
-  const releaseNumber = formatReleaseNumber(sceneSeasonNumber, sceneEpisodeNumbers, sceneAbsoluteEpisodeNumbers);
-  const mappedNumber = formatReleaseNumber(seasonNumber, episodeNumbers, absoluteEpisodeNumbers);
+  const releaseNumber = formatReleaseNumber(sceneSeasonNumber, sceneIssueNumbers, sceneAbsoluteIssueNumbers);
+  const mappedNumber = formatReleaseNumber(seasonNumber, issueNumbers, absoluteIssueNumbers);
   const messages = [];
 
   const isMixed = (sceneOrigin === 'mixed');
@@ -78,10 +78,10 @@ function ReleaseSceneIndicator(props) {
 
   if (isMixed) {
     level = styles.levelMixed;
-    messages.push(<div>{comment ?? 'Source'} releases exist with ambiguous numbering, unable to reliably identify episode.</div>);
+    messages.push(<div>{comment ?? 'Source'} releases exist with ambiguous numbering, unable to reliably identify issue.</div>);
   } else if (isUnknown) {
     level = styles.levelUnknown;
-    messages.push(<div>Numbering varies for this episode and release does not match any known mappings.</div>);
+    messages.push(<div>Numbering varies for this issue and release does not match any known mappings.</div>);
     if (sceneOrigin === 'unknown') {
       messages.push(<div>Assuming Scene numbering.</div>);
     } else if (sceneOrigin === 'unknown:tvdb') {
@@ -93,14 +93,14 @@ function ReleaseSceneIndicator(props) {
     level = styles.levelNormal;
   }
 
-  if (!episodeRequested) {
+  if (!issueRequested) {
     if (!isMixed && !isUnknown) {
       level = styles.levelNotRequested;
     }
     if (mappedNumber) {
-      messages.push(<div>Mapped episode wasn't requested in this search.</div>);
+      messages.push(<div>Mapped issue wasn't requested in this search.</div>);
     } else {
-      messages.push(<div>Unknown episode or comic.</div>);
+      messages.push(<div>Unknown issue or comic.</div>);
     }
   }
 
@@ -178,13 +178,13 @@ function ReleaseSceneIndicator(props) {
 ReleaseSceneIndicator.propTypes = {
   className: PropTypes.string.isRequired,
   seasonNumber: PropTypes.number,
-  episodeNumbers: PropTypes.arrayOf(PropTypes.number),
-  absoluteEpisodeNumbers: PropTypes.arrayOf(PropTypes.number),
+  issueNumbers: PropTypes.arrayOf(PropTypes.number),
+  absoluteIssueNumbers: PropTypes.arrayOf(PropTypes.number),
   sceneSeasonNumber: PropTypes.number,
-  sceneEpisodeNumbers: PropTypes.arrayOf(PropTypes.number),
-  sceneAbsoluteEpisodeNumbers: PropTypes.arrayOf(PropTypes.number),
+  sceneIssueNumbers: PropTypes.arrayOf(PropTypes.number),
+  sceneAbsoluteIssueNumbers: PropTypes.arrayOf(PropTypes.number),
   sceneMapping: PropTypes.object.isRequired,
-  episodeRequested: PropTypes.bool.isRequired,
+  issueRequested: PropTypes.bool.isRequired,
   isDaily: PropTypes.bool.isRequired
 };
 

@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 const absUrlRegex = /^(https?:)?\/\//i;
-const apiRoot = window.Sonarr.apiRoot;
+const apiRoot = window.Paperback.apiRoot;
 
 function isRelative(ajaxOptions) {
   return !absUrlRegex.test(ajaxOptions.url);
@@ -25,7 +25,7 @@ function addRootUrl(ajaxOptions) {
 
 function addApiKey(ajaxOptions) {
   ajaxOptions.headers = ajaxOptions.headers || {};
-  ajaxOptions.headers['X-Api-Key'] = window.Sonarr.apiKey;
+  ajaxOptions.headers['X-Api-Key'] = window.Paperback.apiKey;
 }
 
 function addContentType(ajaxOptions) {

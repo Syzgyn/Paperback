@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import episodeEntities from 'Episode/episodeEntities';
-import EpisodeTitleLink from 'Episode/EpisodeTitleLink';
-import EpisodeStatusConnector from 'Episode/EpisodeStatusConnector';
-import SeasonEpisodeNumber from 'Episode/SeasonEpisodeNumber';
-import EpisodeSearchCellConnector from 'Episode/EpisodeSearchCellConnector';
+import issueEntities from 'Issue/issueEntities';
+import IssueTitleLink from 'Issue/IssueTitleLink';
+import IssueStatusConnector from 'Issue/IssueStatusConnector';
+import SeasonIssueNumber from 'Issue/SeasonIssueNumber';
+import IssueSearchCellConnector from 'Issue/IssueSearchCellConnector';
 import ComicTitleLink from 'Comic/ComicTitleLink';
 import RelativeDateCellConnector from 'Components/Table/Cells/RelativeDateCellConnector';
 import TableRow from 'Components/Table/TableRow';
@@ -15,14 +15,14 @@ import styles from './MissingRow.css';
 function MissingRow(props) {
   const {
     id,
-    episodeFileId,
+    issueFileId,
     comic,
     seasonNumber,
-    episodeNumber,
-    absoluteEpisodeNumber,
+    issueNumber,
+    absoluteIssueNumber,
     sceneSeasonNumber,
-    sceneEpisodeNumber,
-    sceneAbsoluteEpisodeNumber,
+    sceneIssueNumber,
+    sceneAbsoluteIssueNumber,
     unverifiedSceneNumbering,
     airDateUtc,
     title,
@@ -65,35 +65,35 @@ function MissingRow(props) {
             );
           }
 
-          if (name === 'episode') {
+          if (name === 'issue') {
             return (
               <TableRowCell
                 key={name}
-                className={styles.episode}
+                className={styles.issue}
               >
-                <SeasonEpisodeNumber
+                <SeasonIssueNumber
                   seasonNumber={seasonNumber}
-                  episodeNumber={episodeNumber}
-                  absoluteEpisodeNumber={absoluteEpisodeNumber}
+                  issueNumber={issueNumber}
+                  absoluteIssueNumber={absoluteIssueNumber}
                   comicType={comic.comicType}
                   alternateTitles={comic.alternateTitles}
                   sceneSeasonNumber={sceneSeasonNumber}
-                  sceneEpisodeNumber={sceneEpisodeNumber}
-                  sceneAbsoluteEpisodeNumber={sceneAbsoluteEpisodeNumber}
+                  sceneIssueNumber={sceneIssueNumber}
+                  sceneAbsoluteIssueNumber={sceneAbsoluteIssueNumber}
                   unverifiedSceneNumbering={unverifiedSceneNumbering}
                 />
               </TableRowCell>
             );
           }
 
-          if (name === 'episodeTitle') {
+          if (name === 'issueTitle') {
             return (
               <TableRowCell key={name}>
-                <EpisodeTitleLink
-                  episodeId={id}
+                <IssueTitleLink
+                  issueId={id}
                   comicId={comic.id}
-                  episodeEntity={episodeEntities.WANTED_MISSING}
-                  episodeTitle={title}
+                  issueEntity={issueEntities.WANTED_MISSING}
+                  issueTitle={title}
                   showOpenComicButton={true}
                 />
               </TableRowCell>
@@ -115,10 +115,10 @@ function MissingRow(props) {
                 key={name}
                 className={styles.status}
               >
-                <EpisodeStatusConnector
-                  episodeId={id}
-                  episodeFileId={episodeFileId}
-                  episodeEntity={episodeEntities.WANTED_MISSING}
+                <IssueStatusConnector
+                  issueId={id}
+                  issueFileId={issueFileId}
+                  issueEntity={issueEntities.WANTED_MISSING}
                 />
               </TableRowCell>
             );
@@ -126,12 +126,12 @@ function MissingRow(props) {
 
           if (name === 'actions') {
             return (
-              <EpisodeSearchCellConnector
+              <IssueSearchCellConnector
                 key={name}
-                episodeId={id}
+                issueId={id}
                 comicId={comic.id}
-                episodeTitle={title}
-                episodeEntity={episodeEntities.WANTED_MISSING}
+                issueTitle={title}
+                issueEntity={issueEntities.WANTED_MISSING}
                 showOpenComicButton={true}
               />
             );
@@ -146,14 +146,14 @@ function MissingRow(props) {
 
 MissingRow.propTypes = {
   id: PropTypes.number.isRequired,
-  episodeFileId: PropTypes.number,
+  issueFileId: PropTypes.number,
   comic: PropTypes.object.isRequired,
   seasonNumber: PropTypes.number.isRequired,
-  episodeNumber: PropTypes.number.isRequired,
-  absoluteEpisodeNumber: PropTypes.number,
+  issueNumber: PropTypes.number.isRequired,
+  absoluteIssueNumber: PropTypes.number,
   sceneSeasonNumber: PropTypes.number,
-  sceneEpisodeNumber: PropTypes.number,
-  sceneAbsoluteEpisodeNumber: PropTypes.number,
+  sceneIssueNumber: PropTypes.number,
+  sceneAbsoluteIssueNumber: PropTypes.number,
   unverifiedSceneNumbering: PropTypes.bool.isRequired,
   airDateUtc: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,

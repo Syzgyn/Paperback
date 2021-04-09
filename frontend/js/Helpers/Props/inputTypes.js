@@ -3,7 +3,7 @@ export const CAPTCHA = 'captcha';
 export const CHECK = 'check';
 export const DEVICE = 'device';
 export const KEY_VALUE_LIST = 'keyValueList';
-export const MONITOR_EPISODES_SELECT = 'monitorEpisodesSelect';
+export const MONITOR_ISSUES_SELECT = 'monitorIssuesSelect';
 export const NUMBER = 'number';
 export const OAUTH = 'oauth';
 export const PASSWORD = 'password';
@@ -27,7 +27,7 @@ export const all = [
   CHECK,
   DEVICE,
   KEY_VALUE_LIST,
-  MONITOR_EPISODES_SELECT,
+  MONITOR_ISSUES_SELECT,
   NUMBER,
   OAUTH,
   PASSWORD,

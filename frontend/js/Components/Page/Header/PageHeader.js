@@ -57,7 +57,7 @@ class PageHeader extends Component {
           >
             <img
               className={styles.logo}
-              src={`${window.Sonarr.urlBase}/storage/logo.png`}
+              src={`${window.Paperback.urlBase}/storage/logo.png`}
             />
           </Link>
         </div>
@@ -76,7 +76,7 @@ class PageHeader extends Component {
           <IconButton
             className={styles.donate}
             name={icons.HEART}
-            to="https://sonarr.tv/donate.html"
+            to="https://paperback.tv/donate.html"
             size={14}
           />
           <PageHeaderActionsMenuConnector

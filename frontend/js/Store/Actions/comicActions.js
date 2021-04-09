@@ -12,7 +12,7 @@ import createSaveProviderHandler from './Creators/createSaveProviderHandler';
 import createRemoveItemHandler from './Creators/createRemoveItemHandler';
 import createHandleActions from './Creators/createHandleActions';
 import { updateItem, set } from './baseActions';
-import { fetchEpisodes } from './episodeActions';
+import { fetchIssues } from './issueActions';
 
 //
 // Local
@@ -78,7 +78,7 @@ export const filters = [
   },
   {
     key: 'missing',
-    label: 'Missing Episodes',
+    label: 'Missing Issues',
     filters: [
       {
         key: 'missing',
@@ -90,16 +90,16 @@ export const filters = [
 ];
 
 export const filterPredicates = {
-  episodeProgress: function(item, filterValue, type) {
+  issueProgress: function(item, filterValue, type) {
     const { statistics = {} } = item;
 
     const {
-      episodeCount = 0,
-      episodeFileCount
+      issueCount = 0,
+      issueFileCount
     } = statistics;
 
-    const progress = episodeCount ?
-      episodeFileCount / episodeCount * 100 :
+    const progress = issueCount ?
+      issueFileCount / issueCount * 100 :
       100;
 
     const predicate = filterTypePredicates[type];
@@ -110,7 +110,7 @@ export const filterPredicates = {
   missing: function(item) {
     const { statistics = {} } = item;
 
-    return statistics.episodeCount - statistics.episodeFileCount > 0;
+    return statistics.issueCount - statistics.issueFileCount > 0;
   },
 
   nextAiring: function(item, filterValue, type) {
@@ -222,8 +222,8 @@ export const filterBuilderProps = [
     type: filterBuilderTypes.NUMBER
   },
   {
-    name: 'episodeProgress',
-    label: 'Episode Progress',
+    name: 'issueProgress',
+    label: 'Issue Progress',
     type: filterBuilderTypes.NUMBER
   },
   {
@@ -488,20 +488,20 @@ export const actionHandlers = handleThunks({
             }
           });
 
-          const episodesToUpdate = getState().episodes.items.reduce((acc, episode) => {
-            if (episode.comicId !== data.id) {
+          const issuesToUpdate = getState().issues.items.reduce((acc, issue) => {
+            if (issue.comicId !== data.id) {
               return acc;
             }
 
-            const changedSeason = changedSeasons.find((s) => s.seasonNumber === episode.seasonNumber);
+            const changedSeason = changedSeasons.find((s) => s.seasonNumber === issue.seasonNumber);
 
             if (!changedSeason) {
               return acc;
             }
 
             acc.push(updateItem({
-              id: episode.id,
-              section: 'episodes',
+              id: issue.id,
+              section: 'issues',
               monitored: changedSeason.monitored
             }));
 
@@ -515,7 +515,7 @@ export const actionHandlers = handleThunks({
               ...data
             }),
 
-            ...episodesToUpdate
+            ...issuesToUpdate
           ]));
 
           changedSeasons.forEach((s) => {
@@ -565,7 +565,7 @@ export const actionHandlers = handleThunks({
       dataType: 'json'
     }).request;
     promise.done((data) => {
-      dispatch(fetchEpisodes({ comicId: id }));
+      dispatch(fetchIssues({ comicId: id }));
 
       dispatch(set({
         section,

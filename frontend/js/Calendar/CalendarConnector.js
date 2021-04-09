@@ -6,7 +6,7 @@ import { registerPagePopulator, unregisterPagePopulator } from 'Utilities/pagePo
 import hasDifferentItems from 'Utilities/Object/hasDifferentItems';
 import selectUniqueIds from 'Utilities/Object/selectUniqueIds';
 import * as calendarActions from 'Store/Actions/calendarActions';
-import { fetchEpisodeFiles, clearEpisodeFiles } from 'Store/Actions/episodeFileActions';
+import { fetchIssueFiles, clearIssueFiles } from 'Store/Actions/issueFileActions';
 import { fetchQueueDetails, clearQueueDetails } from 'Store/Actions/queueActions';
 import createCommandExecutingSelector from 'Store/Selectors/createCommandExecutingSelector';
 import * as commandNames from 'Commands/commandNames';
@@ -31,8 +31,8 @@ function createMapStateToProps() {
 
 const mapDispatchToProps = {
   ...calendarActions,
-  fetchEpisodeFiles,
-  clearEpisodeFiles,
+  fetchIssueFiles,
+  clearIssueFiles,
   fetchQueueDetails,
   clearQueueDetails
 };
@@ -76,15 +76,15 @@ class CalendarConnector extends Component {
     } = this.props;
 
     if (hasDifferentItems(prevProps.items, items)) {
-      const episodeIds = selectUniqueIds(items, 'id');
-      const episodeFileIds = selectUniqueIds(items, 'episodeFileId');
+      const issueIds = selectUniqueIds(items, 'id');
+      const issueFileIds = selectUniqueIds(items, 'issueFileId');
 
       if (items.length) {
-        this.props.fetchQueueDetails({ episodeIds });
+        this.props.fetchQueueDetails({ issueIds });
       }
 
-      if (episodeFileIds.length) {
-        this.props.fetchEpisodeFiles({ episodeFileIds });
+      if (issueFileIds.length) {
+        this.props.fetchIssueFiles({ issueFileIds });
       }
     }
 
@@ -105,7 +105,7 @@ class CalendarConnector extends Component {
     unregisterPagePopulator(this.repopulate);
     this.props.clearCalendar();
     this.props.clearQueueDetails();
-    this.props.clearEpisodeFiles();
+    this.props.clearIssueFiles();
     this.clearUpdateTimeout();
   }
 
@@ -187,8 +187,8 @@ CalendarConnector.propTypes = {
   gotoCalendarNextRange: PropTypes.func.isRequired,
   clearCalendar: PropTypes.func.isRequired,
   fetchCalendar: PropTypes.func.isRequired,
-  fetchEpisodeFiles: PropTypes.func.isRequired,
-  clearEpisodeFiles: PropTypes.func.isRequired,
+  fetchIssueFiles: PropTypes.func.isRequired,
+  clearIssueFiles: PropTypes.func.isRequired,
   fetchQueueDetails: PropTypes.func.isRequired,
   clearQueueDetails: PropTypes.func.isRequired
 };

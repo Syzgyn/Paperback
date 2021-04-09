@@ -22,7 +22,7 @@ class History extends Component {
 
   shouldComponentUpdate(nextProps) {
     // Don't update when fetching has completed if items have changed,
-    // before episodes start fetching or when episodes start fetching.
+    // before issues start fetching or when issues start fetching.
 
     if (
       (
@@ -30,7 +30,7 @@ class History extends Component {
         nextProps.isPopulated &&
         hasDifferentItems(this.props.items, nextProps.items)
       ) ||
-      (!this.props.isEpisodesFetching && nextProps.isEpisodesFetching)
+      (!this.props.isIssuesFetching && nextProps.isIssuesFetching)
     ) {
       return false;
     }
@@ -51,17 +51,17 @@ class History extends Component {
       selectedFilterKey,
       filters,
       totalRecords,
-      isEpisodesFetching,
-      isEpisodesPopulated,
-      episodesError,
+      isIssuesFetching,
+      isIssuesPopulated,
+      issuesError,
       onFilterSelect,
       onFirstPagePress,
       ...otherProps
     } = this.props;
 
-    const isFetchingAny = isFetching || isEpisodesFetching;
-    const isAllPopulated = isPopulated && (isEpisodesPopulated || !items.length);
-    const hasError = error || episodesError;
+    const isFetchingAny = isFetching || isIssuesFetching;
+    const isAllPopulated = isPopulated && (isIssuesPopulated || !items.length);
+    const hasError = error || issuesError;
 
     return (
       <PageContent title="History">
@@ -109,7 +109,7 @@ class History extends Component {
 
           {
             // If history isPopulated and it's empty show no history found and don't
-            // wait for the episodes to populate because they are never coming.
+            // wait for the issues to populate because they are never coming.
 
             isPopulated && !hasError && !items.length &&
               <div>
@@ -162,9 +162,9 @@ History.propTypes = {
   selectedFilterKey: PropTypes.string.isRequired,
   filters: PropTypes.arrayOf(PropTypes.object).isRequired,
   totalRecords: PropTypes.number,
-  isEpisodesFetching: PropTypes.bool.isRequired,
-  isEpisodesPopulated: PropTypes.bool.isRequired,
-  episodesError: PropTypes.object,
+  isIssuesFetching: PropTypes.bool.isRequired,
+  isIssuesPopulated: PropTypes.bool.isRequired,
+  issuesError: PropTypes.object,
   onFilterSelect: PropTypes.func.isRequired,
   onFirstPagePress: PropTypes.func.isRequired
 };

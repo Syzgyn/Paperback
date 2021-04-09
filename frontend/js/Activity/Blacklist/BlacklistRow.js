@@ -6,8 +6,8 @@ import TableSelectCell from 'Components/Table/Cells/TableSelectCell';
 import RelativeDateCellConnector from 'Components/Table/Cells/RelativeDateCellConnector';
 import TableRow from 'Components/Table/TableRow';
 import TableRowCell from 'Components/Table/Cells/TableRowCell';
-import EpisodeLanguage from 'Episode/EpisodeLanguage';
-import EpisodeQuality from 'Episode/EpisodeQuality';
+import IssueLanguage from 'Issue/IssueLanguage';
+import IssueQuality from 'Issue/IssueQuality';
 import ComicTitleLink from 'Comic/ComicTitleLink';
 import BlacklistDetailsModal from './BlacklistDetailsModal';
 import styles from './BlacklistRow.css';
@@ -100,7 +100,7 @@ class BlacklistRow extends Component {
                   key={name}
                   className={styles.language}
                 >
-                  <EpisodeLanguage
+                  <IssueLanguage
                     language={language}
                   />
                 </TableRowCell>
@@ -113,7 +113,7 @@ class BlacklistRow extends Component {
                   key={name}
                   className={styles.quality}
                 >
-                  <EpisodeQuality
+                  <IssueQuality
                     quality={quality}
                   />
                 </TableRowCell>
