@@ -220,8 +220,8 @@ class Menu extends Component {
 
         <Portal>
           <Popper {...popperOptions[alignMenu]}>
-            {({ ref, style, scheduleUpdate }) => {
-              this._scheduleUpdate = scheduleUpdate;
+            {({ ref, style, update}) => {
+              this._scheduleUpdate = update;
 
               return React.cloneElement(
                 childrenArray[1],
