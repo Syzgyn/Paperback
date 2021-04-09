@@ -275,6 +275,9 @@ ComicIndexOverview.defaultProps = {
     issueCount: 0,
     issueFileCount: 0,
     totalIssueCount: 0
+  },
+  qualityProfile: {
+    name: 'delete me',
   }
 };
 

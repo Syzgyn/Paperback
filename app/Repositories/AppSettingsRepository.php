@@ -122,6 +122,10 @@ class AppSettingsRepository
                         return "$key = $value";
                     }
 
+                    if (is_numeric($value)) {
+                        return "$key = $value";
+                    }
+
                     return "$key = '$value'";
                 },
                 array_values($properties),

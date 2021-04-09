@@ -45,11 +45,15 @@ class SettingsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, string $category)
     {
-        $config = $request->all();
+        $config = [$category => $request->all()];
 
-        return $this->settings->bulkSet($config);
+        if ($this->settings->bulkSet($config)) {
+            return $this->settings->get($category);
+        }
+
+        throw new Exception("Unable to save config");
     }
 
     /**

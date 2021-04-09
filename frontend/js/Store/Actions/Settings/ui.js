@@ -50,8 +50,8 @@ export default {
   // Action Handlers
 
   actionHandlers: {
-    [FETCH_UI_SETTINGS]: createFetchHandler(section, '/config/ui'),
-    [SAVE_UI_SETTINGS]: createSaveHandler(section, '/config/ui')
+    [FETCH_UI_SETTINGS]: createFetchHandler(section, '/settings/ui'),
+    [SAVE_UI_SETTINGS]: createSaveHandler(section, '/settings/ui')
   },
 
   //
