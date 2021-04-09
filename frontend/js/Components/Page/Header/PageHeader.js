@@ -73,12 +73,6 @@ class PageHeader extends Component {
         <ComicSearchInputConnector />
 
         <div className={styles.right}>
-          <IconButton
-            className={styles.donate}
-            name={icons.HEART}
-            to="https://paperback.tv/donate.html"
-            size={14}
-          />
           <PageHeaderActionsMenuConnector
             onKeyboardShortcutsPress={this.onOpenKeyboardShortcutsModal}
           />
