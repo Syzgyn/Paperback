@@ -15,29 +15,23 @@ class Issue extends JsonResource
     public function toArray($request)
     {
         return [
-            'issue_name' => $this->getName(),
-            'comic_name' => $this->comic->name,
-            'comic_id' => $this->comic_id,
-            'description' => $this->description,
-            'release_date' => $this->release_date,
-            'issue_num' => $this->issue_num,
+            'title' => $this->displayName,
+            'comicId' => $this->comic_id,
+            'overview' => $this->description,
+            'airDate' => $this->release_date,
+            'airDateUtc' => $this->release_date,
+            'absoluteEpisodeNumber' => $this->issue_num,
+            'episodeNumber' => $this->issue_num,
             'url' => $this->url,
-            'cvid' => $this->cvid,
-            'trackedDownloads' => $this->trackedDownloads,
-            'activeDownloads' => $this->activeDownloads,
-            'status' => $this->status,
+            'id' => $this->cvid,
+            //'trackedDownloads' => $this->trackedDownloads,
+            //'activeDownloads' => $this->activeDownloads,
+            //'status' => $this->status,
             'monitored' => $this->monitored,
-            'downloadedFile' => $this->downloadedFile,
-            'displayName' => $this->displayName,
+            'hasFile' => $this->hasDownloadedFile(),
+            'issueFileId' => 0, //TODO
+            'seasonNumber' => 0, //TODO
+            'unverifiedSceneNumbering' => false,
         ];
-    }
-
-    protected function getName()
-    {
-        if ($this->name) {
-            return $this->name;
-        }
-
-        return 'Issue #' . $this->issue_num;
     }
 }

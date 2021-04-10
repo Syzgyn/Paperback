@@ -17,8 +17,14 @@ class IssueController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($comicId = $request->query('comicId')) {
+            $issues = Issue::where('comic_id', $comicId)->orderBy('issue_num', 'DESC')->get();
+
+            return new IssueCollection($issues);
+        }
+
         $issues = Issue::all();
 
         return new IssueCollection($issues);
