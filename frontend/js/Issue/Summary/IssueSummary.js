@@ -12,6 +12,7 @@ import IssueQuality from 'Issue/IssueQuality';
 import IssueAiringConnector from './IssueAiringConnector';
 import MediaInfo from './MediaInfo';
 import styles from './IssueSummary.css';
+import ReactHtmlParser from 'react-html-parser';
 
 class IssueSummary extends Component {
 
@@ -50,7 +51,7 @@ class IssueSummary extends Component {
       qualityProfileId,
       network,
       overview,
-      airDateUtc,
+      releaseDateUtc,
       mediaInfo,
       path,
       size,
@@ -66,28 +67,15 @@ class IssueSummary extends Component {
           <span className={styles.infoTitle}>Airs</span>
 
           <IssueAiringConnector
-            airDateUtc={airDateUtc}
+            releaseDateUtc={releaseDateUtc}
             network={network}
           />
-        </div>
-
-        <div>
-          <span className={styles.infoTitle}>Quality Profile</span>
-
-          <Label
-            kind={kinds.PRIMARY}
-            size={sizes.MEDIUM}
-          >
-            <QualityProfileNameConnector
-              qualityProfileId={qualityProfileId}
-            />
-          </Label>
         </div>
 
         <div className={styles.overview}>
           {
             hasOverview ?
-              overview :
+              ReactHtmlParser(overview) :
               'No issue overview.'
           }
         </div>
@@ -168,10 +156,9 @@ class IssueSummary extends Component {
 
 IssueSummary.propTypes = {
   issueFileId: PropTypes.number.isRequired,
-  qualityProfileId: PropTypes.number.isRequired,
-  network: PropTypes.string.isRequired,
+  network: PropTypes.string,
   overview: PropTypes.string,
-  airDateUtc: PropTypes.string.isRequired,
+  releaseDateUtc: PropTypes.string.isRequired,
   mediaInfo: PropTypes.object,
   path: PropTypes.string,
   size: PropTypes.number,

@@ -81,7 +81,7 @@ export const defaultState = {
         isVisible: true
       },
       {
-        name: 'issue.airDateUtc',
+        name: 'issue.releaseDateUtc',
         label: 'Issue Air Date',
         isSortable: true,
         isVisible: false

@@ -4,14 +4,14 @@ import IssueNumber from './IssueNumber';
 
 function SeasonIssueNumber(props) {
   const {
-    airDate,
+    releaseDate,
     comicType,
     ...otherProps
   } = props;
 
-  if (comicType === 'daily' && airDate) {
+  if (comicType === 'daily' && releaseDate) {
     return (
-      <span>{airDate}</span>
+      <span>{releaseDate}</span>
     );
   }
 
@@ -25,7 +25,7 @@ function SeasonIssueNumber(props) {
 }
 
 SeasonIssueNumber.propTypes = {
-  airDate: PropTypes.string,
+  releaseDate: PropTypes.string,
   comicType: PropTypes.string
 };
 

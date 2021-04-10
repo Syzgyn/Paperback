@@ -31,7 +31,7 @@ const columns = [
     isVisible: true
   },
   {
-    name: 'airDate',
+    name: 'releaseDate',
     label: 'Air Date',
     isVisible: true
   }
@@ -175,7 +175,7 @@ class SelectIssueModalContent extends Component {
                               issueNumber={item.issueNumber}
                               absoluteIssueNumber={item.absoluteIssueNumber}
                               title={item.title}
-                              airDate={item.airDate}
+                              releaseDate={item.releaseDate}
                               isAnime={isAnime}
                               isSelected={selectedState[item.id]}
                               onSelectedChange={this.onSelectedChange}

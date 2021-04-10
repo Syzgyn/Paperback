@@ -34,7 +34,7 @@ const columns = [
     isVisible: true
   },
   {
-    name: 'airDateUtc',
+    name: 'releaseDateUtc',
     label: 'Air Date',
     isVisible: true
   },

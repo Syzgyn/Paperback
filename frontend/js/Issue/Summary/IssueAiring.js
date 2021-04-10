@@ -10,7 +10,7 @@ import Label from 'Components/Label';
 
 function IssueAiring(props) {
   const {
-    airDateUtc,
+    releaseDateUtc,
     network,
     shortDateFormat,
     showRelativeDates,
@@ -26,7 +26,7 @@ function IssueAiring(props) {
     </Label>
   );
 
-  if (!airDateUtc) {
+  if (!releaseDateUtc) {
     return (
       <span>
         TBA on {networkLabel}
@@ -34,17 +34,17 @@ function IssueAiring(props) {
     );
   }
 
-  const time = formatTime(airDateUtc, timeFormat);
+  const time = formatTime(releaseDateUtc, timeFormat);
 
   if (!showRelativeDates) {
     return (
       <span>
-        {moment(airDateUtc).format(shortDateFormat)} at {time} on {networkLabel}
+        {moment(releaseDateUtc).format(shortDateFormat)} at {time} on {networkLabel}
       </span>
     );
   }
 
-  if (isToday(airDateUtc)) {
+  if (isToday(releaseDateUtc)) {
     return (
       <span>
         {time} on {networkLabel}
@@ -52,7 +52,7 @@ function IssueAiring(props) {
     );
   }
 
-  if (isTomorrow(airDateUtc)) {
+  if (isTomorrow(releaseDateUtc)) {
     return (
       <span>
         Tomorrow at {time} on {networkLabel}
@@ -60,27 +60,31 @@ function IssueAiring(props) {
     );
   }
 
-  if (isInNextWeek(airDateUtc)) {
+  if (isInNextWeek(releaseDateUtc)) {
     return (
       <span>
-        {moment(airDateUtc).format('dddd')} at {time} on {networkLabel}
+        {moment(releaseDateUtc).format('dddd')} at {time} on {networkLabel}
       </span>
     );
   }
 
   return (
     <span>
-      {moment(airDateUtc).format(shortDateFormat)} at {time} on {networkLabel}
+      {moment(releaseDateUtc).format(shortDateFormat)} at {time} on {networkLabel}
     </span>
   );
 }
 
 IssueAiring.propTypes = {
-  airDateUtc: PropTypes.string.isRequired,
+  releaseDateUtc: PropTypes.string.isRequired,
   network: PropTypes.string.isRequired,
   shortDateFormat: PropTypes.string.isRequired,
   showRelativeDates: PropTypes.bool.isRequired,
   timeFormat: PropTypes.string.isRequired
 };
+
+IssueAiring.defaultProps = {
+    network: "Publisher",
+}
 
 export default IssueAiring;

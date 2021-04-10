@@ -21,13 +21,13 @@ function createMissingIssueIdsSelector() {
     (state) => state.queue.details.items,
     (start, end, issues, queueDetails) => {
       return issues.reduce((acc, issue) => {
-        const airDateUtc = issue.airDateUtc;
+        const releaseDateUtc = issue.releaseDateUtc;
 
         if (
           !issue.issueFileId &&
-          moment(airDateUtc).isAfter(start) &&
-          moment(airDateUtc).isBefore(end) &&
-          isBefore(issue.airDateUtc) &&
+          moment(releaseDateUtc).isAfter(start) &&
+          moment(releaseDateUtc).isBefore(end) &&
+          isBefore(issue.releaseDateUtc) &&
           !queueDetails.some((details) => !!details.issue && details.issue.id === issue.id)
         ) {
           acc.push(issue.id);

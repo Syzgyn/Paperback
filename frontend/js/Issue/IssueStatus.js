@@ -10,7 +10,7 @@ import styles from './IssueStatus.css';
 
 function IssueStatus(props) {
   const {
-    airDateUtc,
+    releaseDateUtc,
     monitored,
     grabbed,
     queueItem,
@@ -19,7 +19,7 @@ function IssueStatus(props) {
 
   const hasIssueFile = !!issueFile;
   const isQueued = !!queueItem;
-  const hasAired = isBefore(airDateUtc);
+  const hasAired = isBefore(releaseDateUtc);
 
   if (isQueued) {
     const {
@@ -73,7 +73,7 @@ function IssueStatus(props) {
     );
   }
 
-  if (!airDateUtc) {
+  if (!releaseDateUtc) {
     return (
       <div className={styles.center}>
         <Icon
@@ -118,7 +118,7 @@ function IssueStatus(props) {
 }
 
 IssueStatus.propTypes = {
-  airDateUtc: PropTypes.string,
+  releaseDateUtc: PropTypes.string,
   monitored: PropTypes.bool.isRequired,
   grabbed: PropTypes.bool,
   queueItem: PropTypes.object,

@@ -53,7 +53,7 @@ class CalendarEvent extends Component {
       seasonNumber,
       issueNumber,
       absoluteIssueNumber,
-      airDateUtc,
+      releaseDateUtc,
       monitored,
       hasFile,
       grabbed,
@@ -71,8 +71,8 @@ class CalendarEvent extends Component {
       return null;
     }
 
-    const startTime = moment(airDateUtc);
-    const endTime = moment(airDateUtc).add(comic.runtime, 'minutes');
+    const startTime = moment(releaseDateUtc);
+    const endTime = moment(releaseDateUtc).add(comic.runtime, 'minutes');
     const isDownloading = !!(queueItem || grabbed);
     const isMonitored = comic.monitored && monitored;
     const statusStyle = getStatusStyle(hasFile, isDownloading, startTime, endTime, isMonitored);
@@ -216,7 +216,7 @@ class CalendarEvent extends Component {
           }
 
           <div className={styles.airTime}>
-            {formatTime(airDateUtc, timeFormat)} - {formatTime(endTime.toISOString(), timeFormat, { includeMinuteZero: true })}
+            {formatTime(releaseDateUtc, timeFormat)} - {formatTime(endTime.toISOString(), timeFormat, { includeMinuteZero: true })}
           </div>
         </Link>
 
@@ -242,7 +242,7 @@ CalendarEvent.propTypes = {
   seasonNumber: PropTypes.number.isRequired,
   issueNumber: PropTypes.number.isRequired,
   absoluteIssueNumber: PropTypes.number,
-  airDateUtc: PropTypes.string.isRequired,
+  releaseDateUtc: PropTypes.string.isRequired,
   monitored: PropTypes.bool.isRequired,
   hasFile: PropTypes.bool.isRequired,
   grabbed: PropTypes.bool,

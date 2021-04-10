@@ -89,9 +89,9 @@ class CalendarEventGroup extends Component {
     const anyDownloading = isDownloading || anyQueued;
     const firstIssue = events[0];
     const lastIssue = events[events.length -1];
-    const airDateUtc = firstIssue.airDateUtc;
-    const startTime = moment(airDateUtc);
-    const endTime = moment(lastIssue.airDateUtc).add(comic.runtime, 'minutes');
+    const releaseDateUtc = firstIssue.releaseDateUtc;
+    const startTime = moment(releaseDateUtc);
+    const endTime = moment(lastIssue.releaseDateUtc).add(comic.runtime, 'minutes');
     const seasonNumber = firstIssue.seasonNumber;
     const statusStyle = getStatusStyle(allDownloaded, anyDownloading, startTime, endTime, anyMonitored);
     const isMissingAbsoluteNumber = comic.comicType === 'anime' && seasonNumber > 0 && !allAbsoluteIssueNumbers;
@@ -188,7 +188,7 @@ class CalendarEventGroup extends Component {
 
         <div className={styles.airingInfo}>
           <div className={styles.airTime}>
-            {formatTime(airDateUtc, timeFormat)} - {formatTime(endTime.toISOString(), timeFormat, { includeMinuteZero: true })}
+            {formatTime(releaseDateUtc, timeFormat)} - {formatTime(endTime.toISOString(), timeFormat, { includeMinuteZero: true })}
           </div>
 
           {

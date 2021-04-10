@@ -58,7 +58,7 @@ class IssueRow extends Component {
       sceneSeasonNumber,
       sceneIssueNumber,
       sceneAbsoluteIssueNumber,
-      airDateUtc,
+      releaseDateUtc,
       title,
       useSceneNumbering,
       unverifiedSceneNumbering,
@@ -159,11 +159,11 @@ class IssueRow extends Component {
               );
             }
 
-            if (name === 'airDateUtc') {
+            if (name === 'releaseDateUtc') {
               return (
                 <RelativeDateCellConnector
                   key={name}
-                  date={airDateUtc}
+                  date={releaseDateUtc}
                 />
               );
             }
@@ -264,7 +264,7 @@ IssueRow.propTypes = {
   sceneSeasonNumber: PropTypes.number,
   sceneIssueNumber: PropTypes.number,
   sceneAbsoluteIssueNumber: PropTypes.number,
-  airDateUtc: PropTypes.string,
+  releaseDateUtc: PropTypes.string,
   title: PropTypes.string.isRequired,
   isSaving: PropTypes.bool,
   useSceneNumbering: PropTypes.bool,

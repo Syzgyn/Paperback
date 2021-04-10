@@ -25,7 +25,7 @@ function CutoffUnmetRow(props) {
     sceneIssueNumber,
     sceneAbsoluteIssueNumber,
     unverifiedSceneNumbering,
-    airDateUtc,
+    releaseDateUtc,
     title,
     isSelected,
     columns,
@@ -97,11 +97,11 @@ function CutoffUnmetRow(props) {
             );
           }
 
-          if (name === 'airDateUtc') {
+          if (name === 'releaseDateUtc') {
             return (
               <RelativeDateCellConnector
                 key={name}
-                date={airDateUtc}
+                date={releaseDateUtc}
               />
             );
           }
@@ -165,7 +165,7 @@ CutoffUnmetRow.propTypes = {
   sceneIssueNumber: PropTypes.number,
   sceneAbsoluteIssueNumber: PropTypes.number,
   unverifiedSceneNumbering: PropTypes.bool.isRequired,
-  airDateUtc: PropTypes.string.isRequired,
+  releaseDateUtc: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   isSelected: PropTypes.bool,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,

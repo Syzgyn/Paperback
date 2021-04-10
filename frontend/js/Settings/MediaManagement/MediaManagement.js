@@ -34,8 +34,8 @@ const downloadPropersAndRepacksOptions = [
 
 const fileDateOptions = [
   { key: 'none', value: 'None' },
-  { key: 'localAirDate', value: 'Local Air Date' },
-  { key: 'utcAirDate', value: 'UTC Air Date' }
+  { key: 'localReleaseDate', value: 'Local Air Date' },
+  { key: 'utcReleaseDate', value: 'UTC Air Date' }
 ];
 
 class MediaManagement extends Component {

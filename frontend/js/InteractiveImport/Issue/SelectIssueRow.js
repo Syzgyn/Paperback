@@ -27,7 +27,7 @@ class SelectIssueRow extends Component {
       issueNumber,
       absoluteIssueNumber,
       title,
-      airDate,
+      releaseDate,
       isAnime,
       isSelected,
       onSelectedChange
@@ -51,7 +51,7 @@ class SelectIssueRow extends Component {
         </TableRowCell>
 
         <TableRowCell>
-          {airDate}
+          {releaseDate}
         </TableRowCell>
       </TableRowButton>
     );
@@ -63,7 +63,7 @@ SelectIssueRow.propTypes = {
   issueNumber: PropTypes.number.isRequired,
   absoluteIssueNumber: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  airDate: PropTypes.string.isRequired,
+  releaseDate: PropTypes.string.isRequired,
   isAnime: PropTypes.bool.isRequired,
   isSelected: PropTypes.bool,
   onSelectedChange: PropTypes.func.isRequired

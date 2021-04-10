@@ -69,7 +69,7 @@ const issueTokens = [
   { token: '{issue:00}', example: '01' }
 ];
 
-const airDateTokens = [
+const releaseDateTokens = [
   { token: '{Air-Date}', example: '2016-03-20' },
   { token: '{Air Date}', example: '2016 03 20' }
 ];
@@ -350,7 +350,7 @@ class NamingModal extends Component {
                   <FieldSet legend="Air-Date">
                     <div className={styles.groups}>
                       {
-                        airDateTokens.map(({ token, example }) => {
+                        releaseDateTokens.map(({ token, example }) => {
                           return (
                             <NamingOption
                               key={token}

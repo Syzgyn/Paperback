@@ -55,24 +55,9 @@ export const defaultState = {
       isVisible: false
     },
     {
-      name: 'airDateUtc',
-      label: 'Air Date',
+      name: 'releaseDateUtc',
+      label: 'Release Date',
       isVisible: true
-    },
-    {
-      name: 'language',
-      label: 'Language',
-      isVisible: false
-    },
-    {
-      name: 'audioInfo',
-      label: 'Audio Info',
-      isVisible: false
-    },
-    {
-      name: 'videoCodec',
-      label: 'Video Codec',
-      isVisible: false
     },
     {
       name: 'size',

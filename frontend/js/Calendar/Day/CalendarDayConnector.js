@@ -9,10 +9,10 @@ import CalendarDay from './CalendarDay';
 function sort(items) {
   return _.sortBy(items, (item) => {
     if (item.isGroup) {
-      return moment(item.events[0].airDateUtc).unix();
+      return moment(item.events[0].releaseDateUtc).unix();
     }
 
-    return moment(item.airDateUtc).unix();
+    return moment(item.releaseDateUtc).unix();
   });
 }
 
@@ -23,7 +23,7 @@ function createCalendarEventsConnector() {
     (state) => state.calendar.options.collapseMultipleIssues,
     (date, items, collapseMultipleIssues) => {
       const filtered = _.filter(items, (item) => {
-        return moment(date).isSame(moment(item.airDateUtc), 'day');
+        return moment(date).isSame(moment(item.releaseDateUtc), 'day');
       });
 
       if (!collapseMultipleIssues) {
@@ -44,7 +44,7 @@ function createCalendarEventsConnector() {
             comicId: events[0].comicId,
             seasonNumber: events[0].seasonNumber,
             issueIds: events.map((event) => event.id),
-            events: _.sortBy(events, (item) => moment(item.airDateUtc).unix())
+            events: _.sortBy(events, (item) => moment(item.releaseDateUtc).unix())
           });
         }
       });

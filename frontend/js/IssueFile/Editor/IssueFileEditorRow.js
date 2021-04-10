@@ -17,7 +17,7 @@ function IssueFileEditorRow(props) {
     issueNumber,
     absoluteIssueNumber,
     relativePath,
-    airDateUtc,
+    releaseDateUtc,
     language,
     quality,
     qualityCutoffNotMet,
@@ -50,7 +50,7 @@ function IssueFileEditorRow(props) {
       </TableRowCell>
 
       <RelativeDateCellConnector
-        date={airDateUtc}
+        date={releaseDateUtc}
       />
 
       <TableRowCell>
@@ -77,7 +77,7 @@ IssueFileEditorRow.propTypes = {
   issueNumber: PropTypes.number.isRequired,
   absoluteIssueNumber: PropTypes.number,
   relativePath: PropTypes.string.isRequired,
-  airDateUtc: PropTypes.string.isRequired,
+  releaseDateUtc: PropTypes.string.isRequired,
   language: PropTypes.object.isRequired,
   quality: PropTypes.object.isRequired,
   qualityCutoffNotMet: PropTypes.bool.isRequired,

@@ -37,7 +37,7 @@ function getSeasonStatistics(issues) {
   const sizeOnDisk = 0;
 
   issues.forEach((issue) => {
-    if (issue.issueFileId || (issue.monitored && isBefore(issue.airDateUtc))) {
+    if (issue.issueFileId || (issue.monitored && isBefore(issue.releaseDateUtc))) {
       issueCount++;
     }
 
@@ -129,8 +129,8 @@ class ComicDetailsSeason extends Component {
     } = this.props;
 
     const expand = _.some(items, (item) => {
-      return isAfter(item.airDateUtc) ||
-             isAfter(item.airDateUtc, { days: -30 });
+      return isAfter(item.releaseDateUtc) ||
+             isAfter(item.releaseDateUtc, { days: -30 });
     });
 
     onExpandPress(seasonNumber, expand && seasonNumber > 0);

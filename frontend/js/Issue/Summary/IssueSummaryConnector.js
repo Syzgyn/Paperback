@@ -20,7 +20,7 @@ function createMapStateToProps() {
       } = comic;
 
       const {
-        airDateUtc,
+        releaseDateUtc,
         overview
       } = issue;
 
@@ -35,7 +35,7 @@ function createMapStateToProps() {
       return {
         network,
         qualityProfileId,
-        airDateUtc,
+        releaseDateUtc,
         overview,
         mediaInfo,
         path,
