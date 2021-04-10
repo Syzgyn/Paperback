@@ -30,6 +30,16 @@ class IssueController extends Controller
         return new IssueCollection($issues);
     }
 
+    public function monitored(Request $request)
+    {
+        $ids = $request->input('issueIds');
+        $monitored = $request->boolean('monitored');
+
+        Issue::whereIn('cvid', $ids)->update(['monitored' => $monitored]);
+
+        return new IssueCollection(Issue::findMany($ids));
+    }
+
     public function byComic(Request $request, Int $cvid)
     {
         $issues = Issue::where('comic_id', $cvid)->orderBy('issue_num', 'DESC')->get();

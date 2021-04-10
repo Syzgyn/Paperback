@@ -30,7 +30,7 @@ import EditComicModalConnector from 'Comic/Edit/EditComicModalConnector';
 import DeleteComicModal from 'Comic/Delete/DeleteComicModal';
 import ComicHistoryModal from 'Comic/History/ComicHistoryModal';
 import ComicAlternateTitles from './ComicAlternateTitles';
-import ComicDetailsSeasonConnector from './ComicDetailsSeasonConnector';
+import ComicDetailsIssuesConnector from './ComicDetailsIssuesConnector';
 import ComicTagsConnector from './ComicTagsConnector';
 import ComicDetailsLinks from './ComicDetailsLinks';
 import MonitoringOptionsModal from 'Comic/MonitoringOptions/MonitoringOptionsModal';
@@ -602,26 +602,16 @@ class ComicDetails extends Component {
             }
 
             {
-              isPopulated && !!seasons.length &&
+              isPopulated && hasIssues &&
                 <div>
-                  {
-                    seasons.slice(0).reverse().map((season) => {
-                      return (
-                        <ComicDetailsSeasonConnector
-                          key={season.seasonNumber}
-                          comicId={id}
-                          {...season}
-                          isExpanded={expandedState[season.seasonNumber]}
-                          onExpandPress={this.onExpandPress}
-                        />
-                      );
-                    })
-                  }
+                  <ComicDetailsIssuesConnector
+                    comicId={id}
+                  />
                 </div>
             }
 
             {
-              isPopulated && !seasons.length &&
+              isPopulated && !hasIssues &&
                 <div>
                   No issue information is available.
                 </div>

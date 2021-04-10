@@ -24,6 +24,7 @@ Route::get('comic/{comic}/download', 'ComicController@download');
 Route::get('comic/{comic}/comicvine', 'ComicController@comicvine');
 Route::resource('comic', 'ComicController');
 
+Route::put('issue/monitor', 'IssueController@monitored');
 Route::get('issue/byComic/{cvid}', 'IssueController@byComic');
 Route::get('issue/wanted', 'IssueController@wanted');
 Route::apiResource('issue', 'IssueController');
