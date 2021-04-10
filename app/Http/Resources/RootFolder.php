@@ -19,7 +19,8 @@ class RootFolder extends JsonResource
             'path' => $this->resource->path,
             'freeSpace' => $this->resource->freeSpace,
             'unmappedFolders' => $this->resource->unmappedFolders,
-            'unmappedFoldersCount' => $this->resource->unmappedFoldersCount,
+            'accessible' => $this->resource->accessible,
+            //'unmappedFoldersCount' => $this->resource->unmappedFoldersCount,
         ];
     }
 }

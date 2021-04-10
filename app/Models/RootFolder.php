@@ -12,7 +12,17 @@ class RootFolder extends Model
         'path',
     ];
 
+    public function getAccessibleAttribute()
+    {
+        return true;
+    }
+
     public function getFreeSpaceAttribute()
+    {
+        return disk_free_space($this->path);
+    }
+
+    public function getFormattedFreeSpaceAttribute()
     {
         $bytes = disk_free_space($this->path);
         $si_prefix = ['B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB'];

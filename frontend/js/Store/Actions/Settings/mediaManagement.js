@@ -50,8 +50,8 @@ export default {
   // Action Handlers
 
   actionHandlers: {
-    [FETCH_MEDIA_MANAGEMENT_SETTINGS]: createFetchHandler(section, '/config/mediamanagement'),
-    [SAVE_MEDIA_MANAGEMENT_SETTINGS]: createSaveHandler(section, '/config/mediamanagement')
+    [FETCH_MEDIA_MANAGEMENT_SETTINGS]: createFetchHandler(section, '/settings/mediamanagement'),
+    [SAVE_MEDIA_MANAGEMENT_SETTINGS]: createSaveHandler(section, '/settings/mediamanagement')
   },
 
   //

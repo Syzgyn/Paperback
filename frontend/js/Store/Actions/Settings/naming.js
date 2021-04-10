@@ -50,8 +50,8 @@ export default {
   // Action Handlers
 
   actionHandlers: {
-    [FETCH_NAMING_SETTINGS]: createFetchHandler(section, '/config/naming'),
-    [SAVE_NAMING_SETTINGS]: createSaveHandler(section, '/config/naming')
+    [FETCH_NAMING_SETTINGS]: createFetchHandler(section, '/settings/naming'),
+    [SAVE_NAMING_SETTINGS]: createSaveHandler(section, '/settings/naming')
   },
 
   //
