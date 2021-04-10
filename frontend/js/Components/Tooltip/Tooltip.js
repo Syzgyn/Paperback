@@ -73,7 +73,7 @@ class Tooltip extends Component {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
 
-    if ((/^top/).test(data.placement)) {
+    if ((/^top/).test(state.placement)) {
       state.styles.popper.maxHeight = top - 20;
     } else if ((/^bottom/).test(state.placement)) {
       state.styles.popper.maxHeight = windowHeight - bottom - 20;
@@ -159,7 +159,13 @@ class Tooltip extends Component {
               {
                 name: 'flip',
                 enabled: canFlip
-              }
+              },
+              {
+                name: 'offset',
+                options: {
+                  offset: [0, 10],
+                }
+              },
             ]}
           >
             {({ ref, style, placement, arrowProps, update}) => {

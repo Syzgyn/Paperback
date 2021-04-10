@@ -1,0 +1,12 @@
+.container p {
+    margin: 0;
+}
+
+.container a {
+  color: $linkColor;
+
+  &:hover {
+    color: $linkHoverColor;
+    text-decoration: underline;
+  }
+}

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import Truncate from 'react-truncate-html';
+import Truncate from 'Components/Truncate';
 import { icons } from 'Helpers/Props';
 import dimensions from 'Styles/Variables/dimensions';
 import fonts from 'Styles/Variables/fonts';
@@ -203,7 +203,7 @@ class ComicIndexOverview extends Component {
               >
                 <Truncate
                   lines={Math.floor(overviewHeight / (defaultFontSize * lineHeight))}
-                  dangerouslySetInnerHTML={{__html: overview}}
+                  html={overview}
                 />
               </Link>
 

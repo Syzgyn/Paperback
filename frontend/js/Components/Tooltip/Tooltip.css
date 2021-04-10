@@ -1,6 +1,5 @@
 .tooltipContainer {
   z-index: $popperZIndex;
-  margin: 10px;
 }
 
 .tooltip {

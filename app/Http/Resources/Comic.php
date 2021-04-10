@@ -30,6 +30,7 @@ class Comic extends JsonResource
             'year' => $this->start_year,
             'url' => $this->url,
             'id' => $this->cvid,
+            'cvid' => $this->cvid, //TODO: consolidate with id
             'images' => [
                 ['coverType' => 'poster', 'url' => $this->image],
             ],

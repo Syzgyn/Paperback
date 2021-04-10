@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import React, { Component, Children, createElement, cloneElement } from 'react'
-import PropTypes from 'prop-types'
-import ReactDOM from 'react-dom'
-import getNodeDimensions from 'get-node-dimensions'
+import React, { Component, Children, createElement, cloneElement } from 'react';
+import PropTypes from 'prop-types';
+import ReactDOM from 'react-dom';
+import getNodeDimensions from 'get-node-dimensions';
 
 class Measure extends Component {
   static propTypes = {

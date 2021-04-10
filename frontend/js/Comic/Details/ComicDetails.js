@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import TextTruncate from 'react-text-truncate';
+import Truncate from 'Components/Truncate';
 import formatBytes from 'Utilities/Number/formatBytes';
 import selectAll from 'Utilities/Table/selectAll';
 import toggleSelected from 'Utilities/Table/toggleSelected';
@@ -25,7 +25,6 @@ import Tooltip from 'Components/Tooltip/Tooltip';
 import IssueFileEditorModal from 'IssueFile/Editor/IssueFileEditorModal';
 import InteractiveImportModal from 'InteractiveImport/InteractiveImportModal';
 import OrganizePreviewModalConnector from 'Organize/OrganizePreviewModalConnector';
-import QualityProfileNameConnector from 'Settings/Profiles/Quality/QualityProfileNameConnector';
 import ComicPoster from 'Comic/ComicPoster';
 import EditComicModalConnector from 'Comic/Edit/EditComicModalConnector';
 import DeleteComicModal from 'Comic/Delete/DeleteComicModal';
@@ -40,6 +39,7 @@ import styles from './ComicDetails.css';
 
 const defaultFontSize = parseInt(fonts.defaultFontSize);
 const lineHeight = parseFloat(fonts.lineHeight);
+console.log(defaultFontSize, lineHeight);
 
 function getFanartUrl(images) {
   const fanartImage = _.find(images, { coverType: 'fanart' });
@@ -166,6 +166,8 @@ class ComicDetails extends Component {
   }
 
   onMeasure = ({ height }) => {
+    console.log(height);
+    console.log(Math.floor(height / (defaultFontSize * lineHeight)));
     this.setState({ overviewHeight: height });
   }
 
@@ -175,7 +177,7 @@ class ComicDetails extends Component {
   render() {
     const {
       id,
-      tvdbId,
+      cvid,
       tvMazeId,
       imdbId,
       title,
@@ -470,11 +472,7 @@ class ComicDetails extends Component {
                     />
 
                     <span className={styles.qualityProfileName}>
-                      {
-                        <QualityProfileNameConnector
-                          qualityProfileId={qualityProfileId}
-                        />
-                      }
+                      {qualityProfileId}
                     </span>
                   </Label>
 
@@ -543,7 +541,7 @@ class ComicDetails extends Component {
                     }
                     tooltip={
                       <ComicDetailsLinks
-                        tvdbId={tvdbId}
+                        cvid={cvid}
                         tvMazeId={tvMazeId}
                         imdbId={imdbId}
                       />
@@ -580,9 +578,10 @@ class ComicDetails extends Component {
 
                 <Measure onMeasure={this.onMeasure}>
                   <div className={styles.overview}>
-                    <TextTruncate
-                      line={Math.floor(overviewHeight / (defaultFontSize * lineHeight))}
-                      text={overview}
+                  {console.log('oh', overviewHeight, Math.floor(overviewHeight / (defaultFontSize * lineHeight)))}
+                    <Truncate
+                      lines={Math.floor(overviewHeight / (defaultFontSize * lineHeight))}
+                      html={overview}
                     />
                   </div>
                 </Measure>
@@ -688,11 +687,11 @@ class ComicDetails extends Component {
 
 ComicDetails.propTypes = {
   id: PropTypes.number.isRequired,
-  tvdbId: PropTypes.number.isRequired,
+  cvid: PropTypes.number.isRequired,
   tvMazeId: PropTypes.number,
   imdbId: PropTypes.string,
   title: PropTypes.string.isRequired,
-  runtime: PropTypes.number.isRequired,
+  runtime: PropTypes.number,
   ratings: PropTypes.object.isRequired,
   path: PropTypes.string.isRequired,
   statistics: PropTypes.object.isRequired,
@@ -727,7 +726,9 @@ ComicDetails.propTypes = {
 ComicDetails.defaultProps = {
   statistics: {},
   tags: [],
-  isSaving: false
+  isSaving: false,
+  qualityProfileId: 0,
+  seasons: [],
 };
 
 export default ComicDetails;
