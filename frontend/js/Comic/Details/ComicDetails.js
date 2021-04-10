@@ -39,7 +39,6 @@ import styles from './ComicDetails.css';
 
 const defaultFontSize = parseInt(fonts.defaultFontSize);
 const lineHeight = parseFloat(fonts.lineHeight);
-console.log(defaultFontSize, lineHeight);
 
 function getFanartUrl(images) {
   const fanartImage = _.find(images, { coverType: 'fanart' });
@@ -166,8 +165,6 @@ class ComicDetails extends Component {
   }
 
   onMeasure = ({ height }) => {
-    console.log(height);
-    console.log(Math.floor(height / (defaultFontSize * lineHeight)));
     this.setState({ overviewHeight: height });
   }
 
@@ -578,7 +575,6 @@ class ComicDetails extends Component {
 
                 <Measure onMeasure={this.onMeasure}>
                   <div className={styles.overview}>
-                  {console.log('oh', overviewHeight, Math.floor(overviewHeight / (defaultFontSize * lineHeight)))}
                     <Truncate
                       lines={Math.floor(overviewHeight / (defaultFontSize * lineHeight))}
                       html={overview}

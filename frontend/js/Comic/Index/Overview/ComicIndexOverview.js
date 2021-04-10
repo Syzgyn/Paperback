@@ -13,6 +13,7 @@ import DeleteComicModal from 'Comic/Delete/DeleteComicModal';
 import ComicIndexProgressBar from 'Comic/Index/ProgressBar/ComicIndexProgressBar';
 import ComicIndexOverviewInfo from './ComicIndexOverviewInfo';
 import styles from './ComicIndexOverview.css';
+import { convertNodeToElement } from 'react-html-parser';
 
 const columnPadding = parseInt(dimensions.comicIndexColumnPadding);
 const columnPaddingSmallScreen = parseInt(dimensions.comicIndexColumnPaddingSmallScreen);
@@ -63,6 +64,14 @@ class ComicIndexOverview extends Component {
 
   onDeleteComicModalClose = () => {
     this.setState({ isDeleteComicModalOpen: false });
+  }
+
+  transformOverview = (node, index) => {
+    if (node.type === 'tag' && node.name === 'a') {
+      console.log(node);
+      node.name = 'span';
+      return convertNodeToElement(node, index, this.transformOverview);
+    }
   }
 
   //
@@ -204,6 +213,7 @@ class ComicIndexOverview extends Component {
                 <Truncate
                   lines={Math.floor(overviewHeight / (defaultFontSize * lineHeight))}
                   html={overview}
+                  transform={this.transformOverview}
                 />
               </Link>
 
