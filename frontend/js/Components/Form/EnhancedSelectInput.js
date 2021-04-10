@@ -19,6 +19,7 @@ import TextInput from './TextInput';
 import HintedSelectInputSelectedValue from './HintedSelectInputSelectedValue';
 import HintedSelectInputOption from './HintedSelectInputOption';
 import styles from './EnhancedSelectInput.css';
+import maxSize from "popper-max-size-modifier";
 
 function isArrowKey(keyCode) {
   return keyCode === keyCodes.UP_ARROW || keyCode === keyCodes.DOWN_ARROW;
@@ -134,21 +135,9 @@ class EnhancedSelectInput extends Component {
   //
   // Listeners
 
-  onComputeMaxHeight = (data) => {
-    const {
-      top,
-      bottom
-    } = data.offsets.reference;
-
-    const windowHeight = window.innerHeight;
-
-    if ((/^botton/).test(data.placement)) {
-      data.styles.maxHeight = windowHeight - bottom;
-    } else {
-      data.styles.maxHeight = top;
-    }
-
-    return data;
+  onComputeMaxHeight = ({state}) => {
+    const { height } = state.modifiersData.maxSize;
+    state.styles.popper.maxHeight = `${height}px`;
   }
 
   onWindowClick = (event) => {
@@ -441,13 +430,16 @@ class EnhancedSelectInput extends Component {
           <Portal>
             <Popper
               placement="bottom-start"
-              modifiers={{
-                computeMaxHeight: {
-                  order: 851,
+              modifiers={[
+                maxSize,
+                {
+                  name: 'computeMaxHeight',
                   enabled: true,
-                  fn: this.onComputeMaxHeight
+                  fn: this.onComputeMaxHeight,
+                  phase: 'beforeWrite',
+                  requires: ['maxSize'],
                 }
-              }}
+              ]}
             >
               {({ ref, style, scheduleUpdate }) => {
                 this._scheduleUpdate = scheduleUpdate;

@@ -58,30 +58,32 @@ class Tooltip extends Component {
   //
   // Control
 
-  computeMaxSize = (data) => {
+  computeMaxSize = ({state}) => {
     const {
-      top,
-      right,
-      bottom,
-      left
-    } = data.offsets.reference;
+	  width,
+      height,
+      x,
+      y
+    } = state.rects.reference;
+    const top = y;
+    const left = x;
+    const bottom = top + height;
+    const right = left + width;
 
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
 
     if ((/^top/).test(data.placement)) {
-      data.styles.maxHeight = top - 20;
-    } else if ((/^bottom/).test(data.placement)) {
-      data.styles.maxHeight = windowHeight - bottom - 20;
-    } else if ((/^right/).test(data.placement)) {
-      data.styles.maxWidth = Math.min(this._maxWidth, windowWidth - right - 20);
-      data.styles.maxHeight = top - 20;
+      state.styles.popper.maxHeight = top - 20;
+    } else if ((/^bottom/).test(state.placement)) {
+      state.styles.popper.maxHeight = windowHeight - bottom - 20;
+    } else if ((/^right/).test(state.placement)) {
+      state.styles.popper.maxWidth = Math.min(this._maxWidth, windowWidth - right - 20);
+      state.styles.popper.maxHeight = top - 20;
     } else {
-      data.styles.maxWidth = Math.min(this._maxWidth, left - 20);
-      data.styles.maxHeight = top - 20;
+      state.styles.popper.maxWidth = Math.min(this._maxWidth, left - 20);
+      state.styles.popper.maxHeight = top - 20;
     }
-
-    return data;
   }
 
   //
@@ -147,24 +149,21 @@ class Tooltip extends Component {
             // Disable events to improve performance when many tooltips
             // are shown (Quality Definitions for example).
             eventsEnabled={false}
-            modifiers={{
-              computeMaxHeight: {
-                order: 851,
+            modifiers={[
+              {
+                name: 'computeMaxHeight',
                 enabled: true,
-                fn: this.computeMaxSize
+                fn: this.computeMaxSize,
+                phase: 'write',
               },
-              preventOverflow: {
-                // Fixes positioning for tooltips in the queue
-                // and likely others.
-                escapeWithReference: false
-              },
-              flip: {
+              {
+                name: 'flip',
                 enabled: canFlip
               }
-            }}
+            ]}
           >
-            {({ ref, style, placement, arrowProps, scheduleUpdate }) => {
-              this._scheduleUpdate = scheduleUpdate;
+            {({ ref, style, placement, arrowProps, update}) => {
+              this._scheduleUpdate = update;
 
               const popperPlacement = placement ? placement.split('-')[0] : position;
               const vertical = popperPlacement === 'top' || popperPlacement === 'bottom';

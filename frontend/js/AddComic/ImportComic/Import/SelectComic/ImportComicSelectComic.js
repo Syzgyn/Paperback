@@ -207,11 +207,14 @@ class ImportComicSelectComic extends Component {
         <Portal>
           <Popper
             placement="bottom"
-            modifiers={{
-              preventOverflow: {
-                boundariesElement: 'viewport'
+            modifiers={[
+              {
+                name: 'preventOverflow',
+                options: {
+                  boundariesElement: 'viewport'
+                }
               }
-            }}
+            ]}
           >
             {({ ref, style, scheduleUpdate }) => {
               this._scheduleUpdate = scheduleUpdate;

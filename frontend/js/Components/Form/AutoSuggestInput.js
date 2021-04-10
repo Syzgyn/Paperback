@@ -56,19 +56,34 @@ class AutoSuggestInput extends Component {
       <Portal>
         <Popper
           placement='bottom-start'
-          modifiers={{
-            computeMaxHeight: {
-              order: 851,
+          modifiers={[
+            maxSize,
+            {
+              name: 'computeMaxHeight',
               enabled: true,
-              fn: this.onComputeMaxHeight
+			  fn: ({ state }) => {
+				const { height } = state.modifiersData.maxSize;
+				state.styles.popper.maxHeight = `${height}px`;
+				state.styles.popper.width = `${state.rects.reference.width}px`;
+			  },
+			  effect: ({ state }) => {
+				state.elements.popper.style.width = `${
+				  state.elements.reference.offsetWidth
+				}px`;
+			  },
+              phase: 'beforeWrite',
+              requires: ['maxSize'],
             },
-            flip: {
-              padding: this.props.minHeight
-            }
-          }}
+            {
+              name: 'flip',
+              options: {
+                padding: this.props.minHeight
+              }
+            },
+          ]}
         >
-          {({ ref: popperRef, style, scheduleUpdate }) => {
-            this._scheduleUpdate = scheduleUpdate;
+          {({ ref: popperRef, style, update}) => {
+            this._scheduleUpdate = update;
 
             return (
               <div
@@ -94,26 +109,6 @@ class AutoSuggestInput extends Component {
 
   //
   // Listeners
-
-  onComputeMaxHeight = (data) => {
-    const {
-      top,
-      bottom,
-      width
-    } = data.offsets.reference;
-
-    const windowHeight = window.innerHeight;
-
-    if ((/^botton/).test(data.placement)) {
-      data.styles.maxHeight = windowHeight - bottom;
-    } else {
-      data.styles.maxHeight = top;
-    }
-
-    data.styles.width = width;
-
-    return data;
-  }
 
   onInputChange = (event, { newValue }) => {
     this.props.onChange({
