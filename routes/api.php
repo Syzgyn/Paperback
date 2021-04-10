@@ -46,6 +46,7 @@ Route::apiResource('trackeddownload', 'TrackedDownloadController')->parameters([
     'trackeddownload' => 'trackedDownload',
 ]);
 
+Route::get('settings/naming/examples', 'SettingsController@namingExamples');
 Route::get('settings/{category}/{property}', 'SettingsController@property');
 Route::get('settings/{category}', 'SettingsController@category');
 Route::get('settings', 'SettingsController@index');

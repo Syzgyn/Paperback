@@ -56,14 +56,9 @@ class SettingsController extends Controller
         throw new Exception("Unable to save config");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function namingExamples(Request $request)
     {
-        //
+        //TODO: Add name parser
+        return respose()->json([]);
     }
 }

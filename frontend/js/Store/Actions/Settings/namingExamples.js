@@ -43,7 +43,7 @@ export default {
       const naming = getState().settings.naming;
 
       const promise = createAjaxRequest({
-        url: '/config/naming/examples',
+        url: '/settings/naming/examples',
         data: Object.assign({}, naming.item, naming.pendingChanges)
       }).request;
 
