@@ -5,6 +5,7 @@ import { Manager, Popper, Reference } from 'react-popper';
 import classNames from 'classnames';
 import Portal from 'Components/Portal';
 import styles from './AutoSuggestInput.css';
+import maxSize from "popper-max-size-modifier";
 
 class AutoSuggestInput extends Component {
 
