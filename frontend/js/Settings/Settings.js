@@ -26,28 +26,6 @@ function Settings() {
 
         <Link
           className={styles.link}
-          to="/settings/profiles"
-        >
-          Profiles
-        </Link>
-
-        <div className={styles.summary}>
-          Quality, Language, Delay and Release profiles
-        </div>
-
-        <Link
-          className={styles.link}
-          to="/settings/quality"
-        >
-          Quality
-        </Link>
-
-        <div className={styles.summary}>
-          Quality sizes and naming
-        </div>
-
-        <Link
-          className={styles.link}
           to="/settings/indexers"
         >
           Indexers
@@ -66,39 +44,6 @@ function Settings() {
 
         <div className={styles.summary}>
           Download clients, download handling and remote path mappings
-        </div>
-
-        <Link
-          className={styles.link}
-          to="/settings/importlists"
-        >
-          Import Lists
-        </Link>
-
-        <div className={styles.summary}>
-          Import from another Paperback instance or Trakt lists and manage list exclusions
-        </div>
-
-        <Link
-          className={styles.link}
-          to="/settings/connect"
-        >
-          Connect
-        </Link>
-
-        <div className={styles.summary}>
-          Notifications, connections to media servers/players and custom scripts
-        </div>
-
-        <Link
-          className={styles.link}
-          to="/settings/metadata"
-        >
-          Metadata
-        </Link>
-
-        <div className={styles.summary}>
-          Create metadata files when issues are imported or comic are refreshed
         </div>
 
         <Link

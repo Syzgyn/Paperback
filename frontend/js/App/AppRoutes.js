@@ -152,16 +152,6 @@ function AppRoutes(props) {
       />
 
       <Route
-        path="/settings/profiles"
-        component={Profiles}
-      />
-
-      <Route
-        path="/settings/quality"
-        component={Quality}
-      />
-
-      <Route
         path="/settings/indexers"
         component={IndexerSettingsConnector}
       />
@@ -170,22 +160,12 @@ function AppRoutes(props) {
         path="/settings/downloadclients"
         component={DownloadClientSettingsConnector}
       />
-
+/*
       <Route
         path="/settings/importlists"
         component={ImportListSettingsConnector}
       />
-
-      <Route
-        path="/settings/connect"
-        component={NotificationSettings}
-      />
-
-      <Route
-        path="/settings/metadata"
-        component={MetadataSettings}
-      />
-
+*/
       <Route
         path="/settings/tags"
         component={TagSettings}

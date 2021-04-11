@@ -188,6 +188,7 @@ class ComicDetails extends Component {
       network,
       overview,
       images,
+      links,
       seasons,
       alternateTitles,
       tags,
@@ -538,9 +539,7 @@ class ComicDetails extends Component {
                     }
                     tooltip={
                       <ComicDetailsLinks
-                        cvid={cvid}
-                        tvMazeId={tvMazeId}
-                        imdbId={imdbId}
+                        links={links}
                       />
                     }
                     kind={kinds.INVERSE}
@@ -688,6 +687,7 @@ ComicDetails.propTypes = {
   network: PropTypes.string,
   overview: PropTypes.string.isRequired,
   images: PropTypes.arrayOf(PropTypes.object).isRequired,
+  links: PropTypes.arrayOf(PropTypes.object).isRequired,
   seasons: PropTypes.arrayOf(PropTypes.object).isRequired,
   alternateTitles: PropTypes.arrayOf(PropTypes.object).isRequired,
   tags: PropTypes.arrayOf(PropTypes.number).isRequired,

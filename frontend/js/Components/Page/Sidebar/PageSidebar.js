@@ -96,32 +96,12 @@ const links = [
         to: '/settings/mediamanagement'
       },
       {
-        title: 'Profiles',
-        to: '/settings/profiles'
-      },
-      {
-        title: 'Quality',
-        to: '/settings/quality'
-      },
-      {
         title: 'Indexers',
         to: '/settings/indexers'
       },
       {
         title: 'Download Clients',
         to: '/settings/downloadclients'
-      },
-      {
-        title: 'Import Lists',
-        to: '/settings/importlists'
-      },
-      {
-        title: 'Connect',
-        to: '/settings/connect'
-      },
-      {
-        title: 'Metadata',
-        to: '/settings/metadata'
       },
       {
         title: 'Tags',

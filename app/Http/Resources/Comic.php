@@ -28,7 +28,9 @@ class Comic extends JsonResource
             'overview' => $this->description,
             //'descriptionIsTruncated' => $this->description !== $this->truncatedDescription,
             'year' => $this->start_year,
-            'url' => $this->url,
+            'links' => [
+                ['name' => 'ComicVine', 'url' => $this->url],
+            ],
             'id' => $this->cvid,
             'cvid' => $this->cvid, //TODO: consolidate with id
             'images' => [
@@ -47,7 +49,7 @@ class Comic extends JsonResource
             'qualityProfile' => ['name' => 'remove me'],
             'languageProfile' => ['name' => 'remove me'],
             'path' => 'temp',
-            'ratings' => ['value' => 50],
+            'ratings' => ['value' => 5],
             'useSceneNumbering' => false,
         ];
     }

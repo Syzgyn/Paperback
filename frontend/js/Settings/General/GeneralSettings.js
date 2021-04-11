@@ -134,44 +134,10 @@ class GeneralSettings extends Component {
                 id="generalSettings"
                 {...otherProps}
               >
-                <HostSettings
-                  advancedSettings={advancedSettings}
-                  settings={settings}
-                  isWindows={isWindows}
-                  mode={mode}
-                  onInputChange={onInputChange}
-                />
-
-                <SecuritySettings
-                  settings={settings}
-                  isResettingApiKey={isResettingApiKey}
-                  onInputChange={onInputChange}
-                  onConfirmResetApiKey={onConfirmResetApiKey}
-                />
-
-                <ProxySettings
-                  settings={settings}
-                  onInputChange={onInputChange}
-                />
-
                 <LoggingSettings
                   settings={settings}
                   onInputChange={onInputChange}
                 />
-
-                <AnalyticSettings
-                  settings={settings}
-                  onInputChange={onInputChange}
-                />
-
-                <UpdateSettings
-                  advancedSettings={advancedSettings}
-                  settings={settings}
-                  isMono={isMono}
-                  packageUpdateMechanism={packageUpdateMechanism}
-                  onInputChange={onInputChange}
-                />
-
                 <BackupSettings
                   advancedSettings={advancedSettings}
                   settings={settings}

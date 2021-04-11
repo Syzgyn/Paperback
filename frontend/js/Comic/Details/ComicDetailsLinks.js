@@ -5,80 +5,30 @@ import Label from 'Components/Label';
 import Link from 'Components/Link/Link';
 import styles from './ComicDetailsLinks.css';
 
-function ComicDetailsLinks(props) {
-  const {
-    cvid,
-    tvMazeId,
-    imdbId
-  } = props;
-
-  return (
+const ComicDetailsLinks = ({links}) => (
     <div className={styles.links}>
+      {links.map(item => (
       <Link
         className={styles.link}
-        to={`http://www.thetvdb.com/?tab=comic&id=${cvid}`}
+        to={item.url}
       >
         <Label
           className={styles.linkLabel}
           kind={kinds.INFO}
           size={sizes.LARGE}
         >
-          The TVDB
+          {item.name}
         </Label>
       </Link>
-
-      <Link
-        className={styles.link}
-        to={`http://trakt.tv/search/tvdb/${cvid}?id_type=show`}
-      >
-        <Label
-          className={styles.linkLabel}
-          kind={kinds.INFO}
-          size={sizes.LARGE}
-        >
-          Trakt
-        </Label>
-      </Link>
-
-      {
-        !!tvMazeId &&
-          <Link
-            className={styles.link}
-            to={`http://www.tvmaze.com/shows/${tvMazeId}/_`}
-          >
-            <Label
-              className={styles.linkLabel}
-              kind={kinds.INFO}
-              size={sizes.LARGE}
-            >
-              TV Maze
-            </Label>
-          </Link>
-      }
-
-      {
-        !!imdbId &&
-          <Link
-            className={styles.link}
-            to={`http://imdb.com/title/${imdbId}/`}
-          >
-            <Label
-              className={styles.linkLabel}
-              kind={kinds.INFO}
-              size={sizes.LARGE}
-            >
-              IMDB
-            </Label>
-          </Link>
-      }
+      ))}
     </div>
-  );
-}
+);
 
 ComicDetailsLinks.propTypes = {
-  cvid: PropTypes.number.isRequired,
-  tvMazeId: PropTypes.number,
-  imdbId: PropTypes.string
+  links: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired
+    })).isRequired,
 };
 
 export default ComicDetailsLinks;

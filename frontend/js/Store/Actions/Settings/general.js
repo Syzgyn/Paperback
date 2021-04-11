@@ -50,8 +50,8 @@ export default {
   // Action Handlers
 
   actionHandlers: {
-    [FETCH_GENERAL_SETTINGS]: createFetchHandler(section, '/config/host'),
-    [SAVE_GENERAL_SETTINGS]: createSaveHandler(section, '/config/host')
+    [FETCH_GENERAL_SETTINGS]: createFetchHandler(section, '/settings/host'),
+    [SAVE_GENERAL_SETTINGS]: createSaveHandler(section, '/settings/host')
   },
 
   //
