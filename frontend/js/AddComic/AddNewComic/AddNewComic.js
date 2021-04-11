@@ -139,7 +139,7 @@ class AddNewComic extends Component {
                   items.map((item) => {
                     return (
                       <AddNewComicSearchResultConnector
-                        key={item.tvdbId}
+                        key={item.cvid}
                         {...item}
                       />
                     );

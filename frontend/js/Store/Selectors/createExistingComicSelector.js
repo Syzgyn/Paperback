@@ -4,10 +4,10 @@ import createAllComicSelector from './createAllComicSelector';
 
 function createExistingComicSelector() {
   return createSelector(
-    (state, { tvdbId }) => tvdbId,
+    (state, { cvid }) => cvid,
     createAllComicSelector(),
-    (tvdbId, comic) => {
-      return _.some(comic, { tvdbId });
+    (cvid, comic) => {
+      return _.some(comic, { cvid });
     }
   );
 }

@@ -28,9 +28,6 @@ class Comic extends JsonResource
             'overview' => $this->description,
             //'descriptionIsTruncated' => $this->description !== $this->truncatedDescription,
             'year' => $this->start_year,
-            'links' => [
-                ['name' => 'ComicVine', 'url' => $this->url],
-            ],
             'id' => $this->cvid,
             'cvid' => $this->cvid, //TODO: consolidate with id
             'images' => [

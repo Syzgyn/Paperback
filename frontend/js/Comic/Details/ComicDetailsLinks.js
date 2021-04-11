@@ -5,30 +5,25 @@ import Label from 'Components/Label';
 import Link from 'Components/Link/Link';
 import styles from './ComicDetailsLinks.css';
 
-const ComicDetailsLinks = ({links}) => (
+const ComicDetailsLinks = ({cvid}) => (
     <div className={styles.links}>
-      {links.map(item => (
       <Link
         className={styles.link}
-        to={item.url}
+        to={`https://comicvine.gamespot.com/volume/4050-${cvid}/`}
       >
         <Label
           className={styles.linkLabel}
           kind={kinds.INFO}
           size={sizes.LARGE}
         >
-          {item.name}
+          ComicVine
         </Label>
       </Link>
-      ))}
     </div>
 );
 
 ComicDetailsLinks.propTypes = {
-  links: PropTypes.arrayOf(PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired
-    })).isRequired,
+    cvid: PropTypes.number.isRequired,
 };
 
 export default ComicDetailsLinks;

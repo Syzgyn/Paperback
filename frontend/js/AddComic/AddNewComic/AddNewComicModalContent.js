@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { icons, kinds, inputTypes, tooltipPositions } from 'Helpers/Props';
 import Icon from 'Components/Icon';
+import Truncate from 'Components/Truncate';
 import SpinnerButton from 'Components/Link/SpinnerButton';
 import Form from 'Components/Form/Form';
 import FormGroup from 'Components/Form/FormGroup';
@@ -118,7 +119,11 @@ class AddNewComicModalContent extends Component {
               {
                 overview ?
                   <div className={styles.overview}>
-                    {overview}
+                    <Truncate
+                      lines={10}
+                      html={overview}
+                      removeLinks
+                    />
                   </div> :
                   null
               }

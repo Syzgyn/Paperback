@@ -7,6 +7,8 @@ import Label from 'Components/Label';
 import Link from 'Components/Link/Link';
 import ComicPoster from 'Comic/ComicPoster';
 import AddNewComicModal from './AddNewComicModal';
+import Truncate from 'Components/Truncate';
+import { convertNodeToElement } from 'react-html-parser';
 import styles from './AddNewComicSearchResult.css';
 
 class AddNewComicSearchResult extends Component {
@@ -39,7 +41,7 @@ class AddNewComicSearchResult extends Component {
     this.setState({ isNewAddComicModalOpen: false });
   }
 
-  onTVDBLinkPress = (event) => {
+  onComicVineLinkPress = (event) => {
     event.stopPropagation();
   }
 
@@ -48,15 +50,14 @@ class AddNewComicSearchResult extends Component {
 
   render() {
     const {
-      tvdbId,
+      cvid,
       title,
       titleSlug,
       year,
-      network,
+      publisher,
       status,
       overview,
-      statistics,
-      ratings,
+      issueCount,
       folder,
       comicType,
       images,
@@ -64,17 +65,15 @@ class AddNewComicSearchResult extends Component {
       isSmallScreen
     } = this.props;
 
-    const seasonCount = statistics.seasonCount;
-
     const {
       isNewAddComicModalOpen
     } = this.state;
 
     const linkProps = isExistingComic ? { to: `/comic/${titleSlug}` } : { onPress: this.onPress };
-    let seasons = '1 Season';
+    let issues = '1 Issue';
 
-    if (seasonCount > 1) {
-      seasons = `${seasonCount} Seasons`;
+    if (issueCount > 1) {
+      issues = `${issueCount} Issues`;
     }
 
     return (
@@ -126,8 +125,8 @@ class AddNewComicSearchResult extends Component {
 
                 <Link
                   className={styles.tvdbLink}
-                  to={`http://www.thetvdb.com/?tab=comic&id=${tvdbId}`}
-                  onPress={this.onTVDBLinkPress}
+                  to={`https://comicvine.gamespot.com/volume/4050-${cvid}/`}
+                  onPress={this.onComicVineLinkPress}
                 >
                   <Icon
                     className={styles.tvdbLinkIcon}
@@ -139,25 +138,18 @@ class AddNewComicSearchResult extends Component {
             </div>
 
             <div>
-              <Label size={sizes.LARGE}>
-                <HeartRating
-                  rating={ratings.value}
-                  iconSize={13}
-                />
-              </Label>
-
               {
-                network ?
+                publisher ?
                   <Label size={sizes.LARGE}>
-                    {network}
+                    {publisher}
                   </Label> :
                   null
               }
 
               {
-                seasonCount ?
+                issueCount ?
                   <Label size={sizes.LARGE}>
-                    {seasons}
+                    {issues}
                   </Label> :
                   null
               }
@@ -186,14 +178,18 @@ class AddNewComicSearchResult extends Component {
             </div>
 
             <div className={styles.overview}>
-              {overview}
+              <Truncate
+                lines={10}
+                html={overview}
+                removeLinks
+              />
             </div>
           </div>
         </div>
 
         <AddNewComicModal
           isOpen={isNewAddComicModalOpen && !isExistingComic}
-          tvdbId={tvdbId}
+          cvid={cvid}
           title={title}
           year={year}
           overview={overview}
@@ -208,15 +204,14 @@ class AddNewComicSearchResult extends Component {
 }
 
 AddNewComicSearchResult.propTypes = {
-  tvdbId: PropTypes.number.isRequired,
+  cvid: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   titleSlug: PropTypes.string.isRequired,
   year: PropTypes.number.isRequired,
-  network: PropTypes.string,
+  publisher: PropTypes.string,
   status: PropTypes.string.isRequired,
   overview: PropTypes.string,
-  statistics: PropTypes.object.isRequired,
-  ratings: PropTypes.object.isRequired,
+  issueCount: PropTypes.number.isRequired,
   folder: PropTypes.string.isRequired,
   comicType: PropTypes.string.isRequired,
   images: PropTypes.arrayOf(PropTypes.object).isRequired,

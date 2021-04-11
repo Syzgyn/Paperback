@@ -24,30 +24,53 @@ class Volume extends JsonResource
     public function toArray($request)
     {
         return [
-            'name' => $this->resource->name,
-            'displayDescription' => $this->processDescription($this->resource->description),
-            'description' => $this->resource->description,
-            'startYear' => (Int)$this->resource->start_year,
+            'title' => $this->resource->name,
+            'sortName' => $this->getSortName(),
+            'titleSlug' => \Slugify::slugify($this->resource->name),
+            'overview' => $this->resource->description,
+            'year' => (Int)$this->resource->start_year,
             'numIssues' => $this->resource->count_of_issues,
-            'url' => $this->resource->site_detail_url,
             'cvid' => $this->resource->id,
-            'image' => $this->resource->image->{Comic::IMAGE_KEY},
+            'images' => [
+                ['coverType' => 'poster', 'url' => $this->resource->image->{Comic::IMAGE_KEY}],
+            ],
             'publisher' => ($this->resource->publisher) ? $this->resource->publisher->name : null,
             'inLibrary' => $this->checkLibrary($this->resource->id),
+            'issueCount' => $this->resource->count_of_issues,
+            'status' => 'ended',
+            'folder' => $this->getFolderName(),
+            'comicType' => 'standard',
         ];
-    }
-
-    protected function processDescription($text)
-    {
-        $text = $this->truncateHtml($text, self::MAX_LENGTH, "... <a target=\"_blank\" href='" . $this->resource->site_detail_url . "'>Read More</a>");
-
-        $text = $this->changeComicLinks($text);
-
-        return $text;
     }
 
     protected function checkLibrary(Int $cvid)
     {
         return (Comic::find($cvid) instanceof Comic);
+    }
+
+    protected function getSortName()
+    {
+        $name = strtolower($this->resource->name);
+        $name = preg_replace('/[^a-z\d ]+/i', '', $name);
+        if (substr($name, 0, 3) == 'the') {
+            $name = substr($name, 3);
+        }
+
+        return trim($name);
+    }
+
+    protected function getFolderName()
+    {
+        $patterns = [
+            '/: ?/',
+            '/[\\<>"\/\|\?\*\.]/',
+        ];
+        $replacements = [
+            ' - ',
+            '',
+        ];
+
+        return preg_replace($patterns, $replacements, $this->resource->name);
+
     }
 }
