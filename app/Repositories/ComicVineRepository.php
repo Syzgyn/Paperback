@@ -85,9 +85,18 @@ class ComicVineRepository
         return Issue::make($issue->results)->resolve();
     }
 
-    public function searchVolumes($query)
+    public function issuesById(Array $cvids)
     {
-        $volumes = $this->makeRequest('volumes', "volumes.$query", ['filter' => "name:$query"]);
+        asort($cvids);
+        $idList = implode('|', $cvids);
+        $issues = $this->makeRequest('issues', "issuesById.$idList", ['filter' => "id:$idList"]);
+
+        return IssueCollection::make($issues->results)->resolve();
+    }
+
+    public function searchVolumes($query, $includeLastIssue = false)
+    {
+        $volumes = $this->makeRequest('volumes', "volumes.$query." . ($includeLastIssue ? 'true' : 'false'), ['filter' => "name:$query"]);
 
         if (empty($volumes->results)) {
             $volumes = $this->makeRequest('search', "search.$query", [
@@ -96,14 +105,16 @@ class ComicVineRepository
             ]);
         }
 
+        $issueIds = $this->addLastIssueToVolumes($volumes);
+
         $this->sortResults($volumes->results, $query);
 
         return VolumeCollection::make($volumes->results)->resolve();
     }
 
-    protected function makeRequest($url, $cacheKey, $params = [])
+    protected function makeRequest($url, $cacheKey = null, $params = [])
     {
-        if ($this->bypassCache) {
+        if ($this->bypassCache || $cacheKey === null) {
             return $this->getResponse($url, $params);
         }
 
@@ -159,5 +170,23 @@ class ComicVineRepository
 
             return 0;
         });
+    }
+
+    protected function addLastIssueToVolumes(&$volumes)
+    {
+        if ($volumes->number_of_page_results === 0) {
+            return;
+        }
+
+        $issueIds = array_map(fn($resource) => $resource->last_issue->id, $volumes->results);
+
+        $issues = $this->issuesById($issueIds);
+
+        array_walk($volumes->results, function(&$vol, $key, $issues) {
+            $i = array_search($vol->last_issue->id, array_column($issues, 'cvid'));
+            if ($i !== false) {
+                $vol->last_issue_resource = $issues[$i];
+            }
+        }, $issues);
     }
 }

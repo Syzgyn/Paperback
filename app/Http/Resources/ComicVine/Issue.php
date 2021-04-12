@@ -15,14 +15,13 @@ class Issue extends JsonResource
     public function toArray($request)
     {
         return [
-            'name' => $this->resource->name,
-            'comic_id' => (int)$this->resource->volume->id,
-            'description' => $this->resource->description,
-            'release_date' => $this->resource->store_date ?: $this->resource->cover_date,
-            'issue_num' => (int)$this->resource->issue_number,
-            'url' => $this->resource->site_detail_url,
+            'title' => $this->resource->name,
+            'comicId' => (int)$this->resource->volume->id,
+            'overview' => $this->resource->description,
+            'storeDate' => $this->resource->store_date,
+            'coverDate' => $this->resource->cover_date,
+            'issueNumber' => (int)$this->resource->issue_number,
             'cvid' => (int)$this->resource->id,
-            'volume' => $this->resource->volume,
         ];
     }
 }

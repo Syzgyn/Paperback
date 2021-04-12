@@ -68,7 +68,6 @@ class ComicIndexOverview extends Component {
 
   transformOverview = (node, index) => {
     if (node.type === 'tag' && node.name === 'a') {
-      console.log(node);
       node.name = 'span';
       return convertNodeToElement(node, index, this.transformOverview);
     }

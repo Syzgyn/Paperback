@@ -41,7 +41,7 @@ class Comic extends JsonResource
                 'seasonCount' => 0,
             ],
             'monitored' => $this->monitored,
-            'status' => 'ended',
+            'status' => $this->getStatus(),
             'comicType' => 'standard',
             'qualityProfile' => ['name' => 'remove me'],
             'languageProfile' => ['name' => 'remove me'],
@@ -49,6 +49,35 @@ class Comic extends JsonResource
             'ratings' => ['value' => 5],
             'useSceneNumbering' => false,
         ];
+    }
+
+    protected function getStatus()
+    {
+        $lastIssue = $this->issues->last();
+
+        if (!$lastIssue) {
+            //No issues, if it's in the future it must be ongoing
+            if ($this->start_year > date('Y')) {
+                return 'continuing';
+            }
+
+            return 'ended';
+        }
+
+        $dates = [
+            strtotime($this->start_year . '-01-01'),
+            strtotime($lastIssue->releaseDate),
+        ];
+
+        //Get the most recent date from the comic and last issue
+        $latestDate = max($dates);
+
+        //Most recent date is within 55 days of today
+        if (time() - $latestDate < (60*60*24*55)) {
+            return 'continuing';
+        }
+
+        return 'ended';
     }
 
     protected function getSortName()

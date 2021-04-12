@@ -85,7 +85,7 @@ class ComicController extends Controller
     {
         $search = $request->input('term');
 
-        return $this->comicvine->searchVolumes($search);
+        return $this->comicvine->searchVolumes($search, true);
     }
 
     public function download(Comic $comic)

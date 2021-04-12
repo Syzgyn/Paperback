@@ -37,10 +37,40 @@ class Volume extends JsonResource
             'publisher' => ($this->resource->publisher) ? $this->resource->publisher->name : null,
             'inLibrary' => $this->checkLibrary($this->resource->id),
             'issueCount' => $this->resource->count_of_issues,
-            'status' => 'ended',
+            'status' => $this->getStatus(),
             'folder' => $this->getFolderName(),
             'comicType' => 'standard',
         ];
+    }
+
+    protected function getStatus()
+    {
+        $lastIssue = $this->resource?->last_issue_resource;
+
+        if (!$lastIssue) {
+            //No issues, if it's in the future it must be ongoing
+            if ($this->resource->start_year > date('Y')) {
+                return 'continuing';
+            }
+
+            return 'ended';
+        }
+
+        $dates = [
+            strtotime($this->resource->start_year . '-01-01'),
+            strtotime($lastIssue['storeDate']),
+            strtotime($lastIssue['coverDate']),
+        ];
+
+        //Get the most recent date from the comic and last issue
+        $latestDate = max($dates);
+
+        //Most recent date is within 55 days of today
+        if (time() - $latestDate < (60*60*24*55)) {
+            return 'continuing';
+        }
+
+        return 'ended';
     }
 
     protected function checkLibrary(Int $cvid)
