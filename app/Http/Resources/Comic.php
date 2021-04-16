@@ -21,19 +21,14 @@ class Comic extends JsonResource
     public function toArray($request)
     {
         return [
-            'title' => $this->name,
-            'sortTitle' => $this->getSortName(),
-            'titleSlug' => \Slugify::slugify($this->name),
-            //'displayDescription' => $this->truncatedDescription,
-            'overview' => $this->description,
-            //'descriptionIsTruncated' => $this->description !== $this->truncatedDescription,
-            'year' => $this->start_year,
+            'title' => $this->title,
+            'sortTitle' => $this->getSortTitle(),
+            'titleSlug' => \Slugify::slugify($this->title),
+            'overview' => $this->overview,
+            'year' => $this->year,
             'id' => $this->cvid,
             'cvid' => $this->cvid, //TODO: consolidate with id
-            'images' => [
-                ['coverType' => 'poster', 'url' => $this->image],
-            ],
-            //'issues' => $this->issues,
+            'images' => $this->images,
             'statistics' => [
                 'issueCount' => count($this->issues),
                 'totalIssueCount' => count($this->issues),
@@ -42,10 +37,11 @@ class Comic extends JsonResource
             ],
             'monitored' => $this->monitored,
             'status' => $this->getStatus(),
+            'publisher' => $this->publisher,
             'comicType' => 'standard',
             'qualityProfile' => ['name' => 'remove me'],
             'languageProfile' => ['name' => 'remove me'],
-            'path' => 'temp',
+            'path' => $this->path,
             'ratings' => ['value' => 5],
             'useSceneNumbering' => false,
         ];
@@ -80,14 +76,14 @@ class Comic extends JsonResource
         return 'ended';
     }
 
-    protected function getSortName()
+    protected function getSortTitle()
     {
-        $name = strtolower($this->name);
-        $name = preg_replace('/[^a-z\d ]+/i', '', $name);
-        if (substr($name, 0, 3) == 'the') {
-            $name = substr($name, 3);
+        $title = strtolower($this->title);
+        $title = preg_replace('/[^a-z\d ]+/i', '', $title);
+        if (substr($title, 0, 3) == 'the') {
+            $title = substr($title, 3);
         }
 
-        return trim($name);
+        return trim($title);
     }
 }

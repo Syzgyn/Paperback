@@ -14,6 +14,10 @@ const Truncate = (props) => {
 
   const transform = props.removeLinks ? removeLinks : props.transform;
 
+  if (props.html === '' || props.html === null) {
+    return null;
+  }
+
     return (
         <TruncateMarkup lines={props.lines}>
             <div className={styles.container}>
@@ -25,7 +29,7 @@ const Truncate = (props) => {
 
 Truncate.propTypes = {
     lines: PropTypes.number,
-    html: PropTypes.string.isRequired,
+    html: PropTypes.string,
     transform: PropTypes.func,
     removeLinks: PropTypes.bool,
 }
@@ -33,6 +37,7 @@ Truncate.propTypes = {
 Truncate.defaultProps = {
     lines: 2,
     transform: (node, index) => {},
+    html: '',
 }
 
 export default Truncate

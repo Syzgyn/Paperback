@@ -15,14 +15,13 @@ class Issue extends JsonResource
     public function toArray($request)
     {
         return [
-            'title' => $this->displayName,
+            'title' => $this->title,
             'comicId' => $this->comic_id,
-            'overview' => $this->description,
-            'releaseDate' => $this->release_date,
-            'releaseDateUtc' => $this->release_date,
+            'overview' => $this->overview,
+            'releaseDate' => $this->store_date,
+            'releaseDateUtc' => $this->store_date,
             'absoluteIssueNumber' => $this->issue_num,
             'issueNumber' => $this->issue_num,
-            'url' => $this->url,
             'id' => $this->cvid,
             //'trackedDownloads' => $this->trackedDownloads,
             //'activeDownloads' => $this->activeDownloads,
@@ -32,6 +31,7 @@ class Issue extends JsonResource
             'issueFileId' => 0, //TODO
             'seasonNumber' => 0, //TODO
             'unverifiedSceneNumbering' => false,
+            'images' => $this->images,
         ];
     }
 }

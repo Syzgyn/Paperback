@@ -122,7 +122,7 @@ class UMaskInput extends Component {
 
 UMaskInput.propTypes = {
   name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   hasError: PropTypes.bool,
   hasWarning: PropTypes.bool,
   onChange: PropTypes.func.isRequired,

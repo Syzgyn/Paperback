@@ -16,12 +16,13 @@ class Issue extends JsonResource
     {
         return [
             'title' => $this->resource->name,
-            'comicId' => (int)$this->resource->volume->id,
+            'comic_id' => (int)$this->resource->volume->id,
             'overview' => $this->resource->description,
-            'storeDate' => $this->resource->store_date,
-            'coverDate' => $this->resource->cover_date,
-            'issueNumber' => (int)$this->resource->issue_number,
+            'store_date' => $this->resource->store_date,
+            'cover_date' => $this->resource->cover_date,
+            'issue_num' => (int)$this->resource->issue_number,
             'cvid' => (int)$this->resource->id,
+            'images' => $this->resource->image,
         ];
     }
 }

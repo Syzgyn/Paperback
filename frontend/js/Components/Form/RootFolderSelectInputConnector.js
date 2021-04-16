@@ -74,20 +74,20 @@ function createMapDispatchToProps(dispatch, props) {
 
 class RootFolderSelectInputConnector extends Component {
 
-  //
-  // Lifecycle
-
-  componentWillMount() {
+  constructor(props) {
+    super(props);
     const {
       value,
       values,
       onChange
-    } = this.props;
+    } = props;
 
     if (value == null && values[0].key === '') {
       onChange({ name, value: '' });
     }
   }
+  //
+  // Lifecycle
 
   componentDidMount() {
     const {

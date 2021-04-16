@@ -8,7 +8,6 @@ class IssueFile extends Model
 {
     protected $fillable = [
         'comic_id',
-        'issue_id',
         'relative_file_name',
         'original_file_name',
         'size',
@@ -16,7 +15,6 @@ class IssueFile extends Model
 
     protected $casts = [
         'comic_id' => 'integer',
-        'issue_id' => 'integer',
         'size' => 'integer',
     ];
 
@@ -33,7 +31,7 @@ class IssueFile extends Model
 
     public function issue()
     {
-        return $this->belongsTo('App\Models\Issue', 'issue_id', 'cvid');
+        return $this->belongsTo('App\Models\Issue', 'id', 'issue_file');
     }
 
     public static function createAndMove(array $attrs)

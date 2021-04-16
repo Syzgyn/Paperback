@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class RootFolder extends Model
 {
+    public $timestamps = false;
+
     protected $table = 'root_folders';
     protected $_unmappedFolders = null;
     protected $fillable = [

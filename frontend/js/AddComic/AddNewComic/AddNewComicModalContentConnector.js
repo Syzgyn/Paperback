@@ -57,7 +57,7 @@ class AddNewComicModalContentConnector extends Component {
 
   onAddComicPress = (comicType) => {
     const {
-      tvdbId,
+      cvid,
       rootFolderPath,
       monitor,
       qualityProfileId,
@@ -69,7 +69,7 @@ class AddNewComicModalContentConnector extends Component {
     } = this.props;
 
     this.props.addComic({
-      tvdbId,
+      cvid,
       rootFolderPath: rootFolderPath.value,
       monitor: monitor.value,
       qualityProfileId: qualityProfileId.value,
@@ -97,7 +97,7 @@ class AddNewComicModalContentConnector extends Component {
 }
 
 AddNewComicModalContentConnector.propTypes = {
-  tvdbId: PropTypes.number.isRequired,
+  cvid: PropTypes.number.isRequired,
   rootFolderPath: PropTypes.object,
   monitor: PropTypes.object.isRequired,
   qualityProfileId: PropTypes.object,

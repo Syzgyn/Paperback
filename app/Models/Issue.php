@@ -10,19 +10,16 @@ class Issue extends Model
 
     public $primaryKey = 'cvid';
     public $incrementing = false;
-    protected $fillable = [
-        'name',
-        'comic_id',
-        'issue_num',
-        'description',
-        'release_date',
-        'url',
-        'cvid',
-        'monitored',
+    public $timestamps = false;
+
+    protected $guarded = [
+
+        'created_at',
     ];
 
-    protected $hidden = [
-        'name',
+    protected $attributes = [
+        'issue_file' => null,
+        'monitored' => true,
     ];
 
     protected $casts = [
@@ -30,16 +27,12 @@ class Issue extends Model
         'cvid' => 'integer',
         'comic_id' => 'integer',
         'monitored' => 'boolean',
-    ];
-
-    protected $appends = [
-        'display_name',
+        'images' => 'array',
     ];
 
     protected $with = [
         'comic',
         'downloadedFile',
-        'trackedDownloads',
     ];
 
     public function comic()
@@ -49,7 +42,7 @@ class Issue extends Model
 
     public function downloadedFile()
     {
-        return $this->hasOne('App\Models\IssueFile', 'issue_id', 'cvid');
+        return $this->hasOne('App\Models\IssueFile', 'id', 'issue_file');
     }
 
     public function trackedDownloads()
@@ -72,37 +65,18 @@ class Issue extends Model
         return isset($this->downloadedFile);
     }
 
-    public function getReleaseDateAttribute()
-    {
-        return date('M j Y', strtotime($this->attributes['release_date']));
-    }
-
-    public function getDisplayNameAttribute()
-    {
-        if (isset($this->attributes['name'])) {
-            return $this->attributes['name'];
-        }
-
-        return 'Issue #' . $this->attributes['issue_num'];
-    }
-
-    public function getDescriptionAttribute()
+    public function getOverviewAttribute()
     {
         return preg_replace(
             '/href\=\"\//',
             'target="_blank" href="' . self::CV_URL_BASE,
-            $this->attributes['description']
+            $this->attributes['overview']
         );
     }
 
     public function getFileNameAttribute()
     {
         return sprintf('%s %03d', $this->comic->name, $this->issue_num);
-    }
-
-    public function getFullFileNameAttribute()
-    {
-        return $this->comic->fullDirectoryName . DIRECTORY_SEPARATOR . $this->fileName;
     }
 
     public function getStatusAttribute()

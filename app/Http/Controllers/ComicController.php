@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comic;
 use Illuminate\Http\Request;
+use App\Http\Requests\ComicRequest;
 use App\Http\Resources\ComicCollection;
 use App\Http\Resources\Comic as ComicResource;
 
@@ -32,12 +33,9 @@ class ComicController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ComicRequest $request)
     {
-        $cvid = $request->input('cvid');
-        $search = $request->input('search');
-        $comic = Comic::createFromCvid($cvid, true, $search);
-
+        $comic = Comic::create($request->validated());
         return new ComicResource($comic);
     }
     /**

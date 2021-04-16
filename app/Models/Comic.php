@@ -2,35 +2,31 @@
 
 namespace App\Models;
 
-use App\Traits\TruncateHtml;
 use App\Traits\ChangeComicLinks;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class Comic extends Model
 {
-    use TruncateHtml;
     use ChangeComicLinks;
 
     const IMAGE_KEY = 'small_url';
-    const TRUNCATE_LENGTH = 600;
+    const UPDATED_AT = null;
 
     public $primaryKey = 'cvid';
     public $incrementing = false;
-    protected $fillable = [
-        'name',
-        'description',
-        'start_year',
-        'url',
-        'cvid',
-        'monitored',
+
+    protected $guarded = [
+        'created_at',
     ];
 
     protected $casts = [
         'cvid' => 'integer',
-        'start_year' => 'integer',
+        'year' => 'integer',
         'downloadedIssuesCount' => 'integer',
         'monitored' => 'boolean',
+        'images' => 'array',
+        'tags' => 'array',
     ];
 
     public function issues()
@@ -69,7 +65,6 @@ class Comic extends Model
     {
         $repo = resolve('ComicVineRepository');
         $volume = $repo->volume($cvid);
-        $volume['start_year'] = $volume['startYear'];
 
         $comic = Comic::create($volume);
         resolve('FileManager')->getOrCreateComicDir($comic);
@@ -135,14 +130,9 @@ class Comic extends Model
         });
     }
 
-    public function getDescriptionAttribute()
+    public function getOverviewAttribute()
     {
-        return $this->changeComicLinks($this->attributes['description']);
-    }
-
-    public function getTruncatedDescriptionAttribute()
-    {
-        return $this->truncateHtml($this->description, self::TRUNCATE_LENGTH, '...');
+        return $this->changeComicLinks($this->attributes['overview']);
     }
 
     public function importIssuesFromPath(string $path)

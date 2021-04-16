@@ -45,7 +45,7 @@ class Volume extends JsonResource
 
     protected function getStatus()
     {
-        $lastIssue = $this->resource?->last_issue_resource;
+        $lastIssue = $this->resource->last_issue_resource ?? null;
 
         if (!$lastIssue) {
             //No issues, if it's in the future it must be ongoing
@@ -58,8 +58,8 @@ class Volume extends JsonResource
 
         $dates = [
             strtotime($this->resource->start_year . '-01-01'),
-            strtotime($lastIssue['storeDate']),
-            strtotime($lastIssue['coverDate']),
+            strtotime($lastIssue['store_date']),
+            strtotime($lastIssue['cover_date']),
         ];
 
         //Get the most recent date from the comic and last issue

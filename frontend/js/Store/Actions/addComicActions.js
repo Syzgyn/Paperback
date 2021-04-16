@@ -118,9 +118,9 @@ export const actionHandlers = handleThunks({
   [ADD_COMIC]: function(getState, payload, dispatch) {
     dispatch(set({ section, isAdding: true }));
 
-    const tvdbId = payload.tvdbId;
+    const cvid = payload.cvid;
     const items = getState().addComic.items;
-    const newComic = getNewComic(_.cloneDeep(_.find(items, { tvdbId })), payload);
+    const newComic = getNewComic(_.cloneDeep(_.find(items, { cvid })), payload);
 
     const promise = createAjaxRequest({
       url: '/comic',
