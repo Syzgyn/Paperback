@@ -11,6 +11,7 @@ class SettingsController extends Controller
     public function __construct()
     {
         $this->settings = resolve('AppSettings');
+        $this->middleware('api')->except('ConvertEmptyStringsToNull');
     }
 
     /**
