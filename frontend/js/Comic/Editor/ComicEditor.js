@@ -17,7 +17,7 @@ import Table from 'Components/Table/Table';
 import TableBody from 'Components/Table/TableBody';
 import NoComic from 'Comic/NoComic';
 import OrganizeComicModal from './Organize/OrganizeComicModal';
-import ComicEditorRowConnector from './ComicEditorRowConnector';
+import ComicEditorRow from './ComicEditorRow';
 import ComicEditorFooter from './ComicEditorFooter';
 import ComicEditorFilterModalConnector from './ComicEditorFilterModalConnector';
 
@@ -182,7 +182,7 @@ class ComicEditor extends Component {
                     {
                       items.map((item) => {
                         return (
-                          <ComicEditorRowConnector
+                          <ComicEditorRow
                             key={item.id}
                             {...item}
                             columns={columns}
@@ -212,7 +212,6 @@ class ComicEditor extends Component {
           deleteError={deleteError}
           isOrganizingComic={isOrganizingComic}
           columns={columns}
-          showLanguageProfile={columns.find((column) => column.name === 'languageProfileId').isVisible}
           onSaveSelected={this.onSaveSelected}
           onOrganizeComicPress={this.onOrganizeComicPress}
         />

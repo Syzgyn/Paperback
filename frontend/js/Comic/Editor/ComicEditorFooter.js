@@ -392,7 +392,6 @@ ComicEditorFooter.propTypes = {
   isDeleting: PropTypes.bool.isRequired,
   deleteError: PropTypes.object,
   isOrganizingComic: PropTypes.bool.isRequired,
-  showLanguageProfile: PropTypes.bool.isRequired,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   onSaveSelected: PropTypes.func.isRequired,
   onOrganizeComicPress: PropTypes.func.isRequired

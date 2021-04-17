@@ -48,28 +48,16 @@ export const defaultState = {
       isModifiable: false
     },
     {
-      name: 'qualityProfileId',
-      label: 'Quality Profile',
+      name: 'year',
+      label: 'Year',
       isSortable: true,
-      isVisible: true
+      isVisible: true,
     },
     {
-      name: 'languageProfileId',
-      label: 'Language Profile',
+      name: 'numIssues',
+      label: 'Number of Issues',
       isSortable: true,
-      isVisible: true
-    },
-    {
-      name: 'comicType',
-      label: 'Type',
-      isSortable: true,
-      isVisible: true
-    },
-    {
-      name: 'seasonFolder',
-      label: 'Season Folder',
-      isSortable: true,
-      isVisible: true
+      isVisible: true,
     },
     {
       name: 'path',

@@ -31,12 +31,9 @@ class ComicEditorRow extends Component {
       status,
       title,
       titleSlug,
-      comicType,
-      qualityProfile,
-      languageProfile,
+      year,
       path,
       tags,
-      seasonFolder,
       statistics = {},
       columns,
       isSelected,
@@ -72,6 +69,22 @@ class ComicEditorRow extends Component {
               );
             }
 
+            if (name === 'year') {
+              return (
+                <TableRowCell key={name}>
+                    {year}
+                </TableRowCell>
+              );
+            }
+
+            if (name === 'numIssues') {
+              return (
+                <TableRowCell key={name}>
+                    {statistics.issueCount}
+                </TableRowCell>
+              );
+            }
+
             if (name === 'sortTitle') {
               return (
                 <TableRowCell
@@ -87,42 +100,10 @@ class ComicEditorRow extends Component {
               );
             }
 
-            if (name === 'qualityProfileId') {
-              return (
-                <TableRowCell key={name}>
-                  {qualityProfile.name}
-                </TableRowCell>
-              );
-            }
-
-            if (name === 'languageProfileId') {
-              return (
-                <TableRowCell key={name}>
-                  {languageProfile.name}
-                </TableRowCell>
-              );
-            }
-
             if (name === 'comicType') {
               return (
                 <TableRowCell key={name}>
                   {titleCase(comicType)}
-                </TableRowCell>
-              );
-            }
-
-            if (name === 'seasonFolder') {
-              return (
-                <TableRowCell
-                  key={name}
-                  className={styles.seasonFolder}
-                >
-                  <CheckInput
-                    name="seasonFolder"
-                    value={seasonFolder}
-                    isDisabled={true}
-                    onChange={this.onSeasonFolderChange}
-                  />
                 </TableRowCell>
               );
             }
@@ -166,11 +147,9 @@ ComicEditorRow.propTypes = {
   status: PropTypes.string.isRequired,
   titleSlug: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  year: PropTypes.number.isRequired,
   monitored: PropTypes.bool.isRequired,
-  languageProfile: PropTypes.object.isRequired,
-  qualityProfile: PropTypes.object.isRequired,
   comicType: PropTypes.string.isRequired,
-  seasonFolder: PropTypes.bool.isRequired,
   path: PropTypes.string.isRequired,
   statistics: PropTypes.object.isRequired,
   tags: PropTypes.arrayOf(PropTypes.number).isRequired,
