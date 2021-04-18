@@ -41,6 +41,8 @@ class InitialSetup extends Migration
             $table->date('store_date')->nullable();
             $table->date('cover_date')->nullable();
             $table->text('images')->nullable();
+
+            $table->primary('cvid');
         });
 
         Schema::create('issue_files', function (Blueprint $table) {

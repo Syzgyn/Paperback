@@ -178,7 +178,6 @@ class ComicDetails extends Component {
       tvMazeId,
       imdbId,
       title,
-      runtime,
       ratings,
       path,
       statistics,
@@ -402,17 +401,9 @@ class ComicDetails extends Component {
 
                 <div className={styles.details}>
                   <div>
-                    {
-                      !!runtime &&
-                        <span className={styles.runtime}>
-                          {runtime} Minutes
-                        </span>
-                    }
-
-                    <HeartRating
-                      rating={ratings.value}
-                      iconSize={20}
-                    />
+                    <span className={styles.issueCount}>
+                      {statistics.issueCount} Issue{statistics.issueCount !== 1 && 's'}
+                    </span>
                   </div>
                 </div>
 
@@ -675,7 +666,6 @@ ComicDetails.propTypes = {
   tvMazeId: PropTypes.number,
   imdbId: PropTypes.string,
   title: PropTypes.string.isRequired,
-  runtime: PropTypes.number,
   ratings: PropTypes.object.isRequired,
   path: PropTypes.string.isRequired,
   statistics: PropTypes.object.isRequired,

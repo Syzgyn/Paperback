@@ -55,8 +55,13 @@ export const defaultState = {
       isVisible: false
     },
     {
-      name: 'releaseDateUtc',
-      label: 'Release Date',
+      name: 'storeDate',
+      label: 'Store Date',
+      isVisible: true
+    },
+    {
+      name: 'coverDate',
+      label: 'Cover Date',
       isVisible: true
     },
     {

@@ -44,6 +44,7 @@ class Comic extends JsonResource
             'path' => $this->path,
             'ratings' => ['value' => 5],
             'useSceneNumbering' => false,
+            'tags' => $this->tags
         ];
     }
 

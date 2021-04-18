@@ -71,9 +71,20 @@ class ComicVineRepository
         return Volume::make($volume->results)->resolve();
     }
 
-    public function volumeIssues($cvid)
+    public function volumeIssues($cvid, $offset = 0)
     {
-        $issues = $this->makeRequest('issues', "issues.$cvid", ['filter' => "volume:$cvid"]);
+        $this->bypassCache = true;
+        $issues = $this->makeRequest('issues', "issues.$cvid.$offset", ['filter' => "volume:$cvid"]);
+
+        while (count($issues->results) < $issues->number_of_total_results) {
+            $offset+=100;
+            $moreIssues = $this->makeRequest('issues', "issues.$cvid.$offset", ['filter' => "volume:$cvid", 'offset' => $offset]);
+
+            if ($moreIssues->error !== "OK" || $moreIssues->number_of_page_results === 0) {
+                break;
+            }
+            $issues->results = array_merge($issues->results, $moreIssues->results);
+        }
 
         return IssueCollection::make($issues->results)->resolve();
     }
@@ -96,6 +107,10 @@ class ComicVineRepository
 
     public function searchVolumes($query, $includeLastIssue = false)
     {
+        if (preg_match('/^cvid:(\d+)$/', $query, $match)) {
+            return [ $this->volume($match[1]) ];
+        }
+
         $volumes = $this->makeRequest('volumes', "volumes.$query." . ($includeLastIssue ? 'true' : 'false'), ['filter' => "name:$query"]);
 
         if (empty($volumes->results)) {

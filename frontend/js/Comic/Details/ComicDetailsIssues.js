@@ -115,7 +115,7 @@ class ComicDetailsIssues extends Component {
                 </Table> :
 
                 <div className={styles.noIssues}>
-                  No issues in this season
+                  No issues in this comic
                 </div>
             }
           </div>

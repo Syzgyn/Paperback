@@ -101,7 +101,7 @@ class AddNewComic extends Component {
               className={styles.searchInput}
               name="comicLookup"
               value={term}
-              placeholder="eg. Breaking Bad, tvdb:####"
+              placeholder="eg. The Avengers, cvid:####"
               autoFocus={true}
               onChange={this.onSearchInputChange}
             />
@@ -152,12 +152,7 @@ class AddNewComic extends Component {
             !isFetching && !error && !items.length && !!term &&
               <div className={styles.message}>
                 <div className={styles.noResults}>Couldn't find any results for '{term}'</div>
-                <div>You can also search using TVDB ID of a show. eg. tvdb:71663</div>
-                <div>
-                  <Link to="https://wiki.servarr.com/Paperback_FAQ#Why_cant_I_add_a_new_comic_when_I_know_the_TVDB_ID">
-                    Why can't I find my show?
-                  </Link>
-                </div>
+                <div>You can also search using ComicVine ID of a show. eg. cvid:5989</div>
               </div>
           }
 
@@ -168,7 +163,7 @@ class AddNewComic extends Component {
                 <div className={styles.helpText}>
                   It's easy to add a new comic, just start typing the name the comic you want to add.
                 </div>
-                <div>You can also search using TVDB ID of a show. eg. tvdb:71663</div>
+                <div>You can also search using ComicVine ID of a show. eg. cvid:5989</div>
               </div>
           }
 
@@ -176,7 +171,7 @@ class AddNewComic extends Component {
             !term && !hasExistingComic ?
               <div className={styles.message}>
                 <div className={styles.noComicText}>
-                  You haven't added any comic yet, do you want to import some or all of your comic first?
+                  You haven't added any comic yet, do you want to import some or all of your comics first?
                 </div>
                 <div>
                   <Button

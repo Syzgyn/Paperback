@@ -9,7 +9,7 @@ import ConfirmModal from 'Components/Modal/ConfirmModal';
 import Popover from 'Components/Tooltip/Popover';
 import QualityProfileNameConnector from 'Settings/Profiles/Quality/QualityProfileNameConnector';
 import IssueQuality from 'Issue/IssueQuality';
-import IssueAiringConnector from './IssueAiringConnector';
+import IssueReleaseConnector from './IssueReleaseConnector';
 import MediaInfo from './MediaInfo';
 import styles from './IssueSummary.css';
 import ReactHtmlParser from 'react-html-parser';
@@ -49,9 +49,10 @@ class IssueSummary extends Component {
   render() {
     const {
       qualityProfileId,
-      network,
+      publisher,
       overview,
-      releaseDateUtc,
+      storeDate,
+      coverDate,
       mediaInfo,
       path,
       size,
@@ -64,11 +65,10 @@ class IssueSummary extends Component {
     return (
       <div>
         <div>
-          <span className={styles.infoTitle}>Airs</span>
-
-          <IssueAiringConnector
-            releaseDateUtc={releaseDateUtc}
-            network={network}
+          <IssueReleaseConnector
+            storeDate={storeDate}
+            coverDate={coverDate}
+            publisher={publisher}
           />
         </div>
 
@@ -156,10 +156,10 @@ class IssueSummary extends Component {
 
 IssueSummary.propTypes = {
   issueFileId: PropTypes.number.isRequired,
-  network: PropTypes.string,
+  publisher: PropTypes.string,
   overview: PropTypes.string,
-  releaseDateUtc: PropTypes.string.isRequired,
-  mediaInfo: PropTypes.object,
+  storeDate: PropTypes.string,
+  coverDate: PropTypes.string,
   path: PropTypes.string,
   size: PropTypes.number,
   quality: PropTypes.object,

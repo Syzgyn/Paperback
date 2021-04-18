@@ -15,33 +15,27 @@ function createMapStateToProps() {
     createIssueFileSelector(),
     (comic, issue, issueFile = {}) => {
       const {
-        qualityProfileId,
-        network
+        publisher 
       } = comic;
 
       const {
-        releaseDateUtc,
+        storeDate,
+        coverDate,
         overview
       } = issue;
 
       const {
-        mediaInfo,
         path,
         size,
-        quality,
-        qualityCutoffNotMet
       } = issueFile;
 
       return {
-        network,
-        qualityProfileId,
-        releaseDateUtc,
+        publisher,
+        storeDate,
+        coverDate,
         overview,
-        mediaInfo,
         path,
         size,
-        quality,
-        qualityCutoffNotMet
       };
     }
   );

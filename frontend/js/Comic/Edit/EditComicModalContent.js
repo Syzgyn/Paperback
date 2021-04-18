@@ -98,54 +98,6 @@ class EditComicModalContent extends Component {
             </FormGroup>
 
             <FormGroup>
-              <FormLabel>Use Season Folder</FormLabel>
-
-              <FormInputGroup
-                type={inputTypes.CHECK}
-                name="seasonFolder"
-                helpText="Sort issues into season folders"
-                {...seasonFolder}
-                onChange={onInputChange}
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <FormLabel>Quality Profile</FormLabel>
-
-              <FormInputGroup
-                type={inputTypes.QUALITY_PROFILE_SELECT}
-                name="qualityProfileId"
-                {...qualityProfileId}
-                onChange={onInputChange}
-              />
-            </FormGroup>
-
-            {
-              showLanguageProfile &&
-                <FormGroup>
-                  <FormLabel>Language Profile</FormLabel>
-
-                  <FormInputGroup
-                    type={inputTypes.LANGUAGE_PROFILE_SELECT}
-                    name="languageProfileId"
-                    {...languageProfileId}
-                    onChange={onInputChange}
-                  />
-                </FormGroup>
-            }
-
-            <FormGroup>
-              <FormLabel>Comic Type</FormLabel>
-
-              <FormInputGroup
-                type={inputTypes.COMIC_TYPE_SELECT}
-                name="comicType"
-                {...comicType}
-                onChange={onInputChange}
-              />
-            </FormGroup>
-
-            <FormGroup>
               <FormLabel>Path</FormLabel>
 
               <FormInputGroup
@@ -209,7 +161,6 @@ EditComicModalContent.propTypes = {
   title: PropTypes.string.isRequired,
   item: PropTypes.object.isRequired,
   isSaving: PropTypes.bool.isRequired,
-  showLanguageProfile: PropTypes.bool.isRequired,
   isPathChanging: PropTypes.bool.isRequired,
   originalPath: PropTypes.string.isRequired,
   onInputChange: PropTypes.func.isRequired,

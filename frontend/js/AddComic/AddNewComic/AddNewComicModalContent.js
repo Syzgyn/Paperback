@@ -44,14 +44,6 @@ class AddNewComicModalContent extends Component {
   //
   // Listeners
 
-  onQualityProfileIdChange = ({ value }) => {
-    this.props.onInputChange({ name: 'qualityProfileId', value: parseInt(value) });
-  }
-
-  onLanguageProfileIdChange = ({ value }) => {
-    this.props.onInputChange({ name: 'languageProfileId', value: parseInt(value) });
-  }
-
   onAddComicPress = () => {
     const {
       comicType
@@ -82,7 +74,6 @@ class AddNewComicModalContent extends Component {
       searchForCutoffUnmetIssues,
       folder,
       tags,
-      showLanguageProfile,
       isSmallScreen,
       isWindows,
       onModalClose,
@@ -175,65 +166,6 @@ class AddNewComicModalContent extends Component {
                 </FormGroup>
 
                 <FormGroup>
-                  <FormLabel>Quality Profile</FormLabel>
-
-                  <FormInputGroup
-                    type={inputTypes.QUALITY_PROFILE_SELECT}
-                    name="qualityProfileId"
-                    onChange={this.onQualityProfileIdChange}
-                    {...qualityProfileId}
-                  />
-                </FormGroup>
-
-                <FormGroup className={showLanguageProfile ? undefined : styles.hideLanguageProfile}>
-                  <FormLabel>Language Profile</FormLabel>
-
-                  <FormInputGroup
-                    type={inputTypes.LANGUAGE_PROFILE_SELECT}
-                    name="languageProfileId"
-                    onChange={this.onLanguageProfileIdChange}
-                    {...languageProfileId}
-                  />
-                </FormGroup>
-
-                <FormGroup>
-                  <FormLabel>
-                    Comic Type
-
-                    <Popover
-                      anchor={
-                        <Icon
-                          className={styles.labelIcon}
-                          name={icons.INFO}
-                        />
-                      }
-                      title="Comic Types"
-                      body={<ComicTypePopoverContent />}
-                      position={tooltipPositions.RIGHT}
-                    />
-                  </FormLabel>
-
-                  <FormInputGroup
-                    type={inputTypes.COMIC_TYPE_SELECT}
-                    name="comicType"
-                    onChange={onInputChange}
-                    {...comicType}
-                    value={this.state.comicType}
-                  />
-                </FormGroup>
-
-                <FormGroup>
-                  <FormLabel>Season Folder</FormLabel>
-
-                  <FormInputGroup
-                    type={inputTypes.CHECK}
-                    name="seasonFolder"
-                    onChange={onInputChange}
-                    {...seasonFolder}
-                  />
-                </FormGroup>
-
-                <FormGroup>
                   <FormLabel>Tags</FormLabel>
 
                   <FormInputGroup
@@ -311,7 +243,6 @@ AddNewComicModalContent.propTypes = {
   searchForCutoffUnmetIssues: PropTypes.object.isRequired,
   folder: PropTypes.string.isRequired,
   tags: PropTypes.object.isRequired,
-  showLanguageProfile: PropTypes.bool.isRequired,
   isSmallScreen: PropTypes.bool.isRequired,
   isWindows: PropTypes.bool.isRequired,
   onModalClose: PropTypes.func.isRequired,

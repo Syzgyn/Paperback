@@ -20,6 +20,8 @@ class Issue extends JsonResource
             'overview' => $this->overview,
             'releaseDate' => $this->store_date,
             'releaseDateUtc' => $this->store_date,
+            'storeDate' => $this->store_date,
+            'coverDate' => $this->cover_date,
             'absoluteIssueNumber' => $this->issue_num,
             'issueNumber' => $this->issue_num,
             'id' => $this->cvid,
