@@ -48,14 +48,6 @@ function getFanartUrl(images) {
   }
 }
 
-function getExpandedState(newState) {
-  return {
-    allExpanded: newState.allSelected,
-    allCollapsed: newState.allUnselected,
-    expandedState: newState.selectedState
-  };
-}
-
 class ComicDetails extends Component {
 
   //
@@ -72,9 +64,6 @@ class ComicDetails extends Component {
       isComicHistoryModalOpen: false,
       isInteractiveImportModalOpen: false,
       isMonitorOptionsModalOpen: false,
-      allExpanded: false,
-      allCollapsed: false,
-      expandedState: {},
       overviewHeight: 0
     };
   }
@@ -141,29 +130,6 @@ class ComicDetails extends Component {
     this.setState({ isMonitorOptionsModalOpen: false });
   }
 
-  onExpandAllPress = () => {
-    const {
-      allExpanded,
-      expandedState
-    } = this.state;
-
-    this.setState(getExpandedState(selectAll(expandedState, !allExpanded)));
-  }
-
-  onExpandPress = (seasonNumber, isExpanded) => {
-    this.setState((state) => {
-      const convertedState = {
-        allSelected: state.allExpanded,
-        allUnselected: state.allCollapsed,
-        selectedState: state.expandedState
-      };
-
-      const newState = toggleSelected(convertedState, [], seasonNumber, isExpanded, false);
-
-      return getExpandedState(newState);
-    });
-  }
-
   onMeasure = ({ height }) => {
     this.setState({ overviewHeight: height });
   }
@@ -220,8 +186,6 @@ class ComicDetails extends Component {
       isComicHistoryModalOpen,
       isInteractiveImportModalOpen,
       isMonitorOptionsModalOpen,
-      allExpanded,
-      allCollapsed,
       expandedState,
       overviewHeight
     } = this.state;
@@ -237,12 +201,6 @@ class ComicDetails extends Component {
     }
 
     let expandIcon = icons.EXPAND_INDETERMINATE;
-
-    if (allExpanded) {
-      expandIcon = icons.COLLAPSE;
-    } else if (allCollapsed) {
-      expandIcon = icons.EXPAND;
-    }
 
     return (
       <PageContent title={title}>
@@ -315,14 +273,6 @@ class ComicDetails extends Component {
               onPress={this.onDeleteComicPress}
             />
 
-          </PageToolbarSection>
-
-          <PageToolbarSection alignContent={align.RIGHT}>
-            <PageToolbarButton
-              label={allExpanded ? 'Collapse All' : 'Expand All'}
-              iconName={expandIcon}
-              onPress={this.onExpandAllPress}
-            />
           </PageToolbarSection>
         </PageToolbar>
 
@@ -448,21 +398,6 @@ class ComicDetails extends Component {
                     kind={kinds.INVERSE}
                     position={tooltipPositions.BOTTOM}
                   />
-
-                  <Label
-                    className={styles.detailsLabel}
-                    title="Quality Profile"
-                    size={sizes.LARGE}
-                  >
-                    <Icon
-                      name={icons.PROFILE}
-                      size={17}
-                    />
-
-                    <span className={styles.qualityProfileName}>
-                      {qualityProfileId}
-                    </span>
-                  </Label>
 
                   <Label
                     className={styles.detailsLabel}

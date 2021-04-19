@@ -48,9 +48,15 @@ class Comic extends Model
         return $this->issueFiles()->count();
     }
 
-    public function getImageAttribute()
+    public function getImagesAttribute()
     {
-        return asset('/storage/covers/' . $this->cvid . '.jpg');
+        $images = json_decode($this->attributes['images'], true);
+        foreach($images as $k => $v) {
+            if ($v['coverType'] === 'poster') {
+                $images[$k]['url'] = asset('/storage/comics/' . $this->cvid . '.jpg');
+            }
+        }
+        return $images;
     }
 
     public function getDirectoryNameAttribute()
@@ -108,7 +114,7 @@ class Comic extends Model
     {
         //TODO: Replace with Guzzle
         $contents = file_get_contents($path);
-        Storage::disk('covers')->put($this->cvid . '.jpg', $contents);
+        Storage::disk('comics')->put($this->cvid . '.jpg', $contents);
     }
 
     protected function fetchIssues()
@@ -124,13 +130,8 @@ class Comic extends Model
     protected static function booted()
     {
         static::created(function ($comic) {
+            resolve('FileManager')->getOrCreateComicDir($comic);
             $comic->fetchIssues();
-        });
-
-        static::saving(function ($comic) {
-            if ($comic->isDirty('monitored')) {
-                //$comic->issues()->update(['monitored' => $comic->monitored]);
-            }
         });
     }
 

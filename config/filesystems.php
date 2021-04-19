@@ -55,10 +55,10 @@ return [
             'visibility' => 'public',
         ],
 
-        'covers' => [
+        'comics' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/covers'),
-            'url' => env('APP_URL').'/storage/covers',
+            'root' => storage_path('app/public/comics'),
+            'url' => env('APP_URL').'/storage/comics',
             'visibility' => 'public',
         ],
 

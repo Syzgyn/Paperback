@@ -8,7 +8,6 @@ import ComicIndexConnector from 'Comic/Index/ComicIndexConnector';
 import AddNewComicConnector from 'AddComic/AddNewComic/AddNewComicConnector';
 import ImportComic from 'AddComic/ImportComic/ImportComic';
 import ComicEditorConnector from 'Comic/Editor/ComicEditorConnector';
-import SeasonPassConnector from 'SeasonPass/SeasonPassConnector';
 import ComicDetailsPageConnector from 'Comic/Details/ComicDetailsPageConnector';
 import CalendarPageConnector from 'Calendar/CalendarPageConnector';
 import HistoryConnector from 'Activity/History/HistoryConnector';
@@ -82,11 +81,6 @@ function AppRoutes(props) {
       <Route
         path="/comiceditor"
         component={ComicEditorConnector}
-      />
-
-      <Route
-        path="/seasonpass"
-        component={SeasonPassConnector}
       />
 
       <Route

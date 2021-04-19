@@ -358,7 +358,6 @@ export const deleteComic = createThunk(DELETE_COMIC, (payload) => {
     ...payload,
     queryParams: {
       deleteFiles: payload.deleteFiles,
-      addImportListExclusion: payload.addImportListExclusion
     }
   };
 });

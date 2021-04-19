@@ -91,18 +91,6 @@ class DeleteComicModalContent extends Component {
           </div>
 
           <FormGroup>
-            <FormLabel>Add List Exclusion</FormLabel>
-
-            <FormInputGroup
-              type={inputTypes.CHECK}
-              name="addImportListExclusion"
-              value={addImportListExclusion}
-              helpText="Prevent comic from being added to Paperback by lists"
-              onChange={this.onAddImportListExclusionChange}
-            />
-          </FormGroup>
-
-          <FormGroup>
             <FormLabel>{deleteFilesLabel}</FormLabel>
 
             <FormInputGroup

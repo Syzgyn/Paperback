@@ -18,6 +18,36 @@ class FileManager
         'cbt',
     ];
 
+    const PROTECTED_DIRS = [
+        // Windows
+        "boot",
+        "bootmgr",
+        "cache",
+        "msocache",
+        "recovery",
+        '$recycle.bin',
+        "recycler",
+        "system volume information",
+        "temporary internet files",
+        "windows",
+
+        // OS X
+        ".fseventd",
+        ".spotlight",
+        ".trashes",
+        ".vol",
+        "cachedmessages",
+        "caches",
+        "trash",
+
+        // QNAP
+        ".@__thumb",
+
+        // Synology
+        "@eadir",
+        "#recycle"
+    ];
+
     public function moveCompletedDownloads()
     {
         $downloads = TrackedDownload::with(['issue', 'issue.comic', 'comic'])
@@ -224,13 +254,13 @@ class FileManager
 
     public function getOrCreateComicDir(Comic $comic)
     {
-        $path = $comic->fullDirectoryName;
+        $path = $comic->path;
         if (! file_exists($path)) {
             if (! mkdir($path)) {
                 Log::error("Unable to create directory for comic {$comic->name}");
                 throw new \Exception("Unable to create directory for comic {$comic->name}");
             } else {
-                chmod($path, 0777);
+                chmod($path, 0775);
                 Log::info("Created directory $path for comic {$comic->name}");
             }
         }
@@ -252,6 +282,11 @@ class FileManager
 
     public function removeDir($path)
     {
+        if (!is_dir($path)) {
+            Log::warning("$path is not a valid directory");
+            return true;
+        }
+
         $files = array_diff(scandir($path), ['.', '..']);
 
         foreach ($files as $file) {
@@ -273,17 +308,38 @@ class FileManager
         }
     }
 
-    public function getDirectoryListing($path = '', $includeFiles = false)
+    public function getDirectoryListing($path = '/', $includeFiles = false)
     {
-        $path .= DIRECTORY_SEPARATOR;
+        if (!$path) {
+            if (DIRECTORY_SEPARATOR === '/') {
+                // unix based
+                $path = '/';
+            } else {
+                // windows, this is kinda hacky
+                $path = dirname(__DIR__, 100);
+            }
+        }
+
         $output = [
+            'parent' => dirname($path),
             'directories' => [],
             'files' => [],
         ];
+
+        if ($output['parent'] === '' || $output['parent'] === $path) {
+            unset($output['parent']);
+        }
+
+        if (!is_dir($path)) {
+            Log::warning("$path is not a valid directory");
+            return $output;
+        }
+
+        $path .= DIRECTORY_SEPARATOR;
         $contents = scandir($path);
 
         foreach ($contents as $file) {
-            if ($file === '.' || $file === '..') {
+            if ($file === '.' || $file === '..' || (is_dir($path . $file) && in_array($file, self::PROTECTED_DIRS))) {
                 continue;
             }
             if (is_dir($path . $file)) {

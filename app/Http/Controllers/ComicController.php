@@ -76,6 +76,9 @@ class ComicController extends Controller
      */
     public function destroy(Comic $comic)
     {
+        if (request()->query('deleteFiles') === 'true') {
+            resolve('FileManager')->removeDir($comic->path);
+        }
         $comic->delete();
 
         return response()->json(['status' => 'OK']);

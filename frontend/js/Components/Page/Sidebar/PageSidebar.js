@@ -36,10 +36,6 @@ const links = [
         title: 'Mass Editor',
         to: '/comiceditor'
       },
-      {
-        title: 'Season Pass',
-        to: '/seasonpass'
-      }
     ]
   },
 
