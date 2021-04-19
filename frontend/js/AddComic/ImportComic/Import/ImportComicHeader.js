@@ -12,7 +12,6 @@ import styles from './ImportComicHeader.css';
 
 function ImportComicHeader(props) {
   const {
-    showLanguageProfile,
     allSelected,
     allUnselected,
     onSelectAllChange
@@ -53,49 +52,6 @@ function ImportComicHeader(props) {
       </VirtualTableHeaderCell>
 
       <VirtualTableHeaderCell
-        className={styles.qualityProfile}
-        name="qualityProfileId"
-      >
-        Quality Profile
-      </VirtualTableHeaderCell>
-
-      {
-        showLanguageProfile &&
-          <VirtualTableHeaderCell
-            className={styles.languageProfile}
-            name="languageProfileId"
-          >
-            Language Profile
-          </VirtualTableHeaderCell>
-      }
-
-      <VirtualTableHeaderCell
-        className={styles.comicType}
-        name="comicType"
-      >
-        Comic Type
-
-        <Popover
-          anchor={
-            <Icon
-              className={styles.detailsIcon}
-              name={icons.INFO}
-            />
-          }
-          title="Comic Type"
-          body={<ComicTypePopoverContent />}
-          position={tooltipPositions.RIGHT}
-        />
-      </VirtualTableHeaderCell>
-
-      <VirtualTableHeaderCell
-        className={styles.seasonFolder}
-        name="seasonFolder"
-      >
-        Season Folder
-      </VirtualTableHeaderCell>
-
-      <VirtualTableHeaderCell
         className={styles.comic}
         name="comic"
       >
@@ -106,7 +62,6 @@ function ImportComicHeader(props) {
 }
 
 ImportComicHeader.propTypes = {
-  showLanguageProfile: PropTypes.bool.isRequired,
   allSelected: PropTypes.bool.isRequired,
   allUnselected: PropTypes.bool.isRequired,
   onSelectAllChange: PropTypes.func.isRequired

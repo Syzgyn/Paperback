@@ -38,26 +38,19 @@ class ImportComicSelectComicConnector extends Component {
     });
   }
 
-  onComicSelect = (tvdbId) => {
+  onComicSelect = (cvid) => {
     const {
       id,
       items,
       onInputChange
     } = this.props;
 
-    const selectedComic = items.find((item) => item.tvdbId === tvdbId);
+    const selectedComic = items.find((item) => item.cvid === cvid);
 
     this.props.setImportComicValue({
       id,
       selectedComic
     });
-
-    if (selectedComic.comicType !== comicTypes.STANDARD) {
-      onInputChange({
-        name: 'comicType',
-        value: selectedComic.comicType
-      });
-    }
   }
 
   //

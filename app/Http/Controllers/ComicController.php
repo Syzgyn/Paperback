@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Comic;
 use Illuminate\Http\Request;
 use App\Http\Requests\ComicRequest;
+use App\Http\Requests\BulkComicRequest;
 use App\Http\Resources\ComicCollection;
 use App\Http\Resources\Comic as ComicResource;
+use Illuminate\Support\Facades\Validator;
 
 class ComicController extends Controller
 {
@@ -102,5 +104,31 @@ class ComicController extends Controller
         $search = $request->input('query');
 
         return $this->comicvine->searchVolumes($search);
+    }
+
+    public function lookup(Request $request)
+    {
+        if (!$term = $request->input('term', null)) {
+            return [];
+        }
+        
+        return $this->comicvine->searchVolumes($term);
+    }
+
+    public function import(BulkComicRequest $request) {
+        //The content is coming in as an unlabeled array, so we have to do weird stuff to validate it
+        $content = json_decode($request->getContent(), true);
+        $rules = $request->rules();
+        $validator = Validator::make($content, $rules);
+        
+        if (!$validator->passes()) {
+            return response()->json($validator->errors()->messages(), 422);
+        }
+
+        $comics = [];
+        foreach ($content as $item) {
+            $comics[] = Comic::create($item);
+        }
+        return new ComicCollection($comics);
     }
 }

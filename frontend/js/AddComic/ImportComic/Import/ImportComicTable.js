@@ -15,20 +15,12 @@ class ImportComicTable extends Component {
     const {
       unmappedFolders,
       defaultMonitor,
-      defaultQualityProfileId,
-      defaultLanguageProfileId,
-      defaultComicType,
-      defaultSeasonFolder,
       onComicLookup,
       onSetImportComicValue
     } = this.props;
 
     const values = {
       monitor: defaultMonitor,
-      qualityProfileId: defaultQualityProfileId,
-      languageProfileId: defaultLanguageProfileId,
-      comicType: defaultComicType,
-      seasonFolder: defaultSeasonFolder
     };
 
     unmappedFolders.forEach((unmappedFolder) => {
@@ -71,7 +63,7 @@ class ImportComicTable extends Component {
       const isSelected = selectedState[id];
 
       const isExistingComic = !!selectedComic &&
-        _.some(prevProps.allComic, { tvdbId: selectedComic.tvdbId });
+        _.some(prevProps.allComic, { cvid: selectedComic.cvid });
 
       // Props doesn't have a selected comic or
       // the selected comic is an existing comic.
@@ -106,7 +98,6 @@ class ImportComicTable extends Component {
       rootFolderId,
       items,
       selectedState,
-      showLanguageProfile,
       onSelectedChange
     } = this.props;
 
@@ -120,7 +111,6 @@ class ImportComicTable extends Component {
         <ImportComicRowConnector
           key={item.id}
           rootFolderId={rootFolderId}
-          showLanguageProfile={showLanguageProfile}
           isSelected={selectedState[item.id]}
           onSelectedChange={onSelectedChange}
           id={item.id}
@@ -139,7 +129,6 @@ class ImportComicTable extends Component {
       allUnselected,
       isSmallScreen,
       scroller,
-      showLanguageProfile,
       selectedState,
       onSelectAllChange
     } = this.props;
@@ -158,7 +147,6 @@ class ImportComicTable extends Component {
         rowRenderer={this.rowRenderer}
         header={
           <ImportComicHeader
-            showLanguageProfile={showLanguageProfile}
             allSelected={allSelected}
             allUnselected={allUnselected}
             onSelectAllChange={onSelectAllChange}
@@ -175,17 +163,12 @@ ImportComicTable.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object),
   unmappedFolders: PropTypes.arrayOf(PropTypes.object),
   defaultMonitor: PropTypes.string.isRequired,
-  defaultQualityProfileId: PropTypes.number,
-  defaultLanguageProfileId: PropTypes.number,
-  defaultComicType: PropTypes.string.isRequired,
-  defaultSeasonFolder: PropTypes.bool.isRequired,
   allSelected: PropTypes.bool.isRequired,
   allUnselected: PropTypes.bool.isRequired,
   selectedState: PropTypes.object.isRequired,
   isSmallScreen: PropTypes.bool.isRequired,
   allComic: PropTypes.arrayOf(PropTypes.object),
   scroller: PropTypes.instanceOf(Element).isRequired,
-  showLanguageProfile: PropTypes.bool.isRequired,
   onSelectAllChange: PropTypes.func.isRequired,
   onSelectedChange: PropTypes.func.isRequired,
   onRemoveSelectedStateItem: PropTypes.func.isRequired,

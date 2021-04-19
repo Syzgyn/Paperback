@@ -55,7 +55,7 @@ class ImportListExclusion extends Component {
     const {
       id,
       title,
-      tvdbId
+      cvid
     } = this.props;
 
     return (
@@ -65,7 +65,7 @@ class ImportListExclusion extends Component {
         )}
       >
         <div className={styles.title}>{title}</div>
-        <div className={styles.tvdbId}>{tvdbId}</div>
+        <div className={styles.cvid}>{cvid}</div>
 
         <div className={styles.actions}>
           <Link
@@ -99,7 +99,7 @@ class ImportListExclusion extends Component {
 ImportListExclusion.propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  tvdbId: PropTypes.number.isRequired,
+  cvid: PropTypes.number.isRequired,
   onConfirmDeleteImportListExclusion: PropTypes.func.isRequired
 };
 

@@ -15,15 +15,11 @@ function createMapStateToProps() {
     (state) => state.rootFolders,
     (state) => state.addComic,
     (state) => state.importComic,
-    (state) => state.settings.qualityProfiles,
-    (state) => state.settings.languageProfiles,
     (
       match,
       rootFolders,
       addComic,
       importComicState,
-      qualityProfiles,
-      languageProfiles
     ) => {
       const {
         isFetching: rootFoldersFetching,
@@ -39,11 +35,6 @@ function createMapStateToProps() {
         rootFoldersFetching,
         rootFoldersPopulated,
         rootFoldersError,
-        qualityProfiles: qualityProfiles.items,
-        languageProfiles: languageProfiles.items,
-        showLanguageProfile: languageProfiles.items.length > 1,
-        defaultQualityProfileId: addComic.defaults.qualityProfileId,
-        defaultLanguageProfileId: addComic.defaults.languageProfileId
       };
 
       if (items.length) {
@@ -77,10 +68,6 @@ class ImportComicConnector extends Component {
   componentDidMount() {
     const {
       rootFolderId,
-      qualityProfiles,
-      languageProfiles,
-      defaultQualityProfileId,
-      defaultLanguageProfileId,
       dispatchFetchRootFolders,
       dispatchSetAddComicDefault
     } = this.props;
@@ -89,22 +76,6 @@ class ImportComicConnector extends Component {
 
     let setDefaults = false;
     const setDefaultPayload = {};
-
-    if (
-      !defaultQualityProfileId ||
-      !qualityProfiles.some((p) => p.id === defaultQualityProfileId)
-    ) {
-      setDefaults = true;
-      setDefaultPayload.qualityProfileId = qualityProfiles[0].id;
-    }
-
-    if (
-      !defaultLanguageProfileId ||
-      !languageProfiles.some((p) => p.id === defaultLanguageProfileId)
-    ) {
-      setDefaults = true;
-      setDefaultPayload.languageProfileId = languageProfiles[0].id;
-    }
 
     if (setDefaults) {
       dispatchSetAddComicDefault(setDefaultPayload);
@@ -156,10 +127,6 @@ ImportComicConnector.propTypes = {
   rootFolderId: PropTypes.number.isRequired,
   rootFoldersFetching: PropTypes.bool.isRequired,
   rootFoldersPopulated: PropTypes.bool.isRequired,
-  qualityProfiles: PropTypes.arrayOf(PropTypes.object).isRequired,
-  languageProfiles: PropTypes.arrayOf(PropTypes.object).isRequired,
-  defaultQualityProfileId: PropTypes.number.isRequired,
-  defaultLanguageProfileId: PropTypes.number.isRequired,
   dispatchSetImportComicValue: PropTypes.func.isRequired,
   dispatchImportComic: PropTypes.func.isRequired,
   dispatchClearImportComic: PropTypes.func.isRequired,

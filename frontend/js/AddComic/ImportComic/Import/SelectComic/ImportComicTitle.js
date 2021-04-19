@@ -8,7 +8,7 @@ function ImportComicTitle(props) {
   const {
     title,
     year,
-    network,
+    publisher,
     isExistingComic
   } = props;
 
@@ -27,8 +27,8 @@ function ImportComicTitle(props) {
       }
 
       {
-        !!network &&
-          <Label>{network}</Label>
+        !!publisher &&
+          <Label>{publisher}</Label>
       }
 
       {
@@ -46,7 +46,7 @@ function ImportComicTitle(props) {
 ImportComicTitle.propTypes = {
   title: PropTypes.string.isRequired,
   year: PropTypes.number.isRequired,
-  network: PropTypes.string,
+  publisher: PropTypes.string,
   isExistingComic: PropTypes.bool.isRequired
 };
 

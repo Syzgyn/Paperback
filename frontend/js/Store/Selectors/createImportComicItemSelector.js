@@ -11,7 +11,7 @@ function createImportComicItemSelector() {
     (id, addComic, importComic, comic) => {
       const item = _.find(importComic.items, { id }) || {};
       const selectedComic = item && item.selectedComic;
-      const isExistingComic = !!selectedComic && _.some(comic, { tvdbId: selectedComic.tvdbId });
+      const isExistingComic = !!selectedComic && _.some(comic, { cvid: selectedComic.cvid});
 
       return {
         defaultMonitor: addComic.defaults.monitor,

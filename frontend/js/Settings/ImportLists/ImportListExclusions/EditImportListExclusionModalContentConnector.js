@@ -9,7 +9,7 @@ import EditImportListExclusionModalContent from './EditImportListExclusionModalC
 
 const newImportListExclusion = {
   title: '',
-  tvdbId: 0
+  cvid: 0
 };
 
 function createImportListExclusionSelector() {

@@ -96,10 +96,10 @@ class ImportComicSelectComic extends Component {
     this.props.onSearchInputChange(this.state.term);
   }
 
-  onComicSelect = (tvdbId) => {
+  onComicSelect = (cvid) => {
     this.setState({ isOpen: false });
 
-    this.props.onComicSelect(tvdbId);
+    this.props.onComicSelect(cvid);
   }
 
   //
@@ -159,7 +159,7 @@ class ImportComicSelectComic extends Component {
                     <ImportComicTitle
                       title={selectedComic.title}
                       year={selectedComic.year}
-                      network={selectedComic.network}
+                      publisher={selectedComic.publisher}
                       isExistingComic={isExistingComic}
                     /> :
                     null
@@ -213,6 +213,12 @@ class ImportComicSelectComic extends Component {
                 options: {
                   boundariesElement: 'viewport'
                 }
+              },
+              {
+                name: 'offset',
+                options: {
+                    offset: [0, 4],
+                },
               }
             ]}
           >
@@ -257,11 +263,11 @@ class ImportComicSelectComic extends Component {
                             items.map((item) => {
                               return (
                                 <ImportComicSearchResultConnector
-                                  key={item.tvdbId}
-                                  tvdbId={item.tvdbId}
+                                  key={item.cvid}
+                                  cvid={item.cvid}
                                   title={item.title}
                                   year={item.year}
-                                  network={item.network}
+                                  publisher={item.publisher}
                                   onPress={this.onComicSelect}
                                 />
                               );

@@ -226,7 +226,7 @@ export const actionHandlers = handleThunks({
 
       // Make sure we have a selected comic and
       // the same comic hasn't been added yet.
-      if (selectedComic && !acc.some((a) => a.tvdbId === selectedComic.tvdbId)) {
+      if (selectedComic && !acc.some((a) => a.cvid === selectedComic.cvid)) {
         const newComic = getNewComic(_.cloneDeep(selectedComic), item);
         newComic.path = item.path;
 

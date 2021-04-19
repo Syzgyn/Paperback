@@ -68,17 +68,14 @@ class ImportComicSelectFolder extends Component {
             !error && isPopulated &&
               <div>
                 <div className={styles.header}>
-                  Import comic you already have
+                  Import comics you already have
                 </div>
 
                 <div className={styles.tips}>
                   Some tips to ensure the import goes smoothly:
                   <ul>
                     <li className={styles.tip}>
-                      Make sure that your files include the quality in their filenames. eg. <span className={styles.code}>issue.s02e15.bluray.mkv</span>
-                    </li>
-                    <li className={styles.tip}>
-                      Point Paperback to the folder containing all of your tv shows, not a specific one. eg. <span className={styles.code}>"{isWindows ? 'C:\\tv shows' : '/tv shows'}"</span> and not <span className={styles.code}>"{isWindows ? 'C:\\tv shows\\the simpsons' : '/tv shows/the simpsons'}"</span> Additionally, each comic must be in its own folder within the root/library folder.
+                      Point Paperback to the folder containing all of your comics, not a specific one. eg. <span className={styles.code}>"{isWindows ? 'C:\\comics' : '/comics'}"</span> and not <span className={styles.code}>"{isWindows ? 'C:\\comics\\The Boys' : '/comics/The Boys'}"</span> Additionally, each comic must be in its own folder within the root/library folder.
                     </li>
                     <li className={styles.tip}>
                       Do not use for importing downloads from your download client, this is only for existing organized libraries, not unsorted files.

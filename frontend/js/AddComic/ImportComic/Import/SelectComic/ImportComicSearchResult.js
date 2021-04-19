@@ -10,7 +10,7 @@ class ImportComicSearchResult extends Component {
   // Listeners
 
   onPress = () => {
-    this.props.onPress(this.props.tvdbId);
+    this.props.onPress(this.props.cvid);
   }
 
   //
@@ -20,7 +20,7 @@ class ImportComicSearchResult extends Component {
     const {
       title,
       year,
-      network,
+      publisher,
       isExistingComic
     } = this.props;
 
@@ -32,7 +32,7 @@ class ImportComicSearchResult extends Component {
         <ImportComicTitle
           title={title}
           year={year}
-          network={network}
+          publisher={publisher}
           isExistingComic={isExistingComic}
         />
       </Link>
@@ -41,10 +41,10 @@ class ImportComicSearchResult extends Component {
 }
 
 ImportComicSearchResult.propTypes = {
-  tvdbId: PropTypes.number.isRequired,
+  cvid: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   year: PropTypes.number.isRequired,
-  network: PropTypes.string,
+  publisher: PropTypes.string,
   isExistingComic: PropTypes.bool.isRequired,
   onPress: PropTypes.func.isRequired
 };

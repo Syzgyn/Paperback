@@ -13,9 +13,6 @@ function createMapStateToProps() {
     (addComic, importComic, dimensions, allComic) => {
       return {
         defaultMonitor: addComic.defaults.monitor,
-        defaultQualityProfileId: addComic.defaults.qualityProfileId,
-        defaultLanguageProfileId: addComic.defaults.languageProfileId,
-        defaultComicType: addComic.defaults.comicType,
         defaultSeasonFolder: addComic.defaults.seasonFolder,
         items: importComic.items,
         isSmallScreen: dimensions.isSmallScreen,

@@ -23,7 +23,7 @@ function createMapStateToProps() {
     createAllComicSelector(),
     (item, comic) => {
       const selectedComic = item && item.selectedComic;
-      const isExistingComic = !!selectedComic && _.some(comic, { tvdbId: selectedComic.tvdbId });
+      const isExistingComic = !!selectedComic && _.some(comic, { cvid: selectedComic.cvid });
 
       return {
         ...item,
@@ -58,11 +58,9 @@ class ImportComicRowConnector extends Component {
     const {
       items,
       monitor,
-      comicType,
-      seasonFolder
     } = this.props;
 
-    if (!items || !monitor || !comicType || !seasonFolder == null) {
+    if (!items || !monitor) {
       return null;
     }
 
@@ -80,8 +78,6 @@ ImportComicRowConnector.propTypes = {
   rootFolderId: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
   monitor: PropTypes.string,
-  comicType: PropTypes.string,
-  seasonFolder: PropTypes.bool,
   items: PropTypes.arrayOf(PropTypes.object),
   setImportComicValue: PropTypes.func.isRequired
 };

@@ -54,7 +54,7 @@ class Comic extends JsonResource
 
         if (!$lastIssue) {
             //No issues, if it's in the future it must be ongoing
-            if ($this->start_year > date('Y')) {
+            if ($this->year > date('Y')) {
                 return 'continuing';
             }
 
@@ -62,7 +62,7 @@ class Comic extends JsonResource
         }
 
         $dates = [
-            strtotime($this->start_year . '-01-01'),
+            strtotime($this->year . '-01-01'),
             strtotime($lastIssue->releaseDate),
         ];
 

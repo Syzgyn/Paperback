@@ -24,33 +24,18 @@ class ImportComicFooter extends Component {
 
     const {
       defaultMonitor,
-      defaultQualityProfileId,
-      defaultLanguageProfileId,
-      defaultSeasonFolder,
       defaultComicType
     } = props;
 
     this.state = {
       monitor: defaultMonitor,
-      qualityProfileId: defaultQualityProfileId,
-      languageProfileId: defaultLanguageProfileId,
-      comicType: defaultComicType,
-      seasonFolder: defaultSeasonFolder
     };
   }
 
   componentDidUpdate(prevProps, prevState) {
     const {
       defaultMonitor,
-      defaultQualityProfileId,
-      defaultLanguageProfileId,
-      defaultComicType,
-      defaultSeasonFolder,
       isMonitorMixed,
-      isQualityProfileIdMixed,
-      isLanguageProfileIdMixed,
-      isComicTypeMixed,
-      isSeasonFolderMixed
     } = this.props;
 
     const {
@@ -67,30 +52,6 @@ class ImportComicFooter extends Component {
       newState.monitor = MIXED;
     } else if (!isMonitorMixed && monitor !== defaultMonitor) {
       newState.monitor = defaultMonitor;
-    }
-
-    if (isQualityProfileIdMixed && qualityProfileId !== MIXED) {
-      newState.qualityProfileId = MIXED;
-    } else if (!isQualityProfileIdMixed && qualityProfileId !== defaultQualityProfileId) {
-      newState.qualityProfileId = defaultQualityProfileId;
-    }
-
-    if (isLanguageProfileIdMixed && languageProfileId !== MIXED) {
-      newState.languageProfileId = MIXED;
-    } else if (!isLanguageProfileIdMixed && languageProfileId !== defaultLanguageProfileId) {
-      newState.languageProfileId = defaultLanguageProfileId;
-    }
-
-    if (isComicTypeMixed && comicType !== MIXED) {
-      newState.comicType = MIXED;
-    } else if (!isComicTypeMixed && comicType !== defaultComicType) {
-      newState.comicType = defaultComicType;
-    }
-
-    if (isSeasonFolderMixed && seasonFolder != null) {
-      newState.seasonFolder = null;
-    } else if (!isSeasonFolderMixed && seasonFolder !== defaultSeasonFolder) {
-      newState.seasonFolder = defaultSeasonFolder;
     }
 
     if (!_.isEmpty(newState)) {
@@ -115,11 +76,7 @@ class ImportComicFooter extends Component {
       isImporting,
       isLookingUpComic,
       isMonitorMixed,
-      isQualityProfileIdMixed,
-      isLanguageProfileIdMixed,
-      isComicTypeMixed,
       hasUnsearchedItems,
-      showLanguageProfile,
       importError,
       onImportPress,
       onLookupPress,
@@ -155,61 +112,12 @@ class ImportComicFooter extends Component {
           <div className={styles.label}>
             Quality Profile
           </div>
-
-          <FormInputGroup
-            type={inputTypes.QUALITY_PROFILE_SELECT}
-            name="qualityProfileId"
-            value={qualityProfileId}
-            isDisabled={!selectedCount}
-            includeMixed={isQualityProfileIdMixed}
-            onChange={this.onInputChange}
-          />
         </div>
-
-        {
-          showLanguageProfile &&
-            <div className={styles.inputContainer}>
-              <div className={styles.label}>
-                Language Profile
-              </div>
-
-              <FormInputGroup
-                type={inputTypes.LANGUAGE_PROFILE_SELECT}
-                name="languageProfileId"
-                value={languageProfileId}
-                isDisabled={!selectedCount}
-                includeMixed={isLanguageProfileIdMixed}
-                onChange={this.onInputChange}
-              />
-            </div>
-        }
 
         <div className={styles.inputContainer}>
           <div className={styles.label}>
             Comic Type
           </div>
-
-          <FormInputGroup
-            type={inputTypes.COMIC_TYPE_SELECT}
-            name="comicType"
-            value={comicType}
-            isDisabled={!selectedCount}
-            includeMixed={isComicTypeMixed}
-            onChange={this.onInputChange}
-          />
-        </div>
-
-        <div className={styles.inputContainer}>
-          <div className={styles.label}>
-            Season Folder
-          </div>
-
-          <CheckInput
-            name="seasonFolder"
-            value={seasonFolder}
-            isDisabled={!selectedCount}
-            onChange={this.onInputChange}
-          />
         </div>
 
         <div>
@@ -307,17 +215,8 @@ ImportComicFooter.propTypes = {
   isImporting: PropTypes.bool.isRequired,
   isLookingUpComic: PropTypes.bool.isRequired,
   defaultMonitor: PropTypes.string.isRequired,
-  defaultQualityProfileId: PropTypes.number,
-  defaultLanguageProfileId: PropTypes.number,
-  defaultComicType: PropTypes.string.isRequired,
-  defaultSeasonFolder: PropTypes.bool.isRequired,
   isMonitorMixed: PropTypes.bool.isRequired,
-  isQualityProfileIdMixed: PropTypes.bool.isRequired,
-  isLanguageProfileIdMixed: PropTypes.bool.isRequired,
-  isComicTypeMixed: PropTypes.bool.isRequired,
-  isSeasonFolderMixed: PropTypes.bool.isRequired,
   hasUnsearchedItems: PropTypes.bool.isRequired,
-  showLanguageProfile: PropTypes.bool.isRequired,
   importError: PropTypes.object,
   onInputChange: PropTypes.func.isRequired,
   onImportPress: PropTypes.func.isRequired,

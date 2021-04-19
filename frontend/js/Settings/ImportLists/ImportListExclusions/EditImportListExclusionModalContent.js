@@ -32,7 +32,7 @@ function EditImportListExclusionModalContent(props) {
 
   const {
     title,
-    tvdbId
+    cvid
   } = item;
 
   return (
@@ -74,9 +74,9 @@ function EditImportListExclusionModalContent(props) {
 
                 <FormInputGroup
                   type={inputTypes.TEXT}
-                  name="tvdbId"
-                  helpText="The TVDB ID of the comic to exclude"
-                  {...tvdbId}
+                  name="cvid"
+                  helpText="The ComicVine ID of the comic to exclude"
+                  {...cvid}
                   onChange={onInputChange}
                 />
               </FormGroup>
@@ -116,7 +116,7 @@ function EditImportListExclusionModalContent(props) {
 
 const ImportListExclusionShape = {
   title: PropTypes.shape(stringSettingShape).isRequired,
-  tvdbId: PropTypes.shape(numberSettingShape).isRequired
+  cvid: PropTypes.shape(numberSettingShape).isRequired
 };
 
 EditImportListExclusionModalContent.propTypes = {

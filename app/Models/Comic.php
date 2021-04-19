@@ -20,6 +20,10 @@ class Comic extends Model
         'created_at',
     ];
 
+    protected $attributes = [
+        'tags' => '[]',
+    ];
+
     protected $casts = [
         'cvid' => 'integer',
         'year' => 'integer',
@@ -70,7 +74,7 @@ class Comic extends Model
         resolve('FileManager')->getOrCreateComicDir($comic);
 
         if ($grabImage) {
-            $imagePath = $volume['image'];
+            $imagePath = $volume['images'][self::IMAGE_KEY];
             $comic->downloadImage($imagePath);
         }
 
@@ -89,7 +93,7 @@ class Comic extends Model
         $this->fill($volume);
 
         if ($grabImage) {
-            $imagePath = $volume->image;
+            $imagePath = $volume->images->{self::IMAGE_KEY};
             $this->downloadImage($imagePath);
         }
 

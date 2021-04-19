@@ -85,7 +85,6 @@ class ImportComic extends Component {
       rootFoldersPopulated,
       rootFoldersError,
       unmappedFolders,
-      showLanguageProfile
     } = this.props;
 
     const {
@@ -135,7 +134,6 @@ class ImportComic extends Component {
                 allUnselected={allUnselected}
                 selectedState={selectedState}
                 scroller={scroller}
-                showLanguageProfile={showLanguageProfile}
                 onSelectAllChange={this.onSelectAllChange}
                 onSelectedChange={this.onSelectedChange}
                 onRemoveSelectedStateItem={this.onRemoveSelectedStateItem}
@@ -150,7 +148,6 @@ class ImportComic extends Component {
           !!unmappedFolders.length ?
             <ImportComicFooterConnector
               selectedIds={this.getSelectedIds()}
-              showLanguageProfile={showLanguageProfile}
               onInputChange={this.onInputChange}
               onImportPress={this.onImportPress}
             /> :
@@ -169,7 +166,6 @@ ImportComic.propTypes = {
   rootFoldersError: PropTypes.object,
   unmappedFolders: PropTypes.arrayOf(PropTypes.object),
   items: PropTypes.arrayOf(PropTypes.object),
-  showLanguageProfile: PropTypes.bool.isRequired,
   onInputChange: PropTypes.func.isRequired,
   onImportPress: PropTypes.func.isRequired
 };
