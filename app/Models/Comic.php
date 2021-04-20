@@ -50,7 +50,7 @@ class Comic extends Model
 
     public function getTotalIssueFileSizeAttribute()
     {
-        return $this->issueFiles()->sum('size');
+        return (int)($this->issueFiles()->sum('size'));
     }
 
     public function getImagesAttribute()

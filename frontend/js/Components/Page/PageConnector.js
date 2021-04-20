@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom';
 import { createSelector } from 'reselect';
 import createDimensionsSelector from 'Store/Selectors/createDimensionsSelector';
 import { saveDimensions, setIsSidebarVisible } from 'Store/Actions/appActions';
-import { fetchCustomFilters } from 'Store/Actions/customFilterActions';
 import { fetchComic } from 'Store/Actions/comicActions';
 import { fetchTags } from 'Store/Actions/tagActions';
 import { fetchUISettings } from 'Store/Actions/settingsActions';
@@ -44,20 +43,17 @@ const selectAppProps = createSelector(
 
 const selectIsPopulated = createSelector(
   (state) => state.comic.isPopulated,
-  (state) => state.customFilters.isPopulated,
   (state) => state.tags.isPopulated,
   (state) => state.settings.ui.isPopulated,
   (state) => state.system.status.isPopulated,
   (
     comicIsPopulated,
-    customFiltersIsPopulated,
     tagsIsPopulated,
     uiSettingsIsPopulated,
     systemStatusIsPopulated
   ) => {
     return (
       comicIsPopulated &&
-      customFiltersIsPopulated &&
       tagsIsPopulated &&
       uiSettingsIsPopulated &&
       systemStatusIsPopulated
@@ -67,20 +63,17 @@ const selectIsPopulated = createSelector(
 
 const selectErrors = createSelector(
   (state) => state.comic.error,
-  (state) => state.customFilters.error,
   (state) => state.tags.error,
   (state) => state.settings.ui.error,
   (state) => state.system.status.error,
   (
     comicError,
-    customFiltersError,
     tagsError,
     uiSettingsError,
     systemStatusError
   ) => {
     const hasError = !!(
       comicError ||
-      customFiltersError ||
       tagsError ||
       uiSettingsError ||
       systemStatusError
@@ -89,7 +82,6 @@ const selectErrors = createSelector(
     return {
       hasError,
       comicError,
-      customFiltersError,
       tagsError,
       uiSettingsError,
       systemStatusError
@@ -127,9 +119,6 @@ function createMapDispatchToProps(dispatch, props) {
     dispatchFetchComic() {
       dispatch(fetchComic());
     },
-    dispatchFetchCustomFilters() {
-      dispatch(fetchCustomFilters());
-    },
     dispatchFetchTags() {
       dispatch(fetchTags());
     },
@@ -164,7 +153,6 @@ class PageConnector extends Component {
   componentDidMount() {
     if (!this.props.isPopulated) {
       this.props.dispatchFetchComic();
-      this.props.dispatchFetchCustomFilters();
       this.props.dispatchFetchTags();
       this.props.dispatchFetchUISettings();
       this.props.dispatchFetchStatus();
@@ -221,7 +209,6 @@ PageConnector.propTypes = {
   hasError: PropTypes.bool.isRequired,
   isSidebarVisible: PropTypes.bool.isRequired,
   dispatchFetchComic: PropTypes.func.isRequired,
-  dispatchFetchCustomFilters: PropTypes.func.isRequired,
   dispatchFetchTags: PropTypes.func.isRequired,
   dispatchFetchUISettings: PropTypes.func.isRequired,
   dispatchFetchStatus: PropTypes.func.isRequired,
