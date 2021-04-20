@@ -14,7 +14,7 @@ export default function createFetchHandler(section, url) {
     const { request, abortRequest } = createAjaxRequest({
       url: id == null ? url : `${url}/${id}`,
       data: otherPayload,
-      traditional: true
+      //traditional: true
     });
 
     request.done((data) => {

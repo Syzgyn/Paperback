@@ -21,31 +21,39 @@ export const defaultState = {
     isFetching: false,
     isPopulated: false,
     pageSize: 20,
-    sortKey: 'releaseDateUtc',
+    sortKey: 'coverDate',
     sortDirection: sortDirections.DESCENDING,
     error: null,
     items: [],
 
     columns: [
       {
-        name: 'comic.sortTitle',
+        name: 'comics.title',
         label: 'Comic Title',
         isSortable: true,
         isVisible: true
       },
       {
-        name: 'issue',
+        name: 'issue_num',
         label: 'Issue',
+        isSortable: true,
         isVisible: true
       },
       {
-        name: 'issueTitle',
+        name: 'issues.title',
         label: 'Issue Title',
+        isSortable: true,
         isVisible: true
       },
       {
-        name: 'releaseDateUtc',
-        label: 'Air Date',
+        name: 'store_date',
+        label: 'Store Date',
+        isSortable: true,
+        isVisible: true
+      },
+      {
+        name: 'cover_date',
+        label: 'Cover Date',
         isSortable: true,
         isVisible: true
       },
@@ -100,18 +108,18 @@ export const defaultState = {
 
     columns: [
       {
-        name: 'comic.sortTitle',
+        name: 'comics.title',
         label: 'Comic Title',
         isSortable: true,
         isVisible: true
       },
       {
-        name: 'issue',
+        name: 'issue_num',
         label: 'Issue',
         isVisible: true
       },
       {
-        name: 'issueTitle',
+        name: 'issue_title',
         label: 'Issue Title',
         isVisible: true
       },

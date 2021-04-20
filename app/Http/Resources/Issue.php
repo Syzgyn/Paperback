@@ -15,7 +15,7 @@ class Issue extends JsonResource
     public function toArray($request)
     {
         return [
-            'title' => $this->title,
+            'title' => $this->title ?? "Issue #{$this->issue_num}",
             'comicId' => $this->comic_id,
             'overview' => $this->overview,
             'releaseDate' => $this->store_date,

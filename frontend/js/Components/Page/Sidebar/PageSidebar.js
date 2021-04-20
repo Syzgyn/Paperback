@@ -70,16 +70,6 @@ const links = [
     iconName: icons.WARNING,
     title: 'Wanted',
     to: '/wanted/missing',
-    children: [
-      {
-        title: 'Missing',
-        to: '/wanted/missing'
-      },
-      {
-        title: 'Cutoff Unmet',
-        to: '/wanted/cutoffunmet'
-      }
-    ]
   },
 
   {

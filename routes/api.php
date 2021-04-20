@@ -73,6 +73,9 @@ Route::get('health', 'SystemController@health');
 Route::get('diskspace', 'SystemController@diskspace');
 Route::get('update', 'SystemController@update');
 
+Route::Get('queue/details', 'QueueController@details');
+Route::get('wanted/missing', 'WantedController@missing');
+
 /*
 Route::fallback(function () {
     //return response()->json([

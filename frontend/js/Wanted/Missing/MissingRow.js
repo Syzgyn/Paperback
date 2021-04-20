@@ -19,12 +19,8 @@ function MissingRow(props) {
     comic,
     seasonNumber,
     issueNumber,
-    absoluteIssueNumber,
-    sceneSeasonNumber,
-    sceneIssueNumber,
-    sceneAbsoluteIssueNumber,
-    unverifiedSceneNumbering,
-    releaseDateUtc,
+    storeDate,
+    coverDate,
     title,
     isSelected,
     columns,
@@ -54,7 +50,7 @@ function MissingRow(props) {
             return null;
           }
 
-          if (name === 'comic.sortTitle') {
+          if (name === 'comics.title') {
             return (
               <TableRowCell key={name}>
                 <ComicTitleLink
@@ -65,28 +61,18 @@ function MissingRow(props) {
             );
           }
 
-          if (name === 'issue') {
+          if (name === 'issue_num') {
             return (
               <TableRowCell
                 key={name}
                 className={styles.issue}
               >
-                <SeasonIssueNumber
-                  seasonNumber={seasonNumber}
-                  issueNumber={issueNumber}
-                  absoluteIssueNumber={absoluteIssueNumber}
-                  comicType={comic.comicType}
-                  alternateTitles={comic.alternateTitles}
-                  sceneSeasonNumber={sceneSeasonNumber}
-                  sceneIssueNumber={sceneIssueNumber}
-                  sceneAbsoluteIssueNumber={sceneAbsoluteIssueNumber}
-                  unverifiedSceneNumbering={unverifiedSceneNumbering}
-                />
+                {issueNumber}
               </TableRowCell>
             );
           }
 
-          if (name === 'issueTitle') {
+          if (name === 'issues.title') {
             return (
               <TableRowCell key={name}>
                 <IssueTitleLink
@@ -100,11 +86,20 @@ function MissingRow(props) {
             );
           }
 
-          if (name === 'releaseDateUtc') {
+          if (name === 'cover_date') {
             return (
               <RelativeDateCellConnector
                 key={name}
-                date={releaseDateUtc}
+                date={coverDate}
+              />
+            );
+          }
+
+          if (name === 'store_date') {
+            return (
+              <RelativeDateCellConnector
+                key={name}
+                date={storeDate}
               />
             );
           }
@@ -148,14 +143,9 @@ MissingRow.propTypes = {
   id: PropTypes.number.isRequired,
   issueFileId: PropTypes.number,
   comic: PropTypes.object.isRequired,
-  seasonNumber: PropTypes.number.isRequired,
   issueNumber: PropTypes.number.isRequired,
-  absoluteIssueNumber: PropTypes.number,
-  sceneSeasonNumber: PropTypes.number,
-  sceneIssueNumber: PropTypes.number,
-  sceneAbsoluteIssueNumber: PropTypes.number,
-  unverifiedSceneNumbering: PropTypes.bool.isRequired,
-  releaseDateUtc: PropTypes.string.isRequired,
+  storeDate: PropTypes.string,
+  coverDate: PropTypes.string,
   title: PropTypes.string.isRequired,
   isSelected: PropTypes.bool,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,

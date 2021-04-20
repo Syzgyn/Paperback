@@ -63,7 +63,7 @@ export const defaultState = {
         isModifiable: false
       },
       {
-        name: 'comic.sortTitle',
+        name: 'comic.title',
         label: 'Comic',
         isSortable: true,
         isVisible: true
@@ -81,22 +81,16 @@ export const defaultState = {
         isVisible: true
       },
       {
-        name: 'issue.releaseDateUtc',
-        label: 'Issue Air Date',
+        name: 'issue.store_date',
+        label: 'Issue Store Date',
         isSortable: true,
         isVisible: false
       },
       {
-        name: 'language',
-        label: 'Language',
+        name: 'issue.cover_date',
+        label: 'Issue Cover Date',
         isSortable: true,
         isVisible: false
-      },
-      {
-        name: 'quality',
-        label: 'Quality',
-        isSortable: true,
-        isVisible: true
       },
       {
         name: 'protocol',
