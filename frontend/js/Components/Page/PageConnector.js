@@ -8,7 +8,7 @@ import { saveDimensions, setIsSidebarVisible } from 'Store/Actions/appActions';
 import { fetchCustomFilters } from 'Store/Actions/customFilterActions';
 import { fetchComic } from 'Store/Actions/comicActions';
 import { fetchTags } from 'Store/Actions/tagActions';
-import { fetchQualityProfiles, fetchLanguageProfiles, fetchImportLists, fetchUISettings } from 'Store/Actions/settingsActions';
+import { fetchUISettings } from 'Store/Actions/settingsActions';
 import { fetchStatus } from 'Store/Actions/systemActions';
 import ErrorPage from './ErrorPage';
 import LoadingPage from './LoadingPage';
@@ -47,18 +47,12 @@ const selectIsPopulated = createSelector(
   (state) => state.customFilters.isPopulated,
   (state) => state.tags.isPopulated,
   (state) => state.settings.ui.isPopulated,
-  (state) => state.settings.qualityProfiles.isPopulated,
-  (state) => state.settings.languageProfiles.isPopulated,
-  (state) => state.settings.importLists.isPopulated,
   (state) => state.system.status.isPopulated,
   (
     comicIsPopulated,
     customFiltersIsPopulated,
     tagsIsPopulated,
     uiSettingsIsPopulated,
-    qualityProfilesIsPopulated,
-    languageProfilesIsPopulated,
-    importListsIsPopulated,
     systemStatusIsPopulated
   ) => {
     return (
@@ -66,9 +60,6 @@ const selectIsPopulated = createSelector(
       customFiltersIsPopulated &&
       tagsIsPopulated &&
       uiSettingsIsPopulated &&
-      qualityProfilesIsPopulated &&
-      languageProfilesIsPopulated &&
-      importListsIsPopulated &&
       systemStatusIsPopulated
     );
   }
@@ -79,18 +70,12 @@ const selectErrors = createSelector(
   (state) => state.customFilters.error,
   (state) => state.tags.error,
   (state) => state.settings.ui.error,
-  (state) => state.settings.qualityProfiles.error,
-  (state) => state.settings.languageProfiles.error,
-  (state) => state.settings.importLists.error,
   (state) => state.system.status.error,
   (
     comicError,
     customFiltersError,
     tagsError,
     uiSettingsError,
-    qualityProfilesError,
-    languageProfilesError,
-    importListsError,
     systemStatusError
   ) => {
     const hasError = !!(
@@ -98,9 +83,6 @@ const selectErrors = createSelector(
       customFiltersError ||
       tagsError ||
       uiSettingsError ||
-      qualityProfilesError ||
-      languageProfilesError ||
-      importListsError ||
       systemStatusError
     );
 
@@ -110,9 +92,6 @@ const selectErrors = createSelector(
       customFiltersError,
       tagsError,
       uiSettingsError,
-      qualityProfilesError,
-      languageProfilesError,
-      importListsError,
       systemStatusError
     };
   }
@@ -154,15 +133,6 @@ function createMapDispatchToProps(dispatch, props) {
     dispatchFetchTags() {
       dispatch(fetchTags());
     },
-    dispatchFetchQualityProfiles() {
-      dispatch(fetchQualityProfiles());
-    },
-    dispatchFetchLanguageProfiles() {
-      dispatch(fetchLanguageProfiles());
-    },
-    dispatchFetchImportLists() {
-      dispatch(fetchImportLists());
-    },
     dispatchFetchUISettings() {
       dispatch(fetchUISettings());
     },
@@ -196,9 +166,6 @@ class PageConnector extends Component {
       this.props.dispatchFetchComic();
       this.props.dispatchFetchCustomFilters();
       this.props.dispatchFetchTags();
-      this.props.dispatchFetchQualityProfiles();
-      this.props.dispatchFetchLanguageProfiles();
-      this.props.dispatchFetchImportLists();
       this.props.dispatchFetchUISettings();
       this.props.dispatchFetchStatus();
     }
@@ -220,9 +187,6 @@ class PageConnector extends Component {
       hasError,
       dispatchFetchComic,
       dispatchFetchTags,
-      dispatchFetchQualityProfiles,
-      dispatchFetchLanguageProfiles,
-      dispatchFetchImportLists,
       dispatchFetchUISettings,
       dispatchFetchStatus,
       ...otherProps
@@ -259,9 +223,6 @@ PageConnector.propTypes = {
   dispatchFetchComic: PropTypes.func.isRequired,
   dispatchFetchCustomFilters: PropTypes.func.isRequired,
   dispatchFetchTags: PropTypes.func.isRequired,
-  dispatchFetchQualityProfiles: PropTypes.func.isRequired,
-  dispatchFetchLanguageProfiles: PropTypes.func.isRequired,
-  dispatchFetchImportLists: PropTypes.func.isRequired,
   dispatchFetchUISettings: PropTypes.func.isRequired,
   dispatchFetchStatus: PropTypes.func.isRequired,
   onSidebarVisibleChange: PropTypes.func.isRequired

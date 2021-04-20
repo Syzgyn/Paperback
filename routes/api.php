@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::get('comic/search', 'ComicController@search');
 Route::get('comic/lookup', 'ComicController@lookup');
 Route::post('comic/import', 'ComicController@import');
@@ -56,6 +52,9 @@ Route::get('settings/{category}', 'SettingsController@category');
 Route::get('settings', 'SettingsController@index');
 Route::put('settings/{category}', 'SettingsController@update');
 
+Route::apiResource('tag', 'TagController');
+
+Route::get('history/issue/{id}', 'HistoryController@issue');
 Route::get('history/issue/{id}', 'HistoryController@issue');
 
 Route::get('rootFolder/{id}/getFolders', 'RootFolderController@getFolders');
@@ -71,8 +70,10 @@ Route::get('ddl/download', 'DDLController@download');
 
 Route::get('system/status', 'SystemController@status');
 
+/*
 Route::fallback(function () {
     //return response()->json([
     //    'message' => 'Page Not Found.'], 404);
     return response()->json([]);
-});
+})
+*/;
