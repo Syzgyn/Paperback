@@ -64,7 +64,7 @@ class FileManager
         Log::debug("Download {$download->download_id} completed, attempting to move files");
 
         $downloadPath = $download->getCompletedFilePath();
-        $files = $this->getComicsInFolder($downloadPath);
+        $files = $this->getIssuesInFolder($downloadPath);
 
         if (count($files) === 0) {
             if (! is_dir($downloadPath)) {
@@ -130,7 +130,7 @@ class FileManager
             return;
         }
 
-        $files = $this->getComicsInFolder($path);
+        $files = $this->getIssuesInFolder($path);
 
         if (count($files) === 0) {
             if (! is_dir($path)) {
@@ -215,7 +215,7 @@ class FileManager
         return $info->number;
     }
 
-    public function getComicsInFolder($path)
+    public function getIssuesInFolder($path)
     {
         if (! is_dir($path)) {
             //Check if path is the file itself
@@ -227,21 +227,18 @@ class FileManager
         }
 
         $results = [];
-        $files = array_diff(scandir($path), ['.', '..']);
-        foreach ($files as $file) {
-            if (is_dir($path . DIRECTORY_SEPARATOR . $file)) {
-                $results = array_merge($results, $this->getComicsInFolder($path . DIRECTORY_SEPARATOR . $file));
-                continue;
-            }
+        $files = $this->getDirectoryListing($path, true)['files'];
 
-            if ($goodPath = $this->checkFileType($path . DIRECTORY_SEPARATOR . $file)) {
-                $results[] = $goodPath;
+        foreach ($files as $file) {
+            if ($this->checkFileType($file['path'])) {
+                $results[] = $file['name'];
             }
         }
 
         return $results;
     }
 
+    // Checks if the given path is a valid comic archive file or not 
     protected function checkFileType($path)
     {
         $extension = pathinfo($path, PATHINFO_EXTENSION);
@@ -308,7 +305,7 @@ class FileManager
         }
     }
 
-    public function getDirectoryListing($path = '/', $includeFiles = false)
+    public function getDirectoryListing($path = null, $includeFiles = false)
     {
         if (!$path) {
             if (DIRECTORY_SEPARATOR === '/') {

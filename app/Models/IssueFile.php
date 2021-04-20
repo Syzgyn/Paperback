@@ -6,22 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class IssueFile extends Model
 {
-    protected $fillable = [
-        'comic_id',
-        'relative_file_name',
-        'original_file_name',
-        'size',
+    const UPDATED_AT = null;
+
+    protected $guarded = [
+        'id',
+        'created_at',
     ];
 
     protected $casts = [
         'comic_id' => 'integer',
         'size' => 'integer',
-    ];
-
-    public $timestamps = false;
-
-    protected $appends = [
-        'readable_size',
     ];
 
     public function comic()
@@ -32,6 +26,16 @@ class IssueFile extends Model
     public function issue()
     {
         return $this->belongsTo('App\Models\Issue', 'id', 'issue_file');
+    }
+
+    public function getPathAttribute()
+    {
+        return $this->comic->path . DIRECTORY_SEPARATOR . $this->relative_path;
+    }
+
+    public function getFileTypeAttribute()
+    {
+        return pathinfo($this->path, PATHINFO_EXTENSION);
     }
 
     public static function createAndMove(array $attrs)
@@ -54,23 +58,5 @@ class IssueFile extends Model
         $attrs['size'] = filesize($newFilePath);
 
         self::create($attrs);
-    }
-
-    public function getReadableSizeAttribute()
-    {
-        return $this->formatSize($this->size);
-    }
-
-    protected function formatSize(Int $bytes, $precision = 2)
-    {
-        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
-
-        $bytes = max($bytes, 0);
-        $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
-        $pow = min($pow, count($units) - 1);
-
-        $bytes /= pow(1024, $pow);
-
-        return round($bytes, $precision) . ' ' . $units[$pow];
     }
 }

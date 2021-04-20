@@ -60,13 +60,6 @@ class RootFolderController extends Controller
         return response()->json(['status' => 'OK']);
     }
 
-    public function getFolders(int $id)
-    {
-        $rootFolder = RootFolder::find($id);
-
-        return $rootFolder->import();
-    }
-
     public function import(Request $request)
     {
         $data = $request->input('data');

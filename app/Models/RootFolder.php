@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class RootFolder extends Model
 {
@@ -16,7 +18,7 @@ class RootFolder extends Model
 
     public function getAccessibleAttribute()
     {
-        return true;
+        return is_writable($this->path);;
     }
 
     public function getFreeSpaceAttribute()
@@ -37,6 +39,12 @@ class RootFolder extends Model
     public function getUnmappedFoldersAttribute()
     {
         if (! isset($this->path)) {
+            Log::warning("RootFolder {$this->id} does not have a set path");
+            return [];
+        }
+
+        if (!is_dir($this->path)) {
+            Log::debug("$path does not exist");
             return [];
         }
 
@@ -44,21 +52,19 @@ class RootFolder extends Model
             return $this->_unmappedFolders;
         }
 
-        $parser = resolve('ParserService');
         $listing = resolve('FileManager')->getDirectoryListing($this->path);
-        $dirs = $listing['directories'];
+        $possibleDirs = $listing['directories'];
+        $comicDirs = DB::table('comics')->pluck('path')->toArray();
 
-        $unmappedFolders = [];
+        $this->_unmappedFolders = array_udiff($possibleDirs, $comicDirs, function($possible, $comic) {
+            $possible = is_array($possible) ? $possible['path'] : $possible;
+            $comic = is_array($comic) ? $comic['path'] : $comic;
 
-        foreach ($dirs as $dir) {
-            if ($parser->matchDirToComics($dir['path'])) {
-                continue;
+            if ($possible === $comic) {
+                return 0;
             }
-
-            $unmappedFolders[] = $dir;
-        }
-
-        $this->_unmappedFolders = $unmappedFolders;
+            return $possible > $comic ? 1 : -1;
+        }); 
 
         return $this->_unmappedFolders;
     }
@@ -66,30 +72,5 @@ class RootFolder extends Model
     public function getUnmappedFoldersCountAttribute()
     {
         return count($this->unmappedFolders);
-    }
-
-    public function import()
-    {
-        $output = [];
-        $fileManager = resolve('FileManager');
-
-        foreach ($this->unmappedFolders as $folder) {
-            $count = count($fileManager->getComicsInFolder($folder['path']));
-            $output[] = [
-                'name' => $folder['name'],
-                'path' => $folder['path'],
-                'comicCount' => $count,
-                'isLoading' => true,
-                'isPopulated' => false,
-                'error' => null,
-                'items' => [],
-                'monitor' => 'all',
-                'checked' => false,
-                'matchedComics' => [],
-                'matchId' => 0,
-            ];
-        }
-
-        return $output;
     }
 }

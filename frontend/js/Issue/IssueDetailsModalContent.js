@@ -59,7 +59,6 @@ class IssueDetailsModalContent extends Component {
       issueNumber,
       absoluteIssueNumber,
       issueTitle,
-      releaseDate,
       monitored,
       isSaving,
       showOpenComicButton,
@@ -88,16 +87,6 @@ class IssueDetailsModalContent extends Component {
           <span className={styles.comicTitle}>
             {comicTitle}
           </span>
-
-          <span className={styles.separator}>-</span>
-
-          <SeasonIssueNumber
-            seasonNumber={seasonNumber}
-            issueNumber={issueNumber}
-            absoluteIssueNumber={absoluteIssueNumber}
-            releaseDate={releaseDate}
-            comicType={comicType}
-          />
 
           <span className={styles.separator}>-</span>
 
@@ -200,7 +189,6 @@ IssueDetailsModalContent.propTypes = {
   seasonNumber: PropTypes.number.isRequired,
   issueNumber: PropTypes.number.isRequired,
   absoluteIssueNumber: PropTypes.number,
-  releaseDate: PropTypes.string.isRequired,
   issueTitle: PropTypes.string.isRequired,
   monitored: PropTypes.bool.isRequired,
   isSaving: PropTypes.bool,

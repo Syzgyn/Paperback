@@ -29,8 +29,8 @@ class Issue extends JsonResource
             //'activeDownloads' => $this->activeDownloads,
             //'status' => $this->status,
             'monitored' => $this->monitored,
-            'hasFile' => $this->hasDownloadedFile(),
-            'issueFileId' => 0, //TODO
+            'hasFile' => $this->hasFile,
+            'issueFileId' => $this->issue_file ?? 0,
             'seasonNumber' => 0, //TODO
             'unverifiedSceneNumbering' => false,
             'images' => $this->images,

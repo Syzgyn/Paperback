@@ -60,7 +60,7 @@ class IssueRow extends Component {
       sceneAbsoluteIssueNumber,
       storeDate,
       coverDate,
-      title,
+      title: originalTitle,
       useSceneNumbering,
       unverifiedSceneNumbering,
       isSaving,
@@ -72,6 +72,8 @@ class IssueRow extends Component {
       alternateTitles,
       columns
     } = this.props;
+
+    const title = originalTitle ?? ('Issue #' + issueNumber);
 
     return (
       <TableRow>
@@ -276,7 +278,7 @@ IssueRow.propTypes = {
   sceneAbsoluteIssueNumber: PropTypes.number,
   storeDate: PropTypes.string,
   coverDate: PropTypes.string,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   isSaving: PropTypes.bool,
   useSceneNumbering: PropTypes.bool,
   unverifiedSceneNumbering: PropTypes.bool,

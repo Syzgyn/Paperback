@@ -30,6 +30,8 @@ Route::get('issue/byComic/{cvid}', 'IssueController@byComic');
 Route::get('issue/wanted', 'IssueController@wanted');
 Route::apiResource('issue', 'IssueController');
 
+Route::apiResource('issueFile', 'IssueFileController');
+
 Route::get('indexer/schema/{class}', 'IndexerController@schema');
 Route::get('indexer/schema', 'IndexerController@schema');
 Route::post('indexer/test', 'IndexerController@test');
@@ -57,7 +59,6 @@ Route::put('settings/{category}', 'SettingsController@update');
 Route::get('history/issue/{id}', 'HistoryController@issue');
 
 Route::get('rootFolder/{id}/getFolders', 'RootFolderController@getFolders');
-Route::post('rootFolder/import', 'RootFolderController@import');
 Route::apiResource('rootFolder', 'RootFolderController');
 
 Route::get('command', 'CommandController@command');

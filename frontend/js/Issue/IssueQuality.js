@@ -4,19 +4,9 @@ import formatBytes from 'Utilities/Number/formatBytes';
 import { kinds } from 'Helpers/Props';
 import Label from 'Components/Label';
 
-function getTooltip(title, quality, size) {
+function getTooltip(title, size) {
   if (!title) {
     return;
-  }
-
-  const revision = quality.revision;
-
-  if (revision.real && revision.real > 0) {
-    title += ' [REAL]';
-  }
-
-  if (revision.version && revision.version > 1) {
-    title += ' [PROPER]';
   }
 
   if (size) {
@@ -30,22 +20,17 @@ function IssueQuality(props) {
   const {
     className,
     title,
-    quality,
     size,
-    isCutoffNotMet
+    fileType,
   } = props;
-
-  if (!quality) {
-    return null;
-  }
 
   return (
     <Label
       className={className}
-      kind={isCutoffNotMet ? kinds.INVERSE : kinds.DEFAULT}
-      title={getTooltip(title, quality, size)}
+      kind={kinds.DEFAULT}
+      title={getTooltip(title, size)}
     >
-      {quality.quality.name}
+      {fileType}
     </Label>
   );
 }
@@ -53,9 +38,8 @@ function IssueQuality(props) {
 IssueQuality.propTypes = {
   className: PropTypes.string,
   title: PropTypes.string,
-  quality: PropTypes.object.isRequired,
   size: PropTypes.number,
-  isCutoffNotMet: PropTypes.bool
+  fileType: PropTypes.string.isRequired,
 };
 
 IssueQuality.defaultProps = {

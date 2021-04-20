@@ -48,7 +48,6 @@ class IssueSummary extends Component {
 
   render() {
     const {
-      qualityProfileId,
       publisher,
       overview,
       storeDate,
@@ -56,8 +55,7 @@ class IssueSummary extends Component {
       mediaInfo,
       path,
       size,
-      quality,
-      qualityCutoffNotMet
+      fileType,
     } = this.props;
 
     const hasOverview = !!overview;
@@ -113,8 +111,7 @@ class IssueSummary extends Component {
 
                 <div className={styles.quality}>
                   <IssueQuality
-                    quality={quality}
-                    isCutoffNotMet={qualityCutoffNotMet}
+                    fileType={fileType}
                   />
                 </div>
 
@@ -162,8 +159,7 @@ IssueSummary.propTypes = {
   coverDate: PropTypes.string,
   path: PropTypes.string,
   size: PropTypes.number,
-  quality: PropTypes.object,
-  qualityCutoffNotMet: PropTypes.bool,
+  fileType: PropTypes.string,
   onDeleteIssueFile: PropTypes.func.isRequired
 };
 

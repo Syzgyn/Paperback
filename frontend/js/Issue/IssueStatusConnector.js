@@ -15,7 +15,8 @@ function createMapStateToProps() {
     createIssueFileSelector(),
     (issue, queueItem, issueFile) => {
       const result = _.pick(issue, [
-        'releaseDateUtc',
+        'storeDate',
+        'coverDate',
         'monitored',
         'grabbed'
       ]);

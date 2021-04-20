@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RootFolder extends JsonResource
+class IssueFile extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,12 +15,13 @@ class RootFolder extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
+            'comicId' => $this->comic_id,
+            'relativePath' => $this->relative_path,
             'path' => $this->path,
-            'freeSpace' => $this->freeSpace,
-            'unmappedFolders' => $this->unmappedFolders,
-            'accessible' => $this->accessible,
-            //'unmappedFoldersCount' => $this->resource->unmappedFoldersCount,
+            'size' => $this->size,
+            'fileType' => $this->fileType,
+            'dateAdded' => $this->created_at,
+            'id' => $this->id,
         ];
     }
 }

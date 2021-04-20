@@ -24,8 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //$schedule->command('paperback:check-downloads')->everyMinute();
-        //$schedule->command('paperback:update-comics')->daily();
+        $schedule->command('paperback:check-downloads')->everyMinute();
+        $schedule->command('paperback:update-comics')->daily();
     }
 
     /**

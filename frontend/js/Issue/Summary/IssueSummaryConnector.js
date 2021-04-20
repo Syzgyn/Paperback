@@ -27,6 +27,7 @@ function createMapStateToProps() {
       const {
         path,
         size,
+        fileType,
       } = issueFile;
 
       return {
@@ -36,6 +37,7 @@ function createMapStateToProps() {
         overview,
         path,
         size,
+        fileType,
       };
     }
   );

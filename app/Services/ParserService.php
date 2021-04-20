@@ -281,6 +281,10 @@ class ParserService
         }
 
         $name = trim($name);
+        $issueNum = ltrim($issueNum, 0);
+        if ($issueNum === '') {
+            $issueNum = 0;
+        }
 
         return [
             'name' => $name,

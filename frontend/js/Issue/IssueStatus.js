@@ -10,16 +10,18 @@ import styles from './IssueStatus.css';
 
 function IssueStatus(props) {
   const {
-    releaseDateUtc,
+    storeDate,
+    coverDate,
     monitored,
     grabbed,
     queueItem,
     issueFile
   } = props;
 
+  const releaseDate = storeDate ?? coverDate;
   const hasIssueFile = !!issueFile;
   const isQueued = !!queueItem;
-  const hasAired = isBefore(releaseDateUtc);
+  const hasAired = isBefore(releaseDate);
 
   if (isQueued) {
     const {
@@ -58,22 +60,18 @@ function IssueStatus(props) {
   }
 
   if (hasIssueFile) {
-    const quality = issueFile.quality;
-    const isCutoffNotMet = issueFile.qualityCutoffNotMet;
-
     return (
       <div className={styles.center}>
         <IssueQuality
-          quality={quality}
           size={issueFile.size}
-          isCutoffNotMet={isCutoffNotMet}
+          fileType={issueFile.fileType}
           title="Issue Downloaded"
         />
       </div>
     );
   }
 
-  if (!releaseDateUtc) {
+  if (!releaseDate) {
     return (
       <div className={styles.center}>
         <Icon
@@ -118,7 +116,8 @@ function IssueStatus(props) {
 }
 
 IssueStatus.propTypes = {
-  releaseDateUtc: PropTypes.string,
+  storeDate: PropTypes.string,
+  coverDate: PropTypes.string,
   monitored: PropTypes.bool.isRequired,
   grabbed: PropTypes.bool,
   queueItem: PropTypes.object,

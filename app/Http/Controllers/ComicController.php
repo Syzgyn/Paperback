@@ -130,7 +130,9 @@ class ComicController extends Controller
 
         $comics = [];
         foreach ($content as $item) {
-            $comics[] = Comic::create($item);
+            $comic = Comic::create($item);
+            $comic->importIssueFiles();
+            $comics[] = $comic;
         }
         return new ComicCollection($comics);
     }

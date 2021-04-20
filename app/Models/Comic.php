@@ -43,9 +43,14 @@ class Comic extends Model
         return $this->hasMany('App\Models\IssueFile', 'comic_id', 'cvid');
     }
 
-    public function getDownloadedIssuesCountAttribute()
+    public function getIssueFileCountAttribute()
     {
         return $this->issueFiles()->count();
+    }
+
+    public function getTotalIssueFileSizeAttribute()
+    {
+        return $this->issueFiles()->sum('size');
     }
 
     public function getImagesAttribute()
@@ -140,31 +145,29 @@ class Comic extends Model
         return $this->changeComicLinks($this->attributes['overview']);
     }
 
-    public function importIssuesFromPath(string $path)
+    public function importIssueFiles()
     {
         $fileManager = resolve('FileManager');
         $parser = resolve('ParserService');
-        $files = $fileManager->getComicsInFolder($path);
-
-        if ($this->fullDirectoryName == $path) {
-            //Path matches where the comic wants to put the issues, no need to move anything
-            //continue;
-        }
+        $files = $fileManager->getIssuesInFolder($this->path);
 
         foreach ($files as $file) {
             $info = $parser->getIssueInfoFromFile($file);
 
             foreach ($this->issues as $issue) {
-                if ($issue->hasDownloadedFile()) {
+                if ($issue->hasFile) {
                     continue;
                 }
 
                 if ($issue->issue_num == $info['issueNum']) {
-                    IssueFile::createAndMove([
+                    $size = filesize($this->path . DIRECTORY_SEPARATOR . $file);
+                    $issueFile = IssueFile::create([
                         'comic_id' => $this->cvid,
-                        'issue_id' => $issue->cvid,
-                        'original_file_path' => $file,
+                        'relative_path' => $file,
+                        'size' => $size,
                     ]);
+                    $issue->issue_file = $issueFile->id;
+                    $issue->save();
                     break;
                 }
             }

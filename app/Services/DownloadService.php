@@ -134,7 +134,7 @@ class DownloadService
         $comic = Comic::with(['issues', 'issues.downloadedFile'])->find($cvid);
 
         foreach($comic->issues as $issue) {
-            if (! $issue->monitored || $issue->hasDownloadedFile()) {
+            if (! $issue->monitored || $issue->hasFile) {
                 continue;
             }
             $this->downloadIssue($issue->cvid);

@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\ChangeComicLinks;
 use Illuminate\Database\Eloquent\Model;
 
 class Issue extends Model
 {
+    use ChangeComicLinks;
+
     const CV_URL_BASE = 'https://comicvine.gamespot.com/';
 
     public $primaryKey = 'cvid';
@@ -24,15 +27,17 @@ class Issue extends Model
 
     protected $casts = [
         'issue_num' => 'integer',
+        'issue_file' => 'integer',
         'cvid' => 'integer',
         'comic_id' => 'integer',
         'monitored' => 'boolean',
         'images' => 'array',
+
     ];
 
     protected $with = [
         'comic',
-        'downloadedFile',
+        'issueFile',
     ];
 
     public function comic()
@@ -40,7 +45,7 @@ class Issue extends Model
         return $this->belongsTo('App\Models\Comic', 'comic_id', 'cvid');
     }
 
-    public function downloadedFile()
+    public function issueFile()
     {
         return $this->hasOne('App\Models\IssueFile', 'id', 'issue_file');
     }
@@ -60,18 +65,14 @@ class Issue extends Model
             ])->get();
     }
 
-    public function hasDownloadedFile()
+    public function getHasFileAttribute()
     {
-        return isset($this->downloadedFile);
+        return $this->issue_file > 0;
     }
 
     public function getOverviewAttribute()
     {
-        return preg_replace(
-            '/href\=\"\//',
-            'target="_blank" href="' . self::CV_URL_BASE,
-            $this->attributes['overview']
-        );
+        return $this->changeComicLinks($this->attributes['overview']);
     }
 
     public function getFileNameAttribute()
@@ -81,7 +82,7 @@ class Issue extends Model
 
     public function getStatusAttribute()
     {
-        if ($this->downloadedFile) {
+        if ($this->issueFile) {
             return 'downloaded';
         }
 
