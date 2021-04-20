@@ -69,6 +69,9 @@ Route::get('ddl/short', 'DDLController@short');
 Route::get('ddl/download', 'DDLController@download');
 
 Route::get('system/status', 'SystemController@status');
+Route::get('health', 'SystemController@health');
+Route::get('diskspace', 'SystemController@diskspace');
+Route::get('update', 'SystemController@update');
 
 /*
 Route::fallback(function () {

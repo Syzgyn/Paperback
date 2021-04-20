@@ -48,4 +48,31 @@ class SystemController extends Controller
 
         return $version;
     }
+
+    public function health()
+    {
+        //TODO
+        return response()->json([[
+            'source' => 'UpdateCheck',
+            'type' => 'warning',
+            'message' => 'New update is available',
+            'wikiUrl' => 'https://wiki.servarr.com/Sonarr_System#new_update_is_available',
+        ]]);
+    }
+
+    public function diskspace()
+    {
+        return response()->json([[
+            'path' => dirname(base_path(), 1000),
+            'label' => '',
+            'freeSpace' => disk_free_space(base_path()),
+            'totalSpace' => disk_total_space(base_path()),
+        ]], options: JSON_PRETTY_PRINT);
+    }
+
+    //TODO
+    public function update()
+    {
+        return response()->json([]);
+    }
 }
