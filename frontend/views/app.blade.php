@@ -23,6 +23,7 @@
         }
       }
     </style>
+    <link href="{{ asset('assets/bundle/index.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="portal-root"></div>
@@ -35,6 +36,7 @@
             apiRoot: '/api',
         };
     </script>
-    <script src="{{ asset('assets/bundle/index.bundle.js') }}"></script>
+    <script src="{{ asset('assets/bundle/index.js') }}"></script>
+    <script src="{{ asset('assets/bundle/vendor.js') }}"></script>
 </body>
 </html>

@@ -51,7 +51,7 @@ const plugins = [
   }),
 
   new MiniCssExtractPlugin({
-    filename: '[name].bundle.css',
+    filename: '[name].css',
     chunkFilename: '[id].css',
   }),
 
@@ -65,7 +65,7 @@ const plugins = [
 
 module.exports = {
   mode: isProduction ? 'production' : 'development',
-  devtool: 'cheap-source-map',
+  devtool: 'eval-source-map',
 
   stats: {
     children: false
@@ -92,8 +92,28 @@ module.exports = {
 
   output: {
     path: distFolder,
-    filename: '[name].bundle.js',
+    filename: '[name].js',
     sourceMapFilename: '[file].map'
+  },
+
+  optimization: {
+    chunkIds: 'named',
+    splitChunks: {
+      chunks: 'initial',
+	  cacheGroups: {
+        defaultVendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          reuseExistingChunk: true,
+          name: 'vendor',
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
+        },
+      },
+    }
   },
 
   performance: {
@@ -152,8 +172,8 @@ module.exports = {
         test: /\.css$/,
         exclude: /(node_modules|globals.css)/,
         use: [
-          //{ loader: MiniCssExtractPlugin.loader },
-          'style-loader',
+          { loader: MiniCssExtractPlugin.loader },
+          //'style-loader',
           {
             loader: 'css-loader',
             options: {
