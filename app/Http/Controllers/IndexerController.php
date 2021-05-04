@@ -9,20 +9,30 @@ use App\Http\Resources\IndexerCollection;
 use App\Http\Resources\IndexerResultCollection;
 use App\Http\Resources\Indexer as IndexerResource;
 use App\Http\Resources\TrackedDownload as TrackedDownloadResource;
+use App\Libraries\Providers\ProviderController;
+use App\Libraries\Providers\ProviderModel;
+use App\Repositories\IndexerRepository;
 
-class IndexerController extends Controller
+class IndexerController extends ProviderController
 {
+    public function __construct(IndexerRepository $repo)
+    {
+        $this->repo = $repo;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+     /*
     public function index()
     {
         $indexers = Indexer::all();
 
         return new IndexerCollection($indexers);
     }
+    */
 
     /**
      * Store a newly created resource in storage.
@@ -30,7 +40,7 @@ class IndexerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(IndexerRequest $request)
+    public function _store(IndexerRequest $request)
     {
         $indexer = Indexer::createChild($request->validated());
 
@@ -43,10 +53,12 @@ class IndexerController extends Controller
      * @param  \App\Indexer  $indexer
      * @return \Illuminate\Http\Response
      */
+     /*
     public function show(Indexer $indexer)
     {
         return new IndexerResource($indexer);
     }
+    */
 
     /**
      * Update the specified resource in storage.
@@ -55,7 +67,7 @@ class IndexerController extends Controller
      * @param  \App\Indexer  $indexer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Indexer $indexer)
+    public function _update(Request $request, Indexer $indexer)
     {
         $indexer->fill($request->all());
         $indexer->save();
@@ -69,14 +81,14 @@ class IndexerController extends Controller
      * @param  \App\Indexer  $indexer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Indexer $indexer)
+    public function _destroy(Indexer $indexer)
     {
         $indexer->delete();
 
         return response()->json(['status' => 'OK']);
     }
 
-    public function search(Request $request)
+    public function _search(Request $request)
     {
         $cvid = $request->input('cvid');
 
@@ -85,7 +97,7 @@ class IndexerController extends Controller
         return new IndexerResultCollection($results);
     }
 
-    public function autosearch(Request $request)
+    public function _autosearch(Request $request)
     {
         $cvid = $request->input('cvid');
         //TODO: Look at matching files and try replacing issue number to download the rest of the comics
@@ -99,7 +111,7 @@ class IndexerController extends Controller
         return new TrackedDownloadResource($trackedDownload);
     }
 
-    public function schema(Request $request, $name = null)
+    public function _schema(Request $request, $name = null)
     {
         if ($name) {
             if (! array_key_exists($name, Indexer::INDEXER_TYPES)) {
@@ -115,7 +127,7 @@ class IndexerController extends Controller
         return Indexer::buildSchemas();
     }
 
-    public function test(IndexerRequest $request)
+    public function _test(IndexerRequest $request)
     {
         $indexer = Indexer::createChild($request->validated(), false);
 

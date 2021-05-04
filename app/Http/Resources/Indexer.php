@@ -14,13 +14,26 @@ class Indexer extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'id' => $this->id,
+        $output = [
+            'enableRss' => $this->enable_rss,
+            'enableAutomaticSearch' => $this->enable_automatic_search,
+            'enableInteractiveSearch' => $this->enable_interactive_search,
+            'supportsRss' => true,
+            'supportsSearch' => true,
+            'protocol' => $this->getProtocol(),
+            'priority' => $this->priority,
             'name' => $this->name,
-            'class' => $this->class,
-            'enableSearch' => (bool)$this->enable_search,
-            'settings' => $this->settings,
-            'schema' => $this->schema,
+            'fields' => $this->settings->getSettings(),
+            'implementationName' => $this->implementation,
+            'implementation' => $this->implementation,
+            'configContract' => $this->settings_schema,
+            'tags' => [],
         ];
+
+        if ($this->id) {
+            $output['id'] = $this->id;
+        }
+
+        return $output;
     }
 }

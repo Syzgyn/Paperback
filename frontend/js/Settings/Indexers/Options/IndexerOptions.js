@@ -89,7 +89,6 @@ function IndexerOptions(props) {
                 unit="minutes"
                 helpText="Interval in minutes. Set to zero to disable (this will stop all automatic release grabbing)"
                 helpTextWarning="This will apply to all indexers, please follow the rules set forth by them"
-                helpLink="https://wiki.servarr.com/Paperback_FAQ#How_does_Paperback_find_issues"
                 onChange={onInputChange}
                 {...settings.rssSyncInterval}
               />

@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Throwable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -57,5 +58,22 @@ class Handler extends ExceptionHandler
         }
 
         return parent::render($request, $exception);
+    }
+
+	protected function invalidJson($request, ValidationException $exception)
+    {
+        $data = $exception->validator->getData();
+        $failedRules = $exception->validator->failed();
+        $output = [];
+        foreach($exception->errors() as $field => $message) {
+            $output[] = [
+                'propertyName' => $field,
+                'errorMessage' => array_pop($message),
+                'attemptedValue' => $data[$field] ?? null,
+                'severity' => 'error',
+                'errorCode' => array_keys($failedRules[$field])[0]
+            ];
+        }
+        return response()->json($output, 400);
     }
 }

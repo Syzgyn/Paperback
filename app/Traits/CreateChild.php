@@ -3,7 +3,7 @@ namespace App\Traits;
 
 trait CreateChild
 {
-    abstract public static function getClass($type);
+    abstract public static function getClass(String $type);
 
     public static function createChild($attrs, $save = true)
     {

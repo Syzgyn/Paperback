@@ -4,8 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Libraries\Providers\ProviderRequest;
 
-class IndexerRequest extends FormRequest
+class IndexerRequest extends ProviderRequest 
 {
     protected $types = [
         'newznab',
@@ -30,6 +31,7 @@ class IndexerRequest extends FormRequest
      */
     public function rules()
     {
+        return [];
         return [
             'type' => [
                 'required',

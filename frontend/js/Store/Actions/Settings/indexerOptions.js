@@ -50,8 +50,8 @@ export default {
   // Action Handlers
 
   actionHandlers: {
-    [FETCH_INDEXER_OPTIONS]: createFetchHandler(section, '/config/indexer'),
-    [SAVE_INDEXER_OPTIONS]: createSaveHandler(section, '/config/indexer')
+    [FETCH_INDEXER_OPTIONS]: createFetchHandler(section, '/settings/indexer'),
+    [SAVE_INDEXER_OPTIONS]: createSaveHandler(section, '/settings/indexer')
   },
 
   //

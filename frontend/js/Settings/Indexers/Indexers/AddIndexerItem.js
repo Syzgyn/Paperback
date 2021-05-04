@@ -28,7 +28,6 @@ class AddIndexerItem extends Component {
     const {
       implementation,
       implementationName,
-      infoLink,
       presets,
       onIndexerSelect
     } = this.props;
@@ -85,13 +84,6 @@ class AddIndexerItem extends Component {
                   </Menu>
                 </span>
             }
-
-            <Button
-              to={infoLink}
-              size={sizes.SMALL}
-            >
-              More info
-            </Button>
           </div>
         </div>
       </div>
@@ -102,7 +94,6 @@ class AddIndexerItem extends Component {
 AddIndexerItem.propTypes = {
   implementation: PropTypes.string.isRequired,
   implementationName: PropTypes.string.isRequired,
-  infoLink: PropTypes.string.isRequired,
   presets: PropTypes.arrayOf(PropTypes.object),
   onIndexerSelect: PropTypes.func.isRequired
 };

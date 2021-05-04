@@ -28,12 +28,10 @@ Route::apiResource('issue', 'IssueController');
 
 Route::apiResource('issueFile', 'IssueFileController');
 
-Route::get('indexer/schema/{class}', 'IndexerController@schema');
-Route::get('indexer/schema', 'IndexerController@schema');
-Route::post('indexer/test', 'IndexerController@test');
-Route::get('indexer/search', 'IndexerController@search');
-Route::get('indexer/autosearch', 'IndexerController@autosearch');
-Route::apiResource('indexer', 'IndexerController');
+Route::post('indexer/action/{action}', 'IndexerController@action')->middleware('provider');
+Route::get('indexer/schema', 'IndexerController@schema')->middleware('provider');
+Route::post('indexer/test', 'IndexerController@test')->middleware('provider');
+Route::apiResource('indexer', 'IndexerController')->middleware('provider');
 
 
 Route::get('downloader/schema/{class?}', 'DownloaderController@schema');

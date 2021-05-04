@@ -2,75 +2,77 @@
 
 namespace App\Models;
 
-use App\Traits\BuildSchema;
-use App\Traits\CreateChild;
-use App\Traits\FillCastArray;
-use Illuminate\Database\Eloquent\Model;
-use Nanigans\SingleTableInheritance\SingleTableInheritanceTrait;
+use App\Libraries\Providers\ProviderModel;
+use App\Libraries\Providers\ProviderSettingsCast;
 
-class Indexer extends Model
+class Indexer extends ProviderModel
 {
-    use SingleTableInheritanceTrait;
-    use FillCastArray;
-    use BuildSchema;
-    use CreateChild;
+    const PROTOCOL = null;
 
-    const INDEXER_TYPES = [
-        'newznab' => \App\Models\Indexers\Newznab::class,
-        'getcomics' => \App\Models\Indexers\GetComics::class,
-        'comicextra' => \App\Models\Indexers\ComicExtra::class,
+    protected $casts = [
+        'settings' => ProviderSettingsCast::class,
+        'priority' => 'integer',
+        'enable_rss' => 'boolean',
+        'enable_interactive_search' => 'boolean',
+        'enable_automatic_search' => 'boolean',
     ];
 
-    const CACHE_PREFIX = '.indexer';
-    const CACHE_TIME = 1800; //30 Min
-
+    public $timestamps = false;
+    protected $guarded = [
+        'protocol',
+    ];
     protected $table = 'indexers';
 
-    protected static $singleTableTypeField = 'class';
-    protected static $singleTableSubclasses = self::INDEXER_TYPES;
-    protected static $persisted = ['name', 'settings', 'enable_search'];
+    protected $schema;
+    protected $supportsRss;
+    protected $supportsSearch;
 
-    protected $baseSchema = [
-        'fields' => [
-            'name' => [
-                'label' => 'Name',
-                'type' => 'text',
-                'validation' => ['required', 'string'],
-            ],
-            'enableSearch' => [
-                'label' => 'Enable Search',
-                'type' => 'checkbox',
-                'validation' => ['required', 'bool'],
-            ],
-        ],
+    public $attributes = [
+        'priority' => 25,
+        'enable_rss' => true,
+        'enable_interactive_search' => true,
+        'enable_automatic_search' => true,
     ];
 
-    public static function getClass(String $type)
+    public function getChildClasses(): array
     {
-        return self::INDEXER_TYPES[$type];
+        return [
+            Indexers\Newznab::class,
+        ];
     }
 
-    protected static function getChildTypes()
+    public function getNameAttribute(): string
     {
-        return self::INDEXER_TYPES;
+        return $this->attributes['name'] ?? $this->name ?? "";
     }
 
-    protected static function booted()
+    public function getImplementationAttribute(): string
     {
-        static::saving(function ($indexer) {
-            if (get_class($indexer) == self::class) {
-                throw new \Exception('Cannot save base indexer class');
-            }
-        });
+        return $this->attributes['implementation'] ?? $this->implementation ?? "";
     }
 
-    public function getEnableSearchAttribute()
+    protected function prepareAttributes(array &$attributes): void
     {
-        return isset($this->attributes['enable_search']) ? $this->attributes['enable_search'] : true;
+        parent::prepareAttributes($attributes);
     }
 
-    public function setEnableSearchAttribute($value)
+    public function getParser()
     {
-        $this->attributes['enable_search'] = $value;
+        throw new \Exception("Cannot call getParser from base Indexer class");
+    }
+
+    public function getRequestGenerator()
+    {
+        throw new \Exception("Cannot call getRequestGenerator from base Indexer class");
+    }
+
+    public function getEnableAttribute(): bool
+    {
+        return $this->enable_rss || $this->enable_interactive_search || $this->enable_automatic_search;
+    }
+
+    public function setEnableRssAttribute($value): void
+    {
+        $this->attributes['enable_rss'] = $value;
     }
 }

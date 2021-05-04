@@ -2,9 +2,11 @@
 namespace App\Models\Indexers;
 
 use App\Models\Indexer;
-use App\Dto\Indexers\NewznabSettings;
 use App\Repositories\Indexers\NewznabRepository;
 use App\Http\Resources\Indexers\NewznabCollection;
+use App\Libraries\Indexers\Newznab\NewznabSettings;
+use App\Libraries\Indexers\Newznab\NewznabRequestGenerator;
+use App\Libraries\Indexers\Newznab\NewznabParser;
 
 class Newznab extends Indexer
 {
@@ -12,20 +14,8 @@ class Newznab extends Indexer
     const PROTOCOL = 'usenet';
 
     public $repository;
-
-    protected $casts = [
-        'settings' => NewznabSettings::class,
-    ];
-
-    protected $fillable = [
-        'name',
-        'class',
-        'enableSearch',
-        'settings.url',
-        'settings.apikey',
-    ];
-
-    protected static $singleTableType = self::class;
+    protected $implementation = 'Newznab';
+    protected $settingsSchema = 'NewznabSettings';
 
     protected $modelSchema = [
         'protocol' => 'usenet',
@@ -44,6 +34,16 @@ class Newznab extends Indexer
         ],
     ];
 
+    public function getParser()
+    {
+        return new NewznabParser();
+    }
+
+    public function getRequestGenerator()
+    {
+        return new NewznabRequestGenerator($this->settings);
+    }
+
     public function searchCvid($comic, $issue = '', $year = '', $comicYear = null, $offset = 0)
     {
         $query = "$comic $issue $year";
@@ -52,25 +52,38 @@ class Newznab extends Indexer
         return new NewznabCollection($result);
     }
 
-    protected static function booted()
+    public function requestAction(string $action)
     {
-        static::creating(function ($indexer) {
-            $indexer->class = self::class;
-        });
+        if ($action === 'newznabCategories') {
+            $categories = [
+                7000 => 'Books',
+                7010 => 'Mags',
+                7020 => 'EBooks',
+                7030 => 'Comics',
+            ];
 
-        static::retrieved(function ($indexer) {
-            $indexer->repository = new NewznabRepository($indexer);
-            $indexer->class = self::class;
-        });
-    }
+            $results = [];
 
-    public function test()
-    {
-        //Manually create the repo if we're working with an unsaved model
-        if (! $this->repository) {
-            $this->repository = new NewznabRepository($this);
+            foreach($categories as $id => $name) {
+                $item = [
+                    'value' => $id,
+                    'name' => $name,
+                    'order' => 0,
+                    'hint' => "($id)",
+                ];
+
+                if ($id !== 7000) {
+                    $item['parentValue'] = 7000;
+                }
+
+                $results[] = $item;
+            }
+
+            return [
+                'options' => $results,
+            ];
         }
 
-        return $this->repository->test();
+        return parent::requestAction($action);
     }
 }
