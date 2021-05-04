@@ -16,6 +16,7 @@ class ReleaseInfo
     public string $indexer;
     public int $indexerPriority;
     public string $downloadProtocol;
+    public ?int $fileCount;
     public DateTime $publishDate;
 
     public function getAge()

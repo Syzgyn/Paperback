@@ -56,8 +56,12 @@ class RssParser
                 }
             } catch (\Exception $e) {
                 //TODO: Log error
-                dd($e);
+                throw $e;
             }
+        }
+
+        if (!$this->postProcess($items, $results)) {
+            return [];
         }
 
         return $results;
@@ -80,7 +84,7 @@ class RssParser
         return true;
     }
 
-    protected function postProcess(HttpResponse $response, array $elements, array $releases)
+    protected function postProcess(array &$items, array &$releases): bool
     {
         return true;
     }
@@ -195,6 +199,17 @@ class RssParser
         }
 
         return 0;
+    }
+
+    protected function getEnclosureType(SimpleXMLElement $item): ?string
+    {
+        $enclosure = $this->getEnclosure($item);
+
+        if ($enclosure) {
+            return $enclosure['type'];
+        }
+
+        return null;
     }
 
     protected function getEnclosures(SimpleXMLElement $item): array
