@@ -68,6 +68,11 @@ abstract class ProviderController extends Controller
 
     public function testall()
     {
+        //TODO: Collect results
+        $models = $this->repo->all();
+        foreach($models as $model) {
+            $model->test();
+        }
     }
 
     public function action(string $action, Request $request)

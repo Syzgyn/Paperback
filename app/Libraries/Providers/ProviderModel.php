@@ -88,17 +88,9 @@ abstract class ProviderModel extends Model
 
     protected function prepareAttributes(array &$attributes): void
     {
-
-        if (isset($attributes['configContract'])) {
-            $attributes['settings_schema'] = $attributes['configContract'];
-            unset($attributes['configContract']);
-        }
-
         if (isset($attributes['settings']) && gettype($attributes['settings']) === 'array') {
-            $attributes['settings'] = json_encode($attributes['settings']);//new ($this->getSettingsSchemaClassName())($attributes['fields']);
+            $attributes['settings'] = json_encode($attributes['settings']);
         }
-
-        unset($attributes['tags']);
     }
 
     public function requestAction(string $action)

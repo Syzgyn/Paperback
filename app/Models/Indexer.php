@@ -23,10 +23,6 @@ class Indexer extends ProviderModel
     ];
     protected $table = 'indexers';
 
-    protected $schema;
-    protected $supportsRss;
-    protected $supportsSearch;
-
     public $attributes = [
         'priority' => 25,
         'enable_rss' => true,
@@ -51,11 +47,6 @@ class Indexer extends ProviderModel
         return $this->attributes['implementation'] ?? $this->implementation ?? "";
     }
 
-    protected function prepareAttributes(array &$attributes): void
-    {
-        parent::prepareAttributes($attributes);
-    }
-
     public function getParser()
     {
         throw new \Exception("Cannot call getParser from base Indexer class");
@@ -69,10 +60,5 @@ class Indexer extends ProviderModel
     public function getEnableAttribute(): bool
     {
         return $this->enable_rss || $this->enable_interactive_search || $this->enable_automatic_search;
-    }
-
-    public function setEnableRssAttribute($value): void
-    {
-        $this->attributes['enable_rss'] = $value;
     }
 }

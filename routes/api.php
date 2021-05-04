@@ -31,6 +31,7 @@ Route::apiResource('issueFile', 'IssueFileController');
 Route::post('indexer/action/{action}', 'IndexerController@action')->middleware('provider');
 Route::get('indexer/schema', 'IndexerController@schema')->middleware('provider');
 Route::post('indexer/test', 'IndexerController@test')->middleware('provider');
+Route::post('indexer/testall', 'IndexerController@testall')->middleware('provider');
 Route::apiResource('indexer', 'IndexerController')->middleware('provider');
 
 

@@ -44,14 +44,6 @@ class Newznab extends Indexer
         return new NewznabRequestGenerator($this->settings);
     }
 
-    public function searchCvid($comic, $issue = '', $year = '', $comicYear = null, $offset = 0)
-    {
-        $query = "$comic $issue $year";
-        $result = $this->repository->search($query, $offset);
-
-        return new NewznabCollection($result);
-    }
-
     public function requestAction(string $action)
     {
         if ($action === 'newznabCategories') {
