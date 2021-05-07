@@ -9,7 +9,7 @@ class ReleaseInfo
     public string $guid;
     public string $title;
     public int $size;
-    public string $downloadUrl;
+    public ?string $downloadUrl;
     public ?string $infoUrl;
     public ?string $commentUrl;
     public int $indexerId;
@@ -23,7 +23,7 @@ class ReleaseInfo
     {
         $now = new DateTime();
         $diff = $now->diff($this->publishDate);
-        return (int)($diff->format('a'));
+        return (int)($diff->format('%a'));
     }
 
     public function getAgeHours()

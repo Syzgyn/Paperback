@@ -12,6 +12,7 @@ class Newznab extends Indexer
 {
     const URL_ENDPOINT_BASE = '/api/';
     const PROTOCOL = 'usenet';
+    const PAGE_SIZE = 100;
 
     public $repository;
     protected $implementation = 'Newznab';

@@ -148,7 +148,7 @@ class Comic extends Model
     public function importIssueFiles()
     {
         $fileManager = resolve('FileManager');
-        $parser = resolve('ParserService');
+        $parser = resolve('OldParserService');
         $files = $fileManager->getIssuesInFolder($this->path);
 
         foreach ($files as $file) {

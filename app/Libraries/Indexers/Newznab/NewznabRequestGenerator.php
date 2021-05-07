@@ -4,13 +4,19 @@ namespace App\Libraries\Indexers\Newznab;
 
 use App\Libraries\Http\HttpAccept;
 use App\Libraries\Http\HttpRequest;
+use App\Libraries\IndexerSearch\SearchCriteriaBase;
 use App\Libraries\Indexers\IndexerRequestGeneratorInterface;
 use App\Libraries\Indexers\IndexerPageableRequestChain;
+use App\Models\Indexers\Newznab;
 
 class NewznabRequestGenerator implements IndexerRequestGeneratorInterface
 {
     protected $maxPages = 30;
-    protected $pageSize = 100;
+
+    public function getPageSize()
+    {
+        return Newznab::PAGE_SIZE;
+    }
 
     public function __construct(public NewznabSettings $settings)
     {
@@ -42,14 +48,26 @@ class NewznabRequestGenerator implements IndexerRequestGeneratorInterface
             $baseUrl .= "&apikey=" . $this->settings->apiKey;
         }
 
-        if ($this->pageSize === 0)
+        if ($this->getPageSize() === 0)
         {
             yield new HttpRequest($baseUrl . $parameters, HttpAccept::rss());
         } else {
             for($page = 0; $page < $this->maxPages; $page++) {
-                $url = sprintf("%s&offset=%d&limit=%d%s", $baseUrl, $page * $this->pageSize, $this->pageSize, $parameters);
+                $url = sprintf("%s&offset=%d&limit=%d%s", $baseUrl, $page * $this->getPageSize(), $this->getPageSize(), $parameters);
                 yield new HttpRequest($url, HttpAccept::rss());
             }
         }
+    }
+
+    public function getSearchRequests(SearchCriteriaBase $searchCriteria): IndexerPageableRequestChain
+    {
+        $pageableRequests = new IndexerPageableRequestChain();
+        
+        //TODO: Check if supports search
+        $query = str_replace(' ', '+', (string) $searchCriteria);
+
+        $pageableRequests->add($this->getPagedRequests("search", sprintf("&q=%s", $query)));
+
+        return $pageableRequests;
     }
 }

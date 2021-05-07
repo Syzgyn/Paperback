@@ -160,7 +160,7 @@ class FileManager
 
         //Multiple files, need to match them to specific issues
         $comic = $download->comic->with('issues');
-        $parser = resolve('ParserService');
+        $parser = resolve('OldParserService');
 
         //Look for ComicInfo.xml in each archive
         foreach ($files as $file) {

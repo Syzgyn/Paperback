@@ -34,6 +34,8 @@ Route::post('indexer/test', 'IndexerController@test')->middleware('provider');
 Route::post('indexer/testall', 'IndexerController@testall')->middleware('provider');
 Route::apiResource('indexer', 'IndexerController')->middleware('provider');
 
+Route::get('release', 'ReleaseController@get');
+Route::post('release', 'ReleaseController@download');
 
 Route::get('downloader/schema/{class?}', 'DownloaderController@schema');
 Route::get('downloader/schema', 'DownloaderController@schema');

@@ -4,8 +4,11 @@ namespace App\Providers;
 
 use GuzzleHttp\Client;
 use App\Services\FileManager;
-use App\Services\ParserService;
+use App\Services\ParserService as OldParserService;
 use App\Services\DownloadService;
+use App\Libraries\IndexerSearch\SearchService;
+use App\Libraries\DecisionEngine\DecisionService;
+use App\Libraries\Parser\ParserService;
 use App\Libraries\Http\HttpClient;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\ComicVineRepository;
@@ -21,8 +24,11 @@ class AppServiceProvider extends ServiceProvider
         'AppSettings' => AppSettingsRepository::class,
         'FileManager' => FileManager::class,
         'DownloadService' => DownloadService::class,
-        'ParserService' => ParserService::class,
+        'OldParserService' => OldParserService::class, //TODO: Replace
         'HttpClient' => HttpClient::class,
+        'SearchService' => SearchService::class,
+        'DecisionService' => DecisionService::class,
+        'ParserService' => ParserService::class,
     ];
 
     /**
