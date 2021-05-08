@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('comic/search', 'ComicController@search');
 Route::get('comic/lookup', 'ComicController@lookup');
 Route::post('comic/import', 'ComicController@import');
-Route::get('comic/{comic}/download', 'ComicController@download');
 Route::get('comic/{comic}/comicvine', 'ComicController@comicvine');
 Route::resource('comic', 'ComicController');
 

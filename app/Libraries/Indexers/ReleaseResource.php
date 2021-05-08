@@ -4,6 +4,7 @@ namespace App\Libraries\Indexers;
 
 use DateTime;
 use App\Libraries\DecisionEngine\DownloadDecision;
+use Illuminate\Http\Request;
 
 class ReleaseResource
 {
@@ -37,6 +38,23 @@ class ReleaseResource
     public ?int $leechers;
     public string $protocol;
 
+    public ?int $comicId;
+    public ?int $issueId;
+
+    public static function fromRequest(Request $request): ReleaseResource
+    {
+        $request->validate([
+            'guid' => 'required|string',
+            'indexerId' => 'required|int|gt:0',
+        ]);
+
+        $resource = new self();
+        $resource->guid = $request->input('guid');
+        $resource->indexerId = $request->input('indexerId');
+
+        return $resource;
+    }
+
     public static function fromDownloadDecision(DownloadDecision $decision)
     {
         $releaseInfo = $decision->remoteIssue->release;
@@ -69,6 +87,12 @@ class ReleaseResource
         $resource->downloadAllowed = $remoteIssue->downloadAllowed;
 
         $resource->protocol = $releaseInfo->downloadProtocol;
+
+        $resource->comicId = $remoteIssue->comic->cvid;
+
+        if (count($remoteIssue->issues) == 1) {
+            $resource->issueId = $remoteIssue->issues[0]->cvid;
+        }
 
         return $resource;
     }

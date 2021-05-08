@@ -7,12 +7,14 @@ use App\Libraries\IndexerSearch\SearchCriteriaBase;
 
 class ParserService
 {
-    public function map(ParsedIssueInfo $parsedIssueInfo, SearchCriteriaBase $searchCriteria): RemoteIssue
+    public function map(ParsedIssueInfo $parsedIssueInfo, ?SearchCriteriaBase $searchCriteria = null, ?Comic $comic = null): RemoteIssue
     {
         $remoteIssue = new RemoteIssue();
         $remoteIssue->parsedIssueInfo = $parsedIssueInfo;
 
-        $comic = $this->getComic($parsedIssueInfo, $searchCriteria);
+        if ($comic == null) {
+            $comic = $this->getComic($parsedIssueInfo, $searchCriteria);
+        }
 
         if ($comic != null) {
             $remoteIssue->comic = $comic;
@@ -77,7 +79,7 @@ class ParserService
         return strtr(utf8_decode($str), utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'), 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
     }
 
-    public function getIssues(ParsedIssueInfo $parsedIssueInfo, Comic $comic, SearchCriteriaBase $searchCriteria): array
+    public function getIssues(ParsedIssueInfo $parsedIssueInfo, Comic $comic, ?SearchCriteriaBase $searchCriteria = null): array
     {
         if ($parsedIssueInfo->fullComic) {
             return $comic->issues->toArray(); 
@@ -90,7 +92,10 @@ class ParserService
         $results = [];
 
         foreach ($parsedIssueInfo->issueNumbers as $issueNumber) {
-            $issue = $searchCriteria->findIssueByNum($issueNumber);
+            $issue = null;
+            if ($searchCriteria != null) {
+                $issue = $searchCriteria->findIssueByNum($issueNumber);
+            }
 
             if ($issue == null) {
                 $issue = Issue::firstWhere(['comic_id' => $comic->cvid, 'issue_num' => $issueNumber]);
