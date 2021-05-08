@@ -23,7 +23,7 @@ class ReleaseResource
     public bool $temporarilyRejected;
     public bool $rejected;
     public array $rejections;
-    public DateTime $publishDate;
+    public string $publishDate;
     public string $commentUrl;
     public string $downloadUrl;
     public string $infoUrl;
@@ -48,7 +48,7 @@ class ReleaseResource
         $resource->age = $releaseInfo->getAge();
         $resource->ageHours = $releaseInfo->getAgeHours();
         $resource->ageMinutes = $releaseInfo->getAgeMinutes();
-        $resource->size = $releaseInfo->size;
+        $resource->size = (int)$releaseInfo->size;
         $resource->indexerId = $releaseInfo->indexerId;
         $resource->indexer = $releaseInfo->indexer;
         $resource->releaseGroup = $parsedIssueInfo?->releaseGroup;
@@ -56,11 +56,12 @@ class ReleaseResource
         $resource->fullComic = $parsedIssueInfo?->fullComic ?? false;
         $resource->comicTitle = $parsedIssueInfo?->comicTitle;
         $resource->issueNumbers = $parsedIssueInfo->issueNumbers;
+        $resource->mappedIssueNumbers = array_map(fn($i) => $i->issue_num, $remoteIssue->issues);
         $resource->approved = $decision->isApproved();
         $resource->temporarilyRejected = $decision->isTemporarilyRejected();
         $resource->rejected = $decision->isRejected();
         $resource->rejections = array_map(fn($r) => (string)$r->reason, $decision->rejections);
-        $resource->publishDate = $releaseInfo->publishDate;
+        $resource->publishDate = $releaseInfo->publishDate->format('Y-m-d');
         $resource->commentUrl = $releaseInfo->commentUrl;
         $resource->downloadUrl = $releaseInfo->downloadUrl;
         $resource->infoUrl = $releaseInfo->infoUrl;

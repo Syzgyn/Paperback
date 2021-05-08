@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import formatDateTime from 'Utilities/Date/formatDateTime';
 import formatAge from 'Utilities/Number/formatAge';
 import formatBytes from 'Utilities/Number/formatBytes';
-import formatPreferredWordScore from 'Utilities/Number/formatPreferredWordScore';
 import { icons, kinds, tooltipPositions } from 'Helpers/Props';
 import Icon from 'Components/Icon';
 import SpinnerIconButton from 'Components/Link/SpinnerIconButton';
@@ -113,25 +112,19 @@ class InteractiveSearchRow extends Component {
       size,
       seeders,
       leechers,
-      quality,
-      language,
-      preferredWordScore,
       sceneMapping,
       seasonNumber,
       issueNumbers,
-      absoluteIssueNumbers,
-      mappedSeasonNumber,
       mappedIssueNumbers,
-      mappedAbsoluteIssueNumbers,
       rejections,
       issueRequested,
       downloadAllowed,
-      isDaily,
       isGrabbing,
       isGrabbed,
       longDateFormat,
       timeFormat,
-      grabError
+      grabError,
+      releaseGroup,
     } = this.props;
 
     return (
@@ -155,15 +148,9 @@ class InteractiveSearchRow extends Component {
           </Link>
           <ReleaseSceneIndicator
             className={styles.sceneMapping}
-            seasonNumber={mappedSeasonNumber}
+            releaseGroup={releaseGroup}
             issueNumbers={mappedIssueNumbers}
-            absoluteIssueNumbers={mappedAbsoluteIssueNumbers}
-            sceneSeasonNumber={seasonNumber}
-            sceneIssueNumbers={issueNumbers}
-            sceneAbsoluteIssueNumbers={absoluteIssueNumbers}
-            sceneMapping={sceneMapping}
             issueRequested={issueRequested}
-            isDaily={isDaily}
           />
         </TableRowCell>
 
@@ -183,18 +170,6 @@ class InteractiveSearchRow extends Component {
                 leechers={leechers}
               />
           }
-        </TableRowCell>
-
-        <TableRowCell className={styles.language}>
-          <IssueLanguage language={language} />
-        </TableRowCell>
-
-        <TableRowCell className={styles.quality}>
-          <IssueQuality quality={quality} />
-        </TableRowCell>
-
-        <TableRowCell className={styles.preferredWordScore}>
-          {formatPreferredWordScore(preferredWordScore)}
         </TableRowCell>
 
         <TableRowCell className={styles.rejected}>
@@ -264,9 +239,6 @@ InteractiveSearchRow.propTypes = {
   size: PropTypes.number.isRequired,
   seeders: PropTypes.number,
   leechers: PropTypes.number,
-  quality: PropTypes.object.isRequired,
-  language: PropTypes.object.isRequired,
-  preferredWordScore: PropTypes.number.isRequired,
   sceneMapping: PropTypes.object,
   seasonNumber: PropTypes.number,
   issueNumbers: PropTypes.arrayOf(PropTypes.number),
@@ -277,14 +249,14 @@ InteractiveSearchRow.propTypes = {
   rejections: PropTypes.arrayOf(PropTypes.string).isRequired,
   issueRequested: PropTypes.bool.isRequired,
   downloadAllowed: PropTypes.bool.isRequired,
-  isDaily: PropTypes.bool.isRequired,
   isGrabbing: PropTypes.bool.isRequired,
   isGrabbed: PropTypes.bool.isRequired,
   grabError: PropTypes.string,
   longDateFormat: PropTypes.string.isRequired,
   timeFormat: PropTypes.string.isRequired,
   searchPayload: PropTypes.object.isRequired,
-  onGrabPress: PropTypes.func.isRequired
+  onGrabPress: PropTypes.func.isRequired,
+  releaseGroup: PropTypes.string,
 };
 
 InteractiveSearchRow.defaultProps = {

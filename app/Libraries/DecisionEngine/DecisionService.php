@@ -35,7 +35,7 @@ class DecisionService
                     } elseif (empty($remoteIssue->issues)) {
                         $decision = new DownloadDecision($remoteIssue, new Rejection("Unable to identify correct issue(s) using release name"));
                     } else {
-                        $remoteIssue->downloadAllowed = !empty($remoteIssues->issues);
+                        $remoteIssue->downloadAllowed = !empty($remoteIssue->issues);
                         $decision = $this->getDecisionForReport($remoteIssue, $searchCriteria);
                     }
                 }

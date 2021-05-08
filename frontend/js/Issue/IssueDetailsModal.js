@@ -13,7 +13,7 @@ class IssueDetailsModal extends Component {
     super(props, context);
 
     this.state = {
-      closeOnBackgroundClick: false
+      closeOnBackgroundClick: props.selectedTab !== 'search'
     };
   }
 
@@ -52,6 +52,7 @@ class IssueDetailsModal extends Component {
 }
 
 IssueDetailsModal.propTypes = {
+  selectedTab: PropTypes.string,
   isOpen: PropTypes.bool.isRequired,
   onModalClose: PropTypes.func.isRequired
 };

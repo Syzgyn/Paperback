@@ -50,27 +50,6 @@ const columns = [
     isVisible: true
   },
   {
-    name: 'languageWeight',
-    label: 'Language',
-    isSortable: true,
-    isVisible: true
-  },
-  {
-    name: 'qualityWeight',
-    label: 'Quality',
-    isSortable: true,
-    isVisible: true
-  },
-  {
-    name: 'preferredWordScore',
-    label: React.createElement(Icon, {
-      name: icons.SCORE,
-      title: 'Preferred word score'
-    }),
-    isSortable: true,
-    isVisible: true
-  },
-  {
     name: 'rejections',
     label: React.createElement(Icon, {
       name: icons.DANGER,
