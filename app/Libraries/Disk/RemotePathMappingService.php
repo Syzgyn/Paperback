@@ -13,8 +13,10 @@ class RemotePathMappingService
         }
 
         foreach (RemotePathMapping::all() as $mapping) {
-            if (strcasecmp($mapping->host, $host) == 0 && new OsPath($mapping->remote_path)->contains($remotePath)) {
-                $localPath = new OsPath($mapping->local_path)->add($remotePath->sub(new OsPath($mapping->remote_path)));
+            $remotePath = new OsPath($mapping->remote_path);
+            if (strcasecmp($mapping->host, $host) == 0 && $remotePath->contains($remotePath)) {
+                $localPath = new OsPath($mapping->local_path);
+                $localPath->add($remotePath->sub(new OsPath($mapping->remote_path)));
 
                 return $localPath;
             }
@@ -30,8 +32,9 @@ class RemotePathMappingService
         }
 
         foreach (RemotePathMapping::all() as $mapping) {
-            if (strcasecmp($mapping->host, $host) == 0 && new OsPath($mapping->remote_path)->contains($remotePath)) {
-                $remotePath = new OsPath($mapping->remote_path)->add($localPath->sub(new OsPath($mapping->local_path)));
+            $remotePath = new OsPath($mapping->remote_path);
+            if (strcasecmp($mapping->host, $host) == 0 && $remotePath->contains($remotePath)) {
+                $remotePath->add($localPath->sub(new OsPath($mapping->local_path)));
 
                 return $remotePath;
             }

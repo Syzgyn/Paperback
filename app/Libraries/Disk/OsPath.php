@@ -104,7 +104,7 @@ class OsPath
     public function isRooted(): bool
     {
         if ($this->isWindowsPath()) {
-            return str_starts_with($this->path, '\\\\') || $this->hasWindowsDriveLetter($this-path);
+            return str_starts_with($this->path, '\\\\') || $this->hasWindowsDriveLetter($this->path);
         }
         
         if ($this->isUnixPath()) {
@@ -222,7 +222,7 @@ class OsPath
     public function add(string|OsPath $right): OsPath
     {
         if (gettype($right) == "string") {
-            $right = new OsType($right);
+            $right = new OsPath($right);
         }
 
         if ($this->osType != $right->getOsType() && $right->getOsType != "Unknown") {
@@ -237,11 +237,11 @@ class OsPath
             return $right;
         }
 
-        if ($left->osType == "Windows" || $right->getOsType() == "Windows") {
+        if ($this->osType == "Windows" || $right->getOsType() == "Windows") {
             return new OsPath(rtrim($this->path, '\\') . '\\' . ltrim($right->getPath(), '\\'), "Windows");
         }
 
-        if ($left->osType == "Unix" || $right->getOsType() == "Unix") {
+        if ($this->osType == "Unix" || $right->getOsType() == "Unix") {
             return new OsPath(rtrim($this->path, '/') . '/' . ltrim($right->getPath(), '/'), "Unix");
         }
 
@@ -251,7 +251,7 @@ class OsPath
     public function sub(string|OsPath $right): OsPath
     {
         if (gettype($right) == "string") {
-            $right = new OsType($right);
+            $right = new OsPath($right);
         }
 
         if (!$this->isRooted() || !$right->isRooted()) {
@@ -261,7 +261,7 @@ class OsPath
         $leftFragments = $this->getFragments();
         $rightFragments = $right->getFragments();
 
-        $comparisonFunc = ($this->osType == "Windows" || $other->getOsType() == "Windows") ? "strcasecmp" : "strcmp";
+        $comparisonFunc = ($this->osType == "Windows" || $right->getOsType() == "Windows") ? "strcasecmp" : "strcmp";
 
         $i = 0;
         for ($i; $i < count($leftFragments) && $i < count($rightFragments); $i++) {
