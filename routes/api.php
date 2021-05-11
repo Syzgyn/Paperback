@@ -39,6 +39,8 @@ Route::post('downloadclient/test', 'DownloadClientController@test')->middleware(
 Route::post('downloadclient/testall', 'DownloadClientController@testall')->middleware('provider');
 Route::apiResource('downloadclient', 'DownloadClientController')->middleware('provider');
 
+Route::apiResource('remotepathmapping', 'RemotePathMappingController');
+
 Route::get('release', 'ReleaseController@get');
 Route::post('release', 'ReleaseController@download');
 

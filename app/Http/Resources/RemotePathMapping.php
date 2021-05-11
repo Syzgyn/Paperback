@@ -14,6 +14,11 @@ class RemotePathMapping extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'host' => $this->host,
+            'localPath' => $this->local_path,
+            'remotePath' => $this->remote_path,
+            'id' => $this->id,
+        ];
     }
 }

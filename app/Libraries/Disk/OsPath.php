@@ -122,7 +122,8 @@ class OsPath
             return new OsPath(null);
         }
 
-        return new OsPath(substr($this->path, 0, $index), $this->osType)->asDirectory();
+        $path = new OsPath(substr($this->path, 0, $index), $this->osType);
+        return $path->asDirectory();
     }
 
     public function getFilename(): ?string

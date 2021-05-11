@@ -13,7 +13,7 @@ class AddRemotePathMapping extends Migration
      */
     public function up()
     {
-        Schema::create('remote_path_mapping', function (Blueprint $table) {
+        Schema::create('remote_path_mappings', function (Blueprint $table) {
             $table->unsignedInteger("id")->autoIncrement();
             $table->string('host');
             $table->string('remote_path');
@@ -28,6 +28,6 @@ class AddRemotePathMapping extends Migration
      */
     public function down()
     {
-        Schema::drop('remote_path_mapping');
+        Schema::drop('remote_path_mappings');
     }
 }

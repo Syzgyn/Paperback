@@ -306,7 +306,7 @@ class FileManager
         }
     }
 
-    public function getDirectoryListing($path = null, $includeFiles = false)
+    public function getDirectoryListing($path = null, $includeFiles = false, $allowFoldersWithoutTrailingSlashes = false)
     {
         if (!$path) {
             if (DIRECTORY_SEPARATOR === '/') {
@@ -333,7 +333,10 @@ class FileManager
             return $output;
         }
 
-        $path .= DIRECTORY_SEPARATOR;
+        if (!str_ends_with($path, DIRECTORY_SEPARATOR)) {
+            $path .= DIRECTORY_SEPARATOR;
+        }
+
         $contents = scandir($path);
 
         foreach ($contents as $file) {

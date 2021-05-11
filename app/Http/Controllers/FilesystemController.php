@@ -10,14 +10,16 @@ class FilesystemController extends Controller
     {
         $params = $request->validate([
             'path' => 'string|nullable',
-            'showFiles' => 'boolean',
+            'includeFiles' => 'in:true,false',
+            'allowFoldersWithoutTrailingSlashes' => 'in:true,false',
         ]);
 
         $params['path'] = $params['path'] ?? '';
-        $params['showFiles'] = $params['showFiles'] ?? false;
+        $params['includeFiles'] = (bool) ($params['includeFiles'] ?? false);
+        $params['allowFoldersWithoutTrailingSlashes'] = (bool)($params['allowFoldersWithoutTrailingSlashes'] ?? false);
 
         $service = resolve('FileManager');
 
-        return $service->getDirectoryListing($params['path'], $params['showFiles']);
+        return $service->getDirectoryListing($params['path'], $params['includeFiles'], $params['allowFoldersWithoutTrailingSlashes']);
     }
 }

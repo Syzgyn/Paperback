@@ -6,6 +6,7 @@ use App\Models\RemotePathMapping;
 use App\Http\Resources\RemotePathMapping as RemotePathMappingResource;
 use App\Http\Resources\RemotePathMappingCollection;
 use Illuminate\Http\Request;
+use App\Http\Requests\RemotePathMappingRequest;
 use App\Libraries\Disk\OsPath;
 
 class RemotePathMappingController extends Controller
@@ -26,14 +27,16 @@ class RemotePathMappingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RemotePathMappingRequest $request)
     {
         $mapping = new RemotePathMapping();
         $mapping->host = $request->input('host');
-        $mapping->local_path = new OsPath($request->input('local_path')->asDirectory->getPath();
-        $mapping->remote_path = new OsPath($request->input('remote_path')->asDirectory->getPath();
+        $localPath = new OsPath($request->input('local_path'));
+        $remotePath = new OsPath($request->input('remote_path'));
+        $mapping->local_path = $localPath->asDirectory()->getPath();
+        $mapping->remote_path = $remotePath->asDirectory()->getPath();
 
-        $all = RemptePathMapping::all()->toArray();
+        $all = RemotePathMapping::all()->all();
 
         $this->validateMapping($all, $mapping);
 
@@ -60,13 +63,17 @@ class RemotePathMappingController extends Controller
      * @param  \App\Models\RemotePathMapping  $remotePathMapping
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RemotePathMapping $mapping)
+    public function update(RemotePathMappingRequest $request, RemotePathMapping $mapping)
     {
         $mapping->fill($request->all());
 
-        $all = RemotePathMapping::where('id', '!=', $mapping->id)->get()->toArray();
+        $all = RemotePathMapping::where('id', '!=', $mapping->id)->get()->all();
 
-        $this->validateMapping($mapping, $all);
+        if (!is_array($all)) {
+            $all = [ $all ];
+        }
+
+        $this->validateMapping($all, $mapping);
 
         $mapping->save();
 
