@@ -33,6 +33,12 @@ Route::post('indexer/test', 'IndexerController@test')->middleware('provider');
 Route::post('indexer/testall', 'IndexerController@testall')->middleware('provider');
 Route::apiResource('indexer', 'IndexerController')->middleware('provider');
 
+Route::post('downloadclient/action/{action}', 'DownloadClientController@action')->middleware('provider');
+Route::get('downloadclient/schema', 'DownloadClientController@schema')->middleware('provider');
+Route::post('downloadclient/test', 'DownloadClientController@test')->middleware('provider');
+Route::post('downloadclient/testall', 'DownloadClientController@testall')->middleware('provider');
+Route::apiResource('downloadclient', 'DownloadClientController')->middleware('provider');
+
 Route::get('release', 'ReleaseController@get');
 Route::post('release', 'ReleaseController@download');
 

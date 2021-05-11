@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Libraries\Providers\ProviderRepository;
 use App\Models\Indexer;
+use App\Libraries\Indexers\IndexerModelBase;
 use App\Interfaces\IndexerRepositoryInterface;
 use App\Http\Resources\Indexer as IndexerResource;
 use App\Http\Resources\IndexerCollection;

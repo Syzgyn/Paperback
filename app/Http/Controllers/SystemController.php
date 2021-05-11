@@ -8,6 +8,7 @@ class SystemController extends Controller
 {
     public function status()
     {
+        //TODO: Proper system info
         $data = [
 			'version' => '0.1',
 			'buildTime' => 'N/A',

@@ -4,6 +4,7 @@ namespace App\Libraries\Download;
 
 use App\Libraries\Parser\RemoteIssue;
 use App\Libraries\Http\HttpUri;
+use App\Models\DownloadClient;
 use Exception;
 
 class DownloadService
@@ -19,7 +20,7 @@ class DownloadService
         }
 
         $downloadTitle = $remoteIssue->release->title;
-        $downloadClient = null; //TODO: Implement download clients 
+        $downloadClient = DownloadClient::getDownloadClient($remoteIssue->release->downloadProtocol);
 
         if ($downloadClient == null) {
             throw new Exception($remoteIssue->release->downloadProtocol . " Download client isn't configured yet");
@@ -31,6 +32,7 @@ class DownloadService
         }
 
         $downloadClientId = null;
+
         try {
             $downloadClientId = $downloadClient->download($remoteIssue);
         } catch (ReleaseUnavailableException $e) {
@@ -43,7 +45,7 @@ class DownloadService
 
         $issueGrabbedEvent = new IssueGrabbedEvent($remoteIssue);
         $issueGrabbedEvent->downloadClient = $downloadClient->implementation;
-        $issueGrabbedEvent->downloadClientId = $downloadClient-id;
+        $issueGrabbedEvent->downloadClientId = $downloadClient->id;
         $issueGrabbedEvent->downloadClientName = $downloadClient->name;
 
         if ($downloadClientId) {

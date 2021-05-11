@@ -19,7 +19,7 @@ abstract class ProviderController extends Controller
         return $this->repo->collection($items);
     }
 
-    public function show(ProviderModel $model)
+    public function show(ProviderModelBase $model)
     {
         return $this->repo->resource($model);
     }
@@ -28,6 +28,7 @@ abstract class ProviderController extends Controller
     {
         $input = $this->validate($request, $this->repo->validationRules());
         $model = $this->repo->make($input);
+
         if ($model->enable && $request->query('forceSave') == false) {
             $model->test();
         }
@@ -35,7 +36,7 @@ abstract class ProviderController extends Controller
         return $this->repo->resource($model);
     }
 
-    public function update(Request $request, ProviderModel $model)
+    public function update(Request $request, ProviderModelBase $model)
     {
         $input = $this->validate($request, $this->repo->validationRules());
         $model->fill($input);
@@ -47,7 +48,7 @@ abstract class ProviderController extends Controller
         return $this->repo->resource($model);
     }
 
-    public function destroy(ProviderModel $model)
+    public function destroy(ProviderModelBase $model)
     {
         $model->delete();
 

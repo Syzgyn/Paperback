@@ -102,10 +102,6 @@ class NewznabSettings
         return isset($this->attributes[$key]);
     }
 
-    protected function validationRules(): array
-    {
-    }
-
     public function validate($messages = [])
     {
         $validator = Validator::make($this->attributes, $this->rules, $messages, $this->attributeLabels);

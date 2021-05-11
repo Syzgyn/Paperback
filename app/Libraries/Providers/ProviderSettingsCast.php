@@ -7,15 +7,13 @@ use InvalidArgumentException;
 
 class ProviderSettingsCast implements CastsAttributes
 {
-    protected $libraryPath = "App\Libraries";
-
     public function get($model, $key, $value, $attributes)
     {
-        $path = $model->getSettingsSchemaClassName();
+        $class = $model->settingsSchemaClassName;
 
         $settingsValues = json_decode($value, true) ?? [];
 
-        return new $path($settingsValues);
+        return new $class($settingsValues);
     }
 
     public function set($model, $key, $value, $attributes)
@@ -26,10 +24,12 @@ class ProviderSettingsCast implements CastsAttributes
             ];
         }
 
-        $path = $model->getSettingsSchemaClassName();
+        // I don't know why this doesn't work when called as $model->settingsSchemaClassName,
+        // but it throws an Undefined Property error... 
+        $class = $model->getSettingsSchemaClassNameAttribute();
 
-        if (!is_object($value) || get_class($value) !== $path) {
-            throw new InvalidArgumentException("The given value " . gettype($value) . " is not an instance of $path.");
+        if (!is_object($value) || get_class($value) !== $class) {
+            throw new InvalidArgumentException("The given value " . gettype($value) . " is not an instance of $class.");
         }
 
         return [

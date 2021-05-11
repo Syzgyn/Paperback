@@ -19,7 +19,7 @@ class RemoteIssue
 
     public function isRecentIssue(): bool
     {
-        return array_filter($this->issues, function($carry, $issue) {
+        return array_reduce($this->issues, function($carry, $issue) {
             if ($carry) {
                 return $carry;
             }

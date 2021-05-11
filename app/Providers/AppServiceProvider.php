@@ -10,10 +10,12 @@ use App\Libraries\DecisionEngine\DecisionService;
 use App\Libraries\Parser\ParserService;
 use App\Libraries\Download\DownloadService;
 use App\Libraries\Http\HttpClient;
+use App\Libraries\Download\NzbValidationService;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\ComicVineRepository;
 use App\Repositories\AppSettingsRepository;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Libraries\Disk\RemotePathMappingService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,6 +31,8 @@ class AppServiceProvider extends ServiceProvider
         'SearchService' => SearchService::class,
         'DecisionService' => DecisionService::class,
         'ParserService' => ParserService::class,
+        'NzbValidationService' => NzbValidationService::class,
+        'RemotePathMappingService' => RemotePathMappingService::class,
     ];
 
     /**

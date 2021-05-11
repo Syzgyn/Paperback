@@ -10,7 +10,7 @@ use App\Exceptions\TestException;
 abstract class ProviderRepository implements ProviderRepositoryInterface
 {
     public function __construct(
-        protected ProviderModel $model,
+        protected ProviderModelBase $model,
         protected string $resource,
         protected string $collection
     )
@@ -22,7 +22,7 @@ abstract class ProviderRepository implements ProviderRepositoryInterface
         return new ($this->collection)($models);
     }
 
-    public function resource(ProviderModel $model): JsonResource
+    public function resource(ProviderModelBase $model): JsonResource
     {
         return new ($this->resource)($model);
     }
@@ -51,7 +51,7 @@ abstract class ProviderRepository implements ProviderRepositoryInterface
         return $this->model->all();
     }
 
-    public function create(array $data): ?ProviderModel
+    public function create(array $data): ?ProviderModelBase
     {
         $model = $this->make($data);
         if ($model) {
@@ -62,7 +62,7 @@ abstract class ProviderRepository implements ProviderRepositoryInterface
         return null;
     }
 
-    public function make(array $data): ?ProviderModel
+    public function make(array $data): ?ProviderModelBase
     {
         return $this->model->newFromBuilder($data);
     }

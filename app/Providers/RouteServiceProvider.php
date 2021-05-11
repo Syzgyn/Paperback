@@ -35,6 +35,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('comic', \App\Models\Comic::class);
         Route::model('issue', \App\Models\Issue::class);
         Route::model('indexer', \App\Models\Indexer::class);
+        Route::model('downloadclient', \App\Models\DownloadClient::class);
         parent::boot();
     }
 

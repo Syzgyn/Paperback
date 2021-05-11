@@ -50,8 +50,8 @@ export default {
   // Action Handlers
 
   actionHandlers: {
-    [FETCH_DOWNLOAD_CLIENT_OPTIONS]: createFetchHandler(section, '/config/downloadclient'),
-    [SAVE_DOWNLOAD_CLIENT_OPTIONS]: createSaveHandler(section, '/config/downloadclient')
+    [FETCH_DOWNLOAD_CLIENT_OPTIONS]: createFetchHandler(section, '/settings/downloadclient'),
+    [SAVE_DOWNLOAD_CLIENT_OPTIONS]: createSaveHandler(section, '/settings/downloadclient')
   },
 
   //

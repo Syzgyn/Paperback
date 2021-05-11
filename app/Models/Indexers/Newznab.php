@@ -1,14 +1,13 @@
 <?php
 namespace App\Models\Indexers;
 
-use App\Models\Indexer;
 use App\Repositories\Indexers\NewznabRepository;
-use App\Http\Resources\Indexers\NewznabCollection;
+use App\Libraries\Indexers\IndexerModelBase;
 use App\Libraries\Indexers\Newznab\NewznabSettings;
 use App\Libraries\Indexers\Newznab\NewznabRequestGenerator;
 use App\Libraries\Indexers\Newznab\NewznabParser;
 
-class Newznab extends Indexer
+class Newznab extends IndexerModelBase
 {
     const URL_ENDPOINT_BASE = '/api/';
     const PROTOCOL = 'usenet';
@@ -17,23 +16,6 @@ class Newznab extends Indexer
     public $repository;
     protected $implementation = 'Newznab';
     protected $settingsSchema = 'NewznabSettings';
-
-    protected $modelSchema = [
-        'protocol' => 'usenet',
-        'name' => 'Newznab',
-        'fields' => [
-            'settings.url' => [
-                'label' => 'Base URL',
-                'type' => 'text',
-                'validation' => ['required', 'string'],
-            ],
-            'settings.apikey' => [
-                'label' => 'API Key',
-                'type' => 'text',
-                'validation' => ['required', 'alpha_num'],
-            ],
-        ],
-    ];
 
     public function getParser()
     {
@@ -44,6 +26,12 @@ class Newznab extends Indexer
     {
         return new NewznabRequestGenerator($this->settings);
     }
+
+    public function getSettingsSchemaClassNameAttribute(): string
+    {
+        return NewznabSettings::class;
+    }
+
 
     public function requestAction(string $action)
     {

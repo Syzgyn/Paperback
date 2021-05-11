@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Exception;
 use App\Models\Comic;
 use App\Models\IssueFile;
 use App\Models\TrackedDownload;
@@ -367,5 +368,28 @@ class FileManager
         }
 
         $this->removeDir($path);
+    }
+
+    public function folderIsWritable(string $path): bool
+    {
+        if (!is_dir($path)) {
+            throw new Exception("Path $path does not exist");
+        }
+
+        try {
+            $filePath = $path . DIRECTORY_SEPARATOR . "paperback_write_text.txt";
+            $testContent = "This file was created to verify if '$path' is writable. It should've been automatically deleted. Feel free to delete it.";
+            $bytes = file_put_contents($filePath, $testContent);
+            unlink($filePath);
+
+            if ($bytes === false) {
+                throw new Exception("Unwritable");
+            }
+
+            return true;
+        } catch (Exception $e) {
+            //TODO: log
+            return false;
+        }
     }
 }
