@@ -20,12 +20,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile query()
+ * @method static \Illuminate\Database\Eloquent\Builder|IssueFile where($value)
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile whereComicId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile whereOriginalFilePath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile whereRelativePath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile whereSize($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|IssueFile create($value)
  * @mixin \Eloquent
  */
 class IssueFile extends Model

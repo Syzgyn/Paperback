@@ -39,6 +39,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Issue whereOverview($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Issue whereStoreDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Issue whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Issue create($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Issue updateOrCreate($value)
  * @mixin \Eloquent
  */
 class Issue extends Model

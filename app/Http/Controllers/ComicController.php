@@ -28,6 +28,10 @@ class ComicController extends Controller
     {
         $comics = Comic::all();
 
+        app()->terminating(function() {
+            file_put_contents("/tmp/terminated.txt", "Success");
+        });
+
         return new ComicCollection($comics);
     }
 
@@ -121,7 +125,7 @@ class ComicController extends Controller
         $rules = $request->rules();
         $validator = Validator::make($content, $rules);
         
-        if (!$validator->passes()) {
+        if ($validator->fails()) {
             return response()->json($validator->errors()->messages(), 422);
         }
 

@@ -44,6 +44,7 @@ use Illuminate\Support\Facades\Storage;
  * @method static \Illuminate\Database\Eloquent\Builder|Comic whereTags($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Comic whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Comic whereYear($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Comic create($value)
  * @mixin \Eloquent
  */
 class Comic extends Model
