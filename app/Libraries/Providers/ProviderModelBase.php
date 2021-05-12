@@ -8,6 +8,8 @@ use App\Libraries\Http\HttpRequest;
 
 abstract class ProviderModelBase extends Model
 {
+    const PROTOCOL = null;
+    
     protected $casts = [
         'settings' => ProviderSettingsCast::class,
         'priority' => 'integer',

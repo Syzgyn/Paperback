@@ -2,6 +2,9 @@
 
 namespace App\Libraries\Download;
 
+use App\Exceptions\DownloadClientRejectedReleaseException;
+use App\Exceptions\ReleaseDownloadException;
+use App\Exceptions\ReleaseUnavailableException;
 use App\Libraries\Parser\RemoteIssue;
 use App\Libraries\Http\HttpUri;
 use App\Models\DownloadClient;

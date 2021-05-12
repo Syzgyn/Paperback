@@ -6,6 +6,18 @@ use App\Events\DownloadStarted;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Downloaders\DirectDownload;
 
+/**
+ * App\Models\TrackedDownload
+ *
+ * @property-read \App\Models\Comic $comic
+ * @property-read \App\Models\Downloader $downloadClient
+ * @property-read mixed $download_data
+ * @property-read \App\Models\Issue $issue
+ * @method static \Illuminate\Database\Eloquent\Builder|TrackedDownload newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|TrackedDownload newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|TrackedDownload query()
+ * @mixin \Eloquent
+ */
 class TrackedDownload extends Model
 {
     const DOWNLOAD_STATUS = [

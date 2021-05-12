@@ -2,13 +2,45 @@
 
 namespace App\Libraries\Indexers;
 
+use App\Exceptions\TestException;
 use App\Libraries\Providers\ProviderModelBase;
 use App\Models\Indexers\Newznab;
 use App\Libraries\Providers\ProviderSettingsCast;
 use App\Libraries\IndexerSearch\SearchCriteriaBase;
 use App\Libraries\Parser\ReleaseInfo;
 use App\Libraries\Http\HttpRequest;
+use Exception;
 
+/**
+ * App\Libraries\Indexers
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $implementation
+ * @property |null $settings
+ * @property string|null $settings_schema
+ * @property bool|null $enable_rss
+ * @property bool|null $enable_automatic_search
+ * @property bool $enable_interactive_search
+ * @property int $priority
+ * @property-read bool $enable
+ * @property-read array $fields
+ * @property-read mixed $foo
+ * @property-read string $settings_schema_class_name
+ * @method static \Illuminate\Database\Eloquent\Builder|Indexer newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Indexer newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Indexer query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Indexer whereEnableAutomaticSearch($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Indexer whereEnableInteractiveSearch($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Indexer whereEnableRss($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Indexer whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Indexer whereImplementation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Indexer whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Indexer wherePriority($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Indexer whereSettings($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Indexer whereSettingsSchema($value)
+ * @mixin \Eloquent
+ */
 abstract class IndexerModelBase extends ProviderModelBase
 {
     const PROTOCOL = null;
@@ -35,6 +67,9 @@ abstract class IndexerModelBase extends ProviderModelBase
         'enable_interactive_search' => true,
         'enable_automatic_search' => true,
     ];
+
+    protected abstract function getParser();
+    protected abstract function getRequestGenerator();
 
     public function getChildClasses(): array
     {

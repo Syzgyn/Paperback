@@ -4,6 +4,10 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/** @package App\Http\Requests 
+ * @property string $localPath
+ * @property string $remotePath
+*/
 class RemotePathMappingRequest extends FormRequest
 {
     /**

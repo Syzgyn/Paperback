@@ -17,7 +17,7 @@ final class HistoryData extends DataTransferObject implements Castable
     public $size;
     public $guid;
 
-    public static function castUsing()
+    public static function castUsing(array $arguments)
     {
         return HistoryDataCast::class;
     }

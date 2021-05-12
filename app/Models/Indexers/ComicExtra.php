@@ -7,7 +7,7 @@ use App\Http\Resources\IndexerResultCollection;
 use App\Repositories\Indexers\ComicExtraRepository;
 use App\Models\Downloaders\DDL\ComicExtra as ComicExtraDownloader;
 
-class ComicExtra extends Indexer
+class ComicExtra// extends Indexer
 {
     const URL_ENDPOINT_BASE = '/api/';
     const PROTOCOL = 'ddl';
@@ -37,6 +37,7 @@ class ComicExtra extends Indexer
 
     protected static function booted()
     {
+        /*
         static::creating(function ($indexer) {
             $indexer->class = self::class;
         });
@@ -45,6 +46,7 @@ class ComicExtra extends Indexer
             $indexer->repository = new ComicExtraRepository();
             $indexer->class = self::class;
         });
+        */
     }
 
     public function test()

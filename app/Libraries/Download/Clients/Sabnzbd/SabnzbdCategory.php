@@ -16,5 +16,6 @@ class SabnzbdCategory
         public string $dir,
         ...$other)
     {
+        $other = null;
     }
 }

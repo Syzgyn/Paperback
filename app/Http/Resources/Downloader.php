@@ -4,6 +4,9 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/** @package App\Http\Resources 
+ * @mixin App\Models\DownloadClient
+*/
 class Downloader extends JsonResource
 {
     /**

@@ -4,6 +4,7 @@ namespace App\Libraries\Parser;
 
 use App\Models\Comic;
 use App\Libraries\IndexerSearch\SearchCriteriaBase;
+use App\Models\Issue;
 
 class ParserService
 {

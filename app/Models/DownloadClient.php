@@ -8,6 +8,31 @@ use App\Libraries\Parser\RemoteIssue;
 use App\Libraries\Download\DownloadClientItem;
 use App\Libraries\Download\DownloadClientInfo;
 
+/**
+ * App\Models\DownloadClient
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $implementation
+ * @property $settings
+ * @property string|null $settings_schema
+ * @property bool|null $enable
+ * @property int $priority
+ * @property-read array $fields
+ * @property-read mixed $foo
+ * @property-read string $settings_schema_class_name
+ * @method static \Illuminate\Database\Eloquent\Builder|DownloadClient newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|DownloadClient newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|DownloadClient query()
+ * @method static \Illuminate\Database\Eloquent\Builder|DownloadClient whereEnable($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DownloadClient whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DownloadClient whereImplementation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DownloadClient whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DownloadClient wherePriority($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DownloadClient whereSettings($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|DownloadClient whereSettingsSchema($value)
+ * @mixin \Eloquent
+ */
 class DownloadClient extends DownloadClientModelBase
 {
     public function download(RemoteIssue $remoteIssue): string

@@ -26,14 +26,7 @@ class GetComics extends JsonResource
             'raw_size' => $this->resource['size'],
             'url' => $this->resource['link'],
         ];
-
-        //Cache results for downloading later
-        Cache::put(
-            Indexer::CACHE_PREFIX . '.' . $this->resource['id'],
-            $arr,
-            Indexer::CACHE_TIME,
-        );
-
+        
         return $arr;
     }
 

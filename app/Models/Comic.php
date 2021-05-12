@@ -6,6 +6,46 @@ use App\Traits\ChangeComicLinks;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * App\Models\Comic
+ *
+ * @property int $cvid
+ * @property string $title
+ * @property int $status
+ * @property string|null $overview
+ * @property array $images
+ * @property string $path
+ * @property bool $monitored
+ * @property string|null $publisher
+ * @property int|null $year
+ * @property array $tags
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property string|null $add_options
+ * @property-read mixed $directory_name
+ * @property-read mixed $full_directory_name
+ * @property-read mixed $issue_file_count
+ * @property-read mixed $total_issue_file_size
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\IssueFile[] $issueFiles
+ * @property-read int|null $issue_files_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Issue[] $issues
+ * @property-read int|null $issues_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Comic newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Comic newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Comic query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Comic whereAddOptions($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Comic whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Comic whereCvid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Comic whereImages($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Comic whereMonitored($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Comic whereOverview($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Comic wherePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Comic wherePublisher($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Comic whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Comic whereTags($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Comic whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Comic whereYear($value)
+ * @mixin \Eloquent
+ */
 class Comic extends Model
 {
     use ChangeComicLinks;
@@ -64,18 +104,6 @@ class Comic extends Model
         return $images;
     }
 
-    public function getDirectoryNameAttribute()
-    {
-        return sprintf('%s (%d)', $this->name, $this->start_year);
-    }
-
-    public function getFullDirectoryNameAttribute()
-    {
-        $baseDir = resolve('AppSettings')->get('general', 'destination_dir');
-
-        return $baseDir . DIRECTORY_SEPARATOR . $this->directoryName;
-    }
-
     public static function createFromCvid($cvid, $grabImage = true, $searchIssues = false)
     {
         $repo = resolve('ComicVineRepository');
@@ -104,7 +132,7 @@ class Comic extends Model
         $this->fill($volume);
 
         if ($grabImage) {
-            $imagePath = $volume->images->{self::IMAGE_KEY};
+            $imagePath = $volume['images'][self::IMAGE_KEY];
             $this->downloadImage($imagePath);
         }
 

@@ -7,6 +7,36 @@ use App\Repositories\Indexers\GetComicsRepository;
 use App\Http\Resources\Indexers\GetComicsCollection;
 use App\Models\Downloaders\DDL\GetComics as GetComicsDownloader;
 
+/**
+ * App\Models\Indexers\GetComics
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $implementation
+ * @property |null $settings
+ * @property string|null $settings_schema
+ * @property bool|null $enable_rss
+ * @property bool|null $enable_automatic_search
+ * @property bool $enable_interactive_search
+ * @property int $priority
+ * @property-read bool $enable
+ * @property-read array $fields
+ * @property-read mixed $foo
+ * @property-read string $settings_schema_class_name
+ * @method static \Illuminate\Database\Eloquent\Builder|GetComics newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|GetComics newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|GetComics query()
+ * @method static \Illuminate\Database\Eloquent\Builder|GetComics whereEnableAutomaticSearch($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GetComics whereEnableInteractiveSearch($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GetComics whereEnableRss($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GetComics whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GetComics whereImplementation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GetComics whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GetComics wherePriority($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GetComics whereSettings($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|GetComics whereSettingsSchema($value)
+ * @mixin \Eloquent
+ */
 class GetComics extends Indexer
 {
     const URL_ENDPOINT_BASE = '/api/';
@@ -48,14 +78,14 @@ class GetComics extends Indexer
         });
     }
 
-    public function test()
+    public function test(): void
     {
         //Manually create the repo if we're working with an unsaved model
         if (! $this->repository) {
             $this->repository = new GetComicsRepository();
         }
 
-        return $this->repository->test();
+        $this->repository->test();
     }
 
     public function getDownloader(TrackedDownload $download)

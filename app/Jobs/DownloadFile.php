@@ -69,7 +69,7 @@ class DownloadFile implements ShouldQueue
 
         curl_close($ch);
 
-        $this->trackedDownload->ddlFilename = $newfilename;
+        $this->trackedDownload->ddlFilename = $newFilename;
 
         resolve('FileManager')->manageDirectDownload($this->trackedDownload);
     }

@@ -7,6 +7,17 @@ use App\Repositories\Downloaders\SabnzbdRepository;
 
 use Nanigans\SingleTableInheritance\SingleTableInheritanceTrait;
 
+/**
+ * App\Models\Downloaders\Usenet\Sabnzbd
+ *
+ * @property-read mixed $enable
+ * @property-read mixed $protocol
+ * @property-read mixed $schema
+ * @method static \Illuminate\Database\Eloquent\Builder|Sabnzbd newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Sabnzbd newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Sabnzbd query()
+ * @mixin \Eloquent
+ */
 class Sabnzbd extends Downloader
 {
     use SingleTableInheritanceTrait;

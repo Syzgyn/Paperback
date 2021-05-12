@@ -8,6 +8,7 @@ use App\Models\IssueFile;
 use App\Models\TrackedDownload;
 use Illuminate\Support\Facades\Log;
 use \wapmorgan\UnifiedArchive\UnifiedArchive;
+use \SimpleXMLElement;
 
 class FileManager
 {
@@ -131,13 +132,13 @@ class FileManager
             return;
         }
 
-        $files = $this->getIssuesInFolder($path);
+        $files = $this->getIssuesInFolder($destDir);
 
         if (count($files) === 0) {
-            if (! is_dir($path)) {
-                Log::error("Attmpted to look for files in $downloadPath, but it doesn't exist");
+            if (! is_dir($destDir)) {
+                Log::error("Attmpted to look for files in $destDir, but it doesn't exist");
             } else {
-                Log::debug("No comic archives found in $downloadPath");
+                Log::debug("No comic archives found in $destDir");
             }
 
             $download->delete();
@@ -153,7 +154,7 @@ class FileManager
                 'original_file_path' => $files[0],
             ]);
 
-            $this->removeDir($path);
+            $this->removeDir($destDir);
             $download->delete();
 
             return;

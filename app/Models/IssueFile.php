@@ -4,6 +4,30 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\IssueFile
+ *
+ * @property int $id
+ * @property int $comic_id
+ * @property int $size
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property string|null $relative_path
+ * @property string|null $original_file_path
+ * @property-read \App\Models\Comic $comic
+ * @property-read mixed $file_type
+ * @property-read mixed $path
+ * @property-read \App\Models\Issue $issue
+ * @method static \Illuminate\Database\Eloquent\Builder|IssueFile newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|IssueFile newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|IssueFile query()
+ * @method static \Illuminate\Database\Eloquent\Builder|IssueFile whereComicId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|IssueFile whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|IssueFile whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|IssueFile whereOriginalFilePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|IssueFile whereRelativePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|IssueFile whereSize($value)
+ * @mixin \Eloquent
+ */
 class IssueFile extends Model
 {
     const UPDATED_AT = null;

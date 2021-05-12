@@ -78,7 +78,7 @@ class DownloadDecisionComparer
             return 0;
         }
 
-        return self::compareBy($a->remoteIssue, $y->remoteIssue, function($r) {
+        return self::compareBy($a->remoteIssue, $b->remoteIssue, function($r) {
             $ageHours = $r->release->getAgeHours();
             $age = $r->release->getAge();
 

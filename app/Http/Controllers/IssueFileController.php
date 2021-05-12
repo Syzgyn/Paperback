@@ -24,7 +24,7 @@ class IssueFileController extends Controller
 
         $issueFiles = IssueFile::all();
 
-        return new IssueCollection($issueFiles);
+        return new IssueFileCollection($issueFiles);
     }
 
     /**

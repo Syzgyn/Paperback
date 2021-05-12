@@ -5,6 +5,42 @@ namespace App\Models;
 use App\Traits\ChangeComicLinks;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Issue
+ *
+ * @property int $cvid
+ * @property int $comic_id
+ * @property int $issue_num
+ * @property string|null $title
+ * @property string|null $overview
+ * @property int|null $issue_file
+ * @property bool|null $monitored
+ * @property string|null $store_date
+ * @property string|null $cover_date
+ * @property array|null $images
+ * @property-read \App\Models\Comic $comic
+ * @property-read mixed $active_downloads
+ * @property-read mixed $file_name
+ * @property-read mixed $has_file
+ * @property-read mixed $status
+ * @property-read \App\Models\IssueFile|null $issueFile
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\TrackedDownload[] $trackedDownloads
+ * @property-read int|null $tracked_downloads_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Issue newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Issue newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Issue query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Issue whereComicId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Issue whereCoverDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Issue whereCvid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Issue whereImages($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Issue whereIssueFile($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Issue whereIssueNum($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Issue whereMonitored($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Issue whereOverview($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Issue whereStoreDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Issue whereTitle($value)
+ * @mixin \Eloquent
+ */
 class Issue extends Model
 {
     use ChangeComicLinks;
@@ -91,15 +127,5 @@ class Issue extends Model
         }
 
         return 'missing';
-    }
-
-    public static function createFromCvid()
-    {
-        $repo = resolve('ComicVineRepository');
-        $issue = $repo->issue($cvid);
-
-        $issue = Issue::create($volume);
-
-        return $issue;
     }
 }

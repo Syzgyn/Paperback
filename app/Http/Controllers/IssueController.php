@@ -81,20 +81,6 @@ class IssueController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $cvid = $request->input('cvid');
-        $comic = Issue::createFromCvid($cvid, false);
-
-        return new IssueResource($comic);
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Issue  $issue

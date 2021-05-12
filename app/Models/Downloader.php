@@ -8,6 +8,19 @@ use App\Traits\FillCastArray;
 use Illuminate\Database\Eloquent\Model;
 use Nanigans\SingleTableInheritance\SingleTableInheritanceTrait;
 
+/**
+ * App\Models\Downloader
+ *
+ * @property-read mixed $enable
+ * @property-read mixed $protocol
+ * @property-read mixed $schema
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\TrackedDownload[] $trackedDownloads
+ * @property-read int|null $tracked_downloads_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Downloader newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Downloader newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Downloader query()
+ * @mixin \Eloquent
+ */
 class Downloader extends Model
 {
     use SingleTableInheritanceTrait;

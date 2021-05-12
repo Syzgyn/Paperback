@@ -32,7 +32,6 @@ class Comic extends JsonResource
             'statistics' => [
                 'issueCount' => count($this->issues),
                 'totalIssueCount' => count($this->issues),
-                'issueCount' => count($this->issues),
                 'issueFileCount' => $this->issueFileCount,
                 'seasonCount' => 0,
                 'sizeOnDisk' => $this->totalIssueFileSize,

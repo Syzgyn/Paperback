@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Exception;
 
 class SettingsController extends Controller
 {
@@ -60,6 +61,6 @@ class SettingsController extends Controller
     public function namingExamples(Request $request)
     {
         //TODO: Add name parser
-        return respose()->json([]);
+        return response()->json([]);
     }
 }

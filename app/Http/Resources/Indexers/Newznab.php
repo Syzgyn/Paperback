@@ -28,13 +28,6 @@ class Newznab extends JsonResource
             'url' => $this->resource['link'],
         ];
 
-        //Cache results for downloading later
-        Cache::put(
-            Indexer::CACHE_PREFIX . '.' . $guid,
-            $arr,
-            Indexer::CACHE_TIME,
-        );
-
         return $arr;
     }
 

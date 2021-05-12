@@ -1,12 +1,15 @@
 <?php
 namespace App\Models\Downloaders;
 
+use App\Jobs\DownloadFile;
 use App\Models\TrackedDownload;
 
 class DirectDownload
 {
     const PROGRESS_EXTENSION = '.progress';
     const DEFAULT_DOWNLOAD_PATH = 'app/downloads';
+
+    protected TrackedDownload $trackedDownload;
 
     public function __construct(TrackedDownload $trackedDownload)
     {

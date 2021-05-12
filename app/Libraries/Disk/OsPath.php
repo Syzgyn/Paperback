@@ -171,7 +171,7 @@ class OsPath
 
     protected function getFragments(): array
     {
-        return array_filter(preg_split('+/|\\+', $this->path));
+        return array_filter(preg_split('@\\|/@', $this->path));
     }
 
     public function __tostring()

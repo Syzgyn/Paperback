@@ -49,6 +49,7 @@ class DownloadMultipleImages implements ShouldQueue
         $results = Promise\settle($promises)->wait();
 
         $files = array_diff(scandir($this->baseDir), ['.', '..']);
+        $ext = null;
         foreach ($files as $file) {
             $fullPath = $this->baseDir . DIRECTORY_SEPARATOR . $file;
             switch (exif_imagetype($fullPath)) {

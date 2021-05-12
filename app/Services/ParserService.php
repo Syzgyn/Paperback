@@ -210,17 +210,6 @@ class ParserService
         return false;
     }
 
-    public function matchDirToComics(string $dir)
-    {
-        foreach ($this->getComics() as $comic) {
-            if ($dir == $comic->fullDirectoryName) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public function getComicInfoFromString(string $data)
     {
         $regexes = [

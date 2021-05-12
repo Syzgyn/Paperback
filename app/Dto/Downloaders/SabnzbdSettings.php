@@ -13,7 +13,7 @@ final class SabnzbdSettings extends DataTransferObject implements Castable
     public $port;
     public $username;
 
-    public static function castUsing()
+    public static function castUsing(array $arguments)
     {
         return SabnzbdSettingsCast::class;
     }

@@ -7,6 +7,9 @@ use App\Libraries\Http\HttpUri;
 use SimpleXMLElement;
 use DateTime;
 use App\Libraries\Parser\ReleaseInfo;
+use App\Libraries\Indexers\Exceptions\UnsupportedFeedException;
+use App\Libraries\Indexers\Exceptions\SizeParsingException;
+use App\Libraries\Indexers\Exceptions\IndexerException;
 
 class RssParser
 {
@@ -265,7 +268,7 @@ class RssParser
         }
     }
 
-    public function parseSize(string $sizeString, boolean $defaultToBinaryPrefix): int
+    public function parseSize(string $sizeString, bool $defaultToBinaryPrefix): int
     {
         if (empty($sizeString)) {
             return 0;
@@ -276,11 +279,8 @@ class RssParser
         }
 
         $matches = [];
-        preg_match("/(?<value>(?<!\.\d*)(?:\d+,)*\d+(?:\.\d{1,3})?)\W?(?<unit>[KMG]i?B)(?![\w/])/", $sizeString, $matches);
-
-        if (count($matches) > 0) {
-            //TODO
-        }
+        
+        //TODO: Parse size string
 
         return 0;
     }

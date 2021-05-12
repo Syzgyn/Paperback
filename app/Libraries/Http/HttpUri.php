@@ -19,10 +19,9 @@ class HttpUri
         $this->parse();
     }
 
-    public static function fromParts(string $scheme, string $host, ?int $port, string $path, ?string $query, ?string $fragment)
+    public static function fromParts(string $scheme, string $host, ?int $port, ?string $path = null, ?string $query, ?string $fragment)
     {
-		$scheme   = isset($scheme) ? $scheme . '://' : '';
-		$host     = isset($host) ? $host : '';
+		$scheme   = $scheme . '://';
 		$port     = isset($port) ? ':' . $port : '';
 		$path     = isset($path) ? $path : '';
 		$query    = isset($query) ? '?' . $query : '';

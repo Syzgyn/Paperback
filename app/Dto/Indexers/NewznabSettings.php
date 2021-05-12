@@ -12,7 +12,7 @@ final class NewznabSettings extends DataTransferObject implements Castable
 
     public $apikey;
 
-    public static function castUsing()
+    public static function castUsing(array $arguments)
     {
         return NewznabSettingsCast::class;
     }

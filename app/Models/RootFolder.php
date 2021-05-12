@@ -6,6 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * App\Models\RootFolder
+ *
+ * @property int $id
+ * @property string $path
+ * @property-read mixed $accessible
+ * @property-read mixed $formatted_free_space
+ * @property-read mixed $free_space
+ * @property-read mixed $unmapped_folders
+ * @property-read mixed $unmapped_folders_count
+ * @method static \Illuminate\Database\Eloquent\Builder|RootFolder newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|RootFolder newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|RootFolder query()
+ * @method static \Illuminate\Database\Eloquent\Builder|RootFolder whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|RootFolder wherePath($value)
+ * @mixin \Eloquent
+ */
 class RootFolder extends Model
 {
     public $timestamps = false;
@@ -44,7 +61,7 @@ class RootFolder extends Model
         }
 
         if (!is_dir($this->path)) {
-            Log::debug("$path does not exist");
+            Log::debug("{$this->path} does not exist");
             return [];
         }
 

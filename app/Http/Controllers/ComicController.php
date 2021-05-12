@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Validator;
 
 class ComicController extends Controller
 {
+    protected $comicvine;
+    
     public function __construct()
     {
         $this->comicvine = resolve('ComicVineRepository');

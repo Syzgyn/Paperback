@@ -89,7 +89,7 @@ class SabnzbdProxy
 
         $response = $this->processRequest($request, $settings, SabnzbdQueue::class); 
 
-        return $response->status;
+        return $response;
     }
 
     public function getHistory(int $start, int $limit, ?string $category, SabnzbdSettings $settings): SabnzbdHistory
@@ -104,7 +104,7 @@ class SabnzbdProxy
 
         $response = $this->processRequest($request, $settings, SabnzbdHistory::class); 
 
-        return $response->status;
+        return $response;
     }
 
     public function retryDownload(string $id, SabnzbdSettings $settings): ?string

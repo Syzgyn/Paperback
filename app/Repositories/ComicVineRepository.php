@@ -64,7 +64,7 @@ class ComicVineRepository
         return VolumeCollection::make($volumes->results)->resolve();
     }
 
-    public function volume($cvid)
+    public function volume($cvid): array
     {
         $volume = $this->makeRequest('volume/' . self::VOLUME_PREFIX . $cvid, "volume.$cvid");
 

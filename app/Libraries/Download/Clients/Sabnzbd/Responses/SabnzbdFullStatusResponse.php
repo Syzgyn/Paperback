@@ -2,6 +2,8 @@
 
 namespace App\Libraries\Download\Clients\Sabnzbd\Responses;
 
+use App\Libraries\Download\Clients\Sabnzbd\SabnzbdFullStatus;
+
 class SabnzbdFullStatusResponse
 {
     public SabnzbdFullStatus $status;

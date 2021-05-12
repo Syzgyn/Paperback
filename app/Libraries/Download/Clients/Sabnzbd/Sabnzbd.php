@@ -2,12 +2,39 @@
 
 namespace App\Libraries\Download\Clients\Sabnzbd;
 
+use App\Libraries\Disk\OsPath;
 use Exception;
 use App\Libraries\Download\UsenetClientModelBase;
 use App\Libraries\Download\DownloadClientItem;
 use App\Libraries\Parser\RemoteIssue;
 use App\Libraries\Download\DownloadClientInfo;
+use App\Libraries\Download\DownloadClientItemClientInfo;
 
+/**
+ * App\Libraries\Download\Clients\Sabnzbd\Sabnzbd
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $implementation
+ * @property $settings
+ * @property string|null $settings_schema
+ * @property bool|null $enable
+ * @property int $priority
+ * @property-read array $fields
+ * @property-read mixed $foo
+ * @property-read string $settings_schema_class_name
+ * @method static \Illuminate\Database\Eloquent\Builder|Sabnzbd newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Sabnzbd newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Sabnzbd query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Sabnzbd whereEnable($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Sabnzbd whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Sabnzbd whereImplementation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Sabnzbd whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Sabnzbd wherePriority($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Sabnzbd whereSettings($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Sabnzbd whereSettingsSchema($value)
+ * @mixin \Eloquent
+ */
 class Sabnzbd extends UsenetClientModelBase
 {
     protected $versionRegex = "/(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+|x)/";
@@ -51,7 +78,7 @@ class Sabnzbd extends UsenetClientModelBase
         $queueItems = [];
 
         foreach($sabQueue as $sabQueueItem) {
-            if ($queueItem->status == "Deleted") {
+            if ($sabQueueItem->status == "Deleted") {
                 continue;
             }
 
@@ -170,7 +197,7 @@ class Sabnzbd extends UsenetClientModelBase
         }
     }
 
-    protected function getCategories(SabnzbRemoteConfig $config): array
+    protected function getCategories(SabnzbdRemoteConfig $config): array
     {
         $completeDir = new OsPath($config->misc->complete_dir);
 

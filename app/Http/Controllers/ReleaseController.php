@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use App\Libraries\DecisionEngine\DownloadDecision;
 use App\Libraries\Indexers\ReleaseResource;
+use App\Models\Issue;
+use App\Models\Comic;
 use Exception;
+use App\Exceptions\ReleaseDownloadException;
 
 class ReleaseController extends Controller
 {
@@ -50,7 +53,7 @@ class ReleaseController extends Controller
                     throw new Exception("Unable to find matching comic and issues");
                 }
             } elseif (empty($remoteIssue->issues)) {
-                $issues = resolve('ParserService')->map($remoteIssue->parsedIssueInfo, null, $comic);
+                $issues = resolve('ParserService')->map($remoteIssue->parsedIssueInfo, null, $remoteIssue->comic);
 
                 if (empty($issues) && isset($release->issueId)) {
                     $issue = Issue::find($release->issueId);

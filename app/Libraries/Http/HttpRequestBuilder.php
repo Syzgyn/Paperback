@@ -106,7 +106,6 @@ class HttpRequestBuilder
     public function __clone()
     {
         $this->baseUrl = clone $this->baseUrl;
-        $this->accept = clone $this->accept;
         $this->rateLimit = clone $this->rateLimit;
         $this->formData = array_map(fn($o) => clone $o, $this->formData);
 
@@ -127,7 +126,7 @@ class HttpRequestBuilder
             throw new Exception("Cannot send HttpRequest Body and FormData simultaneously");
         }
 
-        $isMultipartData = count(array_filter($this->formData, fn($c) => $c->contentType != null || $c->filename != null || strlen($v->contentData) > 1024)) > 0;
+        $isMultipartData = count(array_filter($this->formData, fn($c) => $c->contentType != null || $c->filename != null || strlen($c->contentData) > 1024)) > 0;
 
         $output = [];
         if ($isMultipartData) {
