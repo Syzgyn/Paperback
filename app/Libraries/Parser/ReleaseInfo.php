@@ -3,8 +3,9 @@
 namespace App\Libraries\Parser;
 
 use DateTime;
+use Illuminate\Contracts\Database\Eloquent\Castable;
 
-class ReleaseInfo
+class ReleaseInfo implements Castable
 {
     public string $guid;
     public string $title;
@@ -43,5 +44,10 @@ class ReleaseInfo
     public function __tostring()
     {
         return sprintf("[%s] %s %s", $this->publishDate->format('Y-m-d h:i:a'), $this->title, $this->size);
+    }
+
+    public static function castUsing(array $arguments)
+    {
+        return ReleaseInfoCast::class;
     }
 }

@@ -138,7 +138,7 @@ class InitialSetup extends Migration
         Schema::create('download_history', function (Blueprint $table) {
             $table->unsignedInteger('id')->autoIncrement();
             $table->foreignId('comic_id')->references('cvid')->on('comics');
-            $table->foreignId('issue_id')->references('cvid')->on('issues');
+            $table->string('download_id');
             $table->integer('event_type');
             $table->text('source_title');
             $table->timestamp('date');
