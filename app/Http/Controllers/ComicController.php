@@ -28,10 +28,6 @@ class ComicController extends Controller
     {
         $comics = Comic::all();
 
-        app()->terminating(function() {
-            file_put_contents("/tmp/terminated.txt", "Success");
-        });
-
         return new ComicCollection($comics);
     }
 
