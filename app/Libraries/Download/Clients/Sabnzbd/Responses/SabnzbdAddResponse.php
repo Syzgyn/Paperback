@@ -2,14 +2,23 @@
 
 namespace App\Libraries\Download\Clients\Sabnzbd\Responses;
 
-class SabnzbdAddResponse
-{
-    public ?array $ids;
-    public ?bool $status;
+use App\Libraries\Download\Clients\Sabnzbd\JsonTransformers\SabnzbdAddResponseTransformer;
 
-    public function __construct(bool $status = null, array $nzo_ids = null)
+class SabnzbdAddResponse implements SabnzbdResponseInterface
+{
+    /** @var string[] */
+    public ?array $ids = null;
+    public ?bool $status = null;
+
+    public static function getTransforms(): array
     {
-        $this->status = $status;
-        $this->ids = $nzo_ids;
+        return [
+            SabnzbdAddResponseTransformer::class,
+        ];
+    }
+
+    public static function getRoot(): string
+    {
+        return "";
     }
 }

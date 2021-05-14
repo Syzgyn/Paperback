@@ -16,7 +16,7 @@ use App\Libraries\Download\DownloadClientItemClientInfo;
  * @property int $id
  * @property string $name
  * @property string $implementation
- * @property $settings
+ * @property SabnzbdSettings $settings
  * @property string|null $settings_schema
  * @property bool|null $enable
  * @property int $priority
@@ -37,14 +37,14 @@ use App\Libraries\Download\DownloadClientItemClientInfo;
  */
 class Sabnzbd extends UsenetClientModelBase
 {
-    protected $versionRegex = "/(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+|x)/";
+    protected string $versionRegex = "/(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+|x)/";
 
     protected $implementation = 'Sabnzbd';
     protected $settingsSchema = 'SabnzbdSettings';
     public string $name = "SABnzbd";
-    protected static SabnzbdProxy $proxy;
+    protected static ?SabnzbdProxy $proxy;
 
-    protected static function getProxy()
+    protected static function getProxy(): SabnzbdProxy
     {
         if (!isset(self::$proxy)) {
             self::$proxy = new SabnzbdProxy();
@@ -65,7 +65,7 @@ class Sabnzbd extends UsenetClientModelBase
 
         $response = self::getProxy()->downloadNzb($fileContent, $filename, $category, $priority, $this->settings);
 
-        if ($response == null || empty($response->ids)) {
+        if (empty($response->ids)) {
             throw new Exception("SABnzbd rejected the NZB for an unknown reason");
         }
 
@@ -77,7 +77,8 @@ class Sabnzbd extends UsenetClientModelBase
         $sabQueue = self::getProxy()->getQueue(0, 0, $this->settings);
         $queueItems = [];
 
-        foreach($sabQueue as $sabQueueItem) {
+        /** @var SabnzbdQueueItem $sabQueueItem */
+        foreach($sabQueue->items as $sabQueueItem) {
             if ($sabQueueItem->status == "Deleted") {
                 continue;
             }
@@ -354,7 +355,7 @@ class Sabnzbd extends UsenetClientModelBase
     {
         $config = self::getProxy()->getConfig($this->settings);
 
-        if ($config->misc->pre_check && !$this->hasVersion(1, 1)) {
+        if ($config->preCheck && !$this->hasVersion(1, 1)) {
             throw new Exception("Disable 'Check before download' option in Sabnzbd");
         }
     }
@@ -374,15 +375,15 @@ class Sabnzbd extends UsenetClientModelBase
             }
         }
 
-        if ($config->misc->enable_tv_sorting && $this->containsCategory($config->misc->tv_categories, $this->settings->category)) {
+        if ($config->enableTvSorting && $this->containsCategory($config->tvCategories, $this->settings->category)) {
             throw new Exception("Disable TV Sorting for category " . $this->settings->category);
         }
 
-        if ($config->misc->enable_movie_sorting && $this->containsCategory($config->misc->movie_categories, $this->settings->category)) {
+        if ($config->enableMovieSorting && $this->containsCategory($config->movieCategories, $this->settings->category)) {
             throw new Exception("Disable Movie Sorting for category " . $this->settings->category);
         }
 
-        if ($config->misc->enable_date_sorting && $this->containsCategory($config->misc->date_categories, $this->settings->category)) {
+        if ($config->enableDateSorting && $this->containsCategory($config->dateCategories, $this->settings->category)) {
             throw new Exception("Disable Date Sorting for category " . $this->settings->category);
         }
     }

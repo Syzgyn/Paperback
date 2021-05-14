@@ -2,11 +2,25 @@
 
 namespace App\Libraries\Download\Clients\Sabnzbd;
 
+use App\Libraries\Providers\ProviderSettings;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
-class SabnzbdSettings
+/** @package App\Libraries\Download\Clients\Sabnzbd
+ * @property string $host
+ * @property int $port
+ * @property string $urlBase
+ * @property string $apiKey
+ * @property string $username
+ * @property string $password
+ * @property string $category
+ * @property int $recentPriority
+ * @property int $olderPriority
+ * @property bool $useSsl
+ */
+class SabnzbdSettings extends ProviderSettings
 {
+    /** @var array */
     protected $definitions = [
         [
             'name' => 'host',
@@ -166,12 +180,14 @@ class SabnzbdSettings
         ],
     ];
 
-    protected function validateHost($attribute, $value, $fail) {
+    protected function validateHost(string $attribute, string $value, callable $fail): void
+    {
         if (!preg_match('/^[-_a-z0-9.]+$/', $value)) {
             $fail("The $attribute must be valid Host without http://");
         }
     }
 
+    /** @var array $rules */
     protected $rules = [ 
         'host' => [
             'required',
@@ -186,6 +202,7 @@ class SabnzbdSettings
         'useSsl' => 'boolean',
     ];
 
+    /** @var array */
     protected $attributeLabels = [
         'host' => 'Host',
         'port' => 'Port',
@@ -198,53 +215,17 @@ class SabnzbdSettings
         'useSsl' => 'Use SSL',
     ];
 
-    public $attributes = [];
 
-    public function __construct(array $attributes = [])
+    public function validate(array $messages = []): bool
     {
-        foreach($attributes as $k => $v) {
-            if (!is_numeric($k)) {
-                $this->attributes[$k] = $v;
-            } else {
-                $this->attributes[$v['name']] = $v['value'] ?? '';
-            }
+        $func = function(string $a, string $v, callable $f): void { $this->validateHost($a, $v, $f); };
+        
+        if (!is_array($this->rules['host'])) {
+            $this->rules['host'] = [$this->rules['host']];
         }
-    }
+        $this->rules['host'][] = $func;
 
-    public function getSettings()
-    {
-        return array_map(function(array $array) {
-            if (isset($this->attributes[$array['name']])) {
-                $array['value'] = $this->attributes[$array['name']];
-            }
-            return $array;
-        }, $this->definitions);
-    }
-
-    public function __get(string $key)
-    {
-        return $this->attributes[$key] ?? null;
-    }
-
-    public function __set(string $key, $value): void 
-    {
-        $this->attributes[$key] = $value;
-    }
-
-    public function __isset(string $key): bool
-    {
-        return isset($this->attributes[$key]);
-    }
-
-    public function validate($messages = [])
-    {
-        $this->rules['host'][] = fn($a, $v, $f) => $this->validateHost($a, $v, $f);
-        $validator = Validator::make($this->attributes, $this->rules, $messages, $this->attributeLabels);
-        if($validator->fails()) {
-            throw new ValidationException($validator);
-        }
-
-        return true;
+        return parent::validate($messages);
     }
 }
 

@@ -2,14 +2,22 @@
 
 namespace App\Libraries\Download\Clients\Sabnzbd\Responses;
 
-class SabnzbdRetryResponse
-{
-    public ?bool $status;
-    public ?string $id;
+use App\Libraries\Download\Clients\Sabnzbd\JsonTransformers\SabnzbdRetryResponseTransformer;
 
-    public function __construct(bool $status = null, string $nzo_id = null)
+class SabnzbdRetryResponse implements SabnzbdResponseInterface
+{
+    public ?bool $status = null;
+    public ?string $id = null;
+
+    public static function getTransforms(): array
     {
-        $this->status = $status;
-        $this->id = $nzo_id;
+        return [
+            SabnzbdRetryResponseTransformer::class,
+        ];
+    }
+
+    public static function getRoot(): string
+    {
+        return "";
     }
 }

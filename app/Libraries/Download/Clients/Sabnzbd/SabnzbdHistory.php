@@ -2,14 +2,25 @@
 
 namespace App\Libraries\Download\Clients\Sabnzbd;
 
-class SabnzbdHistory
-{
-    public bool $paused;
-    public array $items;
+use App\Libraries\Download\Clients\Sabnzbd\JsonTransformers\SabnzbdHistoryItemTransformer;
+use App\Libraries\Download\Clients\Sabnzbd\JsonTransformers\SabnzbdHistoryTransformer;
+use App\Libraries\Download\Clients\Sabnzbd\Responses\SabnzbdResponseInterface;
 
-    public function __construct(array $history)
+class SabnzbdHistory implements SabnzbdResponseInterface
+{
+    /** @var SabnzbdHistoryItem[] */
+    public array $items = [];
+
+    public static function getTransforms(): array
     {
-        $this->paused = $history['paused'];
-        $this->items = $history['slots'];
+        return [
+            SabnzbdHistoryItemTransformer::class,
+            SabnzbdHistoryTransformer::class,
+        ];
+    }
+
+    public static function getRoot(): string
+    {
+        return "history";
     }
 }

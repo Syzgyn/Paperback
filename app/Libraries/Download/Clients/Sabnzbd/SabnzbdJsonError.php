@@ -4,12 +4,12 @@ namespace App\Libraries\Download\Clients\Sabnzbd;
 
 class SabnzbdJsonError
 {
-    public function __construct(public ?bool $status = null, public ?string $error = null)
+    public function __construct(public bool $status, public string $error)
     {
     }
 
     public function failed(): bool
     {
-        return isset($this->status) && !$this->status; 
+        return !$this->status; 
     }
 }

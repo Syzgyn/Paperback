@@ -2,12 +2,22 @@
 
 namespace App\Libraries\Download\Clients\Sabnzbd;
 
-class SabnzbdFullStatus
-{
-    public string $completeDir;
+use App\Libraries\Download\Clients\Sabnzbd\JsonTransformers\SabnzbdFullStatusTransformer;
+use App\Libraries\Download\Clients\Sabnzbd\Responses\SabnzbdResponseInterface;
 
-    public function __construct(array $status)
+class SabnzbdFullStatus implements SabnzbdResponseInterface
+{
+    public ?string $completeDir = null;
+
+    public static function getTransforms(): array
     {
-        $this->completeDir = $status['completedir'];
+        return [
+            SabnzbdFullStatusTransformer::class,
+        ];
+    }
+
+    public static function getRoot(): string
+    {
+        return "";
     }
 }
