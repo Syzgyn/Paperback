@@ -36,6 +36,7 @@ class SabnzbdConfigTransformer implements Transformer
             throw new Exception("Got malformed Sabnzbd config data");
         }
 
+        /** @var string|bool|array */
         return $properties['misc'][$key];
     }
 }

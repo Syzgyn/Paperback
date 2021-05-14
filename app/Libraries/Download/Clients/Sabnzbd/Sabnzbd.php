@@ -72,6 +72,7 @@ class Sabnzbd extends UsenetClientModelBase
         return $response->ids[0];
     }
 
+    /** @return DownloadClientItem[] */
     protected function getQueue(): array
     {
         $sabQueue = self::getProxy()->getQueue(0, 0, $this->settings);
@@ -108,7 +109,7 @@ class Sabnzbd extends UsenetClientModelBase
                 $queueItem->status = "Downloading";
             }
 
-            if (str_starts_with($queueItem->title, "ENCRYPTED /")) {
+            if (!empty($queueItem->title) && str_starts_with($queueItem->title, "ENCRYPTED /")) {
                 $queueItem->title = substr($queueItem->title, 11);
                 $queueItem->isEncrypted = true;
             }
@@ -119,7 +120,8 @@ class Sabnzbd extends UsenetClientModelBase
         return $queueItems;
     }
 
-    protected function getHistory()
+    /** @return DownloadClientItem[] */
+    protected function getHistory(): array
     {
         $sabHistory = self::getProxy()->getHistory(0, 60, $this->settings->category, $this->settings);
 
@@ -185,6 +187,8 @@ class Sabnzbd extends UsenetClientModelBase
 
     public function removeItem(DownloadClientItem $item, bool $deleteData): void
     {
+        assert($item->downloadId != null);
+
         $queueClientItem = array_filter($this->getQueue(), fn($i) => $i->downloadId == $item->downloadId)[0] ?? null;
 
         if ($queueClientItem == null) {
@@ -198,9 +202,10 @@ class Sabnzbd extends UsenetClientModelBase
         }
     }
 
+    /** @return SabnzbdCategory[] */
     protected function getCategories(SabnzbdRemoteConfig $config): array
     {
-        $completeDir = new OsPath($config->misc->complete_dir);
+        $completeDir = new OsPath($config->completeDir);
 
         if (!$completeDir->isRooted()) {
             if ($this->hasVersion(2, 0)) {
@@ -217,6 +222,8 @@ class Sabnzbd extends UsenetClientModelBase
         $categories = [];
 
         foreach ($config->categories as $category) {
+            assert($category->dir != null);
+
             $relativeDir = new OsPath(rtrim($category->dir, '*'));
             $category->fullPath = $completeDir->add($relativeDir);
 
@@ -231,16 +238,16 @@ class Sabnzbd extends UsenetClientModelBase
         $config = self::getProxy()->getConfig($this->settings);
         $categories = $this->getCategories($config);
 
-        $category = array_filter($categories, fn($c) => $c->name == $this->settings->category)[0] ?? null;
+        $category = array_filter($categories, fn(SabnzbdCategory $c) => $c->name == $this->settings->category)[0] ?? null;
 
         if ($category == null) {
-            $category = array_filter($categories, fn($c) => $c->name == '*')[0] ?? null;
+            $category = array_filter($categories, fn(SabnzbdCategory $c) => $c->name == '*')[0] ?? null;
         }
 
         $status = new DownloadClientInfo();
         $status->isLocalhost = $this->settings->host == "127.0.0.1" || $this->settings->host == "localhost";
 
-        if ($category != null) {
+        if ($category != null && $category->fullPath != null) {
             $status->outputRootFolders = [
                 resolve('RemotePathMappingService')->remapRemoteToLocal($this->settings->host, $category->fullPath),
             ];
@@ -314,7 +321,7 @@ class Sabnzbd extends UsenetClientModelBase
         $version = $this->parseVersion($rawVersion);
 
         if ($version == null) {
-            throw new Exception("Unknown Version: $version");
+            throw new Exception("Unknown Version: $rawVersion");
         }
 
         if (strtolower($rawVersion) == "devlop") {
@@ -329,7 +336,7 @@ class Sabnzbd extends UsenetClientModelBase
             return;
         }
 
-        throw new Exception("Version 0.7.0+ is required, but found: $version");
+        throw new Exception("Version 0.7.0+ is required, but found: $rawVersion");
     }
 
     protected function testAuthentication(): void
@@ -363,9 +370,9 @@ class Sabnzbd extends UsenetClientModelBase
     protected function testCategory(): void
     {
         $config = self::getProxy()->getConfig($this->settings);
-        $category = current(array_filter($config->categories, fn($c) => $c->name == $this->settings->category)) ?? null;
+        $category = current(array_filter($config->categories, fn($c) => $c->name == $this->settings->category));
 
-        if ($category != null) {
+        if ($category != null && $category->dir != null) {
             if (str_ends_with($category->dir, '*')) {
                 throw new Exception("Enable Job folders");
             }
@@ -374,6 +381,10 @@ class Sabnzbd extends UsenetClientModelBase
                 throw new Exception("Category does not exist");
             }
         }
+
+        assert($config->tvCategories != null);
+        assert($config->movieCategories != null);
+        assert($config->dateCategories != null);
 
         if ($config->enableTvSorting && $this->containsCategory($config->tvCategories, $this->settings->category)) {
             throw new Exception("Disable TV Sorting for category " . $this->settings->category);

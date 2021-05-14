@@ -51,14 +51,14 @@ class SabnzbdProxy
         $this->processRequest($request, $settings);
     }
 
-    public function getVersion(SabnzbdSettings $settings): ?string
+    public function getVersion(SabnzbdSettings $settings): string
     {
         $request = $this->buildRequest("version", $settings);
         
         /** @var ?array */
         $response = $this->processRequest($request, $settings);
 
-        if ($response == null)
+        if ($response == null || !isset($response['version']))
         {
             throw new Exception("Error getting Sabnzbd version");
             
