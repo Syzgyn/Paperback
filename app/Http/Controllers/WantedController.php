@@ -4,15 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Issue;
 use App\Http\Resources\IssueCollection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class WantedController extends Controller
 {
-    public function missing(Request $request)
+    public function missing(Request $request): JsonResponse
     {
-        $page = $request->query('page', 1);
-        $pageSize = $request->query('pageSize', 20);
+        $page = (int)$request->query('page', "1");
+        $pageSize = (int)$request->query('pageSize', "20");
         $sortDirection = $request->query('sortDirection', 'descending');
+        /** @var string */
         $sortKey = $request->query('sortKey', 'coverDate');
         $monitored = $request->query('monitored', 'true');
 
@@ -30,12 +32,13 @@ class WantedController extends Controller
             ->get();
         $records = new IssueCollection($issues);
 
+        /** @var JsonResponse */
         return response()->json([
-            'page' => (int)$page,
-            'pageSize' => (int)$pageSize,
+            'page' => $page,
+            'pageSize' => $pageSize,
             'sortKey' => $sortKey,
             'sortDirection' => $sortDirection,
-            'totalRecords' => (int)$total,
+            'totalRecords' => $total,
             'records' => $records,
         ]);
     }

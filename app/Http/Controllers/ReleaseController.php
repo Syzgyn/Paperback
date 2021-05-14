@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\DownloadClientRejectedReleaseException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use App\Libraries\DecisionEngine\DownloadDecision;
@@ -10,23 +11,54 @@ use App\Models\Issue;
 use App\Models\Comic;
 use Exception;
 use App\Exceptions\ReleaseDownloadException;
+use App\Exceptions\ReleaseUnavailableException;
+use App\Libraries\DecisionEngine\DecisionService;
+use App\Libraries\Download\DownloadService;
+use App\Libraries\IndexerSearch\SearchService;
+use App\Libraries\Parser\ParsedIssueInfo;
+use App\Libraries\Parser\ParserService;
+use App\Libraries\Parser\RemoteIssue;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\JsonResponse;
+use InvalidArgumentException;
 
 class ReleaseController extends Controller
 {
-    public function get(Request $request)
+    /**
+     * @param Request $request 
+     * @return array 
+     * @throws BindingResolutionException 
+     * @throws ModelNotFoundException 
+     */
+    public function get(Request $request): array
     {
-        $issueId = $request->query('issueId');
+        $issueId = (int)$request->query('issueId');
 
         if (!$issueId) {
-            return $this->getRss();
+            //return $this->getRss();
         }
 
         return $this->getEpisodeReleases($issueId);
     }
 
+    /**
+     * @param Request $request 
+     * @return JsonResponse 
+     * @throws Exception 
+     * @throws InvalidArgumentException 
+     * @throws BindingResolutionException 
+     * @throws ReleaseUnavailableException 
+     * @throws DownloadClientRejectedReleaseException 
+     */
     public function download(Request $request)
     {
+        /** @psalm-var ParserService */
+        $parserService = resolve('ParserService');
+        
         $release = ReleaseResource::fromRequest($request);
+
+        /** @psalm-var RemoteIssue|null $remoteIssue */
         $remoteIssue = Cache::get($this->getCacheKey($release));
 
         if ($remoteIssue == null) {
@@ -36,12 +68,16 @@ class ReleaseController extends Controller
         try {
             if ($remoteIssue->comic == null) {
                 if (isset($release->issueId)) {
-                    $issue = Issue::with('comic')->find($release->issueId);
+                    /** @var Issue */
+                    $issue = Issue::with('comic')->findOrFail($release->issueId);
                     $remoteIssue->comic = $issue->comic;
                     $remoteIssue->issues = [$issue];
                 } elseif (isset($release->comicId)) {
+                    /** @psalm-var Comic */
                     $comic = Comic::find($release->comicId);
-                    $issues = resolve('ParserService')->map($remoteIssue->parsedIssueInfo, null, $comic);
+                    /** @psalm-var Issue[] 
+                     *  @psalm-var ParsedIssueInfo $remoteIssue->parsedIssueInfo */
+                    $issues = $parserService->map($remoteIssue->parsedIssueInfo, null, $comic);
 
                     if (empty($issues)) {
                         throw new Exception("Unable to parse issues in the release");
@@ -53,9 +89,11 @@ class ReleaseController extends Controller
                     throw new Exception("Unable to find matching comic and issues");
                 }
             } elseif (empty($remoteIssue->issues)) {
-                $issues = resolve('ParserService')->map($remoteIssue->parsedIssueInfo, null, $remoteIssue->comic);
+                /**  @psalm-var ParsedIssueInfo $remoteIssue->parsedIssueInfo */
+                $issues = $parserService->map($remoteIssue->parsedIssueInfo, null, $remoteIssue->comic)->issues;
 
                 if (empty($issues) && isset($release->issueId)) {
+                    /** @psalm-var Issue */
                     $issue = Issue::find($release->issueId);
                     $issues = [$issue];
                 }
@@ -68,26 +106,37 @@ class ReleaseController extends Controller
                 throw new Exception("Unable to parse issues in the release");
             }
 
-            resolve('DownloadService')->downloadReport($remoteIssue);
+            /** @psalm-var DownloadService */
+            $downloadService = resolve('DownloadService');
+            $downloadService->downloadReport($remoteIssue);
         } catch (ReleaseDownloadException $e) {
             throw new \Exception("Getting release from indexer failed");
         }
 
+        /** @var JsonResponse */
         return response()->json($release);
     }
 
-    protected function getEpisodeReleases(string $issueId)
+    protected function getEpisodeReleases(int $issueId): array
     {
-        $decisions = resolve('SearchService')->issueIdSearch($issueId, true, true);
-        $prioritizedDecisions = resolve('DecisionService')->prioritizeDecisions($decisions);
+        /** @var SearchService $searchService */
+        $searchService = resolve('SearchService');
+
+        /** @var DecisionService $decisionService */
+        $decisionService = resolve('DecisionService');
+
+        $decisions = $searchService->issueIdSearch($issueId, true, true);
+        $prioritizedDecisions = $decisionService->prioritizeDecisions($decisions);
 
         return $this->mapDecisions($prioritizedDecisions);
     }
 
-    protected function getRss()
+    //TODO
+    protected function getRss(): void
     {
     }
 
+    /** @param DownloadDecision[] $decisions */
     protected function mapDecisions(array $decisions): array
     {
         $results = [];
@@ -111,6 +160,7 @@ class ReleaseController extends Controller
 
     protected function getCacheKey(ReleaseResource $resource): string
     {
+        assert($resource->indexerId != null && $resource->guid != null);
         return sprintf("release_%s_%s", $resource->indexerId, $resource->guid);
     }
 }

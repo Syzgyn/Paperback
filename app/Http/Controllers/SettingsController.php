@@ -2,65 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\AppSettingsRepository;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Http\JsonResponse;
 
 class SettingsController extends Controller
 {
-    protected $settings;
+    protected AppSettingsRepository $settings;
 
     public function __construct()
     {
+        /** @var AppSettingsRepository */
         $this->settings = resolve('AppSettings');
         $this->middleware('api')->except('ConvertEmptyStringsToNull');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(): int|float|bool|string|array
     {
         return $this->settings->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function category(Request $request, string $category)
+    public function category(Request $request, string $category): array
     {
+        /** @var array */
         return $this->settings->get($category);
     }
 
-    public function property(Request $request, string $category, string $property)
+    public function property(Request $request, string $category, string $property): int|float|bool|string
     {
+        /** @var scalar */
         return $this->settings->get($category, $property);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, string $category)
+    public function update(Request $request, string $category): array
     {
         $config = [$category => $request->all()];
 
         if ($this->settings->bulkSet($config)) {
+            /** @var array */
             return $this->settings->get($category);
         }
 
         throw new Exception("Unable to save config");
     }
 
-    public function namingExamples(Request $request)
+    public function namingExamples(Request $request): JsonResponse
     {
         //TODO: Add name parser
+        /** @var JsonResponse */
         return response()->json([]);
     }
 }

@@ -8,18 +8,15 @@ use Illuminate\Pagination\Paginator;
 use App\Http\Resources\IssueCollection;
 use Illuminate\Database\Eloquent\Collection;
 use App\Http\Resources\Issue as IssueResource;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class IssueController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+    public function index(Request $request): IssueCollection
     {
         if ($comicId = $request->query('comicId')) {
+            /** @var Collection */
             $issues = Issue::where('comic_id', $comicId)->orderBy('issue_num', 'DESC')->get();
 
             return new IssueCollection($issues);
@@ -30,9 +27,9 @@ class IssueController extends Controller
         return new IssueCollection($issues);
     }
 
-    public function monitored(Request $request)
+    public function monitored(Request $request): IssueCollection
     {
-        $ids = $request->input('issueIds');
+        $ids = (array)$request->input('issueIds');
         $monitored = $request->boolean('monitored');
 
         Issue::whereIn('cvid', $ids)->update(['monitored' => $monitored]);
@@ -40,13 +37,14 @@ class IssueController extends Controller
         return new IssueCollection(Issue::findMany($ids));
     }
 
-    public function byComic(Request $request, Int $cvid)
+    public function byComic(Request $request, Int $cvid): IssueCollection
     {
         $issues = Issue::where('comic_id', $cvid)->orderBy('issue_num', 'DESC')->get();
 
         return new IssueCollection($issues);
     }
 
+    /*
     public function wanted(Request $request)
     {
         $params = $request->validate([
@@ -79,26 +77,14 @@ class IssueController extends Controller
 
         return $output;
     }
+    */
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Issue  $issue
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Issue $issue)
+    public function show(Issue $issue): IssueResource
     {
         return new IssueResource($issue);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Issue  $issue
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Issue $issue)
+    public function update(Request $request, Issue $issue): IssueResource
     {
         $issue->fill($request->validate([
             'monitored' => 'boolean',
@@ -108,16 +94,11 @@ class IssueController extends Controller
         return new IssueResource($issue);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Issue  $issue
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Issue $issue)
+    public function destroy(Issue $issue): JsonResponse
     {
         $issue->delete();
 
+        /** @var JsonResponse */
         return response()->json(['status' => 'OK']);
     }
 }

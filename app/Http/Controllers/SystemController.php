@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class SystemController extends Controller
 {
-    public function status()
+    public function status(): JsonResponse
     {
         //TODO: Proper system info
         $data = [
@@ -38,21 +39,23 @@ class SystemController extends Controller
 			'packageUpdateMechanism' => 'builtIn'
         ];
 
+        /** @var JsonResponse */
         return response()->json($data);
     }
 
-    protected function getSqliteVersion()
+    protected function getSqliteVersion(): string
     {
         $dbh = new \PDO('sqlite::memory:');
-        $version = $dbh->query('select sqlite_version()')->fetch()[0];
+        $version = (string)((array)$dbh->query('select sqlite_version()')->fetch())[0];
         $dbh = null;
 
         return $version;
     }
 
-    public function health()
+    public function health(): JsonResponse
     {
         //TODO
+        /** @var JsonResponse */
         return response()->json([[
             'source' => 'UpdateCheck',
             'type' => 'warning',
@@ -61,8 +64,9 @@ class SystemController extends Controller
         ]]);
     }
 
-    public function diskspace()
+    public function diskspace(): JsonResponse
     {
+        /** @var JsonResponse */
         return response()->json([[
             'path' => dirname(base_path(), 1000),
             'label' => '',
@@ -72,8 +76,9 @@ class SystemController extends Controller
     }
 
     //TODO
-    public function update()
+    public function update(): JsonResponse
     {
+        /** @var JsonResponse */
         return response()->json([]);
     }
 }

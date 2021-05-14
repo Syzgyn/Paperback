@@ -6,17 +6,15 @@ use App\Models\IssueFile;
 use Illuminate\Http\Request;
 use App\Http\Resources\IssueFile as IssueFileResource;
 use App\Http\Resources\IssueFileCollection;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 
 class IssueFileController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+    public function index(Request $request): IssueFileCollection
     {
         if ($comicId = $request->query('comicId')) {
+            /** @var Collection */
             $issueFiles = IssueFile::where('comic_id', $comicId)->get();
 
             return new IssueFileCollection($issueFiles);
@@ -27,28 +25,17 @@ class IssueFileController extends Controller
         return new IssueFileCollection($issueFiles);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\IssueFile  $issueFile
-     * @return \Illuminate\Http\Response
-     */
-    public function show(IssueFile $issueFile)
+    public function show(IssueFile $issueFile): IssueFileResource
     {
         return new IssueFileResource($issueFile);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\IssueFile  $issueFile
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(IssueFile $issueFile)
+    public function destroy(IssueFile $issueFile): JsonResponse
     {
         $issueFile->delete();
         //TODO: Delete actual file
 
+        /** @var JsonResponse */
         return response()->json(['status' => 'OK']);
     }
 }

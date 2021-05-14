@@ -7,26 +7,16 @@ use App\Models\RootFolder;
 use Illuminate\Http\Request;
 use App\Http\Resources\RootFolderCollection;
 use App\Http\Resources\RootFolder as RootFolderResource;
+use Illuminate\Http\JsonResponse;
 
 class RootFolderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(): RootFolderCollection
     {
         return new RootFolderCollection(RootFolder::all());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(Request $request): RootFolderResource
     {
         $params = $request->validate([
             'path' => 'string|required',
@@ -36,30 +26,20 @@ class RootFolderController extends Controller
         return new RootFolderResource($model);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\RootFolder  $rootFolder
-     * @return \Illuminate\Http\Response
-     */
-    public function show(RootFolder $rootFolder)
+    public function show(RootFolder $rootFolder): RootFolderResource
     {
         return new RootFolderResource($rootFolder);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\RootFolder  $rootFolder
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(RootFolder $rootFolder)
+    public function destroy(RootFolder $rootFolder): JsonResponse
     {
         $rootFolder->delete();
 
+        /** @var JsonResponse */
         return response()->json(['status' => 'OK']);
     }
 
+    /*
     public function import(Request $request)
     {
         $data = $request->input('data');
@@ -83,4 +63,5 @@ class RootFolderController extends Controller
 
         return $output;
     }
+    */
 }

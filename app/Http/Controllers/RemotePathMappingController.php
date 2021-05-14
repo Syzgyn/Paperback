@@ -8,88 +8,59 @@ use App\Http\Resources\RemotePathMappingCollection;
 use Illuminate\Http\Request;
 use App\Http\Requests\RemotePathMappingRequest;
 use App\Libraries\Disk\OsPath;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 
 class RemotePathMappingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index(): RemotePathMappingCollection
     {
         return new RemotePathMappingCollection(RemotePathMapping::all());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(RemotePathMappingRequest $request)
+    public function store(RemotePathMappingRequest $request): RemotePathMappingResource
     {
         $mapping = new RemotePathMapping();
         $mapping->host = $request->input('host');
-        $localPath = new OsPath($request->input('local_path'));
-        $remotePath = new OsPath($request->input('remote_path'));
+        $localPath = new OsPath((string)$request->input('local_path'));
+        $remotePath = new OsPath((string)$request->input('remote_path'));
         $mapping->local_path = $localPath->asDirectory()->getPath();
         $mapping->remote_path = $remotePath->asDirectory()->getPath();
 
-        $all = RemotePathMapping::all()->all();
+        $all = RemotePathMapping::all();
 
-        $this->validateMapping($all, $mapping);
+        $this->validateMapping((array)$all, $mapping);
 
         $mapping->save();
 
         return new RemotePathMappingResource($mapping);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\RemotePathMapping  $remotePathMapping
-     * @return \Illuminate\Http\Response
-     */
-    public function show(RemotePathMapping $remotePathMapping)
+    public function show(RemotePathMapping $remotePathMapping): RemotePathMappingResource
     {
         return new RemotePathMappingResource($remotePathMapping);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\RemotePathMapping  $remotePathMapping
-     * @return \Illuminate\Http\Response
-     */
-    public function update(RemotePathMappingRequest $request, RemotePathMapping $mapping)
+    public function update(RemotePathMappingRequest $request, RemotePathMapping $mapping):RemotePathMappingResource
     {
         $mapping->fill($request->all());
 
-        $all = RemotePathMapping::where('id', '!=', $mapping->id)->get()->all();
+        /** @var Collection */
+        $mappings = RemotePathMapping::where('id', '!=', $mapping->id)->get();
 
-        if (!is_array($all)) {
-            $all = [ $all ];
-        }
-
-        $this->validateMapping($all, $mapping);
+        $this->validateMapping($mappings->all(), $mapping);
 
         $mapping->save();
 
         return new RemotePathMappingResource($mapping);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\RemotePathMapping  $remotePathMapping
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(RemotePathMapping $remotePathMapping)
+    public function destroy(RemotePathMapping $remotePathMapping): JsonResponse
     {
         $remotePathMapping->delete();
 
+        /** @var JsonResponse */
         return response()->json(['status' => 'OK']);
     }
 
@@ -114,6 +85,7 @@ class RemotePathMappingController extends Controller
             throw new \LogicException("Can't add mount point directory that doesn't exist");
         }
 
+        /** @var RemotePathMapping $existingMapping */
         foreach($existing as $existingMapping) {
             if ($existingMapping->host == $mapping->host && $existingMapping->remote_path == $mapping->remote_path) {
                 throw new \Exception("RemotePath already mounted");
