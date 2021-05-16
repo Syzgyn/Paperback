@@ -2,9 +2,14 @@
 
 namespace App\Libraries\DecisionEngine;
 
+use App\Libraries\Parser\ReleaseInfo;
+use App\Libraries\Parser\RemoteIssue;
+use App\Models\Issue;
+
 class DownloadDecisionComparer
 {
-    protected static $comparers = [
+    /** @var string[] */
+    protected static array $comparers = [
         'compareIssueCount',
         'compareIssueNumber',
         'compareIndexerPriority',
@@ -16,6 +21,7 @@ class DownloadDecisionComparer
     public static function compare(DownloadDecision $a, DownloadDecision $b): int
     {
         foreach(self::$comparers as $comparer) {
+            /** @var int $result */
             $result = self::$comparer($a, $b);
             if ($result != 0) {
                 return $result;
@@ -27,7 +33,9 @@ class DownloadDecisionComparer
 
     protected static function compareBy(object $left, object $right, callable $funcValue): int
     {
+        /** @var int|bool */
         $leftValue = $funcValue($left);
+        /** @var int|bool */
         $rightValue = $funcValue($right);
 
         if ($leftValue < $rightValue) {
@@ -46,23 +54,30 @@ class DownloadDecisionComparer
 
     protected static function compareIssueCount(DownloadDecision $a, DownloadDecision $b): int
     {
-        $fullComicCompare = self::compareBy($a->remoteIssue, $b->remoteIssue, fn($x) => $x->parsedIssueInfo->fullSeason);
+        $fullComicCompare = self::compareBy($a->remoteIssue, $b->remoteIssue, fn(RemoteIssue $r) => $r->parsedIssueInfo?->fullComic);
+
         if ($fullComicCompare != 0) {
             return $fullComicCompare;
         }
 
-        return self::compareByReverse($a->remoteIssue, $b->remoteIssue, fn($x) => count($x->issues));
+        return self::compareByReverse($a->remoteIssue, $b->remoteIssue, fn(RemoteIssue $r) => count($r->issues));
     }
 
     protected static function compareIssueNumber(DownloadDecision $a, DownloadDecision $b): int
     {
         //Compare by lowest issue number in each remoteIssue
-        return self::compareByReverse($a->remoteIssue, $b->remoteIssue, fn($x) => array_reduce($x->issues, fn($c, $i) => min([$c, $i->issueNumber]), 10000));
+        return self::compareByReverse($a->remoteIssue, $b->remoteIssue, 
+            fn(RemoteIssue $x) => array_reduce($x->issues, fn(int $c, Issue $i) => min([$c, $i->issue_num]), 10000));
     }
 
     protected static function compareIndexerPriority(DownloadDecision $a, DownloadDecision $b): int
     {
-        return self::compareByReverse($a->remoteIssue->release, $b->remoteIssue->release, fn($x) => $x->indexerPriority);
+        if ($a->remoteIssue->release == null ||
+            $b->remoteIssue->release == null) {
+            return 0;
+        }
+
+        return self::compareByReverse($a->remoteIssue->release, $b->remoteIssue->release, fn(ReleaseInfo $x) => $x->indexerPriority);
     }
 
     protected static function comparePeersIfTorrent(DownloadDecision $a, DownloadDecision $b): int
@@ -73,12 +88,18 @@ class DownloadDecisionComparer
 
     protected static function compareAgeIfUsenet(DownloadDecision $a, DownloadDecision $b): int
     {
-        if ($a->remoteIssue->release->downloadProtocol != 'usenet' ||
+        if ($a->remoteIssue->release == null ||
+            $b->remoteIssue->release == null ||
+            $a->remoteIssue->release->downloadProtocol != 'usenet' ||
             $b->remoteIssue->release->downloadProtocol != 'usenet') {
             return 0;
         }
 
-        return self::compareBy($a->remoteIssue, $b->remoteIssue, function($r) {
+        return self::compareBy($a->remoteIssue, $b->remoteIssue, function(RemoteIssue $r) {
+            if ($r->release == null) {
+                return 0;
+            }
+
             $ageHours = $r->release->getAgeHours();
             $age = $r->release->getAge();
 
@@ -101,6 +122,6 @@ class DownloadDecisionComparer
     protected static function compareSize(DownloadDecision $a, DownloadDecision $b): int
     {
         //Round size to closest megabit
-        return self::compareBy($a->remoteIssue, $b->remoteIssue, fn($x) => round($x->release->size, 1000));
+        return self::compareBy($a->remoteIssue, $b->remoteIssue, fn(RemoteIssue $x) => round($x->release?->size ?? 0, 1000));
     }
 }

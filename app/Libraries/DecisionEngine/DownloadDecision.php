@@ -24,13 +24,13 @@ class DownloadDecision
     public function isTemporarilyRejected(): bool
     {
         return !empty($this->rejections) && array_reduce($this->rejections, 
-            fn($c, $r) => $c && $r->type === RejectionType::TEMPORARY, true);
+            fn(bool $c, Rejection $r) => $c && $r->type === RejectionType::TEMPORARY, true);
     }
 
     public function isRejected(): bool
     {
         return !empty($this->rejections) && array_reduce($this->rejections, 
-            fn($c, $r) => $c || $r->type === RejectionType::PERMANENT, false);
+            fn(bool $c, Rejection $r) => $c || $r->type === RejectionType::PERMANENT, false);
     }
 
     public function __tostring()

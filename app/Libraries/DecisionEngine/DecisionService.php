@@ -7,17 +7,32 @@ use Generator;
 use App\Libraries\Parser\RemoteIssue;
 use App\Libraries\Parser\ParsedIssueInfo;
 use App\Libraries\Parser\Parser;
+use App\Libraries\Parser\ReleaseInfo;
+use Illuminate\Contracts\Container\BindingResolutionException;
 
 class DecisionService
 {
-    public function getRssDecision(array $reports)
+    /**
+     * @param ReleaseInfo[] $reports 
+     * @return null|Generator 
+     * @throws BindingResolutionException 
+     */
+    public function getRssDecision(array $reports): ?Generator
     {
         return $this->getSearchDecision($reports);
     }
 
-    public function getSearchDecision(array $reports, ?SearchCriteriaBase $searchCriteria = null): ?Generator 
+
+    /**
+     * @param ReleaseInfo[] $reports 
+     * @param null|SearchCriteriaBase $searchCriteria 
+     * @return Generator 
+     * @throws BindingResolutionException 
+     */
+    public function getSearchDecision(array $reports, ?SearchCriteriaBase $searchCriteria = null): Generator
     {
         //TODO: Logging
+        /** @var \App\Libraries\Parser\ParserService */
         $parser = resolve('ParserService');
 
         foreach($reports as $report) {
@@ -54,7 +69,6 @@ class DecisionService
                     }
                 }
             } catch (\Exception $e) {
-            dd($e);
                 $remoteIssue = new RemoteIssue();
                 $remoteIssue->release = $report;
                 $decision = new DownloadDecision($remoteIssue, new Rejection("Unexpected error processing release"));
@@ -72,6 +86,10 @@ class DecisionService
        return new DownloadDecision($remoteIssue, []);
     }
 
+    /**
+     * @param DownloadDecision[] $decisions 
+     * @return DownloadDecision[]
+     */
     public function prioritizeDecisions(array $decisions): array
     {
         //Start with only decisions with a set comic
@@ -80,7 +98,9 @@ class DecisionService
         $comicDecisions = [];
         //Group them by the comic id
         foreach($filledDecisions as $decision) {
-            $comicDecisions[$decision->remoteIssue->comic->id][] = $decision;
+            assert($decision->remoteIssue->comic != null);
+            $key = $decision->remoteIssue->comic->cvid;
+            $comicDecisions[$key][] = $decision;
         }
         
         //For each unique comic id, sort the decisions
@@ -90,9 +110,14 @@ class DecisionService
 
         //Flatten back to a single dimensional array
         $sortedDecisions = [];
-        array_walk_recursive($comicDecisions, function($v) use (&$sortedDecisions) { $sortedDecisions[] = $v; });
+        array_walk_recursive($comicDecisions, function(DownloadDecision $v) use (&$sortedDecisions) { 
+            
+            /** @psalm-var DownloadDecision[] $sortedDecisions */
+            $sortedDecisions[] = $v; 
+        });
 
         //Add the null comic decisions to the end
+        /** @psalm-var DownloadDecision[] $sortedDecisions */
         $sortedDecisions += array_filter($decisions, fn($d) => !isset($d->remoteIssue->comic));
 
         return $sortedDecisions;

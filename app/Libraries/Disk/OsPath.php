@@ -166,9 +166,10 @@ class OsPath
             $index++;
         }
 
-        return $index;
+        return (int) $index;
     }
 
+    /** @return string[] */
     protected function getFragments(): array
     {
         return array_filter(preg_split('@\\|/@', $this->path));
@@ -226,7 +227,7 @@ class OsPath
         }
 
         if ($this->osType != $right->getOsType() && $right->getOsType != "Unknown") {
-            throw new \Exception(sprintf("Cannot combine OsPaths of different platforms(%s + %s)", $this, $right));
+            throw new \Exception(sprintf("Cannot combine OsPaths of different platforms(%s + %s)", (string) $this, (string) $right));
         }
 
         if ($right->isEmpty()) {

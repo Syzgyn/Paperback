@@ -12,6 +12,7 @@ class RemotePathMappingService
             return $remotePath;
         }
 
+        /** @var RemotePathMapping $mapping */
         foreach (RemotePathMapping::all() as $mapping) {
             $remotePath = new OsPath($mapping->remote_path);
             if (strcasecmp($mapping->host, $host) == 0 && $remotePath->contains($remotePath)) {
@@ -31,6 +32,7 @@ class RemotePathMappingService
             return $localPath;
         }
 
+        /** @var RemotePathMapping $mapping */
         foreach (RemotePathMapping::all() as $mapping) {
             $remotePath = new OsPath($mapping->remote_path);
             if (strcasecmp($mapping->host, $host) == 0 && $remotePath->contains($remotePath)) {
