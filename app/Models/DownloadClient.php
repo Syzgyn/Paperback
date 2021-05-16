@@ -70,6 +70,7 @@ class DownloadClient extends DownloadClientModelBase
         $allProviders = DownloadClient::all();
         $availableProviders = [];
 
+        /** @var DownloadClientModelBase $provider */
         foreach($allProviders as $provider) {
             if ($provider::PROTOCOL == $protocol) {
                 $availableProviders[] = $provider;
@@ -93,7 +94,7 @@ class DownloadClient extends DownloadClientModelBase
 
         //Get first priority group, then sort by id
         $availableProviders = array_shift($groupedProviders);
-        usort($availableProviders, function($a, $b) {
+        usort($availableProviders, function(DownloadClientModelBase $a, DownloadClientModelBase $b) {
             return $a->id < $b->id ? -1 : 1;
         });
 

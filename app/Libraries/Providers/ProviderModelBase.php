@@ -10,6 +10,8 @@ use App\Libraries\Http\HttpRequest;
  * @property ProviderSettings $settings
  * @property bool $enable
  * @property class-string<ProviderSettings> $settingsSchemaClassName
+ * @property string $configContract
+ * @property string $dateFormat
  * @psalm-consistent-constructor
  */
 abstract class ProviderModelBase extends Model

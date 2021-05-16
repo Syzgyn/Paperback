@@ -3,7 +3,10 @@
 namespace App\Models;
 
 use App\Traits\ChangeComicLinks;
+use App\Models\Comic;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * App\Models\Issue
@@ -18,7 +21,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $store_date
  * @property string|null $cover_date
  * @property array|null $images
- * @property-read \App\Models\Comic $comic
+ * @property array $attributes
+ * @property Comic $comic
  * @property-read mixed $active_downloads
  * @property-read mixed $file_name
  * @property-read mixed $has_file
@@ -29,6 +33,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Issue newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Issue newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Issue query()
+ * @method static \Illuminate\Database\Eloquent\Builder where($column, $value)
+ * @method static \Illuminate\Database\Eloquent\Builder whereIn($column, $value)
  * @method static \Illuminate\Database\Eloquent\Builder|Issue whereComicId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Issue whereCoverDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Issue whereCvid($value)
@@ -40,7 +46,11 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Issue whereStoreDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Issue whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Issue create($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Issue updateOrCreate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Issue updateOrCreate($value, $params = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|Issue|null firstWhere($column, $value = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|Issue find($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Issue findMany($value)
+ * @method static \Illuminate\Database\Eloquent\Builder join($model, $remote, $op, $local)
  * @mixin \Eloquent
  */
 class Issue extends Model
@@ -78,22 +88,23 @@ class Issue extends Model
         'issueFile',
     ];
 
-    public function comic()
+    public function comic(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Comic', 'comic_id', 'cvid');
+        return $this->belongsTo(Comic::class, 'comic_id', 'cvid');
     }
 
-    public function issueFile()
+    public function issueFile(): HasOne
     {
-        return $this->hasOne('App\Models\IssueFile', 'id', 'issue_file');
+        return $this->hasOne(IssueFile::class, 'id', 'issue_file');
     }
 
-    public function trackedDownloads()
+    /*
+    public function trackedDownloads(): HasMany
     {
-        return $this->hasMany('App\Models\TrackedDownload', 'issue_id', 'cvid');
+        return $this->hasMany(TrackedDownload::class, 'issue_id', 'cvid');
     }
 
-    public function getActiveDownloadsAttribute()
+    public function getActiveDownloadsAttribute(): Collection
     {
         return $this->trackedDownloads()
             ->whereIn('status', [
@@ -102,31 +113,36 @@ class Issue extends Model
                 TrackedDownload::DOWNLOAD_STATUS['Completed'],
             ])->get();
     }
+    */
 
-    public function getHasFileAttribute()
+    public function getHasFileAttribute(): bool
     {
         return $this->issue_file > 0;
     }
 
-    public function getOverviewAttribute()
+    public function getOverviewAttribute(): string
     {
-        return $this->changeComicLinks($this->attributes['overview']);
+        return $this->changeComicLinks((string) $this->attributes['overview']);
     }
 
-    public function getFileNameAttribute()
+    public function getFileNameAttribute(): string
     {
-        return sprintf('%s %03d', $this->comic->name, $this->issue_num);
+        /** @var Comic $comic */
+        $comic = $this->comic;
+        return sprintf('%s %03d', $comic->title, $this->issue_num);
     }
 
-    public function getStatusAttribute()
+    public function getStatusAttribute(): string
     {
         if ($this->issueFile) {
             return 'downloaded';
         }
-
+        
+        /*
         if (count($this->activeDownloads) > 0) {
             return 'downloading';
         }
+        */
 
         return 'missing';
     }

@@ -3,9 +3,11 @@ namespace App\Models\Indexers;
 
 use App\Repositories\Indexers\NewznabRepository;
 use App\Libraries\Indexers\IndexerModelBase;
+use App\Libraries\Indexers\IndexerRequestGeneratorInterface;
 use App\Libraries\Indexers\Newznab\NewznabSettings;
 use App\Libraries\Indexers\Newznab\NewznabRequestGenerator;
 use App\Libraries\Indexers\Newznab\NewznabParser;
+use App\Libraries\Indexers\RssParser;
 
 /**
  * App\Models\Indexers\Newznab
@@ -13,7 +15,7 @@ use App\Libraries\Indexers\Newznab\NewznabParser;
  * @property int $id
  * @property string $name
  * @property string $implementation
- * @property |null $settings
+ * @property \App\Libraries\Indexers\Newznab\NewznabSettings|null $settings
  * @property string|null $settings_schema
  * @property bool|null $enable_rss
  * @property bool|null $enable_automatic_search
@@ -43,17 +45,17 @@ class Newznab extends IndexerModelBase
     const PROTOCOL = 'usenet';
     const PAGE_SIZE = 100;
 
-    public $repository;
+    //public $repository;
     protected $implementation = 'Newznab';
     protected $settingsSchema = 'NewznabSettings';
 
-    public function getParser()
+    public function getParser(): RssParser
     {
         return new NewznabParser();
     }
 
-    public function getRequestGenerator()
-    {
+    public function getRequestGenerator(): IndexerRequestGeneratorInterface
+    {   
         return new NewznabRequestGenerator($this->settings);
     }
 
@@ -63,7 +65,7 @@ class Newznab extends IndexerModelBase
     }
 
 
-    public function requestAction(string $action)
+    public function requestAction(string $action): mixed
     {
         if ($action === 'newznabCategories') {
             $categories = [

@@ -2,9 +2,13 @@
 
 namespace App\Models;
 
+use App\Repositories\ComicVineRepository;
 use App\Traits\ChangeComicLinks;
+use App\Services\FileManager;
+use App\Services\ParserService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\Comic
@@ -20,6 +24,8 @@ use Illuminate\Support\Facades\Storage;
  * @property int|null $year
  * @property array $tags
  * @property \Illuminate\Support\Carbon $created_at
+ * @property string $table
+ * @property string $dateFormat
  * @property string|null $add_options
  * @property-read mixed $directory_name
  * @property-read mixed $full_directory_name
@@ -27,11 +33,8 @@ use Illuminate\Support\Facades\Storage;
  * @property-read mixed $total_issue_file_size
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\IssueFile[] $issueFiles
  * @property-read int|null $issue_files_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Issue[] $issues
+ * @property-read \Illuminate\Database\Eloquent\Collection $issues
  * @property-read int|null $issues_count
- * @method static \Illuminate\Database\Eloquent\Builder|Comic newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Comic newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Comic query()
  * @method static \Illuminate\Database\Eloquent\Builder|Comic whereAddOptions($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Comic whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Comic whereCvid($value)
@@ -45,6 +48,8 @@ use Illuminate\Support\Facades\Storage;
  * @method static \Illuminate\Database\Eloquent\Builder|Comic whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Comic whereYear($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Comic create($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Comic find($value)
+ * @method static Comic|null firstWhere($column, $value = null)
  * @mixin \Eloquent
  */
 class Comic extends Model
@@ -61,6 +66,7 @@ class Comic extends Model
         'created_at',
     ];
 
+    /** @var array<array-key, mixed> */
     protected $attributes = [
         'tags' => '[]',
     ];
@@ -74,30 +80,40 @@ class Comic extends Model
         'tags' => 'array',
     ];
 
-    public function issues()
+    public function issues(): HasMany
     {
-        return $this->hasMany('App\Models\Issue', 'comic_id', 'cvid')->orderBy('issue_num', 'DESC');
+        /**
+         * @var HasMany 
+         * @psalm-suppress InvalidArgument
+        */
+        return $this->hasMany(Issue::class, 'comic_id', 'cvid')->orderBy('issue_num', 'DESC');
     }
 
-    public function issueFiles()
+    public function issueFiles(): HasMany
     {
-        return $this->hasMany('App\Models\IssueFile', 'comic_id', 'cvid');
+        /** @var HasMany */
+        return $this->hasMany(IssueFile::class, 'comic_id', 'cvid');
     }
 
-    public function getIssueFileCountAttribute()
+    public function getIssueFileCountAttribute(): int
     {
-        return $this->issueFiles()->count();
+        return (int)$this->issueFiles()->count();
     }
 
-    public function getTotalIssueFileSizeAttribute()
+    public function getTotalIssueFileSizeAttribute(): int
     {
         return (int)($this->issueFiles()->sum('size'));
     }
 
-    public function getImagesAttribute()
+    public function getImagesAttribute(): array
     {
-        $images = json_decode($this->attributes['images'], true);
+        if (empty($this->attributes['images'])) {
+            return [];
+        }
+        /** @var array<string[]> $images  */
+        $images = json_decode((string)$this->attributes['images'], true);
         foreach($images as $k => $v) {
+            /** @psalm-var array<string, string> $v */
             if ($v['coverType'] === 'poster') {
                 $images[$k]['url'] = asset('/storage/comics/' . $this->cvid . '.jpg');
             }
@@ -105,6 +121,7 @@ class Comic extends Model
         return $images;
     }
 
+    /*
     public static function createFromCvid($cvid, $grabImage = true, $searchIssues = false)
     {
         $repo = resolve('ComicVineRepository');
@@ -150,12 +167,15 @@ class Comic extends Model
         $contents = file_get_contents($path);
         Storage::disk('comics')->put($this->cvid . '.jpg', $contents);
     }
+    */
 
-    protected function fetchIssues()
+    protected function fetchIssues(): void
     {
+        /** @var ComicVineRepository */
         $repo = resolve('ComicVineRepository');
         $issues = $repo->volumeIssues($this->cvid);
 
+        /** @var Issue $issue */
         foreach ($issues as $issue) {
             Issue::updateOrCreate(['cvid' => $issue['cvid']], $issue);
         }
@@ -163,33 +183,40 @@ class Comic extends Model
 
     protected static function booted()
     {
-        static::created(function ($comic) {
-            resolve('FileManager')->getOrCreateComicDir($comic);
+        static::created(function (Comic $comic) {
+            /** @var FileManager */
+            $fileManager = resolve('FileManager');
+            $fileManager->getOrCreateComicDir($comic);
             $comic->fetchIssues();
         });
     }
 
-    public function getOverviewAttribute()
+    public function getOverviewAttribute(): string
     {
-        return $this->changeComicLinks($this->attributes['overview']);
+        return $this->changeComicLinks((string) $this->attributes['overview']);
     }
 
-    public function importIssueFiles()
+    public function importIssueFiles(): void
     {
+        /** @var FileManager */
         $fileManager = resolve('FileManager');
+        /** @var ParserService */
         $parser = resolve('OldParserService');
         $files = $fileManager->getIssuesInFolder($this->path);
 
         foreach ($files as $file) {
             $info = $parser->getIssueInfoFromFile($file);
 
+            /** @var Issue $issue */
             foreach ($this->issues as $issue) {
+                /** @var bool $issue->hasFile */
                 if ($issue->hasFile) {
                     continue;
                 }
 
                 if ($issue->issue_num == $info['issueNum']) {
                     $size = filesize($this->path . DIRECTORY_SEPARATOR . $file);
+                    /** @var IssueFile $issueFile */
                     $issueFile = IssueFile::create([
                         'comic_id' => $this->cvid,
                         'relative_path' => $file,

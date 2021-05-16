@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Libraries\Parser\ReleaseInfo;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\DownloadHistory
@@ -31,7 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|DownloadHistory whereData($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DownloadHistory whereDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DownloadHistory whereDownloadClientId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|DownloadHistory whereDownloadId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder whereDownloadId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DownloadHistory whereEventType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DownloadHistory whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DownloadHistory whereIndexerId($value)
@@ -54,14 +55,14 @@ class DownloadHistory extends Model
         
     ];
 
-    public function comic()
+    public function comic(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Comic', 'comic_id', 'cvid');
+        return $this->belongsTo(Comic::class, 'comic_id', 'cvid');
     }
 
-    public function issue()
+    public function issue(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Issue', 'issue_id', 'cvid');
+        return $this->belongsTo(Issue::class, 'issue_id', 'cvid');
     }
     
     public static function findByDownloadId(string $downloadId): Collection

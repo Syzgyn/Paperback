@@ -9,6 +9,9 @@ use App\Models\Downloaders\DirectDownload;
 /**
  * App\Models\TrackedDownload
  *
+ * @property string $protocol
+ * @property int $download_id
+ * @property string $status
  * @property-read \App\Models\Comic $comic
  * @property-read \App\Models\Downloader $downloadClient
  * @property-read mixed $download_data

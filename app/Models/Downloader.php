@@ -19,6 +19,7 @@ use Nanigans\SingleTableInheritance\SingleTableInheritanceTrait;
  * @method static \Illuminate\Database\Eloquent\Builder|Downloader newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Downloader newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Downloader query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Downloader where()
  * @mixin \Eloquent
  */
 class Downloader extends Model

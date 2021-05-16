@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Exception;
 use App\Libraries\Indexers\IndexerModelBase;
+use App\Libraries\Indexers\IndexerRequestGeneratorInterface;
+use App\Libraries\Indexers\RssParser;
+use App\Libraries\Providers\ProviderSettings;
 
 /**
  * App\Models\Indexer
@@ -11,7 +14,7 @@ use App\Libraries\Indexers\IndexerModelBase;
  * @property int $id
  * @property string $name
  * @property string $implementation
- * @property |null $settings
+ * @property ProviderSettings $settings
  * @property string|null $settings_schema
  * @property bool|null $enable_rss
  * @property bool|null $enable_automatic_search
@@ -33,16 +36,18 @@ use App\Libraries\Indexers\IndexerModelBase;
  * @method static \Illuminate\Database\Eloquent\Builder|Indexer wherePriority($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Indexer whereSettings($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Indexer whereSettingsSchema($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Indexer find($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Indexer where($column, $value = null)
  * @mixin \Eloquent
  */
 class Indexer extends IndexerModelBase
 {
-    protected function getParser()
+    protected function getParser(): RssParser
     {
         throw new Exception("Cannot call getParser of base Indexer");
     }
 
-    protected function getRequestGenerator()
+    protected function getRequestGenerator(): IndexerRequestGeneratorInterface
     {
         throw new Exception("Cannot call getRequestGenerator of base Indexer");
     }

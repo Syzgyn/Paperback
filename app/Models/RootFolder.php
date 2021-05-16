@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
  * @method static \Illuminate\Database\Eloquent\Builder|RootFolder newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|RootFolder newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|RootFolder query()
+ * @method static RootFolder create($params)
  * @method static \Illuminate\Database\Eloquent\Builder|RootFolder whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|RootFolder wherePath($value)
  * @mixin \Eloquent
@@ -28,22 +29,22 @@ class RootFolder extends Model
     public $timestamps = false;
 
     protected $table = 'root_folders';
-    protected $_unmappedFolders = null;
+    protected ?array $_unmappedFolders = null;
     protected $fillable = [
         'path',
     ];
 
-    public function getAccessibleAttribute()
+    public function getAccessibleAttribute(): bool
     {
         return is_writable($this->path);;
     }
 
-    public function getFreeSpaceAttribute()
+    public function getFreeSpaceAttribute(): float
     {
         return disk_free_space($this->path);
     }
 
-    public function getFormattedFreeSpaceAttribute()
+    public function getFormattedFreeSpaceAttribute(): string
     {
         $bytes = disk_free_space($this->path);
         $si_prefix = ['B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB'];
@@ -53,13 +54,13 @@ class RootFolder extends Model
         return sprintf('%1.2f', $bytes / pow($base, $class)) . ' ' . $si_prefix[$class];
     }
 
-    public function getUnmappedFoldersAttribute()
+    public function getUnmappedFoldersAttribute(): array
     {
-        if (! isset($this->path)) {
+        if (! isset($this->path) || ! is_string($this->path)) {
             Log::warning("RootFolder {$this->id} does not have a set path");
             return [];
         }
-
+        
         if (!is_dir($this->path)) {
             Log::debug("{$this->path} does not exist");
             return [];
@@ -73,8 +74,10 @@ class RootFolder extends Model
         $possibleDirs = $listing['directories'];
         $comicDirs = DB::table('comics')->pluck('path')->toArray();
 
-        $this->_unmappedFolders = array_udiff($possibleDirs, $comicDirs, function($possible, $comic) {
+        $this->_unmappedFolders = array_udiff($possibleDirs, $comicDirs, function(string|array $possible, string|array $comic) {
+            /** @var string */
             $possible = is_array($possible) ? $possible['path'] : $possible;
+            /** @var string */
             $comic = is_array($comic) ? $comic['path'] : $comic;
 
             if ($possible === $comic) {
@@ -86,7 +89,7 @@ class RootFolder extends Model
         return $this->_unmappedFolders;
     }
 
-    public function getUnmappedFoldersCountAttribute()
+    public function getUnmappedFoldersCountAttribute(): int
     {
         return count($this->unmappedFolders);
     }

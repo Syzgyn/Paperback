@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\IssueFile
@@ -20,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile query()
- * @method static \Illuminate\Database\Eloquent\Builder|IssueFile where($value)
+ * @method static \Illuminate\Database\Eloquent\Builder where($column, $value)
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile whereComicId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile whereId($value)
@@ -44,27 +45,31 @@ class IssueFile extends Model
         'size' => 'integer',
     ];
 
-    public function comic()
+    public function comic(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Comic', 'comic_id', 'cvid');
+        return $this->belongsTo(Comic::class, 'comic_id', 'cvid');
     }
 
-    public function issue()
+    public function issue(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Issue', 'id', 'issue_file');
+        return $this->belongsTo(Issue::class, 'id', 'issue_file');
     }
 
-    public function getPathAttribute()
+    public function getPathAttribute(): string
     {
-        return $this->comic->path . DIRECTORY_SEPARATOR . $this->relative_path;
+        /** @var Comic $comic */
+        $comic = $this->comic;
+        return $comic->path . DIRECTORY_SEPARATOR . ((string) $this->relative_path);
     }
 
-    public function getFileTypeAttribute()
+    public function getFileTypeAttribute(): string
     {
         return pathinfo($this->path, PATHINFO_EXTENSION);
     }
 
-    public static function createAndMove(array $attrs)
+    /*
+    /** @param array{original_file_path: string, issue_id: int} $attrs 
+    public static function createAndMove(array $attrs): self
     {
         if ($match = self::where('issue_id', $attrs['issue_id'])->first()) {
             $match->delete();
@@ -85,4 +90,5 @@ class IssueFile extends Model
 
         self::create($attrs);
     }
+    */
 }
