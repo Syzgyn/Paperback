@@ -5,6 +5,7 @@ namespace App\Libraries\Download\History;
 use App\Libraries\Download\DownloadProtocol;
 use App\Libraries\Download\IssueGrabbedEvent;
 use App\Models\DownloadHistory;
+use Exception;
 use Illuminate\Events\Dispatcher;
 
 class DownloadHistoryService
@@ -59,7 +60,8 @@ class DownloadHistoryService
             return;
         }
 
-        DownloadHistory::create([
+        try {
+        $result = DownloadHistory::create([
             'event_type' => DownloadHistoryEventType::DOWNLOAD_GRABBED,
             'comic_id' => $event->issue->comic->cvid,
             'download_id' => $event->downloadId,
@@ -75,6 +77,9 @@ class DownloadHistoryService
                 'downloadClientName' => $event->downloadClientName,
             ],
         ]);
+        } catch (Exception $e) {
+        }
+
     }
     public function subscribe(Dispatcher $events): void
     {

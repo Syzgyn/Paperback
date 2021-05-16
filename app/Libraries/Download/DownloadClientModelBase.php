@@ -8,6 +8,17 @@ use App\Libraries\Download\Clients\Sabnzbd\Sabnzbd;
 use App\Libraries\Parser\RemoteIssue;
 use Exception;
 
+/**
+ * App\Libraries\Download\DownloadClientModelBase
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $implementation
+ * @property $settings
+ * @property string|null $settings_schema
+ * @property bool|null $enable
+ * @property int $priority
+ */
 abstract class DownloadClientModelBase extends ProviderModelBase
 {
     const PROTOCOL = null;
@@ -49,21 +60,17 @@ abstract class DownloadClientModelBase extends ProviderModelBase
 
     protected function deleteItemData(DownloadClientItem $item): void
     {
-        if ($item == null) {
-            return;
-        }
-
         if (empty($item->outputPath)) {
             return;
         }
 
         try {
-            if (is_dir($item->outputPath)) {
+            if (is_dir((string)$item->outputPath)) {
                 //TODO: log
                 resolve('FileManager')->removeDir($item->outputPath);
-            } elseif (is_file($item->outputPath)) {
+            } elseif (is_file((string)$item->outputPath)) {
                 //TODO: log
-                unlink($item->outputPath);
+                unlink((string)$item->outputPath);
             } else {
                 //TODO: log
             }
@@ -72,7 +79,7 @@ abstract class DownloadClientModelBase extends ProviderModelBase
         }
     }
 
-    protected function testFolder(string $folder, string $propertyName, bool $mustBeWritable = true)
+    protected function testFolder(string $folder, string $propertyName, bool $mustBeWritable = true): void
     {
         if (!is_dir($folder)) {
             throw new Exception("Folder does not exist");
@@ -81,11 +88,9 @@ abstract class DownloadClientModelBase extends ProviderModelBase
         if ($mustBeWritable && !resolve('FileManager')->folderIsWritable($folder)) {
             throw new Exception("Unable to write to folder");
         }
-
-        return null;
     }
     
-    public function markItemAsImported(DownloadClientItem $item)
+    public function markItemAsImported(DownloadClientItem $item): void
     {
         throw new Exception($this->name . " does not support marking items as imported");
     }

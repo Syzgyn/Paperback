@@ -9,17 +9,22 @@ use App\Libraries\Parser\RemoteIssue;
 use App\Libraries\Http\HttpUri;
 use App\Models\DownloadClient;
 use Exception;
+use Illuminate\Support\Facades\App;
 
 class DownloadService
 {
-    public function downloadReport(RemoteIssue $remoteIssue)
+    public function downloadReport(RemoteIssue $remoteIssue): void
     {
-        if (empty($remoteIssue->comic)) {
+        if (!isset($remoteIssue->comic)) {
             throw new Exception("Release is missing matching comic");
         }
         
         if (empty($remoteIssue->issues)) {
             throw new Exception("Release is missing matching issues");
+        }
+
+        if (empty($remoteIssue->release->downloadProtocol)) {
+            throw new Exception("Release is missing protocol type");
         }
 
         $downloadTitle = $remoteIssue->release->title;
@@ -56,6 +61,9 @@ class DownloadService
         }
 
         //TODO: Log
-        //TODO: publish event
+        /** @var App */
+        App::terminating(function() use ($issueGrabbedEvent) {
+            event($issueGrabbedEvent);
+        });
     }
 }

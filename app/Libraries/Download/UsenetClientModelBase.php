@@ -5,6 +5,7 @@ namespace App\Libraries\Download;
 use App\Libraries\Parser\RemoteIssue;
 use App\Libraries\Http\HttpRequest;
 use GuzzleHttp\Exception\TransferException;
+use Exception;
 
 abstract class UsenetClientModelBase extends DownloadClientModelBase
 {
@@ -14,6 +15,15 @@ abstract class UsenetClientModelBase extends DownloadClientModelBase
 
     public function download(RemoteIssue $remoteIssue): string
     {
+        if (
+            $remoteIssue->release == null || 
+            $remoteIssue->release->title == null ||
+            $remoteIssue->release->downloadUrl == null
+        ) {
+            throw new Exception("Unable to download, no relase found");
+            
+        }
+
         $url = $remoteIssue->release->downloadUrl;
         $filename = $remoteIssue->release->title . ".nzb"; //TODO: Implement fileNameBuilder
 
@@ -21,7 +31,7 @@ abstract class UsenetClientModelBase extends DownloadClientModelBase
 
         try {
             $request = new HttpRequest($url);
-            $request->rateLimitKey = $remoteIssue->release?->indexerId;
+            $request->rateLimitKey = (string) $remoteIssue->release->indexerId;
             $fileContent = resolve('HttpClient')->get($request)->content;
 
             //TODO: log
