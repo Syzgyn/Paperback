@@ -6,59 +6,63 @@ use Illuminate\Database\Eloquent\Model;
 use App\Exceptions\TestException;
 use App\Libraries\Http\HttpRequest;
 
+/** 
+ * @property ProviderSettings $settings
+ * @property bool $enable
+ * @property class-string<ProviderSettings> $settingsSchemaClassName
+ * @psalm-consistent-constructor
+ */
 abstract class ProviderModelBase extends Model
 {
-    const PROTOCOL = null;
+    const PROTOCOL = "Unknown";
     
     protected $casts = [
         'settings' => ProviderSettingsCast::class,
         'priority' => 'integer',
     ];
 
-    public $configContract;
-    public $protocol;
+    public string $configContract;
 
+    /** @return class-string<ProviderModelBase>[] */
     abstract function getChildClasses(): array;
     abstract function test(): void;
 
-    public function getProtocol(): ?string
+    public function getProtocol(): string
     {
+        /** @var string */
         return static::PROTOCOL;
     }
 
     public function getNameAttribute(): string
     {
-        return $this->attributes['name'] ?? $this->name ?? "";
-    }
-
-    public function getFooAttribute($val)
-    {
-        dd($val);
-        return 'abcd';
+        return (string) ($this->attributes['name'] ?? $this->name ?? "");
     }
 
     public function getImplementationAttribute(): string
     {
-        return $this->attributes['implementation'] ?? $this->implementation ?? "";
+        return (string) ($this->attributes['implementation'] ?? $this->implementation ?? "");
     }
 
-    public function getFieldsAttribute(): array 
+    public function getSettingsSchemaAttribute(): string
     {
-        return $this->attributes['fields'] ?? $this->name ?? "";
+        return (string) ($this->attributes['settings_schema'] ?? $this->settingsSchema);
     }
 
-    public function getSettingsSchemaAttribute(): ?string
-    {
-        return $this->attributes['settings_schema'] ?? $this->settingsSchema ?? null;
-    }
-
+    /** 
+     * @param array<array-key, mixed> $attributes 
+     * @param string|null $connection
+     * @return self
+    */
     public function newFromBuilder($attributes = [], $connection = null)
     {
-        if (!is_array($attributes)) {
-            $attributes = (array) $attributes;
+        /** @psalm-suppress RedundantCast */
+        $attributes = (array) $attributes;
+        if (gettype($attributes['implementation']) != "string") {
+            return parent::newFromBuilder($attributes, $connection);
         }
 
         $class = null;
+        /** @var class-string $className */
         foreach($this->getChildClasses() as $className) {
             if (ucfirst($attributes['implementation']) === class_basename($className)) {
                 $class = $className;
@@ -71,6 +75,9 @@ abstract class ProviderModelBase extends Model
         }
 
         //From http://oldblog.codebyjeff.com/blog/2014/07/single-table-inheritence-in-laravel
+        /** @var ProviderModelBase $instance 
+         * @psalm-suppress MixedMethodCall
+        */
         $instance = new $class;
         $instance->prepareAttributes($attributes);
         
@@ -78,7 +85,7 @@ abstract class ProviderModelBase extends Model
             $instance->exists = true;
         }
 
-        $instance->setRawAttributes((array) $attributes, true);
+        $instance->setRawAttributes($attributes, true);
         
         return $instance;
     }
@@ -90,7 +97,7 @@ abstract class ProviderModelBase extends Model
         }
     }
 
-    public function requestAction(string $action)
+    public function requestAction(string $action): mixed
     {
         return null;
     }

@@ -4,6 +4,7 @@ namespace App\Libraries\Providers;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/** @psalm-suppress PropertyNotSetInConstructor */
 class ProviderRequest extends FormRequest implements ProviderRequestInterface
 {
     /**

@@ -13,9 +13,15 @@ interface ProviderRepositoryInterface
     public function validationRules(): array;
 
     public function all(): Collection;
+
+    /** @param array<array-key, mixed> $data */
     public function create(array $data): ?ProviderModelBase;
+
+    /** @param array<array-key, mixed> $data */
     public function make(array $data): ?ProviderModelBase;
 
-    public function test(array $data);
+    /** @param array<array-key, mixed> $data */
+    public function test(array $data): array;
+
     public function schema(): Collection;
 }

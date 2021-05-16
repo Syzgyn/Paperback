@@ -6,7 +6,12 @@ use Illuminate\Support\Collection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use App\Exceptions\TestException;
+use Exception;
 
+/** @package App\Libraries\Providers 
+ * @property class-string<JsonResource> $resource
+ * @property class-string<ResourceCollection> $collection
+*/
 abstract class ProviderRepository implements ProviderRepositoryInterface
 {
     public function __construct(
@@ -19,11 +24,13 @@ abstract class ProviderRepository implements ProviderRepositoryInterface
 
     public function collection(Collection $models): ResourceCollection
     {
+        /** @psalm-suppress UnsafeInstantiation */
         return new ($this->collection)($models);
     }
 
     public function resource(ProviderModelBase $model): JsonResource
     {
+        /** @psalm-suppress UnsafeInstantiation */
         return new ($this->resource)($model);
     }
 
@@ -36,6 +43,11 @@ abstract class ProviderRepository implements ProviderRepositoryInterface
         }
 
         return $rules;
+    }
+
+    public function additionalValidationRules(): array
+    {
+        return [];
     }
 
     public function validationMessages(): array
@@ -51,24 +63,23 @@ abstract class ProviderRepository implements ProviderRepositoryInterface
         return $this->model->all();
     }
 
+    /** @param array<array-key, mixed> $data */
     public function create(array $data): ?ProviderModelBase
     {
         $model = $this->make($data);
-        if ($model) {
-            $model->save();
-            return $model;
-        }
-
-        return null;
+        $model->save();
+        return $model;
     }
 
-    public function make(array $data): ?ProviderModelBase
+    /** @param array<array-key, mixed> $data */
+    public function make(array $data): ProviderModelBase
     {
         return $this->model->newFromBuilder($data);
     }
 
 
-    public function test(array $data)
+    /** @param array<array-key, mixed> $data */
+    public function test(array $data): array
     {
         $model = $this->make($data);
         $model->settings->validate($this->validationMessages());

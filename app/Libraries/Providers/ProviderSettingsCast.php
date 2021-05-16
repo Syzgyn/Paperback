@@ -9,8 +9,17 @@ class ProviderSettingsCast implements CastsAttributes
 {
     public function get($model, $key, $value, $attributes)
     {
+        /**
+         * @var ProviderModelBase $model 
+         * @var class-string<ProviderSettings> $class
+        */
         $class = $model->settingsSchemaClassName;
 
+        if (!is_string($value)) {
+            return new $class;
+        }
+
+        /** @var array $settingsValues */
         $settingsValues = json_decode($value, true) ?? [];
 
         return new $class($settingsValues);
@@ -26,7 +35,8 @@ class ProviderSettingsCast implements CastsAttributes
 
         // I don't know why this doesn't work when called as $model->settingsSchemaClassName,
         // but it throws an Undefined Property error... 
-        $class = $model->getSettingsSchemaClassNameAttribute();
+         /** @var class-string<ProviderSettings> $class */
+         $class = $model->getSettingsSchemaClassNameAttribute();
 
         if (!is_object($value) || get_class($value) !== $class) {
             throw new InvalidArgumentException("The given value " . gettype($value) . " is not an instance of $class.");

@@ -7,7 +7,8 @@ use Closure;
 
 class ProviderMiddleware extends TransformsRequest
 {
-    protected $transformations = [
+    /** @var array<string, string> */
+    protected array $transformations = [
         'enableRss' => 'enable_rss',
         'enableAutomaticSearch' => 'enable_automatic_search',
         'enableInteractiveSearch' => 'enable_interactive_search',
@@ -15,8 +16,12 @@ class ProviderMiddleware extends TransformsRequest
         'fields' => 'settings',
     ];
 
+    /** 
+     * @param string $keyPrefix
+    */
     protected function cleanArray(array $data, $keyPrefix = '')
     {
+        /** @psalm-var array<string, string> $data */
         foreach($data as $key => $value) {
             $this->updateData($data, $key, $value);
         }
@@ -24,7 +29,7 @@ class ProviderMiddleware extends TransformsRequest
         return collect($data)->all();
     }
 
-    protected function updateData(array &$data, $key, $value)
+    protected function updateData(array &$data, string $key, string $value): void
     {
         if (isset($this->transformations[$key])) {
             $data[$this->transformations[$key]] = $value;
