@@ -9,7 +9,17 @@ class ReleaseInfoCast implements CastsAttributes
     public function get($model, string $key, $value, array $attributes)
     {
         $releaseInfo = new ReleaseInfo();
+
+        if (!is_string($value)) {
+            return $releaseInfo;
+        }
+        /** @var array<string, string>|false $json */
         $json = json_decode($value, true);
+
+        if ($json === false) {
+            return $releaseInfo;
+        }
+
         foreach ($json as $key => $val) {
             
             $releaseInfo->$key = $val;

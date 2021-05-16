@@ -26,7 +26,7 @@ class Parser
                     $result = self::ParseTitleMatches($matches, $releaseTitle);
 
                     if ($result) {
-                        $result->fileType = self::parseFileType($title);
+                        //$result->fileType = self::parseFileType($title); //TODO
                         $result->releaseGroup = self::parseReleaseGroup($releaseTitle);
                         
                         return $result;
@@ -62,19 +62,20 @@ class Parser
      public static function removeFileExtension(string $title): string
     {
         $extensions = MediaFileExtensions::$extensions + ['.par2', '.nbz'];
-         $title = preg_replace_callback(Patterns::$fileExtensionRegex, function($match) use ($extensions) {
-            $extension = strtolower($match[0]);
+         $title = preg_replace_callback(Patterns::$fileExtensionRegex, function(array $match) use ($extensions) {
+            $extension = strtolower((string) $match[0]);
             
              if (in_array($extension, $extensions)) {
                 return "";
             }
 
-            return $match[0];
+            return (string) $match[0];
         }, $title);
 
         return $title;
     }
 
+    /** @param string[] $regexes */
     protected static function matchesAnyRegex(array $regexes, string $match): bool
     {
         foreach($regexes as $regex) {
@@ -86,6 +87,7 @@ class Parser
         return false;
     }
 
+    /** @param non-empty-list<array<array-key, string>> $matches */
     protected static function parseTitleMatches(array $matches, string $releaseTitle): ?ParsedIssueInfo
     {
         $comicTitle = $matches[0]['title'];
@@ -101,7 +103,7 @@ class Parser
         $result->comicTitleInfo = self::getComicTitleInfo($comicTitle);
 
         if ($releaseYear && is_numeric($releaseYear)) {
-            $result->releaseYear = $releaseYear;
+            //$result->releaseYear = $releaseYear;
         }
 
         foreach($matches as $matchGroup) {

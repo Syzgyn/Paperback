@@ -13,7 +13,7 @@ class ParserService
         $remoteIssue = new RemoteIssue();
         $remoteIssue->parsedIssueInfo = $parsedIssueInfo;
 
-        if ($comic == null) {
+        if ($comic == null && $searchCriteria != null) {
             $comic = $this->getComic($parsedIssueInfo, $searchCriteria);
         }
 
@@ -23,23 +23,26 @@ class ParserService
 
         }
 
-        $remoteIssue->issueRequested = count(array_filter(
-                                            $remoteIssue->issues, 
-                                            fn($i) => $searchCriteria->findIssueByNum($i->issue_num) !== null)
-                                       ) > 0;
+        if ($searchCriteria != null) {
+            $remoteIssue->issueRequested = count(array_filter(
+                                                $remoteIssue->issues, 
+                                                fn(Issue $i) => $searchCriteria->findIssueByNum($i->issue_num) !== null)
+                                        ) > 0;
+        }
         return $remoteIssue;
     }
 
-    protected function getComic(ParsedIssueInfo $parsedIssueInfo, SearchCriteriaBase $searchCriteria): Comic
+    protected function getComic(ParsedIssueInfo $parsedIssueInfo, SearchCriteriaBase $searchCriteria): ?Comic
     {
         if ($this->cleanComicTitle($searchCriteria->comic->title) === $this->cleanComicTitle($parsedIssueInfo->comicTitle)) {
             return $searchCriteria->comic;
         }
 
         //TODO: implement clean titles in database and use those for matching
+        /** @psalm-var Comic|null */
         $comic = Comic::firstWhere('title', $parsedIssueInfo->comicTitle);
 
-        if ($comic == null && isset($parsedIssueInfo->comicTitleInfo->year)) {
+        if ($comic == null && !empty($parsedIssueInfo->comicTitleInfo->year)) {
             $comic = Comic::firstWhere([
                 'title' => $parsedIssueInfo->comicTitleInfo->titleWithoutYear,
                 'year' => $parsedIssueInfo->comicTitleInfo->year,
@@ -54,11 +57,13 @@ class ParserService
         return $comic;
     }
 
-    public function cleanComicTitle(string $title): string 
+    public function cleanComicTitle(?string $title = ""): string 
     {
         if (is_numeric($title)) {
             return $title;
         }
+
+        assert($title != null);
 
         $title = preg_replace([
                 Patterns::$percentRegex,
@@ -92,6 +97,7 @@ class ParserService
 
         $results = [];
 
+        /** @psalm-var int $issueNumber */
         foreach ($parsedIssueInfo->issueNumbers as $issueNumber) {
             $issue = null;
             if ($searchCriteria != null) {

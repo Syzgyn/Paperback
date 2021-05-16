@@ -4,7 +4,7 @@ namespace App\Libraries\MediaFiles;
 
 final class MediaFileExtensions
 {
-    public static $extensions = [
+    public static array $extensions = [
         '.cbr',
         '.cbz',
         '.cba',

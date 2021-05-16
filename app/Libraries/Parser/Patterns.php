@@ -6,6 +6,7 @@ final class Patterns
 {
     public static string$fileExtensionRegex = "/\.[a-z0-9]{2,4}$/i";
 
+    /** @var string[] */
     public static array $rejectedHashedReleasesRegexes = [
         // Generic match for md5 and mixed-case hashes.
         "/^[0-9a-zA-Z]{32}/",
@@ -57,6 +58,7 @@ final class Patterns
 
     public static string $yearInTitleRegex = "/^(?<title>.+?)(?:\W|_)?(?<year>\d{4})/i";
 
+    /** @var string[] */
     public static array $reportTitleRegexes = [
         "/^(?<title>.*?)[-_. ]+(?<issue>\d+)[-_. ]+\(?(?<year>\d{2,4})\)?/i"
     ];

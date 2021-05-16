@@ -4,9 +4,9 @@ namespace App\Libraries\Parser;
 
 class ParsedIssueInfo
 {
-    public string $releaseTitle;
+    public ?string $releaseTitle = null;
     public ?string $comicTitle = null;
-    public ComicTitleInfo $comicTitleInfo;
+    public ?ComicTitleInfo $comicTitleInfo = null;
     public array $issueNumbers = [];
     public bool $fullComic = false;
     public bool $isPartialComic = false;
@@ -19,10 +19,10 @@ class ParsedIssueInfo
         if ($this->fullComic) {
             $issueString = "Complete";
         } elseif (!empty($this->issueNumbers)) {
-            $issueString = explode("-", array_map($this->issueNumbers, fn($n) => sprintf("%02d", $n)));
+            $issueString = implode("-", array_map(fn(int $n) => sprintf("%02d", $n), $this->issueNumbers));
         }
 
-        return sprintf("%s - %s", $this->comicTitle, $issueString);
+        return sprintf("%s - %s", $this->comicTitle ?? "Unknown Title", $issueString);
     }
 }
 

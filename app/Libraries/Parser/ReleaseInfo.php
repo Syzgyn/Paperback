@@ -7,38 +7,50 @@ use Illuminate\Contracts\Database\Eloquent\Castable;
 
 class ReleaseInfo implements Castable
 {
-    public string $guid;
-    public string $title;
-    public int $size;
-    public ?string $downloadUrl;
-    public ?string $infoUrl;
-    public ?string $commentUrl;
-    public int $indexerId;
-    public string $indexer;
-    public int $indexerPriority;
-    public string $downloadProtocol;
-    public ?int $fileCount;
-    public DateTime $publishDate;
+    public ?string $guid = null;
+    public ?string $title = null;
+    public ?int $size = null;
+    public ?string $downloadUrl = null;
+    public ?string $infoUrl = null;
+    public ?string $commentUrl = null;
+    public ?int $indexerId = null;
+    public ?string $indexer = null;
+    public ?int $indexerPriority = null;
+    public ?string $downloadProtocol = null;
+    public ?int $fileCount = null;
+    public ?DateTime $publishDate = null;
 
-    public function getAge()
+    public function getAge(): int
     {
+        if ($this->publishDate == null) {
+            return 0;
+        }
+
         $now = new DateTime();
         $diff = $now->diff($this->publishDate);
         return (int)($diff->format('%a'));
     }
 
-    public function getAgeHours()
+    public function getAgeHours(): int
     {
+        if ($this->publishDate == null) {
+            return 0;
+        }
+
         $now = time();
         $pubTimestamp = $this->publishDate->format('u');
-        return ($now - $pubTimestamp) / 3600;
+        return (int)(($now - (int)$pubTimestamp) / 3600);
     }
 
-    public function getAgeMinutes()
+    public function getAgeMinutes(): int
     {
+        if ($this->publishDate == null) {
+            return 0;
+        }
+
         $now = time();
         $pubTimestamp = $this->publishDate->format('u');
-        return ($now - $pubTimestamp) / 60;
+        return (int)(($now - (int)$pubTimestamp) / 60);
     }
 
     public function __tostring()
@@ -46,7 +58,7 @@ class ReleaseInfo implements Castable
         return sprintf("[%s] %s %s", $this->publishDate->format('Y-m-d h:i:a'), $this->title, $this->size);
     }
 
-    public static function castUsing(array $arguments)
+    public static function castUsing(array $arguments): string
     {
         return ReleaseInfoCast::class;
     }

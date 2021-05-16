@@ -3,14 +3,18 @@
 namespace App\Libraries\Parser;
 
 use App\Models\Comic;
+use App\Models\Issue;
 use DateTime;
 use DateInterval;
 
+/** @package App\Libraries\Parser 
+ * @property Issue[] $issues
+*/
 class RemoteIssue
 {
-    public ReleaseInfo $release;
-    public ParsedIssueInfo $parsedIssueInfo;
-    public Comic $comic;
+    public ?ReleaseInfo $release = null;
+    public ?ParsedIssueInfo $parsedIssueInfo = null;
+    public ?Comic $comic = null;
     public array $issues = [];
     public bool $issueRequested = false;
     public bool $downloadAllowed = false;
@@ -19,7 +23,7 @@ class RemoteIssue
 
     public function isRecentIssue(): bool
     {
-        return array_reduce($this->issues, function($carry, $issue) {
+        return array_reduce($this->issues, function(bool $carry, Issue $issue) {
             if ($carry) {
                 return $carry;
             }
@@ -30,16 +34,16 @@ class RemoteIssue
 
             $store_dt = new DateTime($issue->store_date ?? '1000-01-01'); 
             $cover_dt = new DateTime($issue->cover_date ?? '1000-01-01');
-            $now = new DateTime();
+            $checkDate = new DateTime();
 
-            $now->sub(new DateInterval('P14D'));
+            $checkDate->sub(new DateInterval('P14D'));
             
-            return $store_dt >= $now || $cover_dt >= $now;
+            return $store_dt >= $checkDate || $cover_dt >= $checkDate;
         }, false);
     }
 
     public function __tostring()
     {
-        return $this->release->title;
+        return $this->release?->title ?? "";
     }
 }
