@@ -70,6 +70,7 @@ class ReleaseController extends Controller
                 if (isset($release->issueId)) {
                     /** @var Issue */
                     $issue = Issue::with('comic')->findOrFail($release->issueId);
+                    /** @var Comic */
                     $remoteIssue->comic = $issue->comic;
                     $remoteIssue->issues = [$issue];
                 } elseif (isset($release->comicId)) {

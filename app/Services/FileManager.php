@@ -217,7 +217,8 @@ class FileManager
         return $info->number;
     }
 
-    public function getIssuesInFolder($path)
+    /** @return string[] */
+    public function getIssuesInFolder($path): array
     {
         if (! is_dir($path)) {
             //Check if path is the file itself
@@ -307,7 +308,8 @@ class FileManager
         }
     }
 
-    public function getDirectoryListing($path = null, $includeFiles = false, $allowFoldersWithoutTrailingSlashes = false)
+    /** @return array{directories: list<array{name: string, path: string, type: "dir"}>, files: list<array{name: string, path: string, type: "file"}>, parent?: non-empty-string} */
+    public function getDirectoryListing(string $path = null, bool $includeFiles = false, bool $allowFoldersWithoutTrailingSlashes = false): array
     {
         if (!$path) {
             if (DIRECTORY_SEPARATOR === '/') {

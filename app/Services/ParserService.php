@@ -246,7 +246,8 @@ class ParserService
         ];
     }
 
-    public function getIssueInfoFromFile(string $file)
+    /** @return array<string, mixed> */
+    public function getIssueInfoFromFile(string $file): array
     {
         $regexes = [
             '/(?<name>.+) (?<issueNum>\d{1,3}) \(of \d+\) \((?<year>\d{2,4})\)/',

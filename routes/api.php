@@ -44,12 +44,6 @@ Route::apiResource('remotepathmapping', 'RemotePathMappingController');
 Route::get('release', 'ReleaseController@get');
 Route::post('release', 'ReleaseController@download');
 
-Route::get('downloader/schema/{class?}', 'DownloaderController@schema');
-Route::get('downloader/schema', 'DownloaderController@schema');
-Route::post('downloader/test', 'DownloaderController@test');
-Route::get('testdownload', 'DownloaderController@testdownload');
-Route::apiResource('downloader', 'DownloaderController');
-
 Route::apiResource('trackeddownload', 'TrackedDownloadController')->parameters([
     'trackeddownload' => 'trackedDownload',
 ]);
@@ -62,19 +56,18 @@ Route::put('settings/{category}', 'SettingsController@update');
 
 Route::apiResource('tag', 'TagController');
 
-Route::get('history/issue/{id}', 'HistoryController@issue');
-Route::get('history/issue/{id}', 'HistoryController@issue');
-
 Route::get('rootFolder/{id}/getFolders', 'RootFolderController@getFolders');
 Route::apiResource('rootFolder', 'RootFolderController');
 
 Route::get('command', 'CommandController@command');
 Route::get('filesystem', 'FilesystemController@filesystem');
 
+/*
 Route::get('ddl/index', 'DDLController@index');
 Route::get('ddl/page', 'DDLController@page');
 Route::get('ddl/short', 'DDLController@short');
 Route::get('ddl/download', 'DDLController@download');
+*/
 
 Route::get('system/status', 'SystemController@status');
 Route::get('health', 'SystemController@health');

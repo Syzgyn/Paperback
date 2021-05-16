@@ -16,12 +16,13 @@ use App\Repositories\ComicVineRepository;
 use App\Repositories\AppSettingsRepository;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Libraries\Disk\RemotePathMappingService;
+use Illuminate\Support\Facades\App;
 
 class AppServiceProvider extends ServiceProvider
 {
-    protected $comicvineUrl = 'https://comicvine.gamespot.com/api/';
+    protected string $comicvineUrl = 'https://comicvine.gamespot.com/api/';
 
-    public $singletons = [
+    public array $singletons = [
         'ComicVineRepository' => ComicVineRepository::class,
         'AppSettings' => AppSettingsRepository::class,
         'FileManager' => FileManager::class,
@@ -42,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('Guzzle\ComicVine', function ($app) {
+        $this->app->singleton('Guzzle\ComicVine', function (App $app) {
             return new Client([
                 'base_uri' => $this->comicvineUrl,
             ]);

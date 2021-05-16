@@ -50,7 +50,7 @@ class ComicVineRepository
 
     public function volumesWithYear($name, $year = null)
     {
-        $data = resolve('ParserService')->getComicInfoFromString($name);
+        $data = resolve('OldParserService')->getComicInfoFromString($name);
         if (! $year) {
             $year = $data['year'];
         }
@@ -71,7 +71,7 @@ class ComicVineRepository
         return Volume::make($volume->results)->resolve();
     }
 
-    public function volumeIssues($cvid, $offset = 0)
+    public function volumeIssues($cvid, $offset = 0): array
     {
         $this->bypassCache = true;
         $issues = $this->makeRequest('issues', "issues.$cvid.$offset", ['filter' => "volume:$cvid"]);
@@ -105,7 +105,7 @@ class ComicVineRepository
         return IssueCollection::make($issues->results)->resolve();
     }
 
-    public function searchVolumes($query, $includeLastIssue = false)
+    public function searchVolumes($query, $includeLastIssue = false): array
     {
         if (preg_match('/^cvid:(\d+)$/', $query, $match)) {
             return [ $this->volume($match[1]) ];
@@ -169,7 +169,7 @@ class ComicVineRepository
     protected function sortResults(&$results, $name, $year = null)
     {
         if (! $year) {
-            $data = resolve('ParserService')->getComicInfoFromString($name);
+            $data = resolve('OldParserService')->getComicInfoFromString($name);
             $name = $data['name'];
             $year = $data['year'];
         }

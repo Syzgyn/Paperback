@@ -16,6 +16,7 @@
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "karriere/json-decoder": "^4.0",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0",
@@ -27,7 +28,7 @@
         "wapmorgan/unified-archive": "^1.0"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "^2.10",
+        "barryvdh/laravel-ide-helper": "2.9.1",
         "facade/ignition": "^2.3.6",
         "fzaninotto/faker": "^1.9.1",
         "laravel/telescope": "^4.0",
@@ -35,7 +36,9 @@
         "nunomaduro/collision": "^5.0",
         "nunomaduro/larastan": "^0.7.5",
         "phpstan/phpstan": "^0.12.86",
-        "phpunit/phpunit": "^9.0"
+        "phpunit/phpunit": "^9.0",
+        "psalm/plugin-laravel": "^1.4",
+        "vimeo/psalm": "^4.7"
     },
     "config": {
         "optimize-autoloader": true,

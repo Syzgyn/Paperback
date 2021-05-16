@@ -7,7 +7,7 @@ use App\Repositories\ComicVineRepository;
 
 trait ChangeComicLinks
 {
-    public function changeComicLinks($text)
+    public function changeComicLinks(string $text): string
     {
         $ids = DB::table('comics')->pluck('cvid')->toArray();
         //Find all links
