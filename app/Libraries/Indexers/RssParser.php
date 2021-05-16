@@ -10,6 +10,7 @@ use App\Libraries\Parser\ReleaseInfo;
 use App\Libraries\Indexers\Exceptions\UnsupportedFeedException;
 use App\Libraries\Indexers\Exceptions\SizeParsingException;
 use App\Libraries\Indexers\Exceptions\IndexerException;
+use Traversable;
 
 class RssParser
 {
@@ -17,7 +18,9 @@ class RssParser
     const TorrentEnclosureMimeType = "application/x-bittorrent";
     const MagnetEnclosureMimeType = "application/x-bittorrent;x-scheme-handler/magnet";
 
+    /** @var string[] */
     public static array $usenetEnclosureMimeTypes = [ self::NzbEnclosureMimeType ];
+    /** @var string[] */
     public static array $torrentEnclosureMimeTypes = [ self::TorrentEnclosureMimeType, self::MagnetEnclosureMimeType ];
 
     // Use the 'guid' element content as InfoUrl
@@ -30,15 +33,16 @@ class RssParser
     // Parse "Size: 1.3 GB" or "1.3 GB" parts in the description element and use that as Size.
     public bool $parseSizeInDescription = false;
 
+    /** @var string[] */
     public array $preferredEnclosureMimeTypes = [];
 
-    protected HttpResponse $response;
+    protected ?HttpResponse $response = null;
 
     public function __construct()
     {
     }
 
-    public function parseResponse(HttpResponse $response): ?array
+    public function parseResponse(HttpResponse $response): array
     {
         $this->response = $response;
 
@@ -53,10 +57,7 @@ class RssParser
 
         foreach($items as $item) {
             try {
-                $reportInfo = $this->processItem($item);
-                if ($reportInfo) {
-                    $results[] = $reportInfo;
-                }
+                $results[] = $this->processItem($item);
             } catch (\Exception $e) {
                 //TODO: Log error
                 throw $e;
@@ -72,14 +73,21 @@ class RssParser
 
     protected function preProcess(): bool
     {
+        if ($this->response == null) {
+            throw new IndexerException("Indexer API call tried to process an empty response");
+            
+        }
         if ($this->response->statusCode !== 200) {
            throw new IndexerException("Indexer API call resulted in an unexpected StatusCode " . $this->response->statusCode);
         }
 
         // If we returned text/html and didn't request it...
         if (isset($this->response->headers['Content-Type']) && isset($this->response->request->headers['Accept'])) {
-            $contentTypes = implode(',', $this->response->headers['Content-Type']);
-            if (str_contains($contentTypes, 'text/html') && !str_contains($this->response->request->headers['Accept'], 'text/html')) {
+            if (gettype($this->response->headers['Content-Type']) != "string") {
+                throw new IndexerException("Indexer responded with an unknown Content-Type, got: " . print_r($this->response->headers['Content-Type'], true));
+            }
+
+            if (str_contains($this->response->headers['Content-Type'], 'text/html') && !str_contains($this->response->request->headers['Accept'], 'text/html')) {
                 throw new IndexerException("Indexer responded with html content. Site is likely blocked or unavailable.");
             }
         }
@@ -87,27 +95,47 @@ class RssParser
         return true;
     }
 
+    /** @param SimpleXMLElement[] $items */
     protected function postProcess(array &$items, array &$releases): bool
     {
         return true;
     }
 
-    protected function loadXmlDocument(): SimpleXMLElement|false
+    protected function loadXmlDocument(): SimpleXMLElement
     {
-        //libxml_use_internal_errors(true);
+        if ($this->response == null || $this->response->content == null) {
+            throw new \Exception("Unable to parse XML: No content found");    
+        }
+
+        libxml_use_internal_errors(true);
         $content = $this->response->content;
         //Replace HTML entities
         //$content = html_entity_decode($content);
         //Remove unicode characters
         $content = preg_replace('/[\x00-\x1F\x7F]/u', '', $content);
 
-        return simplexml_load_string($content);
+        $xml = simplexml_load_string($content);
+
+        if ($xml === false) {
+            $errors = libxml_get_errors();
+            $firstError = array_shift($errors);
+            throw new \Exception(sprintf("Unable to parse XML: Issue %s on line %s, column %s", $firstError->code, $firstError->line, $firstError->column));
+        }
+
+        return $xml;
     }
 
-    protected function getItems(SimpleXMLElement $document)
+    /** @return SimpleXMLElement[] */
+    protected function getItems(SimpleXMLElement $document): array
     {
         $items = [];
+
+        if (empty($document->channel) || !($document->channel instanceof SimpleXMLElement) || empty($document->channel->item)) {
+            return [];
+        }
+
         try {
+            /** @var SimpleXMLElement $item */
             foreach($document->channel->item as $item) {
                 $items[] = $item;
             }
@@ -120,7 +148,7 @@ class RssParser
     {
         $releaseInfo = new ReleaseInfo();
         $releaseInfo->guid = $this->getGuid($item);
-        $releaseInfo->title = $this->getTitle($item);
+        $releaseInfo->title = $this->getTitle($item) ?? "Unknown Title";
         $releaseInfo->publishDate = $this->getPublishDate($item);
         $releaseInfo->downloadUrl = $this->getDownloadUrl($item);
         $releaseInfo->infoUrl = $this->getInfoUrl($item);
@@ -137,23 +165,28 @@ class RssParser
 
     protected function getGuid(SimpleXMLElement $item): ?string
     {
-        return $item->guid ?? null;
+        if (empty($item->guid)) {
+            return null;
+        }
+        return (string) $item->guid;
     }
 
     protected function getTitle(SimpleXMLElement $item): ?string
     {
-        return $item->title ?? null;
+        if (empty($item->title)) {
+            return null;
+        }
+        return (string) $item->title;
     }
 
     protected function getPublishDate(SimpleXMLElement $item): DateTime
     {
-        $pubDate = $item->pubDate ?? null;
-
-        if ($pubDate) {
-            return new DateTime($pubDate);
+        if (empty($item->pubDate)) {
+            throw new UnsupportedFeedException("Rss feed must have a pubDate element with a valid publish date.");
         }
 
-        throw new UnsupportedFeedException("Rss feed must have a pubDate element with a valid publish date.");
+        $pubDate = (string) $item->pubDate;
+        return new DateTime($pubDate);
     }
 
     protected function getDownloadUrl(SimpleXMLElement $item): ?string
@@ -215,17 +248,23 @@ class RssParser
         return null;
     }
 
+    /** @return array<array-key, array{url: string, type: string, length: int}> */
     protected function getEnclosures(SimpleXMLElement $item): array
     {
-        return array_map(function($element) {
+        if (!($item->enclosure instanceof Traversable)) {
+            return [];
+        }
+
+        return array_map(function(SimpleXMLElement $element) {
             return [
-                'url' => (string)$element['url'] ?? null,
-                'type' => (string)$element['type'] ?? null,
-                'length' => (int)$element['length'] ?? 0,
+                'url' => (string)$element['url'],
+                'type' => (string)$element['type'],
+                'length' => (int)$element['length'],
             ];
         }, iterator_to_array($item->enclosure, false));
     }
 
+    /** @return array{url: string, type: string, length: int}|null */
     protected function getEnclosure(SimpleXMLElement $item, bool $enforceMimeType = true): ?array
     {
         $enclosures = $this->getEnclosures($item);
@@ -236,7 +275,7 @@ class RssParser
 
         if ($this->preferredEnclosureMimeTypes != null) {
             foreach ($this->preferredEnclosureMimeTypes as $mimeType) {
-                $filteredEnclosures = array_filter($enclosures, function($enc) use ($mimeType) {
+                $filteredEnclosures = array_filter($enclosures, function(array $enc) use ($mimeType) {
                     return $enc['type'] === $mimeType;
                 });
 
@@ -255,7 +294,7 @@ class RssParser
 
     protected function parseUrl(string $value): ?string
     {
-        if (empty($value)) {
+        if (empty($value) || $this->response == null) {
             return null;
         }
 

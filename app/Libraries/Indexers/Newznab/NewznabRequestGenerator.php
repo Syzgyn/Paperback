@@ -8,18 +8,25 @@ use App\Libraries\IndexerSearch\SearchCriteriaBase;
 use App\Libraries\Indexers\IndexerRequestGeneratorInterface;
 use App\Libraries\Indexers\IndexerPageableRequestChain;
 use App\Models\Indexers\Newznab;
+use Exception;
 
 class NewznabRequestGenerator implements IndexerRequestGeneratorInterface
 {
-    protected $maxPages = 30;
+    public NewznabSettings $settings;
+    protected int $maxPages = 30;
 
-    public function getPageSize()
+    public function getPageSize(): int
     {
         return Newznab::PAGE_SIZE;
     }
 
-    public function __construct(public NewznabSettings $settings)
+    public function __construct(?NewznabSettings $settings = null)
     {
+        if (!$settings) {
+            throw new Exception("Missing NewznabSettings object");
+        }
+
+        $this->settings = $settings;
     }
 
     public function getRecentRequests(): IndexerPageableRequestChain
@@ -50,11 +57,11 @@ class NewznabRequestGenerator implements IndexerRequestGeneratorInterface
 
         if ($this->getPageSize() === 0)
         {
-            yield new HttpRequest($baseUrl . $parameters, HttpAccept::rss());
+            yield new HttpRequest($baseUrl . $parameters, (string) HttpAccept::rss());
         } else {
             for($page = 0; $page < $this->maxPages; $page++) {
                 $url = sprintf("%s&offset=%d&limit=%d%s", $baseUrl, $page * $this->getPageSize(), $this->getPageSize(), $parameters);
-                yield new HttpRequest($url, HttpAccept::rss());
+                yield new HttpRequest($url, (string) HttpAccept::rss());
             }
         }
     }

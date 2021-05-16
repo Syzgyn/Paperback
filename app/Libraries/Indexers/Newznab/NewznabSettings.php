@@ -2,11 +2,20 @@
 
 namespace App\Libraries\Indexers\Newznab;
 
+use App\Libraries\Providers\ProviderSettings;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
-class NewznabSettings
+/**
+ * @property string $baseUrl
+ * @property string $apiPath
+ * @property string $apiKey
+ * @property array $categories
+ * @property string $additionalParameters
+ */
+class NewznabSettings extends ProviderSettings
 {
+    /** @var array */
     protected $definitions = [
         [
             'name' => 'baseUrl',
@@ -50,6 +59,7 @@ class NewznabSettings
         ],
     ];
 
+    /** @var array */
     protected $rules = [ 
         'baseUrl' => 'required|url',
         'apiPath' => 'string',
@@ -58,57 +68,10 @@ class NewznabSettings
         'additionalParameters' => 'string',
     ];
 
+    /** @var array */
     protected $attributeLabels = [
         'baseUrl' => 'URL',
         'apiPath' => 'API Path',
         'apiKey' => 'API Key',
     ];
-
-    public $attributes = [];
-
-    public function __construct(array $attributes = [])
-    {
-        foreach($attributes as $k => $v) {
-            if (!is_numeric($k)) {
-                $this->attributes[$k] = $v;
-            } else {
-                $this->attributes[$v['name']] = $v['value'] ?? '';
-            }
-        }
-    }
-
-    public function getSettings()
-    {
-        return array_map(function(array $array) {
-            if (isset($this->attributes[$array['name']])) {
-                $array['value'] = $this->attributes[$array['name']];
-            }
-            return $array;
-        }, $this->definitions);
-    }
-
-    public function __get(string $key)
-    {
-        return $this->attributes[$key] ?? null;
-    }
-
-    public function __set(string $key, $value): void 
-    {
-        $this->attributes[$key] = $value;
-    }
-
-    public function __isset(string $key): bool
-    {
-        return isset($this->attributes[$key]);
-    }
-
-    public function validate($messages = [])
-    {
-        $validator = Validator::make($this->attributes, $this->rules, $messages, $this->attributeLabels);
-        if($validator->fails()) {
-            throw new ValidationException($validator);
-        }
-
-        return true;
-    }
 }

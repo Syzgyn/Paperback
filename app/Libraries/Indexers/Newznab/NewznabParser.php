@@ -44,6 +44,8 @@ class NewznabParser extends RssParser
             throw new ApiKeyException($message);
         }
 
+        assert($this->response != null);
+
         if (!str_contains($this->response->request->url->getFullUrl(), "apikey=") && 
             ($message === "Missing parameter" || str_contains($message, "apikey"))
         ) {
@@ -57,6 +59,7 @@ class NewznabParser extends RssParser
         throw new NewznabException($message);
     }
 
+    /** @param SimpleXMLElement[] $items */
     protected function postProcess(array &$items, array &$releases): bool
     {
         $enclosureTypes = array_filter(array_unique(array_map(function($item) {
@@ -123,9 +126,11 @@ class NewznabParser extends RssParser
 
     protected function tryGetNewznabAttribute(SimpleXMLElement $item, string $attribute, string $defaultValue = ""): string
     {
-        $elements = $item->children('newznab', true)->attr;
+        /** @var SimpleXMLElement */
+        $elements = $item->children('newznab', true);
 
-        foreach($elements as $element) {
+        /** @var SimpleXMLElement $element */
+        foreach($elements->attr as $element) {
             if ((string)$element->attributes()['name'] === $attribute) {
                 return (string)$element->attributes()['value'];
             }

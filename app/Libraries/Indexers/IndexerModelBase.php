@@ -3,13 +3,19 @@
 namespace App\Libraries\Indexers;
 
 use App\Exceptions\TestException;
+use App\Libraries\Http\HttpClient;
 use App\Libraries\Providers\ProviderModelBase;
 use App\Models\Indexers\Newznab;
 use App\Libraries\Providers\ProviderSettingsCast;
 use App\Libraries\IndexerSearch\SearchCriteriaBase;
 use App\Libraries\Parser\ReleaseInfo;
 use App\Libraries\Http\HttpRequest;
+use App\Libraries\Http\HttpResponse;
+use App\Libraries\Indexers\Exceptions\IndexerException;
 use Exception;
+use Generator;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * App\Libraries\Indexers
@@ -17,7 +23,7 @@ use Exception;
  * @property int $id
  * @property string $name
  * @property string $implementation
- * @property |null $settings
+ * @property mixed|null $settings
  * @property string|null $settings_schema
  * @property bool|null $enable_rss
  * @property bool|null $enable_automatic_search
@@ -27,9 +33,6 @@ use Exception;
  * @property-read array $fields
  * @property-read mixed $foo
  * @property-read string $settings_schema_class_name
- * @method static \Illuminate\Database\Eloquent\Builder|Indexer newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Indexer newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Indexer query()
  * @method static \Illuminate\Database\Eloquent\Builder|Indexer whereEnableAutomaticSearch($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Indexer whereEnableInteractiveSearch($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Indexer whereEnableRss($value)
@@ -68,8 +71,8 @@ abstract class IndexerModelBase extends ProviderModelBase
         'enable_automatic_search' => true,
     ];
 
-    protected abstract function getParser();
-    protected abstract function getRequestGenerator();
+    protected abstract function getParser(): RssParser;
+    protected abstract function getRequestGenerator(): IndexerRequestGeneratorInterface;
 
     public function getChildClasses(): array
     {
@@ -93,6 +96,7 @@ abstract class IndexerModelBase extends ProviderModelBase
         try {
             $requestGenerator = $this->getRequestGenerator();
 
+            /** @var Generator<HttpRequest>[] */
             $requests = $requestGenerator->getRecentRequests()->getAllTiers();
             $request = array_shift($requests)->current();
 
@@ -111,23 +115,38 @@ abstract class IndexerModelBase extends ProviderModelBase
         }
     }
 
-    protected function fetchPage(HttpRequest $request): ?array
+    protected function fetchPage(HttpRequest $request): array
     {
         //TODO: Implement per-key rate limiting
         $request->rateLimitKey = "indexer-" . $this->id;
 
-        $response = resolve("HttpClient")->execute($request);
+        /** @var HttpClient $client 
+         *  @var HttpResponse $response
+        */
+        $client = resolve("HttpClient");
+        $response = $client->execute($request);
 
         $parser = $this->getParser();
 
         return $parser->parseResponse($response);
     }
 
+    /**
+     * @param SearchCriteriaBase $searchCriteria 
+     * @param bool $isRecent 
+     * @return ReleaseInfo[] 
+     * @throws BindingResolutionException 
+     * @throws GuzzleException 
+     * @throws IndexerException 
+     * @throws Exception 
+     */
     public function fetch(SearchCriteriaBase $searchCriteria, bool $isRecent = false): array
     {
         //TODO: Check for search support
         $generator = $this->getRequestGenerator();
         $requestChain = $generator->getSearchRequests($searchCriteria);
+
+        /** @var ReleaseInfo[] */
         $releases = [];
 
         //TODO:Add recurring RSS search 
@@ -138,6 +157,7 @@ abstract class IndexerModelBase extends ProviderModelBase
             foreach ($requestTier as $requestGenerator) {
                 $pagedReleases = [];
 
+                /** @var HttpRequest $request */
                 foreach ($requestGenerator as $request) {
                     $page = $this->fetchPage($request);
 
@@ -155,7 +175,7 @@ abstract class IndexerModelBase extends ProviderModelBase
                         break;
                     }
                 }
-
+                /** @var ReleaseInfo[] $pagedReleases */
                 $releases += array_filter($pagedReleases, [$this, 'isValidRelease']); 
             }
 
@@ -167,9 +187,14 @@ abstract class IndexerModelBase extends ProviderModelBase
         return $this->cleanupReleases($releases);
     }
 
+    /**
+     * @param ReleaseInfo[] $releases 
+     * @return ReleaseInfo[]
+     */
     protected function cleanupReleases(array $releases): array
     {
         $results = array_filter($releases, function($release) {
+            /** @var string[] */
             static $guidList = [];
             if (in_array($release->guid, $guidList)) {
                 return false;
@@ -178,13 +203,14 @@ abstract class IndexerModelBase extends ProviderModelBase
             return true;
         });
 
-        array_walk($results, function($release) {
+        array_walk($results, function(ReleaseInfo $release) {
             $release->indexerId = $this->id;
             $release->indexer = $this->name;
-            $release->downloadProtocol = static::PROTOCOL;
+            $release->downloadProtocol = (string)static::PROTOCOL;
             $release->indexerPriority = $this->priority;
         });
-        
+
+        /** @var ReleaseInfo[] */
         return $results;
     }
 
@@ -193,7 +219,8 @@ abstract class IndexerModelBase extends ProviderModelBase
         return !empty($release->downloadUrl);
     }
 
-    protected function isFullPage(array $page) {
+    protected function isFullPage(array $page): bool
+    {
         return static::PAGE_SIZE != 0 && count($page) >= static::PAGE_SIZE; 
     }
 }

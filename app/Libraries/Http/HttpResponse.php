@@ -7,6 +7,7 @@ use GuzzleHttp\Psr7\Response;
 class HttpResponse
 {
     public int $statusCode;
+    /** @var array<array-key, mixed> */
     public array $headers;
     public HttpRequest $request;
     public string $content;

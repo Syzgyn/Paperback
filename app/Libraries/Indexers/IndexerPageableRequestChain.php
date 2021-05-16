@@ -7,6 +7,7 @@ use Generator;
 
 class IndexerPageableRequestChain
 {
+    /** @var array<Generator[]> $chain */
     protected array $chain = [];
 
     public function __construct()
@@ -19,11 +20,13 @@ class IndexerPageableRequestChain
         return count($this->chain);
     }
 
+    /** @return Generator[] */
     public function getAllTiers(): array
     {
         return array_merge(...$this->chain);
     }
 
+    /** @return Generator[] */
     public function getTier(int $index): array
     {
         return $this->chain[$index];
@@ -31,26 +34,18 @@ class IndexerPageableRequestChain
 
     public function add(Generator $request): void
     {
-        if ($request == null) {
-            return;
-        }
-
         $this->chain[$this->tierCount() - 1][] = $request;
     }
 
     public function addToTier(int $index, Generator $request): void
     {
-        if ($request == null) {
-            return;
-        }
-        
         $this->chain[$index][] = $request;
     }
 
-    public function addTier(Generator|null $request = null)
+    public function addTier(?Generator $request = null): void
     {
         if ($request === null) {
-            if (count($this->chain[$this->tierCount() - 1] === 0)) {
+            if (count($this->chain[$this->tierCount() - 1]) === 0) {
                 return;
             }
 
