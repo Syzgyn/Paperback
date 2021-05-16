@@ -7,14 +7,16 @@ use App\Models\Issue;
 
 abstract class SearchCriteriaBase
 {
-        protected $patterns = [
+        /** @var string[] */
+        protected array $patterns = [
             "/^the\s/i", //Beginning 'the'
             "/&/",       //Ampersand
             "/[`'\.]/i", //Special Characters
             "/[\W]/i",   //Non-words
         ];
 
-        protected $replacements = [
+        /** @var string[] */
+        protected array $replacements = [
             "",     //Beginning 'the'
             "and",  //Ampersand
             "",     //Special characters
@@ -22,6 +24,7 @@ abstract class SearchCriteriaBase
         ];
 
         public Comic $comic;
+        /** @var Issue[] */
         public array $issues;
         public bool $monitoredEpisodesOnly;
         public bool $userInvokedSearch;
@@ -49,5 +52,10 @@ abstract class SearchCriteriaBase
             }
 
             return null;
+        }
+
+        public function __toString(): string
+        {
+            return $this->getQueryTitle();
         }
 }
