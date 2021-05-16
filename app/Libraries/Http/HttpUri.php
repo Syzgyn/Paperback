@@ -4,14 +4,14 @@ namespace App\Libraries\Http;
 
 class HttpUri
 {
-    public ?string $scheme;
-    public ?string $host;
-    public ?int    $port;
-    public ?string $path;
-    public ?string $query;
-    public ?string $fragment;
+    public ?string $scheme = null;
+    public ?string $host = null;
+    public ?int    $port = null;
+    public ?string $path = null;
+    public ?string $query = null;
+    public ?string $fragment = null;
 
-    protected $uri;
+    protected string $uri;
 
     public function __construct(string $uri)
     {
@@ -19,7 +19,7 @@ class HttpUri
         $this->parse();
     }
 
-    public static function fromParts(string $scheme, string $host, ?int $port, ?string $path = null, ?string $query, ?string $fragment)
+    public static function fromParts(string $scheme, string $host, ?int $port, ?string $path = null, ?string $query, ?string $fragment): self
     {
 		$scheme   = $scheme . '://';
 		$port     = isset($port) ? ':' . $port : '';
@@ -52,17 +52,17 @@ class HttpUri
         return $this->uri;
     }
 
-    public function getFullUrl()
+    public function getFullUrl(): string
     {
         return $this->uri;
     }
 
     public function combineWithPath(string $path): HttpUri
     {
-        return HttpUri::fromParts($this->scheme, $this->host, $this->port, self::combinePath($this->path, $path), $this->query, $this->fragment);
+        return HttpUri::fromParts($this->scheme ?? "", $this->host ?? "", $this->port, self::combinePath($this->path ?? "", $path), $this->query, $this->fragment);
     }
 
-    public static function combinePath(string $basePath, string $relativePath): string 
+    public static function combinePath(string $basePath, ?string $relativePath = ""): string 
     {
         if (empty($relativePath)) {
             return $basePath;
@@ -79,10 +79,10 @@ class HttpUri
 
     public function setQuery(string $query): HttpUri
     {
-        return self::fromParts($this->scheme, $this->host, $this->port, $this->path, $query, $this->fragment);
+        return self::fromParts($this->scheme ?? "", $this->host ?? "", $this->port, $this->path, $query, $this->fragment);
     }
 
-    public function addQueryParam(string $key, $val): HttpUri
+    public function addQueryParam(string $key, mixed $val): HttpUri
     {
         $data = [$key => $val];
         $newQuery = http_build_query($data);
@@ -115,9 +115,9 @@ class HttpUri
             return $relativePath;
         }
 
-        $baseSlashIndex = strrchr($basePath, '/');
+        $baseSlashIndex = strrpos($basePath, '/');
 
-        if ($baseSlashIndex >= 0) {
+        if ($baseSlashIndex !== false && $baseSlashIndex >= 0) {
             return substr($basePath, 0, $baseSlashIndex) . '/' . $relativePath;
         }
 
@@ -131,13 +131,13 @@ class HttpUri
         }
 
         if (!empty($relativeUri->host)) {
-            return self::fromParts($this->scheme, $relativeUri->host, $relativeUri->port, $relativeUri->path, $relativeUri->query, $relativeUri->fragment);
+            return self::fromParts($this->scheme ?? "", $relativeUri->host, $relativeUri->port, $relativeUri->path, $relativeUri->query, $relativeUri->fragment);
         }
 
         if (!empty($relativeUri->path)) {
-            return self::fromParts($this->scheme, $this->host, $this->port, self::combineRelativePath($this->path, $relativeUri->path), $relativeUri->query, $relativeUri->fragment);
+            return self::fromParts($this->scheme ?? "", $this->host ?? "", $this->port, self::combineRelativePath($this->path ?? "", $relativeUri->path), $relativeUri->query, $relativeUri->fragment);
         }
 
-        return self::fromParts($this->scheme, $this->host, $this->port, $this->path, $relativeUri->query, $relativeUri->fragment);
+        return self::fromParts($this->scheme ?? "", $this->host ?? "", $this->port, $this->path, $relativeUri->query, $relativeUri->fragment);
     }
 }

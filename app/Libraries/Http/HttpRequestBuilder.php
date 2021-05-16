@@ -8,12 +8,14 @@ use Closure;
 class HttpRequestBuilder
 {
     public string $method;
-    public string $httpAccept;
+    public ?string $httpAccept = null;
     public HttpUri $baseUrl;
     public string $resourceUrl;
     public array $queryParams = [];
     public array $suffixQueryParams = [];
+    /** @var array<array-key, float|int|string> */
     public array $segments = [];
+    /** @var array<string, string> */
     public array $headers = [];
     public bool $suppressHttpError = false;
     public bool $logHttpError = false;
@@ -21,11 +23,13 @@ class HttpRequestBuilder
     public bool $allowAutoRedirect = false;
     public int $rateLimit = -1; 
     public bool $logResponseContent = false;
-    public string $username;
-    public string $password;
+    public ?string $username = null;
+    public ?string $password = null;
+    /** @var array<string, string> */
     public array $cookies = [];
+    /** @var HttpFormData[] */
     public array $formData = [];
-    public Closure $postProcess;
+    public ?Closure $postProcess = null;
 
     public function __construct(string $baseUrl)
     {
@@ -35,7 +39,7 @@ class HttpRequestBuilder
         $this->logHttpError = true;
     }
 
-    public static function buildBaseUrl(bool $useHttps, string $host, int $port, ?string $urlBase = null)
+    public static function buildBaseUrl(bool $useHttps, string $host, int $port, ?string $urlBase = null): string
     {
         $protocol = $useHttps ? 'https' : 'http';
 
@@ -43,7 +47,7 @@ class HttpRequestBuilder
             $urlBase = '/' . $urlBase;
         }
 
-        return sprintf("%s://%s:%s%s", $protocol, $host, $port, $urlBase);
+        return sprintf("%s://%s:%s%s", $protocol, $host, $port, $urlBase ?? "");
     }
 
     protected function createUri(): HttpUri
@@ -96,7 +100,7 @@ class HttpRequestBuilder
         $request = $this->createRequest();
         $this->apply($request);
 
-        if (isset($this->postProcess)) {
+        if ($this->postProcess != null) {
             ($this->postProcess)($request);
         }
 
@@ -106,9 +110,7 @@ class HttpRequestBuilder
     public function __clone()
     {
         $this->baseUrl = clone $this->baseUrl;
-        $this->rateLimit = clone $this->rateLimit;
         $this->formData = array_map(fn($o) => clone $o, $this->formData);
-
     }
 
     public function createFactory(): HttpRequestBuilderFactory
@@ -137,7 +139,7 @@ class HttpRequestBuilder
 
                 $data = [
                     'name' => $formData->name,
-                    'contents' => $formData->contentData ?? "",
+                    'contents' => !empty($formData->contentData) ? $formData->contentData : "",
                 ];
 
                 if (!empty($formData->filename)) {
@@ -227,7 +229,7 @@ class HttpRequestBuilder
     {
         $key = "{" . $segment . "}";
 
-        if (!$dontCheck && ! str_contains($this->createUri(), $key)) {
+        if (!$dontCheck && ! str_contains((string) $this->createUri(), $key)) {
             throw new Exception("Segment $segment is not defined in Uri");
         }
 
@@ -236,6 +238,7 @@ class HttpRequestBuilder
         return $this;
     }
 
+    /** @param array<string, string> $cookies */
     public function setCookies(array $cookies): HttpRequestBuilder
     {
         foreach($cookies as $key => $value) {

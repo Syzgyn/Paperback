@@ -11,12 +11,13 @@ class HttpClient
 {
     const MAX_REDIRECTS = 5;
 
-    protected $client;
+    protected Client $client;
     
     public function __construct()
     {
         //TODO: move this to per-request handler, using rate limiter key
         $stack = HandlerStack::create();
+        /** @psalm-suppress MixedArgumentTypeCoercion */
         $stack->push(RateLimiterMiddleware::perSecond(1, new RateLimiterStore()));
 
         $this->client = new Client([
@@ -28,6 +29,7 @@ class HttpClient
     {
         $options = $this->compileOptions($request);
 
+        /** @psalm-var \GuzzleHttp\Psr7\Response */
         $response = $this->client->request($request->method, (string)$request->url, $options);
 
         return new HttpResponse($request, $response);
@@ -49,9 +51,9 @@ class HttpClient
             $options['headers'] = $request->headers;
         }
 
-        if (isset($request->contentData)) {
+        if (!empty($request->contentData)) {
             $options['body'] = $request->contentData;
-        } elseif (isset($request->formData)) {
+        } elseif (!empty($request->formData)) {
             $key = $request->isMultipartData ? "multipart" : "form_params";
 
             $options[$key] = $request->formData;
