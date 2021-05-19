@@ -38,6 +38,10 @@ class DecisionService
         foreach($reports as $report) {
             $decision = null;
 
+            if ($report->title == null) {
+                continue;
+            }
+
             try {
                 $parsedIssueInfo = Parser::parseTitle($report->title);
 

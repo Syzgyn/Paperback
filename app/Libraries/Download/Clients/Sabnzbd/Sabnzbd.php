@@ -178,6 +178,7 @@ class Sabnzbd extends UsenetClientModelBase
         return $historyItems;
     }
 
+    /** @return DownloadClientItem[] */
     public function getItems(): array
     {
         $items = $this->getQueue() + $this->getHistory();

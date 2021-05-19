@@ -32,6 +32,17 @@ class ParserService
         return $remoteIssue;
     }
 
+    /** @param Issue[] $issues */
+    public function mapFromIssueIds(ParsedIssueInfo $parsedIssueInfo, Comic $comic, array $issues): RemoteIssue
+    {
+        $remoteIssue = new RemoteIssue();
+        $remoteIssue->parsedIssueInfo = $parsedIssueInfo;
+        $remoteIssue->comic = $comic;
+        $remoteIssue->issues = $issues;
+
+        return $remoteIssue;
+    }
+
     protected function getComic(ParsedIssueInfo $parsedIssueInfo, SearchCriteriaBase $searchCriteria): ?Comic
     {
         if ($this->cleanComicTitle($searchCriteria->comic->title) === $this->cleanComicTitle($parsedIssueInfo->comicTitle)) {
@@ -85,10 +96,11 @@ class ParserService
         return strtr(utf8_decode($str), utf8_decode('àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'), 'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
     }
 
+    /** @return Issue[] */
     public function getIssues(ParsedIssueInfo $parsedIssueInfo, Comic $comic, ?SearchCriteriaBase $searchCriteria = null): array
     {
         if ($parsedIssueInfo->fullComic) {
-            return $comic->issues->toArray(); 
+            return $comic->issues->all(); 
         }
 
         if (empty($parsedIssueInfo->issueNumbers)) {
@@ -105,6 +117,7 @@ class ParserService
             }
 
             if ($issue == null) {
+                /** @var ?Issue */
                 $issue = Issue::firstWhere(['comic_id' => $comic->cvid, 'issue_num' => $issueNumber]);
             }
 

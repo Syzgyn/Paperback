@@ -69,7 +69,7 @@ class ComicController extends Controller
         return response()->json(['status' => 'OK']);
     }
 
-    public function search(Request $request): VolumeCollection
+    public function search(Request $request): array
     {
         $search = (string)$request->input('term');
 
@@ -85,7 +85,7 @@ class ComicController extends Controller
         return redirect($data['url']);
     }
 
-    public function importSearch(Request $request): VolumeCollection
+    public function importSearch(Request $request): array
     {
         $search = (string)$request->input('query');
 

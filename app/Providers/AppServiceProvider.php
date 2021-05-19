@@ -16,7 +16,9 @@ use App\Repositories\ComicVineRepository;
 use App\Repositories\AppSettingsRepository;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Libraries\Disk\RemotePathMappingService;
-use Illuminate\Support\Facades\App;
+use App\Libraries\Download\History\DownloadHistoryService;
+use App\Libraries\History\HistoryService;
+use Illuminate\Foundation\Application;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -34,6 +36,8 @@ class AppServiceProvider extends ServiceProvider
         'ParserService' => ParserService::class,
         'NzbValidationService' => NzbValidationService::class,
         'RemotePathMappingService' => RemotePathMappingService::class,
+        'DownloadHistoryService' => DownloadHistoryService::class,
+        'HistoryService' => HistoryService::class
     ];
 
     /**
@@ -43,7 +47,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('Guzzle\ComicVine', function (App $app) {
+        $this->app->singleton('Guzzle\ComicVine', function (Application $app) {
             return new Client([
                 'base_uri' => $this->comicvineUrl,
             ]);

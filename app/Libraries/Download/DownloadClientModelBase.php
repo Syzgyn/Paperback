@@ -18,6 +18,8 @@ use Exception;
  * @property string|null $settings_schema
  * @property bool|null $enable
  * @property int $priority
+ * 
+ * @method static \Illuminate\Database\Eloquent\Builder whereEnable($value)
  */
 abstract class DownloadClientModelBase extends ProviderModelBase
 {
@@ -48,6 +50,7 @@ abstract class DownloadClientModelBase extends ProviderModelBase
     }
 
     public abstract function download(RemoteIssue $remoteIssue): string;
+    /** @return DownloadClientItem[] */
     public abstract function getItems(): array;
     public abstract function removeItem(DownloadClientItem $item, bool $deleteData): void;
     public abstract function getStatus(): DownloadClientInfo;
