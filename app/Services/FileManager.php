@@ -50,7 +50,8 @@ class FileManager
         "#recycle"
     ];
 
-    public function moveCompletedDownloads()
+    /*
+    public function moveCompletedDownloads(): void
     {
         $downloads = TrackedDownload::with(['issue', 'issue.comic', 'comic'])
             ->where('status', TrackedDownload::DOWNLOAD_STATUS['Completed'])
@@ -216,9 +217,10 @@ class FileManager
 
         return $info->number;
     }
+    */
 
     /** @return string[] */
-    public function getIssuesInFolder($path): array
+    public function getIssuesInFolder(string $path): array
     {
         if (! is_dir($path)) {
             //Check if path is the file itself
@@ -242,7 +244,7 @@ class FileManager
     }
 
     // Checks if the given path is a valid comic archive file or not 
-    protected function checkFileType($path)
+    protected function checkFileType(string $path): ?string
     {
         $extension = pathinfo($path, PATHINFO_EXTENSION);
         if (in_array($extension, self::FILETYPES) && file_exists($path)) {
@@ -252,23 +254,23 @@ class FileManager
         return null;
     }
 
-    public function getOrCreateComicDir(Comic $comic)
+    public function getOrCreateComicDir(Comic $comic): string
     {
         $path = $comic->path;
         if (! file_exists($path)) {
             if (! mkdir($path)) {
-                Log::error("Unable to create directory for comic {$comic->name}");
-                throw new \Exception("Unable to create directory for comic {$comic->name}");
+                Log::error("Unable to create directory for comic {$comic->title}");
+                throw new \Exception("Unable to create directory for comic {$comic->title}");
             } else {
                 chmod($path, 0775);
-                Log::info("Created directory $path for comic {$comic->name}");
+                Log::info("Created directory $path for comic {$comic->title}");
             }
         }
 
         return $path;
     }
 
-    public function moveFile(string $original, string $new)
+    public function moveFile(string $original, string $new): string
     {
         $extension = pathinfo($original, PATHINFO_EXTENSION);
         $new .= '.' . $extension;
@@ -280,14 +282,19 @@ class FileManager
         return $new;
     }
 
-    public function removeDir($path)
+    public function removeDir(string $path): bool
     {
         if (!is_dir($path)) {
             Log::warning("$path is not a valid directory");
             return true;
         }
 
-        $files = array_diff(scandir($path), ['.', '..']);
+        $fileListing = scandir($path);
+        if ($fileListing === false) {
+            return false;
+        }
+
+        $files = array_diff($fileListing, ['.', '..']);
 
         foreach ($files as $file) {
             if (is_dir($path . DIRECTORY_SEPARATOR . $file)) {
@@ -366,7 +373,7 @@ class FileManager
         return $output;
     }
 
-    public function removeEmptyDir(string $path)
+    public function removeEmptyDir(string $path): void
     {
         $data = $this->getDirectoryListing($path, true);
         if (count($data['files'])) {
