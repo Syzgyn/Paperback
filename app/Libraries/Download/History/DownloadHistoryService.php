@@ -12,6 +12,7 @@ class DownloadHistoryService
 {
     public function downloadAlreadyImported(string $downloadId): bool
     {
+        /** @var DownloadHistory[] */
         $events = DownloadHistory::findByDownloadId($downloadId);
 
         // Events are ordered by date descending, if a grabbed event comes before an imported event then it was never imported
@@ -29,8 +30,9 @@ class DownloadHistoryService
         return false;
     }
 
-    public function getLatestDownloadHistoryItem(string $downloadId): DownloadHistory
+    public function getLatestDownloadHistoryItem(string $downloadId): ?DownloadHistory
     {
+        /** @var DownloadHistory[] */
         $events = DownloadHistory::findByDownloadId($downloadId);
 
         foreach ($events as $event) {
@@ -47,8 +49,9 @@ class DownloadHistoryService
         return null;
     }
 
-    public function getLatestGrab(string $downloadId): DownloadHistory
+    public function getLatestGrab(string $downloadId): ?DownloadHistory
     {
+        /** @var DownloadHistory|null */
         return DownloadHistory::whereDownloadClientId($downloadId)
             ->where('event_type', DownloadHistoryEventType::DOWNLOAD_GRABBED)
             ->orderByDesc('date')->first();
@@ -56,31 +59,37 @@ class DownloadHistoryService
 
     public function handleIssueGrabbedEvent(IssueGrabbedEvent $event): void
     {
-        if (empty($event->downloadId)) {
+        if (
+            empty($event->downloadId) ||
+            empty($event->issue->comic) ||
+            empty($event->issue->release) ||
+            empty($event->issue->release->downloadProtocol)
+        ) {
             return;
         }
 
         try {
-        $result = DownloadHistory::create([
-            'event_type' => DownloadHistoryEventType::DOWNLOAD_GRABBED,
-            'comic_id' => $event->issue->comic->cvid,
-            'download_id' => $event->downloadId,
-            'source_title' => $event->issue->release->title,
-            'date' => date(DATE_ATOM),
-            'protocol' => DownloadProtocol::fromStr($event->issue->release->downloadProtocol),
-            'indexer_id' => $event->issue->release->indexerId,
-            'download_client_id' => $event->downloadClientId,
-            'release' => $event->issue->release,
-            'data' => [
-                'indexer' => $event->issue->release->indexer,
-                'downloadClient' => $event->downloadClient,
-                'downloadClientName' => $event->downloadClientName,
-            ],
-        ]);
+            $result = DownloadHistory::create([
+                'event_type' => DownloadHistoryEventType::DOWNLOAD_GRABBED,
+                'comic_id' => $event->issue->comic->cvid,
+                'download_id' => $event->downloadId,
+                'source_title' => $event->issue->release->title,
+                'date' => date(DATE_ATOM),
+                'protocol' => DownloadProtocol::fromStr($event->issue->release->downloadProtocol),
+                'indexer_id' => $event->issue->release->indexerId,
+                'download_client_id' => $event->downloadClientId,
+                'release' => $event->issue->release,
+                'data' => [
+                    'indexer' => $event->issue->release->indexer,
+                    'downloadClient' => $event->downloadClient,
+                    'downloadClientName' => $event->downloadClientName,
+                ],
+            ]);
         } catch (Exception $e) {
         }
 
     }
+    
     public function subscribe(Dispatcher $events): void
     {
         $events->listen(

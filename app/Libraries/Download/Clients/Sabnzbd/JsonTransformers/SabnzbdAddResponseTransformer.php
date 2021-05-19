@@ -11,7 +11,7 @@ class SabnzbdAddResponseTransformer implements Transformer
 {
     public function register(ClassBindings $classBindings): void
     {
-        $classBindings->register(new AliasBinding('items', 'nzo_ids'));
+        $classBindings->register(new AliasBinding('ids', 'nzo_ids'));
     }
 
     public function transforms(): string

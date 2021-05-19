@@ -24,10 +24,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $download_id
  * @property-read \App\Models\Comic $comic
  * @property-read \App\Models\Issue $issue
- * @method static \Illuminate\Database\Eloquent\Builder|DownloadHistory create()
+ * @method \Illuminate\Database\Eloquent\Builder|DownloadHistory where($column, $value)
+ * @method \Illuminate\Database\Eloquent\Builder|DownloadHistory orderByDesc($value)
+ * @method DownloadHistory first()
+ * @method static \Illuminate\Database\Eloquent\Builder|DownloadHistory create($values = null)
  * @method static \Illuminate\Database\Eloquent\Builder|DownloadHistory newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DownloadHistory newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|DownloadHistory query()
+ * @method static \Illuminate\Database\Eloquent\Builder|DownloadHistory where($column, $value)
  * @method static \Illuminate\Database\Eloquent\Builder|DownloadHistory whereComicId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DownloadHistory whereData($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DownloadHistory whereDate($value)

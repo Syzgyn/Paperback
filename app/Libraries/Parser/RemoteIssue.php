@@ -15,6 +15,7 @@ class RemoteIssue
     public ?ReleaseInfo $release = null;
     public ?ParsedIssueInfo $parsedIssueInfo = null;
     public ?Comic $comic = null;
+    /** @var Issue[] */
     public array $issues = [];
     public bool $issueRequested = false;
     public bool $downloadAllowed = false;
