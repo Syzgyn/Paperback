@@ -29,7 +29,7 @@ class ProviderMiddleware extends TransformsRequest
         return collect($data)->all();
     }
 
-    protected function updateData(array &$data, string $key, string $value): void
+    protected function updateData(array &$data, string $key, mixed $value): void
     {
         if (isset($this->transformations[$key])) {
             $data[$this->transformations[$key]] = $value;

@@ -24,7 +24,7 @@ class ProviderSettings
     protected $attributeLabels = [];
 
     /** @var array<string, array|scalar> */
-    protected $attributes = [];
+    public $attributes = [];
 
     public final function __construct(array $attributes = [])
     {
