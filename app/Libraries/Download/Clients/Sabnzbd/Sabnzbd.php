@@ -373,7 +373,7 @@ class Sabnzbd extends UsenetClientModelBase
         $config = self::getProxy()->getConfig($this->settings);
         $category = current(array_filter($config->categories, fn($c) => $c->name == $this->settings->category));
 
-        if ($category != null && $category->dir != null) {
+        if ($category != null && $category->dir !== null) {
             if (str_ends_with($category->dir, '*')) {
                 throw new Exception("Enable Job folders");
             }
