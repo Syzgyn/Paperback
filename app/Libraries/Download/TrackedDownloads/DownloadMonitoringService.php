@@ -11,6 +11,8 @@ use bandwidthThrottle\tokenBucket\Rate;
 use bandwidthThrottle\tokenBucket\TokenBucket;
 use bandwidthThrottle\tokenBucket\storage\FileStorage;
 use Exception;
+use Illuminate\Events\Dispatcher;
+use App\Libraries\Download\IssueGrabbedEvent;
 use Illuminate\Database\Eloquent\Collection;
 
 class DownloadMonitoringService
@@ -31,6 +33,11 @@ class DownloadMonitoringService
 
     protected function refresh(): void
     {
+        $seconds = 0;
+        if (!$this->bucket->consume(5, $seconds)) {
+            return;
+        }
+
         /** @var Collection */
         $downloadClients = DownloadClientModelBase::whereEnable(true)->get();
         /** TrackedDownload[] */
@@ -43,6 +50,7 @@ class DownloadMonitoringService
         }
 
         event(new TrackedDownloadRefreshedEvent($trackedDownloads));
+        //TODO: Process downloads command
     }
 
     /** @return TrackedDownload[] */
@@ -102,5 +110,18 @@ class DownloadMonitoringService
         }
 
         return true;
+    }
+
+    public function handleIssueGrabbedEvent(IssueGrabbedEvent $event): void
+    {
+        $this->refresh();
+    }
+
+    public function subscribe(Dispatcher $events): void
+    {
+        $events->listen(
+            IssueGrabbedEvent::class,
+            [$this::class, 'handleIssueGrabbedEvent']
+        );
     }
 }

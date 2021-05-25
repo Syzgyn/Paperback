@@ -14,4 +14,9 @@ class QueueController extends Controller
         //Params: issueIds, comicId
         return response()->json();
     }
+    
+    public function status(Request $request)
+    {
+        
+    }
 }
