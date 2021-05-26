@@ -6,6 +6,7 @@ import ConnectionLostModalConnector from 'App/ConnectionLostModalConnector';
 import AppUpdatedModalConnector from 'App/AppUpdatedModalConnector';
 import PageHeader from './Header/PageHeader';
 import PageSidebar from './Sidebar/PageSidebar';
+import EventSourceConnector from 'Components/EventSourceConnector';
 import styles from './Page.css';
 
 class Page extends Component {
@@ -81,6 +82,7 @@ class Page extends Component {
     return (
       <ColorImpairedContext.Provider value={enableColorImpairedMode}>
         <div className={className}>
+          <EventSourceConnector />
 
           <PageHeader
             onSidebarToggle={onSidebarToggle}

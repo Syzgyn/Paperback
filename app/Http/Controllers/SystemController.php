@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Libraries\SSE;
+use App\Libraries\EventSource\EventSourceResponse;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redis;
-use Symfony\Component\HttpFoundation\JsonResponse as HttpFoundationJsonResponse;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Throwable;
 
 class SystemController extends Controller
@@ -86,17 +82,9 @@ class SystemController extends Controller
         /** @var JsonResponse */
         return response()->json([]);
     }
-
-    public function events(): StreamedResponse
+    
+    public function events(): EventSourceResponse
     {
-        $response = new StreamedResponse();
-        $response->headers->set('Content-Type', 'text/event-stream');
-        $response->headers->set('Cache-Control', 'no-cache');
-        $response->headers->set('Connection', 'keep-alive');
-        $response->headers->set('X-Accel-Buffering', 'no');
-        $response->headers->set("Content-Encoding", "none");
-        $response->setCallback([SSE::class, "responseCallback"]);
-
-        return $response;
+        return new EventSourceResponse();
     }
 }

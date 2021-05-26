@@ -17,6 +17,7 @@ use App\Repositories\AppSettingsRepository;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Libraries\Disk\RemotePathMappingService;
 use App\Libraries\Download\History\DownloadHistoryService;
+use App\Libraries\EventSource\EventSourceService;
 use App\Libraries\History\HistoryService;
 use Illuminate\Foundation\Application;
 
@@ -37,7 +38,8 @@ class AppServiceProvider extends ServiceProvider
         'NzbValidationService' => NzbValidationService::class,
         'RemotePathMappingService' => RemotePathMappingService::class,
         'DownloadHistoryService' => DownloadHistoryService::class,
-        'HistoryService' => HistoryService::class
+        'HistoryService' => HistoryService::class,
+        'EventSourceService' => EventSourceService::class,
     ];
 
     /**

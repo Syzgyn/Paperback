@@ -4,9 +4,8 @@ namespace App\Providers;
 
 use App\Libraries\Download\History\DownloadHistoryService;
 use App\Libraries\History\HistoryService;
+use App\Libraries\EventSource\EventSourceService;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Redis;
 
@@ -23,6 +22,7 @@ class EventServiceProvider extends ServiceProvider
     protected $subscribe = [
         DownloadHistoryService::class,
         HistoryService::class,
+        EventSourceService::class,
     ];
 
     /**
@@ -37,7 +37,7 @@ class EventServiceProvider extends ServiceProvider
          */
         Event::listen('App*', function(string $eventName, array $data) {
             Redis::publish('events', json_encode([
-                'event' => $eventName,
+                'event' => class_basename($eventName),
                 'data' => $data,
             ]));
         });
