@@ -13,7 +13,7 @@ function TimeleftCell(props) {
     timeleft,
     status,
     size,
-    sizeleft,
+    sizeLeft,
     showRelativeDates,
     shortDateFormat,
     timeFormat
@@ -56,7 +56,7 @@ function TimeleftCell(props) {
   }
 
   const totalSize = formatBytes(size);
-  const remainingSize = formatBytes(sizeleft);
+  const remainingSize = formatBytes(sizeLeft);
 
   return (
     <TableRowCell
@@ -73,7 +73,7 @@ TimeleftCell.propTypes = {
   timeleft: PropTypes.string,
   status: PropTypes.string.isRequired,
   size: PropTypes.number.isRequired,
-  sizeleft: PropTypes.number.isRequired,
+  sizeLeft: PropTypes.number.isRequired,
   showRelativeDates: PropTypes.bool.isRequired,
   shortDateFormat: PropTypes.string.isRequired,
   timeFormat: PropTypes.string.isRequired

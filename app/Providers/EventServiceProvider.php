@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Events\Listeners\IssueListener;
 use App\Libraries\Download\History\DownloadHistoryService;
+use App\Libraries\Download\TrackedDownloads\DownloadMonitoringService;
 use App\Libraries\History\HistoryService;
 use App\Libraries\EventSource\EventSourceService;
+use App\Libraries\Queue\QueueService;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Redis;
@@ -21,8 +24,11 @@ class EventServiceProvider extends ServiceProvider
 
     protected $subscribe = [
         DownloadHistoryService::class,
+        DownloadMonitoringService::class,
         HistoryService::class,
         EventSourceService::class,
+        IssueListener::class,
+        QueueService::class,
     ];
 
     /**
@@ -32,14 +38,5 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        /**
-         * Send all non-framework events to Redis, to be picked up by Server-sent Events
-         */
-        Event::listen('App*', function(string $eventName, array $data) {
-            Redis::publish('events', json_encode([
-                'event' => class_basename($eventName),
-                'data' => $data,
-            ]));
-        });
     }
 }

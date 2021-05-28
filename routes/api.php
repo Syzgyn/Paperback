@@ -75,7 +75,13 @@ Route::get('health', 'SystemController@health');
 Route::get('diskspace', 'SystemController@diskspace');
 Route::get('update', 'SystemController@update');
 
-Route::Get('queue/details', 'QueueController@details');
+Route::get('queue', 'QueueController@index');
+Route::get('queue/details', 'QueueController@details');
+Route::get('queue/status', 'QueueController@status');
+Route::delete('queue/bulk', 'QueueController@deleteBulk');
+Route::delete('queue/{id}', 'QueueController@deleteOne');
+
+
 Route::get('wanted/missing', 'WantedController@missing');
 
 /*

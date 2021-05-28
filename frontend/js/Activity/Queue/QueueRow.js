@@ -10,8 +10,6 @@ import TableRowCell from 'Components/Table/Cells/TableRowCell';
 import TableSelectCell from 'Components/Table/Cells/TableSelectCell';
 import ProtocolLabel from 'Activity/Queue/ProtocolLabel';
 import IssueTitleLink from 'Issue/IssueTitleLink';
-import IssueLanguage from 'Issue/IssueLanguage';
-import IssueQuality from 'Issue/IssueQuality';
 import SeasonIssueNumber from 'Issue/SeasonIssueNumber';
 import InteractiveImportModal from 'InteractiveImport/InteractiveImportModal';
 import ComicTitleLink from 'Comic/ComicTitleLink';
@@ -86,8 +84,6 @@ class QueueRow extends Component {
       errorMessage,
       comic,
       issue,
-      language,
-      quality,
       protocol,
       indexer,
       outputPath,
@@ -95,7 +91,7 @@ class QueueRow extends Component {
       estimatedCompletionTime,
       timeleft,
       size,
-      sizeleft,
+      sizeLeft,
       showRelativeDates,
       shortDateFormat,
       timeFormat,
@@ -113,7 +109,7 @@ class QueueRow extends Component {
       isInteractiveImportModalOpen
     } = this.state;
 
-    const progress = 100 - (sizeleft / size * 100);
+    const progress = 100 - (sizeLeft / size * 100);
     const showInteractiveImport = status === 'completed' && trackedDownloadStatus === 'warning';
     const isPending = status === 'delay' || status === 'downloadClientUnavailable';
 
@@ -150,7 +146,7 @@ class QueueRow extends Component {
               );
             }
 
-            if (name === 'comic.sortTitle') {
+            if (name === 'comic.title') {
               return (
                 <TableRowCell key={name}>
                   {
@@ -170,17 +166,7 @@ class QueueRow extends Component {
                 <TableRowCell key={name}>
                   {
                     issue ?
-                      <SeasonIssueNumber
-                        seasonNumber={issue.seasonNumber}
-                        issueNumber={issue.issueNumber}
-                        absoluteIssueNumber={issue.absoluteIssueNumber}
-                        comicType={comic.comicType}
-                        alternateTitles={comic.alternateTitles}
-                        sceneSeasonNumber={issue.sceneSeasonNumber}
-                        sceneIssueNumber={issue.sceneIssueNumber}
-                        sceneAbsoluteIssueNumber={issue.sceneAbsoluteIssueNumber}
-                        unverifiedSceneNumbering={issue.unverifiedSceneNumbering}
-                      /> :
+                      issue.issueNumber :
                       '-'
                   }
                 </TableRowCell>
@@ -205,12 +191,12 @@ class QueueRow extends Component {
               );
             }
 
-            if (name === 'issue.releaseDateUtc') {
+            if (name === 'issue.store_date') {
               if (issue) {
                 return (
                   <RelativeDateCellConnector
                     key={name}
-                    date={issue.releaseDateUtc}
+                    date={issue.storeDate}
                   />
                 );
               }
@@ -222,26 +208,19 @@ class QueueRow extends Component {
               );
             }
 
-            if (name === 'language') {
-              return (
-                <TableRowCell key={name}>
-                  <IssueLanguage
-                    language={language}
+            if (name === 'issue.cover_date') {
+              if (issue) {
+                return (
+                  <RelativeDateCellConnector
+                    key={name}
+                    date={issue.coverDate}
                   />
-                </TableRowCell>
-              );
-            }
+                );
+              }
 
-            if (name === 'quality') {
               return (
                 <TableRowCell key={name}>
-                  {
-                    quality ?
-                      <IssueQuality
-                        quality={quality}
-                      /> :
-                      null
-                  }
+                  -
                 </TableRowCell>
               );
             }
@@ -296,7 +275,7 @@ class QueueRow extends Component {
                   estimatedCompletionTime={estimatedCompletionTime}
                   timeleft={timeleft}
                   size={size}
-                  sizeleft={sizeleft}
+                  sizeLeft={sizeLeft}
                   showRelativeDates={showRelativeDates}
                   shortDateFormat={shortDateFormat}
                   timeFormat={timeFormat}
@@ -390,8 +369,6 @@ QueueRow.propTypes = {
   errorMessage: PropTypes.string,
   comic: PropTypes.object,
   issue: PropTypes.object,
-  language: PropTypes.object.isRequired,
-  quality: PropTypes.object.isRequired,
   protocol: PropTypes.string.isRequired,
   indexer: PropTypes.string,
   outputPath: PropTypes.string,
@@ -399,7 +376,7 @@ QueueRow.propTypes = {
   estimatedCompletionTime: PropTypes.string,
   timeleft: PropTypes.string,
   size: PropTypes.number,
-  sizeleft: PropTypes.number,
+  sizeLeft: PropTypes.number,
   showRelativeDates: PropTypes.bool.isRequired,
   shortDateFormat: PropTypes.string.isRequired,
   timeFormat: PropTypes.string.isRequired,

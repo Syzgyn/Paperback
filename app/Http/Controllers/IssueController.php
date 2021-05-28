@@ -16,8 +16,13 @@ class IssueController extends Controller
     public function index(Request $request): IssueCollection
     {
         if ($comicId = $request->query('comicId')) {
-            /** @var Collection */
             $issues = Issue::where('comic_id', $comicId)->orderBy('issue_num', 'DESC')->get();
+
+            return new IssueCollection($issues);
+        }
+
+        if ($issueIds = $request->query('issueIds')) {
+            $issues = Issue::whereIn('cvid', $issueIds)->get();
 
             return new IssueCollection($issues);
         }

@@ -17,8 +17,11 @@ use App\Repositories\AppSettingsRepository;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Libraries\Disk\RemotePathMappingService;
 use App\Libraries\Download\History\DownloadHistoryService;
+use App\Libraries\Download\IgnoredDownloadService;
+use App\Libraries\Download\TrackedDownloads\TrackedDownloadService;
 use App\Libraries\EventSource\EventSourceService;
 use App\Libraries\History\HistoryService;
+use App\Libraries\Queue\QueueService;
 use Illuminate\Foundation\Application;
 
 class AppServiceProvider extends ServiceProvider
@@ -40,6 +43,9 @@ class AppServiceProvider extends ServiceProvider
         'DownloadHistoryService' => DownloadHistoryService::class,
         'HistoryService' => HistoryService::class,
         'EventSourceService' => EventSourceService::class,
+        'QueueService' => QueueService::class,
+        'TrackedDownloadService' => TrackedDownloadService::class,
+        'IgnoredDownloadService' => IgnoredDownloadService::class,
     ];
 
     /**

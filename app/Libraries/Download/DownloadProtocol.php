@@ -20,4 +20,16 @@ class DownloadProtocol
                 return self::UNKNOWN;
         }
     }
+
+    public static function toString(?int $i = null): string
+    {
+        switch ($i) {
+            case self::USENET:
+                return "usenet";
+            case self::TORRENT:
+                return "torrent";
+            default:
+                return "unknown";
+        }
+    }
 }

@@ -13,6 +13,7 @@ use bandwidthThrottle\tokenBucket\storage\FileStorage;
 use Exception;
 use Illuminate\Events\Dispatcher;
 use App\Libraries\Download\IssueGrabbedEvent;
+use App\Models\DownloadClient;
 use Illuminate\Database\Eloquent\Collection;
 
 class DownloadMonitoringService
@@ -31,7 +32,7 @@ class DownloadMonitoringService
         $this->enableCompletedDownloadHanding = resolve('AppSettings')->get('downloadclient', 'enableCompletedDownloadHandling');
     }
 
-    protected function refresh(): void
+    public function refresh(): void
     {
         $seconds = 0;
         if (!$this->bucket->consume(5, $seconds)) {
@@ -39,7 +40,7 @@ class DownloadMonitoringService
         }
 
         /** @var Collection */
-        $downloadClients = DownloadClientModelBase::whereEnable(true)->get();
+        $downloadClients = DownloadClient::whereEnable(true)->get();
         /** TrackedDownload[] */
         $trackedDownloads = [];
 
@@ -49,6 +50,7 @@ class DownloadMonitoringService
             $trackedDownloads += array_filter($clientTrackedDownloads, [$this, "downloadIsTrackable"]);
         }
 
+        resolve("TrackedDownloadService")->updateTrackable($trackedDownloads);
         event(new TrackedDownloadRefreshedEvent($trackedDownloads));
         //TODO: Process downloads command
     }
@@ -82,7 +84,7 @@ class DownloadMonitoringService
     {
         try {
             /** @var TrackedDownload */
-            $trackedDownload = TrackedDownload::fromDownloadClient($client, $item);
+            $trackedDownload = resolve("TrackedDownloadService")->trackDownload($client, $item);
 
             if ($trackedDownload->state == TrackedDownloadState::DOWNLOADING) {
                 //TODO: Check for failed or completed download
@@ -105,7 +107,10 @@ class DownloadMonitoringService
             return false;
         }
 
-        if (!$this->enableCompletedDownloadHanding && $trackedDownload->downloadItem != null && $trackedDownload->downloadItem->status == DownloadItemStatus::COMPLETED) {
+        if (!$this->enableCompletedDownloadHanding && 
+            $trackedDownload->downloadItem != null && 
+            $trackedDownload->downloadItem->status == DownloadItemStatus::COMPLETED)
+        {
             return false;
         }
 
@@ -114,6 +119,7 @@ class DownloadMonitoringService
 
     public function handleIssueGrabbedEvent(IssueGrabbedEvent $event): void
     {
+        //TODO: replace with command call
         $this->refresh();
     }
 
@@ -121,7 +127,7 @@ class DownloadMonitoringService
     {
         $events->listen(
             IssueGrabbedEvent::class,
-            [$this::class, 'handleIssueGrabbedEvent']
+            [$this, 'handleIssueGrabbedEvent']
         );
     }
 }

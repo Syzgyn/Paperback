@@ -12,7 +12,7 @@ class DownloadClientItemClientInfo
     public static function FromDownloadClient(DownloadClientModelBase $downloadClient): DownloadClientItemClientInfo
     {
         $info = new DownloadClientItemClientInfo();
-        $info->protocol = $downloadClient->protocol;
+        $info->protocol = $downloadClient->getProtocol();
         $info->type = $downloadClient->implementation;
         $info->id = $downloadClient->id;
         $info->name = $downloadClient->name;

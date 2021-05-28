@@ -60,10 +60,10 @@ class DownloadService
             $issueGrabbedEvent->downloadId = $downloadClientId;
         }
 
+        event($issueGrabbedEvent);
         //TODO: Log
         /** @var App */
-        App::terminating(function() use ($issueGrabbedEvent) {
-            event($issueGrabbedEvent);
+        App::terminating(function() {
         });
     }
 }

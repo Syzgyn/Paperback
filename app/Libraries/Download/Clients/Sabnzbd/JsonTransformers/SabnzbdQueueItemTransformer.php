@@ -40,7 +40,7 @@ class SabnzbdQueueItemTransformer implements Transformer
             case 4:
                 return (int)((($split[0] * 24 + $split[1]) * 60) + $split[2]) * 60 + $split[3];
             case 3:
-                return (int)(($split[1] * 60) + $split[2]) * 60 + $split[3];
+                return (int)(($split[0] * 60) + $split[1]) * 60 + $split[2];
             default:
                 throw new Exception("Expected either 0:0:0:0 or 0:0:0 format, but received: " . $timeLeft);
                 
