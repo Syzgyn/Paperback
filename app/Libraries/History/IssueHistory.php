@@ -30,13 +30,17 @@ use DateTime;
  * @method static \Illuminate\Database\Eloquent\Builder|IssueHistory whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|IssueHistory whereIssueId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|IssueHistory whereDownloadId($value)
- * @method \Illuminate\Database\Eloquent\Builder|IssueHistory whereEventType($value)
+ * @method \Illuminate\Database\Eloquent\Builder whereEventType($value)
  * @method static \Illuminate\Database\Eloquent\Builder whereComicId($value)
+ * @method static IssueHistory find($value)
+ * @method static IssueHistory create($values)
  * 
  * @mixin Eloquent
  */
 class IssueHistory extends Model
 {
+    public const DOWNLOAD_CLIENT = "downloadClient";
+    
     public $table = "history";
     public $guarded = [];
     public $timestamps = false;

@@ -2,6 +2,8 @@
 
 namespace App\Libraries\History;
 
+use App\Libraries\Download\DownloadFailedEvent;
+use App\Libraries\Download\DownloadIgnoredEvent;
 use Illuminate\Events\Dispatcher;
 use App\Libraries\Download\IssueGrabbedEvent;
 use DateTimeInterface;
@@ -42,11 +44,62 @@ class HistoryService
             $history->save();
         }
     }
+
+    public function handleDownloadFailedEvent(DownloadFailedEvent $event): void
+    {
+        /** @var int $issueId */
+        foreach ($event->issueIds as $issueId) {
+            IssueHistory::create([
+                'event_type' => IssueHistoryEventType::DOWNLOAD_FAILED,
+                'date' => date(DATE_ATOM),
+                'source_title' => $event->sourceTitle,
+                'comic_id' => $event->comicId,
+                'issue_id' => $issueId,
+                'download_id' => $event->downloadId,
+                'data' => [
+                    'DownloadClient' => $event->downloadClient,
+                    'DownloadClientName' => $event->trackedDownload?->downloadItem?->downloadClientInfo?->name,
+                    'Message' => $event->message,
+                ]
+            ]);
+        }
+    }
+
+    public function handleDownloadIgnoredEvent(DownloadIgnoredEvent $event): void
+    {
+        /** @var int $issueId */
+        foreach ($event->issueIds as $issueId) {
+            IssueHistory::create([
+                'event_type' => IssueHistoryEventType::DOWNLOAD_IGNORED,
+                'date' => date(DATE_ATOM),
+                'source_title' => $event->sourceTitle,
+                'comic_id' => $event->comicId,
+                'issue_id' => $issueId,
+                'download_id' => $event->downloadId,
+                'data' => [
+                    'DownloadClient' => $event->downloadClientInfo?->type,
+                    'DownloadClientName' => $event->downloadClientInfo?->name,
+                    'Message' => $event->message,
+                ]
+            ]);
+        }
+    }
+
     public function subscribe(Dispatcher $events): void
     {
         $events->listen(
             IssueGrabbedEvent::class,
             [$this::class, 'handleIssueGrabbedEvent']
+        );
+
+        $events->listen(
+            DownloadFailedEvent::class,
+            [$this, 'handleDownloadFailedEvent']
+        );
+
+        $events->listen(
+            DownloadIgnoredEvent::class,
+            [$this, 'handleDownloadIgnoredEvent']
         );
     }
 }

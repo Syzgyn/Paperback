@@ -50,11 +50,12 @@ class TrackedDownloadService
                 $removed[] = $trackedDownload;
             }
 
-            Cache::put("trackedDownloads", self::$cache);
-
             //TODO: event(new TrackedDownloadsRemovedEvent($removed));
         }
+        
+        $this->saveCache();
     }
+
     public function trackDownload(DownloadClientModelBase $client, DownloadClientItem $item): TrackedDownload
     {
         // $existingItem = self::find($item->downloadId);
@@ -167,8 +168,7 @@ class TrackedDownloadService
             }
         }
 
-        self::$cache = $cache;
-        Cache::put("trackedDownloads", $cache);
+        $this->saveCache($cache);
     }
 
     // This works by reference
@@ -178,5 +178,14 @@ class TrackedDownloadService
 
         $parsedIssueInfo = Parser::parseTitle($trackedDownload->downloadItem->title);
         $trackedDownload->remoteIssue = $parsedIssueInfo == null ? null : resolve("ParserService")->map($parsedIssueInfo);
+    }
+
+    /** @param TrackedDownload[] $cache */
+    public function saveCache(array $cache = null): void
+    {
+        if ($cache) {
+            self::$cache = $cache;
+        }
+        Cache::put("trackedDownloads", self::$cache);
     }
 }

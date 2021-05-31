@@ -88,6 +88,7 @@ class DownloadMonitoringService
 
             if ($trackedDownload->state == TrackedDownloadState::DOWNLOADING) {
                 //TODO: Check for failed or completed download
+                resolve("FailedDownloadService")->check($trackedDownload);
             }
 
             return $trackedDownload;

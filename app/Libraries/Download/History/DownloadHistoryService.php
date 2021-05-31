@@ -2,6 +2,8 @@
 
 namespace App\Libraries\Download\History;
 
+use App\Libraries\Download\DownloadFailedEvent;
+use App\Libraries\Download\DownloadIgnoredEvent;
 use App\Libraries\Download\DownloadProtocol;
 use App\Libraries\Download\IssueGrabbedEvent;
 use App\Models\DownloadHistory;
@@ -69,7 +71,7 @@ class DownloadHistoryService
         }
 
         try {
-            $result = DownloadHistory::create([
+            DownloadHistory::create([
                 'event_type' => DownloadHistoryEventType::DOWNLOAD_GRABBED,
                 'comic_id' => $event->issue->comic->cvid,
                 'download_id' => $event->downloadId,
@@ -87,14 +89,61 @@ class DownloadHistoryService
             ]);
         } catch (Exception $e) {
         }
+    }
 
+    public function handleDownloadFailedEvent(DownloadFailedEvent $event): void
+    {
+        if ($event->trackedDownload == null) {
+            return;
+        }
+
+        DownloadHistory::create([
+            'event_type' => DownloadHistoryEventType::DOWNLOAD_FAILED,
+            'comic_id' => $event->comicId,
+            'download_id' => $event->downloadId,
+            'source_title' => $event->sourceTitle,
+            'date' => date(DATE_ATOM),
+            'protocol' => $event->trackedDownload->protocol,
+            'downlod_client_id' => $event->trackedDownload->downloadClient,
+            'data' => [
+                'downloadClient' => $event->trackedDownload->downloadItem?->downloadClientInfo?->type,
+                'downloadClientName' => $event->trackedDownload->downloadItem?->downloadClientInfo?->name,
+            ],
+        ]);
+    }
+
+    public function handleDownloadIgnoredEvent(DownloadIgnoredEvent $event): void
+    {
+        DownloadHistory::create([
+            'event_type' => DownloadHistoryEventType::DOWNLOAD_FAILED,
+            'comic_id' => $event->comicId,
+            'download_id' => $event->downloadId,
+            'source_title' => $event->sourceTitle,
+            'date' => date(DATE_ATOM),
+            'protocol' => $event->downloadClientInfo?->protocol,
+            'downlod_client_id' => $event->downloadClientInfo?->id,
+            'data' => [
+                'downloadClient' => $event->downloadClientInfo?->type,
+                'downloadClientName' => $event->downloadClientInfo?->name,
+            ],
+        ]);
     }
     
     public function subscribe(Dispatcher $events): void
     {
         $events->listen(
             IssueGrabbedEvent::class,
-            [$this::class, 'handleIssueGrabbedEvent']
+            [$this, 'handleIssueGrabbedEvent']
+        );
+
+        $events->listen(
+            DownloadFailedEvent::class,
+            [$this, 'handleDownloadFailedEvent']
+        );
+
+        $events->listen(
+            DownloadIgnoredEvent::class,
+            [$this, 'handleDownloadIgnoredEvent']
         );
     }
 }

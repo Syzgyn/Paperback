@@ -30,4 +30,16 @@ class TrackedDownload
     public ?int $protocol = null;
     public ?string $indexer = null;
     public ?bool $isTrackable = null;
+
+    /** @param string|TrackedDownloadStatusMessage[] $message */
+    public function warn(string|array $message): void
+    {
+        $this->status = TrackedDownloadStatus::WARNING;
+        if (is_string($message)) {
+            $message = [new TrackedDownloadStatusMessage($this->downloadItem?->title ?? "Unknown Title", $message)];
+        }
+        $this->statusMessages = $message;
+    }
+
+    
 }

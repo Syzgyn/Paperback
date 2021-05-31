@@ -83,8 +83,8 @@ class QueueController extends Controller
                     $removeIds[] = $trackedDownload->downloadItem->downloadId;
                 }
         }
-
-        resolve("TrackedDownloadService")->stopTracking([$removeIds]);
+        
+        resolve("TrackedDownloadService")->stopTracking($removeIds);
         
         return response()->json([]);
     }
@@ -115,7 +115,8 @@ class QueueController extends Controller
         }
 
         if ($blacklist) {
-            //TODO: Blacklist
+            assert($trackedDownload->downloadItem != null && $trackedDownload->downloadItem->downloadId != null);
+            resolve("FailedDownloadService")->markDownloadAsFailed($trackedDownload->downloadItem->downloadId);
         }
 
         if (!$removeFromClient && !$blacklist) {

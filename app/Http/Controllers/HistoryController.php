@@ -116,7 +116,7 @@ class HistoryController extends Controller
 
     public function markAsFailed(Request $request, int $id): JsonResponse
     {
-        //TODO: resolve("FailedDownloadService")->markAsFailed($id);
+        resolve("FailedDownloadService")->markHistoryAsFailed($id);
         return response()->json();
     }
 }

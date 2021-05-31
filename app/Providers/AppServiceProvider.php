@@ -16,6 +16,7 @@ use App\Repositories\ComicVineRepository;
 use App\Repositories\AppSettingsRepository;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Libraries\Disk\RemotePathMappingService;
+use App\Libraries\Download\FailedDownloadService;
 use App\Libraries\Download\History\DownloadHistoryService;
 use App\Libraries\Download\IgnoredDownloadService;
 use App\Libraries\Download\TrackedDownloads\TrackedDownloadService;
@@ -46,6 +47,7 @@ class AppServiceProvider extends ServiceProvider
         'QueueService' => QueueService::class,
         'TrackedDownloadService' => TrackedDownloadService::class,
         'IgnoredDownloadService' => IgnoredDownloadService::class,
+        'FailedDownloadService' => FailedDownloadService::class,
     ];
 
     /**
