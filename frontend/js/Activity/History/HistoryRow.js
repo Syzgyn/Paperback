@@ -1,16 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import formatPreferredWordScore from 'Utilities/Number/formatPreferredWordScore';
 import { icons } from 'Helpers/Props';
 import IconButton from 'Components/Link/IconButton';
 import RelativeDateCellConnector from 'Components/Table/Cells/RelativeDateCellConnector';
 import TableRow from 'Components/Table/TableRow';
 import TableRowCell from 'Components/Table/Cells/TableRowCell';
 import issueEntities from 'Issue/issueEntities';
-import SeasonIssueNumber from 'Issue/SeasonIssueNumber';
 import IssueTitleLink from 'Issue/IssueTitleLink';
-import IssueLanguage from 'Issue/IssueLanguage';
-import IssueQuality from 'Issue/IssueQuality';
 import ComicTitleLink from 'Comic/ComicTitleLink';
 import HistoryEventTypeCell from './HistoryEventTypeCell';
 import HistoryDetailsModal from './Details/HistoryDetailsModal';
@@ -58,10 +54,6 @@ class HistoryRow extends Component {
       issueId,
       comic,
       issue,
-      language,
-      languageCutoffNotMet,
-      quality,
-      qualityCutoffNotMet,
       eventType,
       sourceTitle,
       date,
@@ -114,16 +106,7 @@ class HistoryRow extends Component {
             if (name === 'issue') {
               return (
                 <TableRowCell key={name}>
-                  <SeasonIssueNumber
-                    seasonNumber={issue.seasonNumber}
-                    issueNumber={issue.issueNumber}
-                    absoluteIssueNumber={issue.absoluteIssueNumber}
-                    comicType={comic.comicType}
-                    alternateTitles={comic.alternateTitles}
-                    sceneSeasonNumber={issue.sceneSeasonNumber}
-                    sceneIssueNumber={issue.sceneIssueNumber}
-                    sceneAbsoluteIssueNumber={issue.sceneAbsoluteIssueNumber}
-                  />
+                  {issue.issueNumber}
                 </TableRowCell>
               );
             }
@@ -137,28 +120,6 @@ class HistoryRow extends Component {
                     comicId={comic.id}
                     issueTitle={issue.title}
                     showOpenComicButton={true}
-                  />
-                </TableRowCell>
-              );
-            }
-
-            if (name === 'language') {
-              return (
-                <TableRowCell key={name}>
-                  <IssueLanguage
-                    language={language}
-                    isCutoffMet={languageCutoffNotMet}
-                  />
-                </TableRowCell>
-              );
-            }
-
-            if (name === 'quality') {
-              return (
-                <TableRowCell key={name}>
-                  <IssueQuality
-                    quality={quality}
-                    isCutoffMet={qualityCutoffNotMet}
                   />
                 </TableRowCell>
               );
@@ -191,28 +152,6 @@ class HistoryRow extends Component {
                   className={styles.indexer}
                 >
                   {data.indexer}
-                </TableRowCell>
-              );
-            }
-
-            if (name === 'preferredWordScore') {
-              return (
-                <TableRowCell
-                  key={name}
-                  className={styles.preferredWordScore}
-                >
-                  {formatPreferredWordScore(data.preferredWordScore)}
-                </TableRowCell>
-              );
-            }
-
-            if (name === 'releaseGroup') {
-              return (
-                <TableRowCell
-                  key={name}
-                  className={styles.releaseGroup}
-                >
-                  {data.releaseGroup}
                 </TableRowCell>
               );
             }
@@ -256,10 +195,6 @@ HistoryRow.propTypes = {
   issueId: PropTypes.number,
   comic: PropTypes.object.isRequired,
   issue: PropTypes.object,
-  language: PropTypes.object.isRequired,
-  languageCutoffNotMet: PropTypes.bool.isRequired,
-  quality: PropTypes.object.isRequired,
-  qualityCutoffNotMet: PropTypes.bool.isRequired,
   eventType: PropTypes.string.isRequired,
   sourceTitle: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,

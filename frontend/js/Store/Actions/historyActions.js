@@ -52,16 +52,6 @@ export const defaultState = {
       isVisible: true
     },
     {
-      name: 'language',
-      label: 'Language',
-      isVisible: false
-    },
-    {
-      name: 'quality',
-      label: 'Quality',
-      isVisible: true
-    },
-    {
       name: 'date',
       label: 'Date',
       isSortable: true,
@@ -75,20 +65,6 @@ export const defaultState = {
     {
       name: 'indexer',
       label: 'Indexer',
-      isVisible: false
-    },
-    {
-      name: 'releaseGroup',
-      label: 'Release Group',
-      isVisible: false
-    },
-    {
-      name: 'preferredWordScore',
-      columnLabel: 'Preferred Word Score',
-      label: React.createElement(Icon, {
-        name: icons.SCORE,
-        title: 'Preferred word score'
-      }),
       isVisible: false
     },
     {

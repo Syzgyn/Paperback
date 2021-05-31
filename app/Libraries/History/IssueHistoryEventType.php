@@ -12,4 +12,26 @@ class IssueHistoryEventType
     public const ISSUE_FILE_DELETED = 5;
     public const ISSUE_FILE_RENAMED = 6;
     public const DOWNLOAD_IGNORED = 7;
+
+    public static function toString(int $i): string
+    {
+        switch ($i) {
+            case self::GRABBED:
+                return "grabbed";
+            case self::COMIC_FOLDER_IMPORTED:
+                return "comicFolderImported";
+            case self::DOWNLOAD_FOLDER_IMPORTED:
+                return "downloadFolderImported";
+            case self::DOWNLOAD_FAILED:
+                return "downloadFailed";
+            case self::ISSUE_FILE_DELETED:
+                return "issueFileDeleted";
+            case self::ISSUE_FILE_RENAMED:
+                return "issueFileRenamed";
+            case self::DOWNLOAD_IGNORED:
+                return "downloadIgnored";
+            default:
+                return "unknown";
+        }
+    }
 }

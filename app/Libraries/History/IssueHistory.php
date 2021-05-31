@@ -26,7 +26,7 @@ use DateTime;
  * @method IssueHistory first()
  * @method \Illuminate\Database\Eloquent\Collection get()
  * @method \Illuminate\Database\Eloquent\Builder|IssueHistory orderByDesc($column)
- * @method static \Illuminate\Database\Eloquent\Builder|IssueHistory where($value)
+ * @method static \Illuminate\Database\Eloquent\Builder where($column, $val, $opt=null)
  * @method static \Illuminate\Database\Eloquent\Builder|IssueHistory whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|IssueHistory whereIssueId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|IssueHistory whereDownloadId($value)
@@ -43,7 +43,9 @@ class IssueHistory extends Model
 
     protected $casts = [
         'date' => 'datetime',
-        'data' => 'array'
+        'data' => 'array',
+        'comic_id' => 'int',
+        'issue_id' => 'int',
     ];
 
     public function comic(): BelongsTo
@@ -80,15 +82,25 @@ class IssueHistory extends Model
         return IssueHistory::whereDownloadId($downloadId)->get();
     }
 
-    public static function findByComic(int $comicId, ?int $eventType = null): Collection
+    public static function findByComic(int $comicId, ?int $eventType = null, bool $includeComic = false, bool $includeIssue = false): Collection
     {
         /** @var Builder $query */
         $query = IssueHistory::whereComicId($comicId);
 
-        if ($eventType) {
-            /** @var Builder $query */
-            $query->whereEventType($eventType);
-        }
+        $query->when($eventType, function(Builder $q) use ($eventType) {
+            /** @var Builder */
+            return $q->whereEventType($eventType);
+        });
+
+        $query->when($includeComic, function(Builder $q) {
+            /** @var Builder */
+            return $q->with("comic");
+        });
+
+        $query->when($includeIssue, function(Builder $q) {
+            /** @var Builder */
+            return $q->with("issue");
+        });
 
         /** @var Collection<IssueHistory> */
         return $query->orderByDesc("date")->get();
@@ -109,13 +121,24 @@ class IssueHistory extends Model
         IssueHistory::whereComicId($comicId)->delete();
     }
 
-    public static function since(DateTime $date, ?int $eventType = null): Collection
+    public static function since(DateTime $date, ?int $eventType = null, bool $includeComic = false, bool $includeIssue = false): Collection
     {
         $query = IssueHistory::where("date", ">=", $date);
 
-        if ($eventType) {
-            $query->whereEventType($eventType);
-        }
+        $query->when($eventType, function(Builder $q) use ($eventType) {
+            /** @var Builder */
+            return $q->whereEventType($eventType);
+        });
+
+        $query->when($includeComic, function(Builder $q) {
+            /** @var Builder */
+            return $q->with("comic");
+        });
+
+        $query->when($includeIssue, function(Builder $q) {
+            /** @var Builder */
+            return $q->with("issue");
+        });
 
         return $query->orderBy("date")->get();
     }
