@@ -93,4 +93,39 @@ class RootFolder extends Model
     {
         return count($this->unmappedFolders);
     }
+
+    public static function getBestRootFolderPath(string $path): string
+    {
+        $rootFolders = RootFolder::all()->filter(function(RootFolder $rootFolder) use ($path): bool {
+            $parentPath = $rootFolder->path;
+            $childPath = $path;
+
+            if ($parentPath != '/' && !str_ends_with($parentPath, ":\\")) {
+                $parentPath = rtrim($parentPath, DIRECTORY_SEPARATOR);
+            }
+            
+            if ($childPath != '/' && !str_ends_with($childPath, ":\\")) {
+                $childPath = rtrim($childPath, DIRECTORY_SEPARATOR);
+            }
+
+            //TODO: Implement for windows
+            while (dirname($childPath) != "/" && dirname($childPath) != ".") {
+                if (dirname($childPath) == $parentPath) {
+                    return true;
+                }
+
+                $childPath = dirname($childPath);
+            }
+
+            return false;
+        });
+
+        $possibleRootFolder = $rootFolders->sortByDesc(fn(RootFolder $r) => strlen($r->path))->first();
+
+        if ($possibleRootFolder == null) {
+            return dirname($path);
+        }
+
+        return $possibleRootFolder->path;
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Libraries\Parser;
 use App\Models\Comic;
 use App\Libraries\IndexerSearch\SearchCriteriaBase;
 use App\Models\Issue;
+use Illuminate\Database\Eloquent\Builder;
 
 class ParserService
 {
@@ -63,6 +64,27 @@ class ParserService
         if ($comic == null) {
             //TODO: Logging
             return null;
+        }
+
+        return $comic;
+    }
+
+    public function getComicFromTitle(string $title): ?Comic
+    {
+        $parsedIssueInfo = Parser::parseTitle($title);
+
+        if ($parsedIssueInfo == null) {
+            return Comic::firstWhere("title", $title); //TODO: Replace with more accurate version
+        }
+
+        $comic = Comic::firstWhere("title", $parsedIssueInfo->comicTitle);
+
+        if ($comic == null) {
+            /** @var ?Comic */
+            $comic = Comic::whereTitle($parsedIssueInfo->comicTitleInfo?->titleWithoutYear)
+                ->when($parsedIssueInfo->comicTitleInfo?->year, function(Builder $b) use ($parsedIssueInfo) {
+                    return $b->where('year', (string) $parsedIssueInfo->comicTitleInfo?->year);
+            })->first();
         }
 
         return $comic;

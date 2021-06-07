@@ -41,5 +41,26 @@ class TrackedDownload
         $this->statusMessages = $message;
     }
 
-    
+    /** @param IssueHistory[] */
+    public function isImported(array $historyItems): bool
+    {
+        //TODO: Log
+        if (empty($historyItems)) {
+            //TODO: Log
+            return false;
+        }
+
+        $importedIssues = array_map(function(Issue $issue) use ($historyItems) {
+            /** @var IssueHistory */
+            $lastHistoryItem = reset(array_filter($historyItems, fn(IssueHistory $h) => $h->issue_id == $issue->cvid));
+            if ($lastHistoryItem === false) {
+                //TODO: Log
+                return false;
+            }
+
+            return $lastHistoryItem->event_type == IssueHistoryEventType::DOWNLOAD_FOLDER_IMPORTED;
+        }, $this->remoteIssue->issues);
+
+        return $importedIssues;
+    }
 }

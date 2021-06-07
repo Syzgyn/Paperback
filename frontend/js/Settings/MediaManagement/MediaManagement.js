@@ -14,12 +14,6 @@ import RootFoldersConnector from 'RootFolder/RootFoldersConnector';
 import NamingConnector from './Naming/NamingConnector';
 import AddRootFolderConnector from './RootFolder/AddRootFolderConnector';
 
-const issueTitleRequiredOptions = [
-  { key: 'always', value: 'Always' },
-  { key: 'bulkSeasonReleases', value: 'Only for Bulk Season Releases' },
-  { key: 'never', value: 'Never' }
-];
-
 const rescanAfterRefreshOptions = [
   { key: 'always', value: 'Always' },
   { key: 'afterManual', value: 'After Manual Refresh' },
@@ -129,23 +123,6 @@ class MediaManagement extends Component {
                     <FieldSet
                       legend="Importing"
                     >
-                      <FormGroup
-                        advancedSettings={advancedSettings}
-                        isAdvanced={true}
-                        size={sizes.SMALL}
-                      >
-                        <FormLabel>Issue Title Required</FormLabel>
-
-                        <FormInputGroup
-                          type={inputTypes.SELECT}
-                          name="issueTitleRequired"
-                          helpText="Prevent importing for up to 24 hours if the issue title is in the naming format and the issue title is TBA"
-                          values={issueTitleRequiredOptions}
-                          onChange={onInputChange}
-                          {...settings.issueTitleRequired}
-                        />
-                      </FormGroup>
-
                       {
                         isMono &&
                           <FormGroup

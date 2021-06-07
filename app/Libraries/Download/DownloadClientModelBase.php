@@ -56,7 +56,7 @@ abstract class DownloadClientModelBase extends ProviderModelBase
     public abstract function getStatus(): DownloadClientInfo;
     public abstract function test(): void;
 
-    public function getImportItem(DownloadClientItem $item, DownloadClientItem $previousImportAttempt): DownloadClientItem
+    public function getImportItem(DownloadClientItem $item, DownloadClientItem $previousImportAttempt = null): DownloadClientItem
     {
         return $item;
     }

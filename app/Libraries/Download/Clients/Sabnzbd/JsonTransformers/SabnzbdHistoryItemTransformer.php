@@ -16,7 +16,7 @@ class SabnzbdHistoryItemTransformer implements Transformer
         $classBindings->register(new AliasBinding('size', 'mb'));
         $classBindings->register(new AliasBinding('sizeString', 'size'));
         $classBindings->register(new AliasBinding('sizeLeft', 'mbleft'));
-        $classBindings->register(new AliasBinding('title', 'filename'));
+        $classBindings->register(new AliasBinding('title', 'name'));
         $classBindings->register(new AliasBinding('category', 'cat'));
         $classBindings->register(new AliasBinding('id', 'nzo_id'));
     }

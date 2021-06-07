@@ -3,7 +3,7 @@
 namespace App\Libraries\Parser;
 
 use Exception;
-use App\Libraries\MediaFiles\MediaFileExtensions;
+use App\Libraries\MediaFiles\IssueFileExtensions;
 
 class Parser
 {
@@ -61,7 +61,7 @@ class Parser
 
      public static function removeFileExtension(string $title): string
     {
-        $extensions = MediaFileExtensions::$extensions + ['.par2', '.nbz'];
+        $extensions = IssueFileExtensions::$extensions + ['.par2', '.nbz'];
          $title = preg_replace_callback(Patterns::$fileExtensionRegex, function(array $match) use ($extensions) {
             $extension = strtolower((string) $match[0]);
             
@@ -171,5 +171,31 @@ class Parser
         }
 
         return null;
+    }
+
+    public static function parsePath(string $path): ?ParsedIssueInfo
+    {
+        $fileInfo = pathinfo($path);
+        
+        if (!isset($fileInfo['extension'])) {
+            throw new Exception("Path is not a valid file: ". $path);
+        }
+
+        $parentDir = dirname($fileInfo['dirname']);
+        $currentDir = substr($fileInfo['dirname'], strlen($parentDir));
+
+        $result = self::parseTitle($fileInfo['filename']);
+
+        if ($result == null) {
+            //TODO: Log
+            $result = self::parseTitle($currentDir . " " . $fileInfo['filename']);
+        }
+
+        if ($result == null) {
+            //TODO: Log
+            $result = self::parseTitle($currentDir . $fileInfo['extension']);
+        }
+
+        return $result;
     }
 }

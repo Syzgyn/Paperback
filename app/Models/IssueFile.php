@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Libraries\MediaFiles\DeleteIssueFileReason;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -22,11 +24,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile query()
  * @method static \Illuminate\Database\Eloquent\Builder where($column, $value)
- * @method static \Illuminate\Database\Eloquent\Builder|IssueFile whereComicId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder whereComicId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile whereOriginalFilePath($value)
- * @method static \Illuminate\Database\Eloquent\Builder|IssueFile whereRelativePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder whereRelativePath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile whereSize($value)
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile create($value)
  * @mixin \Eloquent
@@ -65,6 +67,33 @@ class IssueFile extends Model
     public function getFileTypeAttribute(): string
     {
         return pathinfo($this->path, PATHINFO_EXTENSION);
+    }
+
+    /** 
+     * @param string[] $files
+     * 
+     * @return string[] 
+     */
+    public static function filterExistingFiles(array $files, Comic $comic)
+    {
+        $issueFiles = IssueFile::whereComicId($comic->cvid)->get(['relative_path'])->all();
+
+        if (empty($issueFiles)) {
+            return $files;
+        }
+
+        array_walk($issueFiles, fn(string &$path) => $comic->path . DIRECTORY_SEPARATOR . $path);
+
+        return array_diff($files, $issueFiles);
+    }
+
+    /** @param DeleteIssueFileReason::* $reason */
+    public function delete(?int $reason = null): ?bool
+    {
+        $return = parent::delete();
+        //TODO: event(new IssueFileDeletedEvent($this, $reason));
+
+        return $return;
     }
 
     /*

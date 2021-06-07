@@ -7,6 +7,7 @@ use App\Services\FileManager;
 use App\Services\ParserService as OldParserService;
 use App\Libraries\IndexerSearch\SearchService;
 use App\Libraries\DecisionEngine\DecisionService;
+use App\Libraries\Disk\LinuxDiskProvider;
 use App\Libraries\Parser\ParserService;
 use App\Libraries\Download\DownloadService;
 use App\Libraries\Http\HttpClient;
@@ -16,12 +17,19 @@ use App\Repositories\ComicVineRepository;
 use App\Repositories\AppSettingsRepository;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Libraries\Disk\RemotePathMappingService;
+use App\Libraries\Download\CompletedDownloadService;
 use App\Libraries\Download\FailedDownloadService;
 use App\Libraries\Download\History\DownloadHistoryService;
 use App\Libraries\Download\IgnoredDownloadService;
 use App\Libraries\Download\TrackedDownloads\TrackedDownloadService;
 use App\Libraries\EventSource\EventSourceService;
 use App\Libraries\History\HistoryService;
+use App\Libraries\MediaFiles\DiskScanService;
+use App\Libraries\MediaFiles\DownloadedIssuesImportService;
+use App\Libraries\MediaFiles\IssueFileMovingService;
+use App\Libraries\MediaFiles\IssueImport\Aggregation\AggregationService;
+use App\Libraries\MediaFiles\IssueImport\ImportDecisionMakerService;
+use App\Libraries\MediaFiles\UpgradeIssueFileService;
 use App\Libraries\Queue\QueueService;
 use Illuminate\Foundation\Application;
 
@@ -48,6 +56,13 @@ class AppServiceProvider extends ServiceProvider
         'TrackedDownloadService' => TrackedDownloadService::class,
         'IgnoredDownloadService' => IgnoredDownloadService::class,
         'FailedDownloadService' => FailedDownloadService::class,
+        'CompletedDownloadService' => CompletedDownloadService::class,
+        'DownloadedIssuesImportService' => DownloadedIssuesImportService::class,
+        'DiskScanService' => DiskScanService::class,
+        'AggregationService' => AggregationService::class,
+        'ImportDecisionMakerService' => ImportDecisionMakerService::class,
+        'UpgradeIssueFileService' => UpgradeIssueFileService::class,
+        'IssueFileMovingService' => IssueFileMovingService::class,
     ];
 
     /**
@@ -61,6 +76,14 @@ class AppServiceProvider extends ServiceProvider
             return new Client([
                 'base_uri' => $this->comicvineUrl,
             ]);
+        });
+
+        $this->app->singleton('DiskProviderService', function(Application $app) {
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                return null;  //TODO: new WindowsDiskProvider();
+            } else {
+                return new LinuxDiskProvider();
+            }
         });
     }
 
