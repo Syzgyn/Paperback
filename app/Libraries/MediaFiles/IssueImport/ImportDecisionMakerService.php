@@ -56,6 +56,7 @@ class ImportDecisionMakerService
             $decisions[] = $this->getDecision($localIssue, $downloadClientItem);
         }
 
+        /** @var ImportDecision[] */
         return $decisions;
     }
 

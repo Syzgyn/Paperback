@@ -13,6 +13,6 @@ class TokenMatch
         public string $separator,
         public string $suffix,
         public string $token,
-        public string $customFormat,
+        public ?string $customFormat,
     ) {}
 }

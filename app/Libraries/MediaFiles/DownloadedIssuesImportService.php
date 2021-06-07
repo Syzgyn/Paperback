@@ -147,8 +147,18 @@ class DownloadedIssuesImportService
     }
 
     /** @return ImportResult[] */
-    protected function processsFile(string $path, int $importMode, Comic $comic, ?DownloadClientItem $downloadClientItem = null): array
+    protected function processsFile(string $path, int $importMode, ?Comic $comic = null, ?DownloadClientItem $downloadClientItem = null): array
     {
+        if ($comic == null) {
+            $comic = resolve("ParserService")->getComicFromTitle(pathinfo($path, PATHINFO_BASENAME));
+
+            if ($comic == null) {
+                return [
+                    $this->unknownComicResult("Unknown comic for file: " . $path, $path),
+                ];
+            }
+        }
+
         if (str_starts_with(pathinfo($path, PATHINFO_BASENAME), "._")) {
             //TODO: Log
 
@@ -162,7 +172,7 @@ class DownloadedIssuesImportService
         }
 
         if ($downloadClientItem == null) {
-            if (resolve("DiskProviderService")->fileIsLocked($path)) {
+            if (resolve("DiskProviderService")->isFileLocked($path)) {
                 return [
                     $this->fileIsLockedResult($path),
                 ];

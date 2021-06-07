@@ -17,7 +17,7 @@ class UpgradeIssueFileService
 
         $moveFileResult = new IssueFileMoveResult();
         $existingFiles = array_filter(array_unique(array_map(function(Issue $issue): ?IssueFile {
-            /** @var IssueFile */
+            /** @var ?IssueFile */
             return $issue->issueFile;
         }, $localIssue->issues)));
 

@@ -6,6 +6,7 @@ use App\Libraries\Download\DownloadClientItem;
 use App\Libraries\Parser\LocalIssue;
 use App\Models\IssueFile;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 
 class ImportApprovedIssues
 {
@@ -76,7 +77,9 @@ class ImportApprovedIssues
                     $oldFiles = $moveResult->oldFiles;
                 } else {
                     $issueFile->relative_path = rtrim(substr($issueFile->path, strlen($localIssue->comic->path)), DIRECTORY_SEPARATOR);
-                    IssueFile::whereComicId($localIssue->comic->cvid)->whereRelativePath($issueFile->relative_path)->delete();
+                    /** @var Builder */
+                    $query = IssueFile::whereComicId($localIssue->comic->cvid)->whereRelativePath($issueFile->relative_path);
+                    $query->delete();
                 }
 
                 $issueFile->save();
@@ -92,7 +95,7 @@ class ImportApprovedIssues
         
         foreach ($importDecisions as $decision) {
             if (!$decision->isApproved()) {
-                $importResults[] = new ImportResult($decision, $decision->rejections);
+                $importResults[] = new ImportResult($decision, array_map(fn($r) => (string) $r, $decision->rejections));
             }
         }
 

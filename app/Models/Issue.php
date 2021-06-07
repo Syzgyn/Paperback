@@ -39,7 +39,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static \Illuminate\Database\Eloquent\Builder|Issue whereCoverDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Issue whereCvid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Issue whereImages($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Issue whereIssueFile($value)
+ * @method static \Illuminate\Database\Eloquent\Builder whereIssueFile($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Issue whereIssueNum($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Issue whereMonitored($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Issue whereOverview($value)

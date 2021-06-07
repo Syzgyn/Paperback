@@ -16,6 +16,11 @@ class IssueFileMovingService
 {
     public function moveIssueFileWithComic(IssueFile $issueFile, Comic $comic): IssueFile
     {
+        if ($issueFile->relative_path == null) {
+            throw new Exception("Invalid file path");
+            
+        }
+        /** @var Issue[] */
         $issues = Issue::whereIssueFile($issueFile->id)->get()->all();
         $filePath = FileNameBuilder::buildFilePath($issues, $comic, $issueFile, pathinfo($issueFile->relative_path, PATHINFO_EXTENSION));
 
@@ -28,6 +33,14 @@ class IssueFileMovingService
 
     public function moveIssueFile(IssueFile $issueFile, LocalIssue $localIssue): IssueFile
     {
+        if ($localIssue->comic == null) {
+            throw new Exception("Missing comic");
+        }
+
+        if ($issueFile->relative_path == null) {
+            throw new Exception("Invalid file path");
+        }
+
         $filePath = FileNameBuilder::buildFilePath($localIssue->issues, $localIssue->comic, $issueFile, pathinfo($issueFile->relative_path, PATHINFO_EXTENSION));
 
         $this->ensureIssueFolder($issueFile, $localIssue->comic, $filePath);
@@ -39,6 +52,14 @@ class IssueFileMovingService
 
     public function copyIssueFile(IssueFile $issueFile, LocalIssue $localIssue): IssueFile
     {
+        if ($localIssue->comic == null) {
+            throw new Exception("Missing comic");
+        }
+
+        if ($issueFile->relative_path == null) {
+            throw new Exception("Invalid file path");
+        }
+
         $filePath = FileNameBuilder::buildFilePath($localIssue->issues, $localIssue->comic, $issueFile, pathinfo($issueFile->relative_path, PATHINFO_EXTENSION));
 
         $this->ensureIssueFolder($issueFile, $localIssue->comic, $filePath);
@@ -57,7 +78,7 @@ class IssueFileMovingService
      */
     protected function transferFile(IssueFile $issueFile, Comic $comic, array $issues, string $destinationFilePath, int $mode): IssueFile
     {
-        $issueFilePath = $issueFile->path ?? $comic->path . DIRECTORY_SEPARATOR . $issueFile->relative_path;
+        $issueFilePath = $issueFile->path;
 
         if (!is_file($issueFilePath)) {
             throw new Exception("Issue file path does not exist:" . $issueFilePath);
