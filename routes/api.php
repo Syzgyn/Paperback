@@ -86,6 +86,7 @@ Route::get('history/since', 'HistoryController@getHistorySince');
 Route::get('history/comic', 'HistoryController@getComicHistory');
 Route::post('history/failed/{id}', 'HistoryController@markAsFailed');
 
+Route::get('log', 'LogController@index');
 
 Route::get('wanted/missing', 'WantedController@missing');
 

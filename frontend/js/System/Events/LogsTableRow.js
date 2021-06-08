@@ -10,15 +10,17 @@ import styles from './LogsTableRow.css';
 
 function getIconName(level) {
   switch (level) {
-    case 'trace':
-    case 'debug':
-    case 'info':
+    case 'DEBUG':
+    case 'INFO':
+    case 'NOTICE':
       return icons.INFO;
-    case 'warn':
+    case 'WARNING':
       return icons.DANGER;
-    case 'error':
+    case 'ERROR':
       return icons.BUG;
-    case 'fatal':
+    case 'CRITICAL':
+    case 'ALERT':
+    case 'EMERGENCY':
       return icons.FATAL;
     default:
       return icons.UNKNOWN;

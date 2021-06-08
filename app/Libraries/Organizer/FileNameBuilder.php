@@ -141,14 +141,14 @@ class FileNameBuilder
     
     protected static function addIssueTitlePlaceholderTokens(array &$tokenHandlers): void
     {
-        $tokenHandlers["{Issue Title}"] = fn(TokenMatch $m): null => null;
-        $tokenHandlers["{Issue CleanTitle}"] = fn(TokenMatch $m): null => null;
+        $tokenHandlers["{Issue Title}"] = fn(TokenMatch $m) => null;
+        $tokenHandlers["{Issue CleanTitle}"] = fn(TokenMatch $m) => null;
     }
 
     protected static function addIssueTitleTokens(array &$tokenHandlers, array $issues, int $maxLength): void
     {
-        $tokenHandlers["{Issue Title}"] = fn(TokenMatch $m): null => null;
-        $tokenHandlers["{Issue CleanTitle}"] = fn(TokenMatch $m): null => null;
+        $tokenHandlers["{Issue Title}"] = fn(TokenMatch $m) => null;
+        $tokenHandlers["{Issue CleanTitle}"] = fn(TokenMatch $m) => null;
     }
 
     protected static function addIssueFileTokens(array &$tokenHandlers, IssueFile $issueFile): void

@@ -135,12 +135,23 @@ export const defaultState = {
         ]
       },
       {
-        key: 'warn',
-        label: 'Warn',
+        key: 'notice',
+        label: 'Notice',
         filters: [
           {
             key: 'level',
-            value: 'warn',
+            value: 'notice',
+            type: filterTypes.EQUAL
+          }
+        ]
+      },
+      {
+        key: 'warning',
+        label: 'Warning',
+        filters: [
+          {
+            key: 'level',
+            value: 'warning',
             type: filterTypes.EQUAL
           }
         ]
@@ -152,6 +163,39 @@ export const defaultState = {
           {
             key: 'level',
             value: 'error',
+            type: filterTypes.EQUAL
+          }
+        ]
+      },
+      {
+        key: 'critical',
+        label: 'Critical',
+        filters: [
+          {
+            key: 'level',
+            value: 'critical',
+            type: filterTypes.EQUAL
+          }
+        ]
+      },
+      {
+        key: 'alert',
+        label: 'Alert',
+        filters: [
+          {
+            key: 'level',
+            value: 'alert',
+            type: filterTypes.EQUAL
+          }
+        ]
+      },
+      {
+        key: 'emergency',
+        label: 'Emergency',
+        filters: [
+          {
+            key: 'level',
+            value: 'emergency',
             type: filterTypes.EQUAL
           }
         ]

@@ -43,6 +43,14 @@ return [
             'foreign_key_constraints' => true,
         ],
 
+        'logs' => [
+            'driver' => 'sqlite',
+            'url' => null,
+            'database' => env('DB_LOG_DATABASE', database_path('logs.sqlite')),
+            'prefix' => '',
+            'foreign_key_constraints' => true,
+        ],
+
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),

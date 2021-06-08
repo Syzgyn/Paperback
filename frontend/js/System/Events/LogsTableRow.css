@@ -4,27 +4,23 @@
   width: 20px;
 }
 
-.info {
+.INFO, .NOTICE {
   color: #1e90ff;
 }
 
-.debug {
+.DEBUG {
   color: #808080;
 }
 
-.trace {
-  color: #d3d3d3;
-}
-
-.warn {
+.WARNING {
   color: $warningColor;
 }
 
-.error {
+.ERROR {
   color: $dangerColor;
 }
 
-.fatal {
+.CRITICAL, .ALERT, .EMERGENCY {
   color: $purple;
 }
 

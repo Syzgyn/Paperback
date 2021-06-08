@@ -37,7 +37,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['dblog', 'single'],
             'ignore_exceptions' => false,
         ],
 
@@ -45,6 +45,11 @@ return [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
             'level' => 'debug',
+        ],
+
+        'dblog' => [
+            'driver' => 'custom',
+            'via' => App\Libraries\Logging\DatabaseLogger::class,
         ],
 
         'daily' => [

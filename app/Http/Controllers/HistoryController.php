@@ -65,7 +65,6 @@ class HistoryController extends Controller
             "totalRecords" => $count,
             "records" => $collection->all(),
         ]);
-        return response()->json($results);
     }
 
     public function getHistorySince(Request $request): IssueHistoryCollection

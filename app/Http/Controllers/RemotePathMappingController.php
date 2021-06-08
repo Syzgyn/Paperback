@@ -28,9 +28,9 @@ class RemotePathMappingController extends Controller
         $mapping->local_path = $localPath->asDirectory()->getPath();
         $mapping->remote_path = $remotePath->asDirectory()->getPath();
 
-        $all = RemotePathMapping::all();
+        $all = RemotePathMapping::all()->all();
 
-        $this->validateMapping((array)$all, $mapping);
+        $this->validateMapping($all, $mapping);
 
         $mapping->save();
 
