@@ -4,6 +4,7 @@ namespace App\Libraries\Parser;
 
 use Exception;
 use App\Libraries\MediaFiles\IssueFileExtensions;
+use Illuminate\Support\Facades\Log;
 
 class Parser
 {
@@ -187,12 +188,12 @@ class Parser
         $result = self::parseTitle($fileInfo['filename']);
 
         if ($result == null) {
-            //TODO: Log
+            Log::debug("Attempting to parse issue info using directory and file names. " . $currentDir);
             $result = self::parseTitle($currentDir . " " . $fileInfo['filename']);
         }
 
         if ($result == null) {
-            //TODO: Log
+            Log::debug("Attempting to parse issue info using directory name. " . $currentDir);
             $result = self::parseTitle($currentDir . $fileInfo['extension']);
         }
 

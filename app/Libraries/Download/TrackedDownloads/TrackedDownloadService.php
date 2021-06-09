@@ -14,6 +14,7 @@ use App\Models\DownloadHistory;
 use App\Models\Issue;
 use Exception;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class TrackedDownloadService
 {
@@ -32,8 +33,12 @@ class TrackedDownloadService
         return self::$cache;
     }
 
-    public function find(string $downloadId): ?TrackedDownload
+    public function find(?string $downloadId): ?TrackedDownload
     {
+        if ($downloadId == null) {
+            return null;
+        }
+
         return self::$cache[$downloadId] ?? null;
     }
 
@@ -56,17 +61,17 @@ class TrackedDownloadService
         $this->saveCache();
     }
 
-    public function trackDownload(DownloadClientModelBase $client, DownloadClientItem $item): TrackedDownload
+    public function trackDownload(DownloadClientModelBase $client, DownloadClientItem $item): ?TrackedDownload
     {
-        // $existingItem = self::find($item->downloadId);
+        $existingItem = $this->find($item->downloadId);
 
-        // if ($existingItem != null && $existingItem->state != TrackedDownloadState::DOWNLOADING) {
-        //     //TODO: Log item change
-        //     $existingItem->downloadItem = $item;
-        //     $existingItem->isTrackable = true;
+        if ($existingItem != null && $existingItem->state != TrackedDownloadState::DOWNLOADING) {
+            $this->logItemChange($existingItem, $existingItem->downloadItem, $item);
+            $existingItem->downloadItem = $item;
+            $existingItem->isTrackable = true;
 
-        //     return $existingItem;
-        // }
+            return $existingItem;
+        }
 
         $trackedDownload = new TrackedDownload();
         $trackedDownload->downloadClient = $client->id;
@@ -110,27 +115,32 @@ class TrackedDownloadService
                     $parsedIssueInfo = Parser::parseTitle($firstHistoryItem->source_title);
 
                     if ($parsedIssueInfo != null) {
+                        /** @var Issue[] */
+                        $issues = $historyItems->where('event_type', IssueHistoryEventType::GRABBED)->map(function(IssueHistory $item): Issue {
+                            /** @var Issue */
+                            return $item->issue;
+                        })->all();
+                        /** @var Comic */
+                        $comic = $firstHistoryItem->comic;
                         $trackedDownload->remoteIssue = resolve("ParserService")->mapFromIssueIds(
                             $parsedIssueInfo, 
-                            $firstHistoryItem->comic,
-                            $historyItems->where('event_type', IssueHistoryEventType::GRABBED)->map(function(IssueHistory $item): Issue {
-                                /** @var Issue */
-                                return $item->issue;
-                            })->all()
+                            $comic,
+                            $issues
                         );
                     }
                 }
             }
 
             if ($trackedDownload->remoteIssue == null) {
-                //TODO: Log
+                Log::debug(sprintf("No issue found for download '%s'", $trackedDownload->downloadItem->title ?? "Unknown Title"));
             }
 
         } catch (Exception $e) {
-            //TODO: Log
+            Log::debug("Failed to find issue for " . $item->title, ['exception' => $e]);
+            return null;
         }
 
-        //TODO: Log item change
+        $this->logItemChange($trackedDownload, $existingItem?->downloadItem, $trackedDownload->downloadItem);
 
         assert($trackedDownload->downloadItem->downloadId != null);
         self::$cache[$trackedDownload->downloadItem->downloadId] = $trackedDownload;
@@ -187,5 +197,26 @@ class TrackedDownloadService
             self::$cache = $cache;
         }
         Cache::put("trackedDownloads", self::$cache);
+    }
+
+    protected function logItemChange(TrackedDownload $trackedDownload, ?DownloadClientItem $existingItem, DownloadClientItem $downloadItem): void
+    {
+        if ($existingItem == null ||
+            $existingItem->status != $downloadItem->status ||
+            $existingItem->canBeRemoved != $downloadItem->canBeRemoved ||
+            $existingItem->canMoveFiles != $downloadItem->canMoveFiles
+        )
+        {
+            Log::debug(sprintf(
+                "Tracking '%s:%s': ClientState=%s%s Stage='%s' Issue='%s' OutputPath='%s'",
+                $downloadItem->downloadClientInfo->name ?? "Unknown Name",
+                $downloadItem->title ?? "Unknown Title",
+                $downloadItem->status ?? "Unknown Status",
+                $downloadItem->canBeRemoved ? "" : ($downloadItem->canMoveFiles ? "(busy)" : "(readonly)"),
+                TrackedDownloadState::toString($trackedDownload->state),
+                (string) $trackedDownload->remoteIssue?->parsedIssueInfo,
+                (string) $downloadItem->outputPath,
+            ));
+        }
     }
 }

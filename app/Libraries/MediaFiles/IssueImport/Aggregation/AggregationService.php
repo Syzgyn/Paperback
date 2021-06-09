@@ -6,6 +6,7 @@ use App\Libraries\Download\DownloadClientItem;
 use App\Libraries\MediaFiles\IssueFileExtensions;
 use App\Libraries\Parser\LocalIssue;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class AggregationService
 {
@@ -40,7 +41,7 @@ class AggregationService
             try {
                 $localIssue = $augmenter->aggregate($localIssue, $downloadClientItem);
             } catch (Exception $e) {
-                //TODO: Log
+                Log::warning($e->getMessage(), ['exception' => $e]);
             }
         }
 

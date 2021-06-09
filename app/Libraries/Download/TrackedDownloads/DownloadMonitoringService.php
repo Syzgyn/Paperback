@@ -15,6 +15,7 @@ use Illuminate\Events\Dispatcher;
 use App\Libraries\Download\IssueGrabbedEvent;
 use App\Models\DownloadClient;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Log;
 
 class DownloadMonitoringService
 {
@@ -66,7 +67,7 @@ class DownloadMonitoringService
         try {
             $downloadClientItems = $client->getItems();
         } catch (Exception $e) {
-            //TODO: Log failure
+            Log::warning("Unable to retrieve queue and history items from " . $client->name, ['exception' => $e]);
         }
 
         foreach ($downloadClientItems as $downloadItem) {
@@ -93,7 +94,7 @@ class DownloadMonitoringService
 
             return $trackedDownload;
         } catch (Exception $e) {
-            //TODO: Log failure
+            Log::error("Couldn't process tracked download " . ($item->title ?? "Unknown title"));
         }
 
         return null;

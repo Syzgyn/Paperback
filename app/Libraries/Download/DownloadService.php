@@ -10,6 +10,7 @@ use App\Libraries\Http\HttpUri;
 use App\Models\DownloadClient;
 use Exception;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 
 class DownloadService
 {
@@ -61,7 +62,7 @@ class DownloadService
         }
 
         event($issueGrabbedEvent);
-        //TODO: Log
+        Log::info(sprintf("Report sent to %s. %s", $downloadClient->name, $downloadTitle ?? "Unknown Title"));
         /** @var App */
         App::terminating(function() {
         });

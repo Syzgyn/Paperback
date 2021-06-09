@@ -401,7 +401,7 @@ class FileManager
 
             return true;
         } catch (Exception $e) {
-            //TODO: log
+            Log::error("Unable to determine if folder is writable: " . $path, ['exception' => $e]);
             return false;
         }
     }

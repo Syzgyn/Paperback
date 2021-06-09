@@ -4,6 +4,7 @@ namespace App\Libraries\Download;
 
 use App\Libraries\Download\TrackedDownloads\TrackedDownload;
 use App\Models\Issue;
+use Illuminate\Support\Facades\Log;
 
 class IgnoredDownloadService
 {
@@ -13,7 +14,7 @@ class IgnoredDownloadService
         $issues = $trackedDownload->remoteIssue?->issues;
 
         if ($comic == null || $issues == null) {
-            //TODO: Log
+            Log::warning("Unable to ignore download for unknown comic");
             return false;
         }
 

@@ -9,7 +9,7 @@ use Monolog\Processor\IntrospectionProcessor;
 
 class LogHandler extends AbstractProcessingHandler
 {
-    protected $processor;
+    protected IntrospectionProcessor $processor;
 
     public function __construct()
     {
@@ -18,6 +18,7 @@ class LogHandler extends AbstractProcessingHandler
 
     protected function write(array $record): void
     {
+        /** @var array{extra: array{class: string}, level_name: string, message: string} */
         $record = ($this->processor)($record);
 
         $record['extra']['basename'] = class_basename($record['extra']['class']);
@@ -26,6 +27,7 @@ class LogHandler extends AbstractProcessingHandler
         $exception = null;
 
         if (isset($record['context']['exception'])) {
+            /** @var \Exception */
             $e = $record['context']['exception'];
 
             $exception_type = class_basename(get_class($e));

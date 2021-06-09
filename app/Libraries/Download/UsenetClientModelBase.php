@@ -6,6 +6,7 @@ use App\Libraries\Parser\RemoteIssue;
 use App\Libraries\Http\HttpRequest;
 use GuzzleHttp\Exception\TransferException;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 abstract class UsenetClientModelBase extends DownloadClientModelBase
 {
@@ -32,16 +33,45 @@ abstract class UsenetClientModelBase extends DownloadClientModelBase
         try {
             $request = new HttpRequest($url);
             $request->rateLimitKey = (string) $remoteIssue->release->indexerId;
-            $fileContent = resolve('HttpClient')->get($request)->content;
+            $response = resolve('HttpClient')->get($request);
+            $fileContent = $response->content;
 
-            //TODO: log
+            Log::debug(sprintf(
+                "Downloaded nzb for issue '%s' finished (%d bytes from %s)",
+                $remoteIssue->release->title,
+                strlen($fileContent),
+                $url
+            ));
         } catch (TransferException $e) {
-            //TODO: log and expand error catching
+            if (!isset($response)) {
+                Log::error("Unable to get response object from " . $url);
+                throw $e;
+            }
+
+            if ($response->statusCode == 404) {
+                Log::error(
+                    sprintf("Downloading nzb for issue '%s' failed since it no longer exists (%s)", $remoteIssue->release->title, $url),
+                    ['exception' => $e],
+                );
+                throw $e;
+            }
+
+            if ($response->statusCode == 429) {
+                Log::error("API Grab limit reached for " . $url);
+            } else {
+                Log::error(
+                    sprintf("Downloading nzb for issue '%s' failed (%s)", $remoteIssue->release->title, $url),
+                    ['exception' => $e],
+                );
+            }
+
             throw $e;
         }
 
         resolve('NzbValidationService')->validate($filename, $fileContent);
-        //TODO: log
+
+        Log::info(sprintf("Adding report [%s] to the queue.", $remoteIssue->release->title));
+
         return $this->addFromNzbFile($remoteIssue, $filename, $fileContent);
     }
 }

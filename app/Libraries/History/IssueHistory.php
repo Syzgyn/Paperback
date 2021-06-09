@@ -16,7 +16,7 @@ use DateTime;
  * @property int $comic_id
  * @property int $issue_id
  * @property string $source_title
- * @property DateTime $date
+ * @property \DateTime $date
  * @property array $data
  * @property int $event_type
  * @property string $download_id

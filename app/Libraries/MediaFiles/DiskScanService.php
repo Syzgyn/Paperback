@@ -3,9 +3,11 @@
 namespace App\Libraries\MediaFiles;
 
 use App\Libraries\Disk\DiskProviderBase;
+use App\Libraries\MediaFiles\IssueImport\ImportApprovedIssues;
 use App\Models\Comic;
 use App\Models\RootFolder;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class DiskScanService
 {
@@ -19,20 +21,20 @@ class DiskScanService
 
         if (!$comicFolderExists) {
             if (!is_dir($rootFolder)) {
-                //TODO: Log
+                Log::warning(sprintf("Comic root folder (%s) doesn't exist.", $rootFolder));
                 //TODO: publish comicScanSkippedEvent
                 return;
             }
 
             // Is dir empty?
             if (!(new \FilesystemIterator($rootFolder))->valid()) {
-                //TODO: Log
+                Log::warning(sprintf("Comic root folder (%s) is empty.", $rootFolder));
                 //TODO: publish comicScanSkippedEvent
                 return;
             }
         }
 
-        //TODO: Log
+        Log::debug("Scanning " . $comic->title);
 
         $settingsService = resolve("AppSettings");
         $createEmptyComicFolders = $settingsService->get("mediamanagement", "createEmptyComicFolders");
@@ -41,14 +43,15 @@ class DiskScanService
         if (!$comicFolderExists) {
             if ($createEmptyComicFolders) {
                 if ($deleteEmptyFolders) {
-                    //TODO: Log
+                    Log::debug(sprintf("Not creating missing comic folder: %s because delete empty comic folder is enabled", $comic->path));
                 } else {
-                    //TODO: Log
-                    mkdir($comic->path, 777, true);
-                    $this->setPermissions($comic->path);
+                    Log::debug(sprintf("Creating missing comic folder: %s", $comic->path));
+                    $diskProvider = resolve("DiskProviderService");
+                    $diskProvider->createFolder($comic->path);
+                    $diskProvider->setPermissionsFromConfig($comic->path);
                 }
             } else {
-                //TODO: Log
+                Log::debug("Comic folder doesn't exist: " . $comic->path);
             }
 
             $this->cleanFiles($comic, []);
@@ -57,41 +60,56 @@ class DiskScanService
             return;
         }
 
+        $issueFileList = $this->filterPaths($comic->path, $this->getIssueFiles($comic->path));
+        Log::debug("Finished getting issue files for: " . $comic->title);
+
+        $this->cleanFiles($comic, $issueFileList);
+
+        $decisions = resolve("ImportDecisionMakerService")->getImportDecisions($issueFileList, $comic);
+        Log::debug("Import decisions complete for: " . $comic->title);
         
+        ImportApprovedIssues::import($decisions, false);
+
+        $this->removeEmptyComicFolder($comic->path);
+        $this->completedScanning($comic);
     }
 
     protected function cleanFiles(Comic $comic, array $fileList): void
     {
+        Log::debug($comic->title . " Cleaning up issue files in DB");
         //TODO: clean issueFiles
     }
 
     protected function completedScanning(Comic $comic): void
     {
-        //TODO: Log
+        Log::debug("Completed scanning disk for " . $comic->title);
         //TODO: event(new ComicScannedEvent($comic));
     }
 
     /** @return string[] */
     public function getIssueFiles(string $path, bool $allDirectories = true): array
     {
-        //TODO: Log
+        Log::debug(sprintf("Scanning '%s' for issue files", $path));
+
         $searchFunc = $allDirectories ? "getFilesRecursive" : "getFiles";
         /** @var string[] */
-        $filesOnDisk = resolve("DiskProvider")->$searchFunc($path);
+        $filesOnDisk = resolve("DiskProviderService")->$searchFunc($path);
 
         $issueFileList = array_filter($filesOnDisk, function($file) {
             $extension = pathinfo($file, PATHINFO_EXTENSION);
             return in_array($extension, IssueFileExtensions::$extensions);
         });
 
-        //TODO: Log
+        Log::debug(sprintf("%d files were found in %s", count($filesOnDisk), $path));
+        Log::debug(sprintf("%d issue files were found in %s", count($issueFileList), $path));
 
         return $issueFileList;
     }
 
     public function getNonIssueFiles(string $path, bool $allDirectories = true): array
     {
-        //TODO: Log
+        Log::debug(sprintf("Scanning '%s' for non-issue files", $path));
+
         $searchFunc = $allDirectories ? "getFilesRecursive" : "getFiles";
         /** @var string[] */
         $filesOnDisk = resolve("DiskProviderService")->$searchFunc($path);
@@ -101,7 +119,8 @@ class DiskScanService
             return !in_array($extension, IssueFileExtensions::$extensions);
         });
 
-        //TODO: Log
+        Log::debug(sprintf("%d files were found in %s", count($filesOnDisk), $path));
+        Log::debug(sprintf("%d non-issue files were found in %s", count($issueFileList), $path));
 
         return $issueFileList;
     }
@@ -121,25 +140,6 @@ class DiskScanService
 
             return true;
         });
-    }
-
-    protected function setPermissions(string $path): void
-    {
-        $settings = resolve("AppSettings");
-        if (!$settings->get("mediamanagemnt", "setPermissionsLinux")) {
-            return;
-        }
-
-        try {
-            resolve("DiskProviderService")->
-                setPermissions(
-                    $path, 
-                    $settings->get("mediamanagemnt", "chmodFolder"),
-                    $settings->get("mediamanagement", "chownGroup")
-                );
-        } catch (Exception $e) {
-            //TODO: Log
-        }
     }
 
     public function removeEmptyComicFolder(string $path): void

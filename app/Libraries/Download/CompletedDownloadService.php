@@ -12,6 +12,7 @@ use App\Libraries\MediaFiles\IssueImport\ImportResultType;
 use App\Models\Comic;
 use App\Models\DownloadClient;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class CompletedDownloadService
 {
@@ -34,7 +35,7 @@ class CompletedDownloadService
         $historyItem = IssueHistory::mostRecentForDownloadId($trackedDownload->downloadItem->downloadId);
 
         if ($historyItem == null && empty($trackedDownload->downloadItem->category)) {
-            //TODO: Log
+            $trackedDownload->warn("Download wasn't grabbed by Paperback and not in a category.  Skipping.");
             return;
         }
 
@@ -54,7 +55,7 @@ class CompletedDownloadService
             }
 
             if ($comic == null) {
-                //TODO: Log
+                $trackedDownload->warn("Comic title mismatch, automatic import is not possible.");
                 return;
             }
         }
@@ -116,14 +117,14 @@ class CompletedDownloadService
         $importedCount = 0;
         foreach($importResults as $importResult) {
             if ($importResult->result() == ImportResultType::IMPORTED) {
-                $importedCount += count($importResult->importDecision->localIssue->issues);
+                $importedCount += count($importResult->importDecision->localIssue->issues ?? []);
             }
         }
 
         $allIssuesImported = $importedCount >= max(1, count($trackedDownload->remoteIssue?->issues ?? []));
 
         if ($allIssuesImported) {
-            //TODO: Log
+            Log::debug("All issues were imported for " . ($trackedDownload->downloadItem->title ?? "Unknown title"));
             $trackedDownload->state = TrackedDownloadState::IMPORTED;
             //TODO: event(new DownloadCompletedEvent($trackedDownload, $trackedDownload->remoteIssue->comic->cvid));
             return true;
@@ -137,9 +138,17 @@ class CompletedDownloadService
 
         if ($trackedDownload->isImported($historyItems->all())) {
             if ($importedCount > 0) {
-                //TODO: Log all issues imported
+                Log::debug("All issues were imported in history for " . ($trackedDownload->downloadItem->title ?? "Unknown title"));
             } else {
-                //TODO: Log no issues imported
+                Log::debug(
+                    "No issues were just imported, but all issues were previously imported.  Possible issue with Download History.", 
+                    [
+                        "comicId" => $trackedDownload->remoteIssue?->comic?->cvid,
+                        "downloadId" => $trackedDownload->downloadItem->downloadId,
+                        "title" => $trackedDownload->downloadItem->title,
+                        "path" => $trackedDownload->importItem?->outputPath?->getPath(),
+                    ]
+                );
             }
 
             $trackedDownload->state = TrackedDownloadState::IMPORTED;
@@ -147,7 +156,7 @@ class CompletedDownloadService
             return true;
         }
 
-        //TODO: log
+        Log::debug("Not all issues have been imported for " . ($trackedDownload->downloadItem->title ?? "Unknown title"));
         return false;
     }
 
@@ -175,7 +184,7 @@ class CompletedDownloadService
         $outputPath = $trackedDownload->importItem?->outputPath;
 
         if (empty($outputPath)) {
-            //TODO: Log
+            $trackedDownload->warn("Download doesn't contain intermediate path, Skipping.");
             return false;
         }
 
@@ -183,7 +192,7 @@ class CompletedDownloadService
             (PHP_OS_FAMILY != "Windows" && !$outputPath->isUnixPath())
         )
         {
-            //TODO: Log
+            $trackedDownload->warn(sprintf("'%s' is not a valid local path.  You may need a remote path mapping.", (string) $outputPath));
             return false;
         }
 

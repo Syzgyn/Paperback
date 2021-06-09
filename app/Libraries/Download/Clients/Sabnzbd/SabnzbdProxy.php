@@ -9,6 +9,7 @@ use App\Libraries\Download\Clients\Sabnzbd\Responses\SabnzbdAddResponse;
 use App\Libraries\Download\Clients\Sabnzbd\Responses\SabnzbdResponseInterface;
 use App\Libraries\Download\Clients\Sabnzbd\Responses\SabnzbdRetryResponse;
 use Exception;
+use Illuminate\Support\Facades\Log;
 use Karriere\JsonDecoder\JsonDecoder;
 use Karriere\JsonDecoder\Transformer;
 
@@ -158,7 +159,7 @@ class SabnzbdProxy
     {
         $httpRequest = $requestBuilder->build();
 
-        //TODO: log
+        Log::debug("Url: " . $httpRequest->url);
 
         $response = null;
 

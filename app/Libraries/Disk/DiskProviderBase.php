@@ -4,6 +4,7 @@ namespace App\Libraries\Disk;
 
 use DateTime;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 abstract class DiskProviderBase
 {
@@ -30,13 +31,14 @@ abstract class DiskProviderBase
         }
 
         try {
-            $this->setPermissions(
-                    $path, 
-                    $settings->get("mediamanagemnt", "chmodFolder"),
-                    $settings->get("mediamanagement", "chownGroup")
-                );
+            /** @var string */
+            $folder = $settings->get("mediamanagemnt", "chmodFolder");
+            /** @var string */
+            $group = $settings->get("mediamanagement", "chownGroup");
+
+            $this->setPermissions($path, $folder, $group);
         } catch (Exception $e) {
-            //TODO: Log
+            Log::warning("Unable to apply permissions to: " . $path, ['exception' => $e]);
         }
     }
 
@@ -107,7 +109,7 @@ abstract class DiskProviderBase
 
             return true;
         } catch (Exception $e) {
-            //TODO: log
+            Log::warning(sprintf("Directory '%s' is not writable. %s", $path, $e->getMessage()));
             return false;
         }
     }

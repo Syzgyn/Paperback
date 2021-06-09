@@ -9,18 +9,20 @@ use App\Libraries\History\IssueHistoryEventType;
 use App\Libraries\MediaFiles\IssueImport\ImportDecisionSpecificationInterface;
 use App\Libraries\Parser\LocalIssue;
 use DateTime;
+use Illuminate\Support\Facades\Log;
 
 class AlreadyImportedSpecification implements ImportDecisionSpecificationInterface
 {
     public function isSatisfiedBy(LocalIssue $localIssue, ?DownloadClientItem $downloadClientItem): Decision
     {
         if ($downloadClientItem == null) {
+            Log::debug("No download client information is available, skipping");
             return Decision::accept();
         }
 
         foreach ($localIssue->issues as $issue) {
             if (!$issue->has_file) {
-                //TODO: Log
+                Log::debug("Skipping already imported check for issue without file");
                 continue;
             }
             
@@ -31,17 +33,17 @@ class AlreadyImportedSpecification implements ImportDecisionSpecificationInterfa
             $lastGrabbed = $issueHistory->firstWhere("event_type", IssueHistoryEventType::GRABBED);
 
             if ($lastImported == null) {
-                //TODO: Log
+                Log::debug("Issue file has not been imported");
                 continue;
             }
 
             if ($lastGrabbed != null && $lastGrabbed->date > $lastImported->date) {
-                //TODO: Log
+                Log::debug("Issue file was grabbed again after importing");
                 continue;
             }
 
             if ($lastImported->download_id == $downloadClientItem->downloadId) {
-                //TODO: Log
+                Log::debug("Issue file previously imported at " . $lastImported->date->format(DATE_ATOM));
                 return Decision::reject("Issue file already imported at " . $lastImported->date->format(DATE_ATOM));
             }
         }

@@ -13,6 +13,7 @@ use App\Models\DownloadHistory;
 use App\Models\Issue;
 use Exception;
 use App\Libraries\Download\History\DownloadHistoryEventType;
+use Illuminate\Support\Facades\Log;
 
 class TrackedDownload
 {
@@ -41,26 +42,39 @@ class TrackedDownload
         $this->statusMessages = $message;
     }
 
-    /** @param IssueHistory[] */
+    /** @param IssueHistory[] $historyItems */
     public function isImported(array $historyItems): bool
     {
-        //TODO: Log
+        Log::debug(sprintf("Checking if all issues for '%s' have been imported", $this->downloadItem->title ?? "Unknown Title"));
+
         if (empty($historyItems)) {
-            //TODO: Log
+            Log::debug("No history for " . ($this->downloadItem->title ?? "Unknown Title"));
             return false;
         }
 
         $importedIssues = array_map(function(Issue $issue) use ($historyItems) {
-            /** @var IssueHistory */
-            $lastHistoryItem = reset(array_filter($historyItems, fn(IssueHistory $h) => $h->issue_id == $issue->cvid));
+            /** @var IssueHistory[] */
+            $matchingHistoryItems =  array_filter($historyItems, fn(IssueHistory $h) => $h->issue_id == $issue->cvid);
+            $lastHistoryItem = reset($matchingHistoryItems);
+
             if ($lastHistoryItem === false) {
-                //TODO: Log
+                Log::debug(sprintf("No history for issue %d [%d]", $issue->issue_num, $issue->cvid));
                 return false;
             }
 
-            return $lastHistoryItem->event_type == IssueHistoryEventType::DOWNLOAD_FOLDER_IMPORTED;
-        }, $this->remoteIssue->issues);
+            Log::debug(sprintf(
+                "Last event for issue %d [%d] is: %s", 
+                $issue->issue_num, $issue->cvid, 
+                IssueHistoryEventType::toString($lastHistoryItem->event_type)
+            ));
 
-        return $importedIssues;
+            return $lastHistoryItem->event_type == IssueHistoryEventType::DOWNLOAD_FOLDER_IMPORTED;
+        }, $this->remoteIssue?->issues ?? []);
+
+        $allDownloaded = count($importedIssues) == count($historyItems);
+
+        Log::debug(sprintf("All issues for %s have been imported: %s", $this->downloadItem->title ?? "Unknown Title", $allDownloaded ? "true" : "false"));
+
+        return $allDownloaded;
     }
 }

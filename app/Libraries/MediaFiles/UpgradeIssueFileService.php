@@ -6,6 +6,7 @@ use App\Libraries\Parser\LocalIssue;
 use App\Models\Issue;
 use App\Models\IssueFile;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class UpgradeIssueFileService
 {
@@ -16,6 +17,7 @@ class UpgradeIssueFileService
         }
 
         $moveFileResult = new IssueFileMoveResult();
+        /** @var IssueFile[] */
         $existingFiles = array_filter(array_unique(array_map(function(Issue $issue): ?IssueFile {
             /** @var ?IssueFile */
             return $issue->issueFile;
@@ -32,7 +34,7 @@ class UpgradeIssueFileService
             $subfolder = substr(dirname($issueFilePath), strlen($rootFolder));
 
             if (is_file($issueFilePath)) {
-                //TODO: Log
+                Log::debug("Removing existing issue file: " . $file->path);
                 //TODO: Recycle delete file
             }
 

@@ -7,6 +7,7 @@ use App\Libraries\Parser\LocalIssue;
 use App\Models\IssueFile;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Log;
 
 class ImportApprovedIssues
 {
@@ -88,7 +89,7 @@ class ImportApprovedIssues
                 //event(new IssueImportedEvent($localIssue, $issueFile, $oldFiles, $newDownload, $downloadClientItem));
 
             } catch (Exception $e) {
-                //TODO: Log
+                Log::warning("Couldn't import issue: " . $localIssue);
                 $importResults[] = new ImportResult($importDecision, ["Failed to import issue"]);
             }
         }

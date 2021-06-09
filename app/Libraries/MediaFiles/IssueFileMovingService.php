@@ -11,6 +11,7 @@ use App\Models\Comic;
 use App\Models\Issue;
 use App\Models\IssueFile;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class IssueFileMovingService
 {
@@ -26,7 +27,7 @@ class IssueFileMovingService
 
         $this->ensureIssueFolder($issueFile, $comic, $filePath);
 
-        //TODO: Log
+        Log::debug(sprintf("Renaming issue file: %s to %s", (string) $issueFile, $filePath));
 
         return $this->transferFile($issueFile, $comic, $issues, $filePath, TransferMode::MOVE);
     }
@@ -45,7 +46,7 @@ class IssueFileMovingService
 
         $this->ensureIssueFolder($issueFile, $localIssue->comic, $filePath);
 
-        //TODO: Log
+        Log::debug(sprintf("Moving issue file: %s to %s", $issueFile->path, $filePath));
 
         return $this->transferFile($issueFile, $localIssue->comic, $localIssue->issues, $filePath, TransferMode::MOVE);
     }
@@ -65,10 +66,11 @@ class IssueFileMovingService
         $this->ensureIssueFolder($issueFile, $localIssue->comic, $filePath);
 
         if (resolve("AppSettings")->get("mediamanagement", "copyUsingHardlinks")) {
-            //TODO: Log
+            Log::debug(sprintf("Hardlinking issue file: %s to %s", $issueFile->path, $filePath));
             return $this->transferFile($issueFile, $localIssue->comic, $localIssue->issues, $filePath, TransferMode::HARDLINK_OR_COPY);
         }
 
+        Log::debug(sprintf("Copying issue file: %s to %s", $issueFile->path, $filePath));
         return $this->transferFile($issueFile, $localIssue->comic, $localIssue->issues, $filePath, TransferMode::COPY);
     }
 

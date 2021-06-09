@@ -12,6 +12,7 @@ use App\Libraries\Parser\Parser;
 use App\Models\Comic;
 use App\Models\IssueFile;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class ImportDecisionMakerService
 {
@@ -39,7 +40,7 @@ class ImportDecisionMakerService
     {
         $newFiles = $filterExistingFiles ? IssueFile::filterExistingFiles($issueFiles, $comic) : $issueFiles;
 
-        //TODO: Log
+        Log::debug(sprintf("Analyzing %d/%d files", count($newFiles), count($issueFiles)));
 
         $downloadClientItemInfo = $downloadClientItem ? Parser::parseTitle($downloadClientItem->title ?? "") : null;
         /** @var ImportDecision[] */
@@ -93,14 +94,14 @@ class ImportDecisionMakerService
                 $decision = $this->getDecision($localIssue, $downloadClientItem);
             }
         } catch (Exception $e) {
-            //TODO: Log
+            Log::error("Couldn't import file: " . ($localIssue->path ?? "Unknown path"), ['exception' => $e]);
             $decision = new ImportDecision($localIssue, [new Rejection("Unable to parse file")]);
         }
 
         if (!empty($decision->rejections)) {
-            //TODO: Log
+            Log::debug("File rejected for the following reasons: " . implode(",", $decision->rejections));
         } else {
-            //TODO: Log
+            Log::debug("File accepted");
         }
 
         return $decision;
@@ -137,7 +138,7 @@ class ImportDecisionMakerService
                 return new Rejection($result->reason);
             }
         } catch (Exception $e) {
-            //TODO: Log
+            Log::error("Couldn't evaluate decision on: " . ($localIssue->path ?? "Unknown Path"), ['exception' => $e]);
             return new Rejection(basename($spec::class) . ": " . $e->getMessage());
         }
 

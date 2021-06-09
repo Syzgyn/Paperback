@@ -10,6 +10,7 @@ use App\Libraries\Parser\ReleaseInfo;
 use App\Libraries\Indexers\Exceptions\UnsupportedFeedException;
 use App\Libraries\Indexers\Exceptions\SizeParsingException;
 use App\Libraries\Indexers\Exceptions\IndexerException;
+use Illuminate\Support\Facades\Log;
 use Traversable;
 
 class RssParser
@@ -59,8 +60,8 @@ class RssParser
             try {
                 $results[] = $this->processItem($item);
             } catch (\Exception $e) {
-                //TODO: Log error
-                throw $e;
+                Log::error("An error occured while processing feed item from " . $response->request->url,
+                    ['exception' => $e]);
             }
         }
 
@@ -302,7 +303,7 @@ class RssParser
             $url = $this->response->request->url->add(new HttpUri($value));
             return (string)$url;
         } catch(\Exception $e) {
-            //TODO: log error
+            Log::debug(sprintf("Failed to parse url %s, ignoring.", $value), ['exception' => $e]);
             return null;
         }
     }

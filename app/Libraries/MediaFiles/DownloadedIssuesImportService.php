@@ -15,6 +15,7 @@ use App\Libraries\Parser\LocalIssue;
 use App\Libraries\Parser\Parser;
 use App\Models\Comic;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class DownloadedIssuesImportService
 {
@@ -25,7 +26,8 @@ class DownloadedIssuesImportService
      */
     public function processPath(string $path, int $importMode = ImportMode::AUTO, Comic $comic = null, DownloadClientItem $downloadClientItem = null): array
     {
-        //TODO: Log
+        Log::debug("Processing path: " . $path);
+
         if (is_dir($path)) {
             return $this->processFolder($path, $importMode, $comic, $downloadClientItem);
         }
@@ -34,7 +36,7 @@ class DownloadedIssuesImportService
             return $this->processsFile($path, $importMode, $comic, $downloadClientItem);
         }
 
-        //TODO: Log
+        Log::error(sprintf("Import failed, path does not exist or is not accessible by Paperback: %s. Ensure the path exists and the user running Paperback has the correct permissions to access this file/folder", $path));
         return [];
     }
 
@@ -48,15 +50,14 @@ class DownloadedIssuesImportService
                 $issueParsedResult = Parser::parseTitle($filename);
 
                 if ($issueParsedResult == null) {
-                    //TODO: Log
+                    Log::warning("Unable to parse file on import: " . $issueFile);
                     return false;
                 }
             }
 
             return true;
-
         } catch (Exception $e) {
-            //TODO: Log
+            Log::debug("Unable to determine whether folder should be removed: " . $path);
             return false;
         }
     }
@@ -80,7 +81,7 @@ class DownloadedIssuesImportService
 
     protected function fileIsLockedResult(string $issueFile): ImportResult
     {
-        //TODO: Log
+        Log::debug(sprintf("[%s] is currently locked by another process, skipping.", $issueFile));
         $localIssue = new LocalIssue();
         $localIssue->path = $issueFile;
 
@@ -99,6 +100,8 @@ class DownloadedIssuesImportService
             $comic = resolve("ParserService")->getComicFromTitle($cleanName);
 
             if ($comic == null) {
+                Log::debug("Unknown Comic: " . $cleanName);
+
                 return [
                     $this->unknownComicResult("Unknown Comic"),
                 ];
@@ -106,7 +109,7 @@ class DownloadedIssuesImportService
         }
 
         if (Comic::wherePath($path)->count()) {
-            //TODO: Log
+            Log::warning("Unable to process folder that is mapped to a current comic");
             return [];
         }
 
@@ -139,7 +142,7 @@ class DownloadedIssuesImportService
             $this->shouldDeleteFolder($path, $comic)
         )
         {
-            //TODO: Log
+            Log::debug("Deleting folder after importing valid files");
             resolve("DiskProviderService")->deleteFolder($path);
         }
 
@@ -153,6 +156,7 @@ class DownloadedIssuesImportService
             $comic = resolve("ParserService")->getComicFromTitle(pathinfo($path, PATHINFO_BASENAME));
 
             if ($comic == null) {
+                Log::debug("Unknown comic for file: " . $path);
                 return [
                     $this->unknownComicResult("Unknown comic for file: " . $path, $path),
                 ];
@@ -160,7 +164,7 @@ class DownloadedIssuesImportService
         }
 
         if (str_starts_with(pathinfo($path, PATHINFO_BASENAME), "._")) {
-            //TODO: Log
+            Log::debug(sprintf("[%s] starts with '._', skipping", $path));
 
             $reason = "Invalid file, filename starts with '._'";
             $localIssue = new LocalIssue();
