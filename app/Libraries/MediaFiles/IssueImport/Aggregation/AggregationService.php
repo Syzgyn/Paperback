@@ -18,7 +18,7 @@ class AggregationService
         $this->augmenters[] = new AggregateIssues();    
     }
 
-    public function augment(LocalIssue $localIssue, DownloadClientItem $downloadClientItem): LocalIssue
+    public function augment(LocalIssue $localIssue, ?DownloadClientItem $downloadClientItem): LocalIssue
     {
         if ($localIssue->path == null) {
             throw new Exception("Unable to parse issue with missing path.");

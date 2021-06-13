@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $indexer_id
  * @property int $download_client_id
  * @property string|null $release
- * @property string|null $data
+ * @property array $data
  * @property string|null $download_id
  * @property-read \App\Models\Comic $comic
  * @property-read \App\Models\Issue $issue

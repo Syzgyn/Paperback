@@ -132,9 +132,9 @@ class DiskScanService
      */
     public function filterPaths(string $basePath, array $paths): array
     {
-        return array_filter($paths, function(string $path) use ($basePath) {
-            if (preg_match($this->excludedSubfoldersRegex, $basePath . DIRECTORY_SEPARATOR . $path) !== false ||
-                preg_match($this->excludedFilesRegex, $path) !== false) {
+        return array_filter($paths, function(string $path) {
+            if (preg_match($this->excludedSubfoldersRegex, $path) ||
+                preg_match($this->excludedFilesRegex, $path)) {
                     return false;
                 }
 

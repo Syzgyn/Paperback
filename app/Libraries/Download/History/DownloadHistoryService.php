@@ -2,6 +2,7 @@
 
 namespace App\Libraries\Download\History;
 
+use App\Events\DownloadCompletedEvent;
 use App\Libraries\Download\DownloadFailedEvent;
 use App\Libraries\Download\DownloadIgnoredEvent;
 use App\Libraries\Download\DownloadProtocol;
@@ -128,6 +129,28 @@ class DownloadHistoryService
             ],
         ]);
     }
+
+    public function handleDownloadCompletedEvent(DownloadCompletedEvent $event): void
+    {
+        $downloadItem = $event->trackedDownload->downloadItem;
+
+        $history = new DownloadHistory([
+            'event_type' => DownloadHistoryEventType::DOWNLOAD_IMPORTED,
+            'comic_id' => $event->comicId,
+            'download_id' => $downloadItem?->downloadId,
+            'source_title' => $downloadItem?->title,
+            'date' => now()->format(DATE_ATOM),
+            'protocol' => $event->trackedDownload->protocol,
+            'download_client_id' => $event->trackedDownload->downloadClient,
+        ]);
+
+        $history->data = [
+            'DownloadClient' => $downloadItem?->downloadClientInfo?->type,
+            'DownloadClientName' => $downloadItem?->downloadClientInfo?->name,
+        ];
+
+        $history->save();
+    }
     
     public function subscribe(Dispatcher $events): void
     {
@@ -144,6 +167,11 @@ class DownloadHistoryService
         $events->listen(
             DownloadIgnoredEvent::class,
             [$this, 'handleDownloadIgnoredEvent']
+        );
+
+        $events->listen(
+            DownloadCompletedEvent::class,
+            [$this, 'handleDownloadCompletedEvent']
         );
     }
 }

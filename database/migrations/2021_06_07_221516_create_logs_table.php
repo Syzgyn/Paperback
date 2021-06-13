@@ -16,7 +16,7 @@ class CreateLogsTable extends Migration
         Schema::connection("logs")->create('logs', function (Blueprint $table) {
             $table->id();
             $table->text("message");
-            $table->dateTime("time");
+            $table->dateTime("time", 6);
             $table->text("logger");
             $table->text("exception")->nullable();
             $table->text("exception_type")->nullable();

@@ -21,7 +21,7 @@ use App\Models\Downloaders\DirectDownload;
  * @method static \Illuminate\Database\Eloquent\Builder|TrackedDownload query()
  * @mixin \Eloquent
  */
-class TrackedDownload extends Model
+class OldTrackedDownload extends Model
 {
     const DOWNLOAD_STATUS = [
         'Pending' => 0,

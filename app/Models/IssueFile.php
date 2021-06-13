@@ -18,7 +18,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string|null $original_file_path
  * @property-read \App\Models\Comic $comic
  * @property-read mixed $file_type
- * @property-read mixed $path
  * @property-read \App\Models\Issue $issue
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|IssueFile newQuery()
@@ -36,6 +35,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class IssueFile extends Model
 {
     const UPDATED_AT = null;
+    
+    public ?string $path = null;
 
     protected $guarded = [
         'id',
@@ -55,13 +56,6 @@ class IssueFile extends Model
     public function issue(): BelongsTo
     {
         return $this->belongsTo(Issue::class, 'id', 'issue_file');
-    }
-
-    public function getPathAttribute(): string
-    {
-        /** @var Comic $comic */
-        $comic = $this->comic;
-        return $comic->path . DIRECTORY_SEPARATOR . ((string) $this->relative_path);
     }
 
     public function getFileTypeAttribute(): string

@@ -3,6 +3,7 @@
 namespace App\Libraries\Disk;
 
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class LinuxDiskProvider extends DiskProviderBase
 {
@@ -37,5 +38,19 @@ class LinuxDiskProvider extends DiskProviderBase
     public function getTotalSize(string $path): int
     {
         return (int) disk_total_space($path);
+    }
+
+    public function tryCreateHardLink(string $source, string $destination): bool
+    {
+        try {
+            if (is_link($source)) {
+                return false;
+            }
+
+            return link($source, $destination);
+        } catch (Exception $e) {
+            Log::debug(sprintf("Hardlink '%s' to '%s' failed.", $source, $destination), ['exception' => $e]);
+            return false;
+        }
     }
 }

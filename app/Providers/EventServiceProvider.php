@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\Listeners\DownloadListener;
 use App\Events\Listeners\IssueListener;
+use App\Libraries\Download\DownloadProcessingService;
 use App\Libraries\Download\History\DownloadHistoryService;
 use App\Libraries\Download\TrackedDownloads\DownloadMonitoringService;
 use App\Libraries\History\HistoryService;
@@ -25,9 +27,11 @@ class EventServiceProvider extends ServiceProvider
     protected $subscribe = [
         DownloadHistoryService::class,
         DownloadMonitoringService::class,
+        DownloadProcessingService::class,
         HistoryService::class,
         EventSourceService::class,
         IssueListener::class,
+        DownloadListener::class,
         QueueService::class,
     ];
 

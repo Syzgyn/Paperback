@@ -17,13 +17,13 @@ class IssueFileMovingService
 {
     public function moveIssueFileWithComic(IssueFile $issueFile, Comic $comic): IssueFile
     {
-        if ($issueFile->relative_path == null) {
+        if ($issueFile->path == null) {
             throw new Exception("Invalid file path");
             
         }
         /** @var Issue[] */
         $issues = Issue::whereIssueFile($issueFile->id)->get()->all();
-        $filePath = FileNameBuilder::buildFilePath($issues, $comic, $issueFile, pathinfo($issueFile->relative_path, PATHINFO_EXTENSION));
+        $filePath = FileNameBuilder::buildFilePath($issues, $comic, $issueFile, pathinfo($issueFile->path, PATHINFO_EXTENSION));
 
         $this->ensureIssueFolder($issueFile, $comic, $filePath);
 
@@ -38,11 +38,11 @@ class IssueFileMovingService
             throw new Exception("Missing comic");
         }
 
-        if ($issueFile->relative_path == null) {
+        if ($issueFile->path == null) {
             throw new Exception("Invalid file path");
         }
 
-        $filePath = FileNameBuilder::buildFilePath($localIssue->issues, $localIssue->comic, $issueFile, pathinfo($issueFile->relative_path, PATHINFO_EXTENSION));
+        $filePath = FileNameBuilder::buildFilePath($localIssue->issues, $localIssue->comic, $issueFile, pathinfo($issueFile->path, PATHINFO_EXTENSION));
 
         $this->ensureIssueFolder($issueFile, $localIssue->comic, $filePath);
 
@@ -57,11 +57,11 @@ class IssueFileMovingService
             throw new Exception("Missing comic");
         }
 
-        if ($issueFile->relative_path == null) {
+        if ($issueFile->path == null) {
             throw new Exception("Invalid file path");
         }
 
-        $filePath = FileNameBuilder::buildFilePath($localIssue->issues, $localIssue->comic, $issueFile, pathinfo($issueFile->relative_path, PATHINFO_EXTENSION));
+        $filePath = FileNameBuilder::buildFilePath($localIssue->issues, $localIssue->comic, $issueFile, pathinfo($issueFile->path, PATHINFO_EXTENSION));
 
         $this->ensureIssueFolder($issueFile, $localIssue->comic, $filePath);
 
@@ -80,9 +80,9 @@ class IssueFileMovingService
      */
     protected function transferFile(IssueFile $issueFile, Comic $comic, array $issues, string $destinationFilePath, int $mode): IssueFile
     {
-        $issueFilePath = $issueFile->path;
+        $issueFilePath = $issueFile->path ?? $comic->path . DIRECTORY_SEPARATOR . ($issueFile->relative_path ?? "");
 
-        if (!is_file($issueFilePath)) {
+        if ($issueFilePath == null || !is_file($issueFilePath)) {
             throw new Exception("Issue file path does not exist:" . $issueFilePath);
         }
 
@@ -90,13 +90,7 @@ class IssueFileMovingService
             throw new Exception("File not moved, source and destination are the same");
         }
 
-        if ($mode == TransferMode::MOVE) {
-            resolve("DiskProviderService")->moveFile($issueFilePath, $destinationFilePath);
-        }
-
-        if ($mode == TransferMode::COPY) {
-            resolve("DiskProviderService")->copyFile($issueFilePath, $destinationFilePath);
-        }
+        resolve("DiskTransferService")->transferFile($issueFilePath, $destinationFilePath, $mode);
 
         $issueFile->relative_path = rtrim(substr($destinationFilePath, strlen($comic->path)), DIRECTORY_SEPARATOR);
         $issueFile->save();

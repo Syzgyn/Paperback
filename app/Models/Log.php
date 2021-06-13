@@ -24,6 +24,8 @@ class Log extends Model
     const CREATED_AT = "time";
     const UPDATED_AT = null;
 
+    protected $dateFormat = "Y-m-d H:i:s.u";
+
     protected $connection = "logs";
 
     protected $casts = [

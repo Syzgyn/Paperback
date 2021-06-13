@@ -7,6 +7,7 @@ use App\Services\FileManager;
 use App\Services\ParserService as OldParserService;
 use App\Libraries\IndexerSearch\SearchService;
 use App\Libraries\DecisionEngine\DecisionService;
+use App\Libraries\Disk\DiskTransferService;
 use App\Libraries\Disk\LinuxDiskProvider;
 use App\Libraries\Parser\ParserService;
 use App\Libraries\Download\DownloadService;
@@ -18,6 +19,7 @@ use App\Repositories\AppSettingsRepository;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Libraries\Disk\RemotePathMappingService;
 use App\Libraries\Download\CompletedDownloadService;
+use App\Libraries\Download\DownloadProcessingService;
 use App\Libraries\Download\FailedDownloadService;
 use App\Libraries\Download\History\DownloadHistoryService;
 use App\Libraries\Download\IgnoredDownloadService;
@@ -63,6 +65,8 @@ class AppServiceProvider extends ServiceProvider
         'ImportDecisionMakerService' => ImportDecisionMakerService::class,
         'UpgradeIssueFileService' => UpgradeIssueFileService::class,
         'IssueFileMovingService' => IssueFileMovingService::class,
+        'DownloadProcessingService' => DownloadProcessingService::class,
+        'DiskTransferService' => DiskTransferService::class,
     ];
 
     /**

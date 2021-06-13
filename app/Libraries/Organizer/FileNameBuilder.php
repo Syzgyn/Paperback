@@ -13,6 +13,7 @@ class FileNameBuilder
     public const MAX_FILE_LENGTH = 255;
 
     protected static string $titleRegex = "/(?<escaped>\{\{|\}\})|\{(?<prefix>[- ._\[(]*)(?<token>(?:[a-z0-9]+)(?:(?<separator>[- ._]+)(?:[a-z0-9]+))?)(?::(?<customFormat>[a-z0-9+-]+(?<!-)))?(?<suffix>[- ._)\]]*)\}/i";
+    protected static string $issueRegex = "/(?<issue>\{issue(?:\:0+)?})/i";
     protected static string $scenifyRemoveChars = "/(?<=\s)(,|<|>|\/|\\|;|:|'|\"\"|\||`|~|!|\?|@|$|%|^|\*|-|_|=){1}(?=\s)|('|:|\?|,)(?=(?:(?:s|m)\s)|\s|$)|(\(|\)|\[|\]|\{|\})/i";
     protected static string $scenifyReplaceChars = "/[\/]/i";
     protected static string $yearRegex = "/\(\d{4}\)$/i";
@@ -71,6 +72,7 @@ class FileNameBuilder
             self::addIssueTokens($tokenHandlers, $issues);
             self::addIssueTitlePlaceholderTokens($tokenHandlers);
             self::addIssueFileTokens($tokenHandlers, $issueFile);
+            self::addIssueNumberingTokens($tokenHandlers, $comic, $issues);
 
             $component = trim(self::replaceTokens($splitPattern, $tokenHandlers, $namingConfig, true));
             $maxPathSegmentLength = min(self::MAX_FILE_LENGTH, $maxPath);
@@ -91,14 +93,14 @@ class FileNameBuilder
             $components[] = $component;
         }
 
-        return implode(DIRECTORY_SEPARATOR, $components) . $extension;
+        return implode(DIRECTORY_SEPARATOR, $components) . "." . $extension;
     }
 
     protected static function getLengthWithoutIssueTitle(string $pattern, array $namingConfig): int
     {
         $tokenHandler = [];
-        $tokenHandler["{Issue Title}"] = fn(TokenMatch $m): string => "";
-        $tokenHandler["{Issue CleanTitle}"] = fn(TokenMatch $m): string => "";
+        $tokenHandler["issue title"] = fn(TokenMatch $m): string => "";
+        $tokenHandler["issue cleantitle"] = fn(TokenMatch $m): string => "";
 
         $result = self::replaceTokens($pattern, $tokenHandler, $namingConfig);
 
@@ -107,54 +109,65 @@ class FileNameBuilder
 
     protected static function getOriginalFileName(IssueFile $issueFile): string
     {
-        if (!empty($issueFile->relative_path)) {
-            return pathinfo($issueFile->relative_path,  PATHINFO_FILENAME);
+        if (empty($issueFile->relative_path)) {
+            return pathinfo($issueFile->path ?? "Missing Path",  PATHINFO_FILENAME);
         }
 
-        return pathinfo($issueFile->path, PATHINFO_FILENAME);
+        return pathinfo($issueFile->relative_path, PATHINFO_FILENAME);
     }
 
     protected static function addComicTokens(array &$tokenHandlers, Comic $comic): void
     {
-        $tokenHandlers["{Comic Title}"] = fn(TokenMatch $m): string => $comic->title;
-        $tokenHandlers["{Comic CleanTitle}"] = fn(TokenMatch $m): string => self::cleanTitle($comic->title);
-        $tokenHandlers["{Comic CleanTitleYear}"] = fn(TokenMatch $m): string => self::cleanTitle(self::titleYear($comic->title, $comic->year ?? 0));
-        $tokenHandlers["{Comic TitleThe}"] = fn(TokenMatch $m): string => self::titleThe($comic->title);
-        $tokenHandlers["{Comic TitleYear}"] = fn(TokenMatch $m): string => self::titleYear($comic->title, $comic->year ?? 0);
-        $tokenHandlers["{Comic TitleTheYear}"] = fn(TokenMatch $m): string => self::titleYear(self::titleThe($comic->title), $comic->year ?? 0);
-        $tokenHandlers["{Comic TitleFirstCharacter}"] = fn(TokenMatch $m): string => strtoupper(substr(self::titleThe($comic->title), 0, 1));
-        $tokenHandlers["{Comic Year}"] = fn(TokenMatch $m): string => (string) $comic->year;
+        $tokenHandlers["comic title"] = fn(TokenMatch $m): string => $comic->title;
+        $tokenHandlers["comic cleantitle"] = fn(TokenMatch $m): string => self::cleanTitle($comic->title);
+        $tokenHandlers["comic cleantitleyear"] = fn(TokenMatch $m): string => self::cleanTitle(self::titleYear($comic->title, $comic->year ?? 0));
+        $tokenHandlers["comic titlethe"] = fn(TokenMatch $m): string => self::titleThe($comic->title);
+        $tokenHandlers["comic titleyear"] = fn(TokenMatch $m): string => self::titleYear($comic->title, $comic->year ?? 0);
+        $tokenHandlers["comic titletheyear"] = fn(TokenMatch $m): string => self::titleYear(self::titleThe($comic->title), $comic->year ?? 0);
+        $tokenHandlers["comic titlefirstcharacter"] = fn(TokenMatch $m): string => strtoupper(substr(self::titleThe($comic->title), 0, 1));
+        $tokenHandlers["comic year"] = fn(TokenMatch $m): string => (string) $comic->year;
     }
 
     protected static function addIdTokens(array &$tokenHandlers, Comic $comic): void
     {
-        $tokenHandlers["{ComicvineId}"] = fn(TokenMatch $m): int => $comic->cvid;
+        $tokenHandlers["comicvineid"] = fn(TokenMatch $m): int => $comic->cvid;
     }
 
+    /** @param Issue[] $issues */
     protected static function addIssueTokens(array &$tokenHandlers, array $issues): void
     {
-        /** @var Issue */
         $issue = array_shift($issues);
-        $tokenHandlers["{Cover Date}"] = fn(TokenMatch $m): string => $issue->cover_date ?? "Unknown";
-        $tokenHandlers["{Store Date}"] = fn(TokenMatch $m): string => $issue->store_date ?? "Unknown";
+        $tokenHandlers["cover date"] = fn(TokenMatch $m): string => $issue->cover_date ?? "Unknown";
+        $tokenHandlers["store date"] = fn(TokenMatch $m): string => $issue->store_date ?? "Unknown";
+    }
+
+    /** @param Issue[] $issues */
+    protected static function addIssueNumberingTokens(array &$tokenHandlers, Comic $comic, array $issues): void
+    {
+        if (count($issues) > 1) {
+            $tokenHandlers["issue"] = fn(TokenMatch $m): string => sprintf("%0" . strlen($m->customFormat ?? "1") . "d", reset($issues)->issue_num) . "-" . sprintf("%0" . strlen($m->customFormat ?? "1") . "d", last($issues)->issue_num);
+        } else {
+            $tokenHandlers["issue"] = fn(TokenMatch $m): string => sprintf("%0" . strlen($m->customFormat ?? "1") . "d", reset($issues)->issue_num);
+        }
     }
     
     protected static function addIssueTitlePlaceholderTokens(array &$tokenHandlers): void
     {
-        $tokenHandlers["{Issue Title}"] = fn(TokenMatch $m) => null;
-        $tokenHandlers["{Issue CleanTitle}"] = fn(TokenMatch $m) => null;
+        $tokenHandlers["issue title"] = fn(TokenMatch $m): ?string => null;
+        $tokenHandlers["issue cleantitle"] = fn(TokenMatch $m): ?string => null;
     }
 
+    /** @param Issue[] $issues */
     protected static function addIssueTitleTokens(array &$tokenHandlers, array $issues, int $maxLength): void
     {
-        $tokenHandlers["{Issue Title}"] = fn(TokenMatch $m) => null;
-        $tokenHandlers["{Issue CleanTitle}"] = fn(TokenMatch $m) => null;
+        $tokenHandlers["issue title"] = fn(TokenMatch $m): string => self::getIssueTitle(self::getIssueTitles($issues), '+', $maxLength);
+        $tokenHandlers["issue cleantitle"] = fn(TokenMatch $m): string => self::cleanTitle(self::getIssueTitle(self::getIssueTitles($issues), "and", $maxLength));
     }
 
     protected static function addIssueFileTokens(array &$tokenHandlers, IssueFile $issueFile): void
     {
-        $tokenHandlers["{Original Title}"] = fn(TokenMatch $m): string => self::getOriginalFileName($issueFile);
-        $tokenHandlers["{Original Filename}"] = fn(TokenMatch $m): string => self::getOriginalFileName($issueFile);
+        $tokenHandlers["original title"] = fn(TokenMatch $m): string => self::getOriginalFileName($issueFile);
+        $tokenHandlers["original filename"] = fn(TokenMatch $m): string => self::getOriginalFileName($issueFile);
     }
 
     public static function cleanTitle(string $title): string
@@ -257,9 +270,10 @@ class FileNameBuilder
         if (empty($tokenMatch->customFormat)) {
             $tokenMatch->customFormat = null;
         }
-
+        
+        $lcToken = strtolower($tokenMatch->token);
         /** @var callable */
-        $tokenHandler = $tokenHandlers[$tokenMatch->token] ?? fn(TokenMatch $m): string => "";
+        $tokenHandler = $tokenHandlers[$lcToken] ?? fn(TokenMatch $m): string => "";
         /** @var string */
         $replacementText = $tokenHandler($tokenMatch);
 
@@ -276,7 +290,7 @@ class FileNameBuilder
         }
 
         if (!empty($tokenMatch->separator)) {
-            $replacementText = str_replace($replacementText, " ", $tokenMatch->separator);
+            $replacementText = str_replace(" ", $tokenMatch->separator, $replacementText);
         }
 
         $replacementText = self::cleanFileName($replacementText, (bool) $namingConfig['replaceIllegalCharacters']);
@@ -286,7 +300,7 @@ class FileNameBuilder
         }
 
         if ($escape) {
-            $replacementText = str_replace($replacementText, ["{{", "}}"], ["{", "}"]);
+            $replacementText = str_replace(["{", "}"], ["", ""], $replacementText);
         }
 
         /** @var string */

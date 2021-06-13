@@ -47,16 +47,17 @@ class ImportApprovedIssues
                     $localIds[] = $issue->cvid;
                 }
                 if (count(array_intersect($importedIssueIds, $localIds))) {
-                    $importResults[] = new ImportResult($importDecision, ["Issue has already ben imported"]);
+                    $importResults[] = new ImportResult($importDecision, ["Issue has already been imported"]);
                     continue;
                 }
 
                 $issueFile = new IssueFile([
                     'comic_id' => $localIssue->comic->cvid,
-                    'path' => rtrim($localIssue->path, '/'),
                     'size' => filesize($localIssue->path),
                     'issue' => reset($localIssue->issues),
                 ]);
+                $issueFile->path = rtrim($localIssue->path, '/');
+
 
                 switch ($importMode) {
                     default:
@@ -89,7 +90,7 @@ class ImportApprovedIssues
                 //event(new IssueImportedEvent($localIssue, $issueFile, $oldFiles, $newDownload, $downloadClientItem));
 
             } catch (Exception $e) {
-                Log::warning("Couldn't import issue: " . $localIssue);
+                Log::warning("Couldn't import issue: " . $localIssue, ['exception' => $e]);
                 $importResults[] = new ImportResult($importDecision, ["Failed to import issue"]);
             }
         }

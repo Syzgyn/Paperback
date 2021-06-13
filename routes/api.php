@@ -59,7 +59,13 @@ Route::apiResource('tag', 'TagController');
 Route::get('rootFolder/{id}/getFolders', 'RootFolderController@getFolders');
 Route::apiResource('rootFolder', 'RootFolderController');
 
-Route::get('command', 'CommandController@command');
+Route::get('command', 'CommandController@index');
+Route::post('command', 'CommandController@start');
+Route::get('command/{id}', 'CommandController@get');
+Route::delete('command/{id}', 'CommandController@cancel');
+
+
+
 Route::get('filesystem', 'FilesystemController@filesystem');
 
 /*

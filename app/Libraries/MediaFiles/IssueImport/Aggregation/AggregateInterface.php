@@ -7,5 +7,5 @@ use App\Libraries\Parser\LocalIssue;
 
 interface AggregateInterface
 {
-    public function aggregate(LocalIssue $localIssue, DownloadClientItem $downloadClientItem): LocalIssue;
+    public function aggregate(LocalIssue $localIssue, ?DownloadClientItem $downloadClientItem): LocalIssue;
 }

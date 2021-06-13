@@ -10,7 +10,7 @@ use App\Models\Issue;
 
 class AggregateIssues implements AggregateInterface
 {
-    public function aggregate(LocalIssue $localIssue, DownloadClientItem $downloadClientItem): LocalIssue
+    public function aggregate(LocalIssue $localIssue, ?DownloadClientItem $downloadClientItem): LocalIssue
     {
         $localIssue->issues = $this->getIssues($localIssue);
 

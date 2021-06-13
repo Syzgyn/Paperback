@@ -9,6 +9,7 @@ use App\Libraries\Download\DownloadClientItem;
 use App\Libraries\Parser\RemoteIssue;
 use App\Libraries\Download\DownloadClientInfo;
 use App\Libraries\Download\DownloadClientItemClientInfo;
+use App\Libraries\Download\DownloadItemStatus;
 
 /**
  * App\Libraries\Download\Clients\Sabnzbd\Sabnzbd
@@ -98,15 +99,15 @@ class Sabnzbd extends UsenetClientModelBase
             if (($sabQueue->paused && $sabQueueItem->priority != "Forced") ||
                 $sabQueueItem->status == "Paused"
             ) {
-                $queueItem->status = "Paused";
+                $queueItem->status = DownloadItemStatus::PAUSED;
                 $queueItem->remainingTime = null;
             } elseif ($sabQueueItem->status == "Queued" ||
                 $sabQueueItem->status == "Grabbing" ||
                 $sabQueueItem->status == "Propagating"
             ) {
-                $queueItem->status = "Queued";
+                $queueItem->status = DownloadItemStatus::QUEUED;
             } else {
-                $queueItem->status = "Downloading";
+                $queueItem->status = DownloadItemStatus::DOWNLOADING;
             }
 
             if (!empty($queueItem->title) && str_starts_with($queueItem->title, "ENCRYPTED /")) {
@@ -148,14 +149,14 @@ class Sabnzbd extends UsenetClientModelBase
                 if (!empty($sabHistoryItem->failMessage) &&
                     strcasecmp($sabHistoryItem->failMessage, "Unpacking failed, write error or disk is full?") == 0
                 ) {
-                    $historyItem->status = "Warning";
+                    $historyItem->status = DownloadItemStatus::WARNING;
                 } else {
-                    $historyItem->status = "Failed";
+                    $historyItem->status = DownloadItemStatus::FAILED;
                 }
             } elseif ($sabHistoryItem->status == "Completed") {
-                $historyItem->status = "Completed";
+                $historyItem->status = DownloadItemStatus::COMPLETED;
             } else {
-                $historyItem->status = "Downloading";
+                $historyItem->status = DownloadItemStatus::DOWNLOADING;
             }
 
             $outputPath = resolve('RemotePathMappingService')->remapRemoteToLocal($this->settings->host, new OsPath($sabHistoryItem->storage));
@@ -193,7 +194,7 @@ class Sabnzbd extends UsenetClientModelBase
         $queueClientItem = array_filter($this->getQueue(), fn($i) => $i->downloadId == $item->downloadId)[0] ?? null;
 
         if ($queueClientItem == null) {
-            if ($deleteData && $item->status == "Completed") {
+            if ($deleteData && $item->status == DownloadItemStatus::COMPLETED) {
                 $this->deleteItemData($item);
             }
 

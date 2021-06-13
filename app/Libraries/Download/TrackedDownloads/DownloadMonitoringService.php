@@ -2,8 +2,9 @@
 
 namespace App\Libraries\Download\TrackedDownloads;
 
+use App\Libraries\Commands\ProcessMonitoredDownloadsCommand;
+use App\Libraries\Commands\RefreshMonitoredDownloadsCommand;
 use App\Libraries\Download\DownloadClientItem;
-use App\Libraries\Download\DownloadClientItemClientInfo;
 use App\Libraries\Download\DownloadClientModelBase;
 use App\Libraries\Download\DownloadItemStatus;
 use App\Libraries\Download\TrackedDownloads\TrackedDownload;
@@ -50,10 +51,10 @@ class DownloadMonitoringService
             $clientTrackedDownloads = $this->processClientDownloads($client);
             $trackedDownloads += array_filter($clientTrackedDownloads, [$this, "downloadIsTrackable"]);
         }
-
+        
         resolve("TrackedDownloadService")->updateTrackable($trackedDownloads);
         event(new TrackedDownloadRefreshedEvent($trackedDownloads));
-        //TODO: Process downloads command
+        event(new ProcessMonitoredDownloadsCommand());
     }
 
     /** @return TrackedDownload[] */
@@ -88,7 +89,7 @@ class DownloadMonitoringService
             $trackedDownload = resolve("TrackedDownloadService")->trackDownload($client, $item);
 
             if ($trackedDownload->state == TrackedDownloadState::DOWNLOADING) {
-                //TODO: Check for failed or completed download
+                resolve("CompletedDownloadService")->check($trackedDownload);
                 resolve("FailedDownloadService")->check($trackedDownload);
             }
 
@@ -130,6 +131,11 @@ class DownloadMonitoringService
         $events->listen(
             IssueGrabbedEvent::class,
             [$this, 'handleIssueGrabbedEvent']
+        );
+
+        $events->listen(
+            RefreshMonitoredDownloadsCommand::class,
+            [$this, 'refresh']
         );
     }
 }

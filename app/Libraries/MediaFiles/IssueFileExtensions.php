@@ -5,11 +5,11 @@ namespace App\Libraries\MediaFiles;
 final class IssueFileExtensions
 {
     public static array $extensions = [
-        '.cbr',
-        '.cbz',
-        '.cba',
-        '.cb7',
-        '.cbt',
+        'cbr',
+        'cbz',
+        'cba',
+        'cb7',
+        'cbt',
     ];
 
     public static function pathIsIssueFile(?string $path): bool

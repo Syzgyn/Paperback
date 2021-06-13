@@ -54,7 +54,7 @@ class ImportDecisionMakerService
             $localIssue->path = $file;
             $localIssue->existingFile = $this->isParentPath($comic->path, $file);
 
-            $decisions[] = $this->getDecision($localIssue, $downloadClientItem);
+            $decisions[] = $this->getDecisionFromFiles($localIssue, $downloadClientItem);
         }
 
         /** @var ImportDecision[] */
@@ -76,7 +76,7 @@ class ImportDecisionMakerService
         return new ImportDecision($localIssue, $reasons);
     }
 
-    public function getDecisionFromFiles(LocalIssue $localIssue, DownloadClientItem $downloadClientItem): ?ImportDecision
+    public function getDecisionFromFiles(LocalIssue $localIssue, ?DownloadClientItem $downloadClientItem): ?ImportDecision
     {
         $decision = null;
 

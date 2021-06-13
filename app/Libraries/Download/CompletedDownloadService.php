@@ -2,6 +2,7 @@
 
 namespace App\Libraries\Download;
 
+use App\Events\DownloadCompletedEvent;
 use App\Libraries\Download\TrackedDownloads\TrackedDownload;
 use App\Libraries\Download\TrackedDownloads\TrackedDownloadState;
 use App\Libraries\Download\TrackedDownloads\TrackedDownloadStatusMessage;
@@ -114,6 +115,10 @@ class CompletedDownloadService
     /** @param ImportResult[] $importResults */
     public function verifyImport(TrackedDownload $trackedDownload, array $importResults): bool
     {
+        if ($trackedDownload->remoteIssue == null || $trackedDownload->remoteIssue->comic == null) {
+            return false;
+        }
+
         $importedCount = 0;
         foreach($importResults as $importResult) {
             if ($importResult->result() == ImportResultType::IMPORTED) {
@@ -121,12 +126,12 @@ class CompletedDownloadService
             }
         }
 
-        $allIssuesImported = $importedCount >= max(1, count($trackedDownload->remoteIssue?->issues ?? []));
+        $allIssuesImported = $importedCount >= max(1, count($trackedDownload->remoteIssue->issues));
 
         if ($allIssuesImported) {
             Log::debug("All issues were imported for " . ($trackedDownload->downloadItem->title ?? "Unknown title"));
             $trackedDownload->state = TrackedDownloadState::IMPORTED;
-            //TODO: event(new DownloadCompletedEvent($trackedDownload, $trackedDownload->remoteIssue->comic->cvid));
+            event(new DownloadCompletedEvent($trackedDownload, $trackedDownload->remoteIssue->comic->cvid));
             return true;
         }
 
@@ -134,16 +139,17 @@ class CompletedDownloadService
             return false;
         }
 
-        $historyItems = IssueHistory::whereDownloadId($trackedDownload->downloadItem->downloadId)->orderByDesc("date")->get();
+        /** @var IssueHistory[] */
+        $historyItems = IssueHistory::whereDownloadId($trackedDownload->downloadItem->downloadId)->orderByDesc("date")->get()->all();
 
-        if ($trackedDownload->isImported($historyItems->all())) {
+        if ($trackedDownload->isImported($historyItems)) {
             if ($importedCount > 0) {
                 Log::debug("All issues were imported in history for " . ($trackedDownload->downloadItem->title ?? "Unknown title"));
             } else {
                 Log::debug(
                     "No issues were just imported, but all issues were previously imported.  Possible issue with Download History.", 
                     [
-                        "comicId" => $trackedDownload->remoteIssue?->comic?->cvid,
+                        "comicId" => $trackedDownload->remoteIssue->comic->cvid,
                         "downloadId" => $trackedDownload->downloadItem->downloadId,
                         "title" => $trackedDownload->downloadItem->title,
                         "path" => $trackedDownload->importItem?->outputPath?->getPath(),
@@ -152,7 +158,7 @@ class CompletedDownloadService
             }
 
             $trackedDownload->state = TrackedDownloadState::IMPORTED;
-            //TODO: event(new DownloadCompletedEvent($trackedDownload, $trackedDownload->remoteIssue->comic->cvid));
+            event(new DownloadCompletedEvent($trackedDownload, $trackedDownload->remoteIssue->comic->cvid));
             return true;
         }
 

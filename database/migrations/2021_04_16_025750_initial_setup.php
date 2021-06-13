@@ -142,9 +142,9 @@ class InitialSetup extends Migration
             $table->integer('event_type');
             $table->text('source_title');
             $table->timestamp('date');
-            $table->integer('protocol');
-            $table->foreignId('indexer_id')->references('id')->on('indexers')->onDelete('set null')->nullable();
-            $table->foreignId('download_client_id')->references('id')->on('download_clients')->onDelete('set null')->nullable();
+            $table->integer('protocol')->nullable();
+            $table->foreignId('indexer_id')->nullable()->references('id')->on('indexers')->onDelete('set null');
+            $table->foreignId('download_client_id')->nullable()->references('id')->on('download_clients')->onDelete('set null');
             $table->text('release')->nullable();
             $table->text('data')->nullable();
         });

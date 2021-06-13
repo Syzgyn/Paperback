@@ -13,6 +13,7 @@ abstract class DiskProviderBase
     public abstract function setPermissions(string $path, string $mask, string $group): void;
     public abstract function copyPermissions(string $sourcePath, string $targetPath): void;
     public abstract function getTotalSize(string $path): int;
+    public abstract function tryCreateHardLink(string $source, string $destination): bool;
 
     protected function checkFolderExists(string $path): void
     {
@@ -26,13 +27,13 @@ abstract class DiskProviderBase
     {
         $settings = resolve("AppSettings");
 
-        if (!$settings->get("mediamanagemnt", "setPermissionsLinux")) {
+        if (!$settings->get("mediamanagement", "setPermissionsLinux")) {
             return;
         }
 
         try {
             /** @var string */
-            $folder = $settings->get("mediamanagemnt", "chmodFolder");
+            $folder = $settings->get("mediamanagement", "chmodFolder");
             /** @var string */
             $group = $settings->get("mediamanagement", "chownGroup");
 
@@ -145,7 +146,9 @@ abstract class DiskProviderBase
             return [];
         }
 
-        return array_filter($contents, fn($i) => !is_dir($path . $i));
+        return array_map(fn($i) => $path . DIRECTORY_SEPARATOR . $i, 
+            array_filter($contents, fn($i) => !is_dir($path . DIRECTORY_SEPARATOR . $i))
+        );
     }
 
     public function getFilesRecursive(string $path): array
@@ -164,9 +167,9 @@ abstract class DiskProviderBase
             }
 
             if (is_dir($path . $item)) {
-                $output += $this->getFilesRecursive($path . $item);
+                $output += $this->getFilesRecursive($path . DIRECTORY_SEPARATOR . $item);
             } else {
-                $output[] = $path . $item;
+                $output[] = $path . DIRECTORY_SEPARATOR . $item;
             }
         }
 
@@ -193,6 +196,31 @@ abstract class DiskProviderBase
     public function deleteFile(string $path): void
     {
         unlink($path);
+    }
+
+    public static function isParentPath(string $parentPath, string $childPath): bool
+    {
+        if ($parentPath != '/' && !str_ends_with($parentPath, ":\\")) {
+            $parentPath = rtrim($parentPath, DIRECTORY_SEPARATOR);
+        }
+        
+        if ($childPath != '/' && !str_ends_with($childPath, ":\\")) {
+            $childPath = rtrim($childPath, DIRECTORY_SEPARATOR);
+        }
+
+        $i = 0;
+
+        //TODO: Implement for windows
+        while (dirname($childPath) != "/" && dirname($childPath) != "." && $i < 100) {
+            if (dirname($childPath) == $parentPath) {
+                return true;
+            }
+
+            $childPath = dirname($childPath);
+            $i++; //Safety check to prevent infinite loop
+        }
+
+        return false;
     }
 
     public function copyFile(string $source, string $dest, bool $overwrite = false): bool

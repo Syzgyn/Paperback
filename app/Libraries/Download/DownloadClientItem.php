@@ -16,7 +16,7 @@ class DownloadClientItem
     public ?float $seedRatio = null;
     public ?OsPath $outputPath = null;
     public ?string $message = null;
-    public ?string $status = null;
+    public ?int $status = null;
     public ?bool $isEncrypted = null;
     public ?bool $canMoveFiles = null;
     public ?bool $canBeRemoved = null;

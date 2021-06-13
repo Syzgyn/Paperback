@@ -23,7 +23,7 @@ class QueueController extends Controller
 
         /** @var ?int */
         $comicId = $request->input('comicId');
-        /** @var ?string */
+        /** @var ?array */
         $issueIds = $request->input('issueIds');
 
         if ($comicId) {
@@ -33,7 +33,6 @@ class QueueController extends Controller
         }
 
         if ($issueIds) {
-            $issueIds = explode(",", $issueIds);
             return response()->json(
                 array_filter($queue, fn(Queue $q) => $q->issue != null && in_array($q->issue->cvid, $issueIds))
             );
@@ -67,7 +66,8 @@ class QueueController extends Controller
     public function deleteBulk(Request $request): JsonResponse
     {
         //More weirdness to get raw json data
-        $ids = (array) json_decode(rtrim(urldecode((string) $request->getContent()), "="), true);
+        $content = (array) json_decode(rtrim(urldecode((string) $request->getContent()), "="), true);
+        $ids = (array) $content['ids'];
         $removeFromClient = (bool) $request->input("removeFromClient", true);
         $blacklist = (bool) $request->input("blacklist", false);
 

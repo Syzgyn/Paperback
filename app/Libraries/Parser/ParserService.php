@@ -122,6 +122,7 @@ class ParserService
     public function getIssues(ParsedIssueInfo $parsedIssueInfo, Comic $comic, ?SearchCriteriaBase $searchCriteria = null): array
     {
         if ($parsedIssueInfo->fullComic) {
+            /** @var Issue[] */
             return $comic->issues->all(); 
         }
 

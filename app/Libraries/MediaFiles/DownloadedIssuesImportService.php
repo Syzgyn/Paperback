@@ -115,7 +115,6 @@ class DownloadedIssuesImportService
 
         $folderInfo = Parser::parseTitle(pathinfo($path, PATHINFO_BASENAME));
         $diskScanService = resolve("DiskScanService");
-        /** @var DiskProviderBase */
         $diskProviderService = resolve("DiskProviderService");
 
         $issueFiles = $diskScanService->filterPaths($path, $diskScanService->getIssueFiles($path));
