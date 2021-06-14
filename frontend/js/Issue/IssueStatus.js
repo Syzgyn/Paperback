@@ -5,7 +5,7 @@ import { icons, kinds, sizes } from 'Helpers/Props';
 import Icon from 'Components/Icon';
 import ProgressBar from 'Components/ProgressBar';
 import QueueDetails from 'Activity/Queue/QueueDetails';
-import IssueQuality from './IssueQuality';
+import formatBytes from 'Utilities/Number/formatBytes';
 import styles from './IssueStatus.css';
 
 function IssueStatus(props) {
@@ -62,10 +62,9 @@ function IssueStatus(props) {
   if (hasIssueFile) {
     return (
       <div className={styles.center}>
-        <IssueQuality
-          size={issueFile.size}
-          fileType={issueFile.fileType}
-          title="Issue Downloaded"
+        <Icon
+          name={icons.CHECK_CIRCLE}
+          title={"Issue downloaded - " + formatBytes(issueFile.size)}
         />
       </div>
     );

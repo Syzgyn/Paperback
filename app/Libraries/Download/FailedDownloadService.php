@@ -99,7 +99,7 @@ class FailedDownloadService
             $historyItem->comic_id,
             array_map(fn(IssueHistory $i) => $i->issue_id, $historyItems),
             $historyItem->source_title,
-            $historyItem->data[IssueHistory::DOWNLOAD_CLIENT] ?? "",
+            (string) $historyItem->data[IssueHistory::DOWNLOAD_CLIENT],
             $historyItem->download_id,
             $message,
             $historyItem->data,

@@ -57,6 +57,7 @@ class ImportApprovedIssues
                     'issue' => reset($localIssue->issues),
                 ]);
                 $issueFile->path = rtrim($localIssue->path, '/');
+                $issueFile->issues = $localIssue->issues;
 
 
                 switch ($importMode) {
@@ -78,7 +79,7 @@ class ImportApprovedIssues
                     $moveResult = resolve("UpgradeIssueFileService")->upgradeIssueFile($issueFile, $localIssue, $copyOnly);
                     $oldFiles = $moveResult->oldFiles;
                 } else {
-                    $issueFile->relative_path = rtrim(substr($issueFile->path, strlen($localIssue->comic->path)), DIRECTORY_SEPARATOR);
+                    $issueFile->relative_path = trim(substr($issueFile->path, strlen($localIssue->comic->path)), DIRECTORY_SEPARATOR);
                     /** @var Builder */
                     $query = IssueFile::whereComicId($localIssue->comic->cvid)->whereRelativePath($issueFile->relative_path);
                     $query->delete();

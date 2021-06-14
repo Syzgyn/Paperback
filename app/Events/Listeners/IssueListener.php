@@ -15,6 +15,7 @@ class IssueListener
     {
         $this->service = resolve('EventSourceService');
     }
+    
     public function subscribe(Dispatcher $events): void
     {
         $events->listen(

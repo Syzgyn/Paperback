@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Libraries\MediaFiles\DeleteIssueFileReason;
+use App\Libraries\MediaFiles\Events\IssueFileAddedEvent;
+use App\Libraries\MediaFiles\Events\IssueFileCreatedEvent;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -37,6 +39,8 @@ class IssueFile extends Model
     const UPDATED_AT = null;
     
     public ?string $path = null;
+    /** @var Issue[] */
+    public array $issues = [];
 
     protected $guarded = [
         'id',
@@ -56,12 +60,7 @@ class IssueFile extends Model
     public function issue(): BelongsTo
     {
         return $this->belongsTo(Issue::class, 'id', 'issue_file');
-    }
-
-    public function getFileTypeAttribute(): string
-    {
-        return pathinfo($this->path, PATHINFO_EXTENSION);
-    }
+}
 
     /** 
      * @param string[] $files
@@ -90,6 +89,12 @@ class IssueFile extends Model
         return $return;
     }
 
+    protected static function booted()
+    {
+        static::created(function (IssueFile $issueFile) {
+            event(new IssueFileAddedEvent($issueFile));
+        });
+    }
     /*
     /** @param array{original_file_path: string, issue_id: int} $attrs 
     public static function createAndMove(array $attrs): self
