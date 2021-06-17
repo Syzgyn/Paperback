@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $level
  * 
  * @method static \Illuminate\Database\Eloquent\Builder where($column, $comparison, $value = null)
- * 
+ * @method static void truncate()
  * 
  * @mixin \Eloquent
  */
