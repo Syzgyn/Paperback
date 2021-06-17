@@ -14,6 +14,7 @@ use bandwidthThrottle\tokenBucket\storage\FileStorage;
 use Exception;
 use Illuminate\Events\Dispatcher;
 use App\Libraries\Download\IssueGrabbedEvent;
+use App\Libraries\MediaFiles\Events\IssueImportedEvent;
 use App\Models\DownloadClient;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
@@ -135,6 +136,11 @@ class DownloadMonitoringService
 
         $events->listen(
             RefreshMonitoredDownloadsCommand::class,
+            [$this, 'refresh']
+        );
+
+        $events->listen(
+            IssueImportedEvent::class,
             [$this, 'refresh']
         );
     }

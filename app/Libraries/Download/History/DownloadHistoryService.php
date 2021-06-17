@@ -7,6 +7,7 @@ use App\Libraries\Download\DownloadFailedEvent;
 use App\Libraries\Download\DownloadIgnoredEvent;
 use App\Libraries\Download\DownloadProtocol;
 use App\Libraries\Download\IssueGrabbedEvent;
+use App\Libraries\MediaFiles\Events\IssueImportedEvent;
 use App\Models\DownloadHistory;
 use Exception;
 use Illuminate\Events\Dispatcher;
@@ -151,12 +152,52 @@ class DownloadHistoryService
 
         $history->save();
     }
+
+    public function handleIssueImportedEvent(IssueImportedEvent $event): void
+    {
+        if (!$event->newDownload) {
+            return;
+        }
+
+        $downloadId = $event->downloadId;
+
+        if (empty($downloadId)) {
+            $downloadId = resolve('HistoryService')->findDownloadId($event);
+        }
+
+        if (empty($downloadId)) {
+            return;
+        }
+
+        $history = new DownloadHistory([
+            'event_type' => DownloadHistoryEventType::FILE_IMPORTED,
+            'comic_id' => $event->issueFile->comic_id,
+            'download_id' => $downloadId,
+            'source_title' => $event->localIssue->path,
+            'date' => date(DATE_ATOM),
+            'protocol' => DownloadProtocol::fromStr($event->downloadClientInfo->protocol),
+            'download_client_id' => $event->downloadClientInfo->id,
+            'data' => [
+                'DownloadClient' => $event->downloadClientInfo->type,
+                'DownloadClientName' => $event->downloadClientInfo->name,
+                'SourcePath' => $event->localIssue->path,
+                'DestinationPath' => $event->localIssue->comic->path . DIRECTORY_SEPARATOR . $event->issueFile->relative_path,
+            ],
+        ]);
+
+        $history->save();
+    }
     
     public function subscribe(Dispatcher $events): void
     {
         $events->listen(
             IssueGrabbedEvent::class,
             [$this, 'handleIssueGrabbedEvent']
+        );
+
+        $events->listen(
+            IssueImportedEvent::class,
+            [$this, 'handleIssueImportedEvent']
         );
 
         $events->listen(

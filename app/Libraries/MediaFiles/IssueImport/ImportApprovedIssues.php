@@ -3,6 +3,7 @@
 namespace App\Libraries\MediaFiles\IssueImport;
 
 use App\Libraries\Download\DownloadClientItem;
+use App\Libraries\MediaFiles\Events\IssueImportedEvent;
 use App\Libraries\Parser\LocalIssue;
 use App\Models\IssueFile;
 use Exception;
@@ -88,7 +89,7 @@ class ImportApprovedIssues
                 $issueFile->save();
                 $importResults[] = new ImportResult($importDecision);
 
-                //event(new IssueImportedEvent($localIssue, $issueFile, $oldFiles, $newDownload, $downloadClientItem));
+                event(new IssueImportedEvent($localIssue, $issueFile, $oldFiles, $newDownload, $downloadClientItem));
 
             } catch (Exception $e) {
                 Log::warning("Couldn't import issue: " . $localIssue, ['exception' => $e]);
