@@ -11,9 +11,10 @@ class LogHandler extends AbstractProcessingHandler
 {
     protected IntrospectionProcessor $processor;
 
-    public function __construct()
+    public function __construct(string $level = "debug")
     {
-        $this->processor = new IntrospectionProcessor(Logger::DEBUG, ["Illuminate\\"]);
+        parent::__construct($level);
+        $this->processor = new IntrospectionProcessor($level, ["Illuminate\\"]);
     }
 
     protected function write(array $record): void

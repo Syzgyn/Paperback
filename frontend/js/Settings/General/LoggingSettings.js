@@ -8,8 +8,7 @@ import FormInputGroup from 'Components/Form/FormInputGroup';
 
 const logLevelOptions = [
   { key: 'info', value: 'Info' },
-  { key: 'debug', value: 'Debug' },
-  { key: 'trace', value: 'Trace' }
+  { key: 'debug', value: 'Debug' }
 ];
 
 function LoggingSettings(props) {

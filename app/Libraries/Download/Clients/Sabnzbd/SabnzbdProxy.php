@@ -158,8 +158,9 @@ class SabnzbdProxy
     protected function processRequest(HttpRequestBuilder $requestBuilder, SabnzbdSettings $settings, ?string $outputClass = null): string|array|object|null
     {
         $httpRequest = $requestBuilder->build();
-
-        Log::debug("Url: " . $httpRequest->url);
+        $url = $httpRequest->url;
+        
+        Log::debug("Url: " . str_replace($settings->apiKey, "XXXXXXXXXXXXX", $url));
 
         $response = null;
 

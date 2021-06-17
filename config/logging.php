@@ -37,25 +37,27 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['dblog', 'single'],
+            'channels' => ['dblog', 'daily'],
             'ignore_exceptions' => false,
         ],
 
-        'single' => [
+        'debug' => [
             'driver' => 'single',
-            'path' => storage_path('logs/laravel.log'),
+            'path' => storage_path('logs/laravel-debug.log'),
             'level' => 'debug',
+            'bubble' => false,
         ],
 
         'dblog' => [
             'driver' => 'custom',
             'via' => App\Libraries\Logging\DatabaseLogger::class,
+            'level' => 'info',
         ],
 
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
-            'level' => 'debug',
+            'level' => 'info',
             'days' => 14,
         ],
 
@@ -105,5 +107,4 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
     ],
-
 ];

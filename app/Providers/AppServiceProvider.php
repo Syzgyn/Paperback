@@ -34,6 +34,7 @@ use App\Libraries\MediaFiles\IssueImport\ImportDecisionMakerService;
 use App\Libraries\MediaFiles\UpgradeIssueFileService;
 use App\Libraries\Queue\QueueService;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Config;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -99,5 +100,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         JsonResource::withoutWrapping();
+        
+        //Set log stack based on app settings
+        $currentChannels = config('logging.channels.stack.channels');
+        $configSetting = resolve("AppSettings")->get("host", "logLevel");
+
+        if (strtolower($configSetting) == "debug") {
+            $currentChannels[] = "debug";
+            Config::set("logging.channels.stack.channels", $currentChannels);
+        }
     }
 }
