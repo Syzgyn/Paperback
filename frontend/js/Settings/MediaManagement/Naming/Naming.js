@@ -40,57 +40,11 @@ class Naming extends Component {
     });
   }
 
-  onDailyNamingModalOpenClick = () => {
-    this.setState({
-      isNamingModalOpen: true,
-      namingModalOptions: {
-        name: 'dailyIssueFormat',
-        season: true,
-        issue: true,
-        daily: true,
-        additional: true
-      }
-    });
-  }
-
-  onAnimeNamingModalOpenClick = () => {
-    this.setState({
-      isNamingModalOpen: true,
-      namingModalOptions: {
-        name: 'animeIssueFormat',
-        season: true,
-        issue: true,
-        anime: true,
-        additional: true
-      }
-    });
-  }
-
   onComicFolderNamingModalOpenClick = () => {
     this.setState({
       isNamingModalOpen: true,
       namingModalOptions: {
         name: 'comicFolderFormat'
-      }
-    });
-  }
-
-  onSeasonFolderNamingModalOpenClick = () => {
-    this.setState({
-      isNamingModalOpen: true,
-      namingModalOptions: {
-        name: 'seasonFolderFormat',
-        season: true
-      }
-    });
-  }
-
-  onSpecialsFolderNamingModalOpenClick = () => {
-    this.setState({
-      isNamingModalOpen: true,
-      namingModalOptions: {
-        name: 'specialsFolderFormat',
-        season: true
       }
     });
   }
@@ -122,26 +76,18 @@ class Naming extends Component {
     const renameIssues = hasSettings && settings.renameIssues.value;
 
     const multiIssueStyleOptions = [
-      { key: 0, value: 'Extend', hint: 'S01E01-02-03' },
-      { key: 1, value: 'Duplicate', hint: 'S01E01.S01E02' },
-      { key: 2, value: 'Repeat', hint: 'S01E01E02E03' },
-      { key: 3, value: 'Scene', hint: 'S01E01-E02-E03' },
-      { key: 4, value: 'Range', hint: 'S01E01-03' },
-      { key: 5, value: 'Prefixed Range', hint: 'S01E01-E03' }
+      { key: 0, value: 'Extend', hint: 'E01-02-03' },
+      { key: 1, value: 'Duplicate', hint: 'E01.S01E02' },
+      { key: 2, value: 'Repeat', hint: 'E01E02E03' },
+      { key: 3, value: 'Scene', hint: 'E01-E02-E03' },
+      { key: 4, value: 'Range', hint: 'E01-03' },
+      { key: 5, value: 'Prefixed Range', hint: 'E01-E03' }
     ];
 
     const standardIssueFormatHelpTexts = [];
     const standardIssueFormatErrors = [];
-    const dailyIssueFormatHelpTexts = [];
-    const dailyIssueFormatErrors = [];
-    const animeIssueFormatHelpTexts = [];
-    const animeIssueFormatErrors = [];
     const comicFolderFormatHelpTexts = [];
     const comicFolderFormatErrors = [];
-    const seasonFolderFormatHelpTexts = [];
-    const seasonFolderFormatErrors = [];
-    const specialsFolderFormatHelpTexts = [];
-    const specialsFolderFormatErrors = [];
 
     if (examplesPopulated) {
       if (examples.singleIssueExample) {
@@ -156,40 +102,10 @@ class Naming extends Component {
         standardIssueFormatErrors.push({ message: 'Multi Issue: Invalid Format' });
       }
 
-      if (examples.dailyIssueExample) {
-        dailyIssueFormatHelpTexts.push(`Example: ${examples.dailyIssueExample}`);
-      } else {
-        dailyIssueFormatErrors.push({ message: 'Invalid Format' });
-      }
-
-      if (examples.animeIssueExample) {
-        animeIssueFormatHelpTexts.push(`Single Issue: ${examples.animeIssueExample}`);
-      } else {
-        animeIssueFormatErrors.push({ message: 'Single Issue: Invalid Format' });
-      }
-
-      if (examples.animeMultiIssueExample) {
-        animeIssueFormatHelpTexts.push(`Multi Issue: ${examples.animeMultiIssueExample}`);
-      } else {
-        animeIssueFormatErrors.push({ message: 'Multi Issue: Invalid Format' });
-      }
-
       if (examples.comicFolderExample) {
         comicFolderFormatHelpTexts.push(`Example: ${examples.comicFolderExample}`);
       } else {
         comicFolderFormatErrors.push({ message: 'Invalid Format' });
-      }
-
-      if (examples.seasonFolderExample) {
-        seasonFolderFormatHelpTexts.push(`Example: ${examples.seasonFolderExample}`);
-      } else {
-        seasonFolderFormatErrors.push({ message: 'Invalid Format' });
-      }
-
-      if (examples.specialsFolderExample) {
-        specialsFolderFormatHelpTexts.push(`Example: ${examples.specialsFolderExample}`);
-      } else {
-        specialsFolderFormatErrors.push({ message: 'Invalid Format' });
       }
     }
 
@@ -234,52 +150,20 @@ class Naming extends Component {
 
               {
                 renameIssues &&
-                  <div>
-                    <FormGroup size={sizes.LARGE}>
-                      <FormLabel>Standard Issue Format</FormLabel>
+                  <FormGroup size={sizes.LARGE}>
+                    <FormLabel>Issue Format</FormLabel>
 
-                      <FormInputGroup
-                        inputClassName={styles.namingInput}
-                        type={inputTypes.TEXT}
-                        name="standardIssueFormat"
-                        buttons={<FormInputButton onPress={this.onStandardNamingModalOpenClick}>?</FormInputButton>}
-                        onChange={onInputChange}
-                        {...settings.standardIssueFormat}
-                        helpTexts={standardIssueFormatHelpTexts}
-                        errors={[...standardIssueFormatErrors, ...settings.standardIssueFormat.errors]}
-                      />
-                    </FormGroup>
-
-                    <FormGroup size={sizes.LARGE}>
-                      <FormLabel>Daily Issue Format</FormLabel>
-
-                      <FormInputGroup
-                        inputClassName={styles.namingInput}
-                        type={inputTypes.TEXT}
-                        name="dailyIssueFormat"
-                        buttons={<FormInputButton onPress={this.onDailyNamingModalOpenClick}>?</FormInputButton>}
-                        onChange={onInputChange}
-                        {...settings.dailyIssueFormat}
-                        helpTexts={dailyIssueFormatHelpTexts}
-                        errors={[...dailyIssueFormatErrors, ...settings.dailyIssueFormat.errors]}
-                      />
-                    </FormGroup>
-
-                    <FormGroup size={sizes.LARGE}>
-                      <FormLabel>Anime Issue Format</FormLabel>
-
-                      <FormInputGroup
-                        inputClassName={styles.namingInput}
-                        type={inputTypes.TEXT}
-                        name="animeIssueFormat"
-                        buttons={<FormInputButton onPress={this.onAnimeNamingModalOpenClick}>?</FormInputButton>}
-                        onChange={onInputChange}
-                        {...settings.animeIssueFormat}
-                        helpTexts={animeIssueFormatHelpTexts}
-                        errors={[...animeIssueFormatErrors, ...settings.animeIssueFormat.errors]}
-                      />
-                    </FormGroup>
-                  </div>
+                    <FormInputGroup
+                      inputClassName={styles.namingInput}
+                      type={inputTypes.TEXT}
+                      name="standardIssueFormat"
+                      buttons={<FormInputButton onPress={this.onStandardNamingModalOpenClick}>?</FormInputButton>}
+                      onChange={onInputChange}
+                      {...settings.standardIssueFormat}
+                      helpTexts={standardIssueFormatHelpTexts}
+                      errors={[...standardIssueFormatErrors, ...settings.standardIssueFormat.errors]}
+                    />
+                  </FormGroup>
               }
 
               <FormGroup
@@ -300,40 +184,7 @@ class Naming extends Component {
                 />
               </FormGroup>
 
-              <FormGroup>
-                <FormLabel>Season Folder Format</FormLabel>
-
-                <FormInputGroup
-                  inputClassName={styles.namingInput}
-                  type={inputTypes.TEXT}
-                  name="seasonFolderFormat"
-                  buttons={<FormInputButton onPress={this.onSeasonFolderNamingModalOpenClick}>?</FormInputButton>}
-                  onChange={onInputChange}
-                  {...settings.seasonFolderFormat}
-                  helpTexts={seasonFolderFormatHelpTexts}
-                  errors={[...seasonFolderFormatErrors, ...settings.seasonFolderFormat.errors]}
-                />
-              </FormGroup>
-
-              <FormGroup
-                advancedSettings={advancedSettings}
-                isAdvanced={true}
-              >
-                <FormLabel>Specials Folder Format</FormLabel>
-
-                <FormInputGroup
-                  inputClassName={styles.namingInput}
-                  type={inputTypes.TEXT}
-                  name="specialsFolderFormat"
-                  buttons={<FormInputButton onPress={this.onSpecialsFolderNamingModalOpenClick}>?</FormInputButton>}
-                  onChange={onInputChange}
-                  {...settings.specialsFolderFormat}
-                  helpTexts={specialsFolderFormatHelpTexts}
-                  errors={[...specialsFolderFormatErrors, ...settings.specialsFolderFormat.errors]}
-                />
-              </FormGroup>
-
-              <FormGroup>
+              {/* <FormGroup>
                 <FormLabel>Multi-Issue Style</FormLabel>
 
                 <FormInputGroup
@@ -343,7 +194,7 @@ class Naming extends Component {
                   onChange={onInputChange}
                   {...settings.multiIssueStyle}
                 />
-              </FormGroup>
+              </FormGroup> */}
 
               {
                 namingModalOptions &&

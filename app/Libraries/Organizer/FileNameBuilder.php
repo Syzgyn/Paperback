@@ -20,6 +20,7 @@ class FileNameBuilder
     protected static string $titlePrefixRegex = "/^(The|An|A) (.*?)((?: *\([^)]+\))*)$/i";
     protected static string $fileNameCleanupRegex = "/([- ._])(\1)+/";
     protected static string $trimSeparatorsRegex = "/[- ._]$/";
+    protected static string $multiPartCleanupRegex = "/(?:\:?\s?(?:\(\d+\)|(Part|Pt\.?)\s?\d+))$/i";
 
     /** @param Issue[] $issues */
     public static function buildFilePath(array $issues, Comic $comic, IssueFile $issueFile, string $extension): string
@@ -36,10 +37,12 @@ class FileNameBuilder
     }
 
     /** @param Issue[] $issues */
-    public static function buildFileName(array $issues, Comic $comic, IssueFile $issueFile, string $extension, int $maxPath): string
+    public static function buildFileName(array $issues, Comic $comic, IssueFile $issueFile, string $extension = "", int $maxPath = self::MAX_FILE_LENGTH, ?array $namingConfig = null): string
     {
-        /** @var array */
-        $namingConfig = resolve("AppSettings")->get("naming");
+        if ($namingConfig == null) {
+            /** @var array */
+            $namingConfig = resolve("AppSettings")->get("naming");
+        }
 
         if (!$namingConfig['renameIssues']) {
             return self::getOriginalFileName($issueFile);
@@ -47,6 +50,10 @@ class FileNameBuilder
 
         if (empty($namingConfig['standardIssueFormat'])) {
             throw new Exception("Issue format cannot be empty");
+        }
+
+        if (!empty($extension) && str_starts_with($extension, '.')) {
+            $extension = ".$extension";
         }
 
         /** @var string */
@@ -93,7 +100,7 @@ class FileNameBuilder
             $components[] = $component;
         }
 
-        return implode(DIRECTORY_SEPARATOR, $components) . "." . $extension;
+        return implode(DIRECTORY_SEPARATOR, $components) . $extension;
     }
 
     protected static function getLengthWithoutIssueTitle(string $pattern, array $namingConfig): int
@@ -197,6 +204,11 @@ class FileNameBuilder
         return "$title ($year)";
     }
 
+    protected static function cleanupIssueTitle(string $title): string
+    {
+        return preg_replace(self::$multiPartCleanupRegex, "", $title);
+    }
+
     /** 
      * @param Issue[] $issues
      * 
@@ -204,7 +216,18 @@ class FileNameBuilder
      */
     protected static function getIssueTitles(array $issues): array
     {
-        return array_map(fn(Issue $i) => rtrim($i->title ?? "", " .?"), $issues);
+        if (count($issues) == 1) {
+            return array_map(fn(Issue $i) => rtrim($i->title ?? "", " .?"), $issues);
+        }
+
+        $titles = array_map(fn(Issue $i) => self::cleanupIssueTitle(rtrim($i->title ?? "", " .?")), $issues);
+        $titles = array_unique($titles);
+
+        if (count(array_filter($titles)) == 0) {
+            $titles = array_unique(array_map(fn(Issue $i) => rtrim($i->title ?? "", " .?"), $issues));
+        }
+
+        return $titles;
     }
 
     /** @param string[] $titles */
@@ -246,7 +269,7 @@ class FileNameBuilder
         return preg_replace_callback(self::$titleRegex, fn(array $match) => self::replaceToken($match, $tokenHandlers, $namingConfig, $escape), $pattern);
     }
 
-    protected static function replaceToken(array $match, array $tokenHandlers, array $namingConfig, bool $escape): string
+    protected static function replaceToken(array $match, array $tokenHandlers, array $namingConfig, bool $escape = false): string
     {
         if ($match['escaped']) {
             if ($escape) {
@@ -320,5 +343,29 @@ class FileNameBuilder
         $result = str_replace($badChars, $goodChars, $result);
 
         return rtrim(ltrim($result, ' '), '. ');
+    }
+
+    public static function cleanFolderName(string $name): string
+    {
+        $name = preg_replace_callback(self::$fileNameCleanupRegex, fn(array $match): string => (string) $match[1], $name);
+        return trim($name, ". ");
+
+    }
+
+    public static function getComicFolder(Comic $comic, ?array $namingConfig = null): string
+    {
+        if ($namingConfig == null) {
+            /** @var array */
+            $namingConfig = resolve("AppSettings")->get("naming");
+        }
+
+        $tokenHandlers = [];
+
+        self::addComicTokens($tokenHandlers, $comic);
+        self::addIdTokens($tokenHandlers, $comic);
+
+        $folderName = self::replaceTokens((string) $namingConfig['comicFolderFormat'], $tokenHandlers, $namingConfig);
+
+        return self::cleanFolderName($folderName);
     }
 }

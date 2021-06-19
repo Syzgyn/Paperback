@@ -49,8 +49,19 @@ class SettingsController extends Controller
 
     public function namingExamples(Request $request): JsonResponse
     {
-        //TODO: Add name parser
-        /** @var JsonResponse */
-        return response()->json([]);
+        $namingConfig = $request->all();
+
+        if (!isset($namingConfig['renameIssues'])) {
+            $namingConfig = null;
+        }
+        $service = resolve("FileNameSampleService");
+        
+        $output = [];
+
+        $output['singleIssueExample'] = $service->getStandardSample($namingConfig)->fileName;
+        $output['multiIssueExample'] = $service->getMultiIssueSample($namingConfig)->fileName;
+        $output['comicFolderExample'] = $service->getComicFolderSample($namingConfig);
+
+        return response()->json($output);
     }
 }

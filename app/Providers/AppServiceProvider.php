@@ -32,6 +32,7 @@ use App\Libraries\MediaFiles\IssueFileMovingService;
 use App\Libraries\MediaFiles\IssueImport\Aggregation\AggregationService;
 use App\Libraries\MediaFiles\IssueImport\ImportDecisionMakerService;
 use App\Libraries\MediaFiles\UpgradeIssueFileService;
+use App\Libraries\Organizer\FileNameSampleService;
 use App\Libraries\Queue\QueueService;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Config;
@@ -68,6 +69,7 @@ class AppServiceProvider extends ServiceProvider
         'IssueFileMovingService' => IssueFileMovingService::class,
         'DownloadProcessingService' => DownloadProcessingService::class,
         'DiskTransferService' => DiskTransferService::class,
+        'FileNameSampleService' => FileNameSampleService::class,
     ];
 
     /**
@@ -102,7 +104,9 @@ class AppServiceProvider extends ServiceProvider
         JsonResource::withoutWrapping();
         
         //Set log stack based on app settings
+        /** @var array */
         $currentChannels = config('logging.channels.stack.channels');
+        /** @var string */
         $configSetting = resolve("AppSettings")->get("host", "logLevel");
 
         if (strtolower($configSetting) == "debug") {
