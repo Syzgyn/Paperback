@@ -191,7 +191,7 @@ class SelectIssueModalContent extends Component {
 
             {
               isPopulated && !items.length ?
-                'No issues were found for the selected season' :
+                'No issues were found' :
                 null
             }
           </Scroller>

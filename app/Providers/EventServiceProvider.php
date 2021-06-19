@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Events\Listeners\ComicListener;
 use App\Events\Listeners\CommandListener;
 use App\Events\Listeners\DownloadListener;
+use App\Events\Listeners\ImportListener;
 use App\Events\Listeners\IssueFileListener;
 use App\Events\Listeners\IssueListener;
 use App\Events\Listeners\LogListener;
@@ -44,6 +45,7 @@ class EventServiceProvider extends ServiceProvider
         CommandListener::class,
         LogListener::class,
         ComicListener::class,
+        ImportListener::class,
     ];
 
     /**

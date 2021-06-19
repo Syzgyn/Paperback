@@ -37,10 +37,9 @@ class SelectIssueModalContentConnector extends Component {
   componentDidMount() {
     const {
       comicId,
-      seasonNumber
     } = this.props;
 
-    this.props.dispatchFetchInteractiveImportIssues({ comicId, seasonNumber });
+    this.props.dispatchFetchInteractiveImportIssues({ comicId });
   }
 
   componentWillUnmount() {
@@ -110,7 +109,6 @@ class SelectIssueModalContentConnector extends Component {
 SelectIssueModalContentConnector.propTypes = {
   ids: PropTypes.arrayOf(PropTypes.number).isRequired,
   comicId: PropTypes.number.isRequired,
-  seasonNumber: PropTypes.number.isRequired,
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   dispatchFetchInteractiveImportIssues: PropTypes.func.isRequired,
   dispatchSetInteractiveImportIssuesSort: PropTypes.func.isRequired,

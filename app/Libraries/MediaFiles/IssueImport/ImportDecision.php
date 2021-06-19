@@ -7,9 +7,9 @@ use App\Libraries\Parser\LocalIssue;
 
 class ImportDecision
 {
+    /** @param Rejection[] $rejections */
     public function __construct(
         public ?LocalIssue $localIssue = null,
-        /** @var Rejection[] */
         public array $rejections = [],
     ){}
 

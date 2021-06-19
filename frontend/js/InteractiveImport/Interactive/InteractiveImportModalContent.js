@@ -21,10 +21,7 @@ import ModalFooter from 'Components/Modal/ModalFooter';
 import Table from 'Components/Table/Table';
 import TableBody from 'Components/Table/TableBody';
 import SelectIssueModal from 'InteractiveImport/Issue/SelectIssueModal';
-import SelectLanguageModal from 'InteractiveImport/Language/SelectLanguageModal';
-import SelectQualityModal from 'InteractiveImport/Quality/SelectQualityModal';
 import SelectComicModal from 'InteractiveImport/Comic/SelectComicModal';
-import SelectSeasonModal from 'InteractiveImport/Season/SelectSeasonModal';
 import InteractiveImportRow from './InteractiveImportRow';
 import styles from './InteractiveImportModalContent.css';
 
@@ -42,25 +39,8 @@ const columns = [
     isVisible: true
   },
   {
-    name: 'season',
-    label: 'Season',
-    isVisible: true
-  },
-  {
     name: 'issues',
     label: 'Issue(s)',
-    isVisible: true
-  },
-  {
-    name: 'quality',
-    label: 'Quality',
-    isSortable: true,
-    isVisible: true
-  },
-  {
-    name: 'language',
-    label: 'Language',
-    isSortable: true,
     isVisible: true
   },
   {
@@ -91,10 +71,7 @@ const importModeOptions = [
 
 const SELECT = 'select';
 const COMIC = 'comic';
-const SEASON = 'season';
 const ISSUE = 'issue';
-const LANGUAGE = 'language';
-const QUALITY = 'quality';
 
 class InteractiveImportModalContent extends Component {
 
@@ -228,10 +205,7 @@ class InteractiveImportModalContent extends Component {
 
     const bulkSelectOptions = [
       { key: SELECT, value: 'Select...', disabled: true },
-      { key: SEASON, value: 'Select Season' },
       { key: ISSUE, value: 'Select Issue(s)' },
-      { key: LANGUAGE, value: 'Select Language' },
-      { key: QUALITY, value: 'Select Quality' }
     ];
 
     if (allowComicChange) {
@@ -384,34 +358,10 @@ class InteractiveImportModalContent extends Component {
           onModalClose={this.onSelectModalClose}
         />
 
-        <SelectSeasonModal
-          isOpen={selectModalOpen === SEASON}
-          ids={selectedIds}
-          comicId={selectedItem && selectedItem.comic && selectedItem.comic.id}
-          onModalClose={this.onSelectModalClose}
-        />
-
         <SelectIssueModal
           isOpen={selectModalOpen === ISSUE}
           ids={orderedSelectedIds}
           comicId={selectedItem && selectedItem.comic && selectedItem.comic.id}
-          seasonNumber={selectedItem && selectedItem.seasonNumber}
-          onModalClose={this.onSelectModalClose}
-        />
-
-        <SelectLanguageModal
-          isOpen={selectModalOpen === LANGUAGE}
-          ids={selectedIds}
-          languageId={0}
-          onModalClose={this.onSelectModalClose}
-        />
-
-        <SelectQualityModal
-          isOpen={selectModalOpen === QUALITY}
-          ids={selectedIds}
-          qualityId={0}
-          proper={false}
-          real={false}
           onModalClose={this.onSelectModalClose}
         />
       </ModalContent>

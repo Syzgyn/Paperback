@@ -98,8 +98,8 @@ class InitialSetup extends Migration
 
         Schema::create('blacklist', function (Blueprint $table) {
             $table->unsignedInteger('id')->autoIncrement();
-            $table->foreignId('comic_id')->references('cvid')->on('comics');
-            $table->foreignId('issue_id')->references('cvid')->on('issues');
+            $table->foreignId('comic_id')->references('cvid')->on('comics')->onDelete('cascade');
+            $table->foreignId('issue_id')->references('cvid')->on('issues')->onDelete('cascade');
             $table->text('source_title');
             $table->timestamp('date');
             $table->timestamp('published_date')->nullable();
@@ -126,8 +126,8 @@ class InitialSetup extends Migration
 
         Schema::create('history', function (Blueprint $table) {
             $table->unsignedInteger('id')->autoIncrement();
-            $table->foreignId('comic_id')->references('cvid')->on('comics');
-            $table->foreignId('issue_id')->references('cvid')->on('issues');
+            $table->foreignId('comic_id')->references('cvid')->on('comics')->onDelete('cascade');
+            $table->foreignId('issue_id')->references('cvid')->on('issues')->onDelete('cascade');
             $table->text('source_title');
             $table->timestamp('date');
             $table->text('data');
@@ -137,7 +137,7 @@ class InitialSetup extends Migration
 
         Schema::create('download_history', function (Blueprint $table) {
             $table->unsignedInteger('id')->autoIncrement();
-            $table->foreignId('comic_id')->references('cvid')->on('comics');
+            $table->foreignId('comic_id')->references('cvid')->on('comics')->onDelete('cascade');
             $table->string('download_id');
             $table->integer('event_type');
             $table->text('source_title');

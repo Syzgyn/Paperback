@@ -47,8 +47,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Comic whereTags($value)
  * @method static \Illuminate\Database\Eloquent\Builder whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Comic whereYear($value)
+ * @method static \Illuminate\Database\Eloquent\Builder where($column, $op = null, $value = null)
  * @method static \Illuminate\Database\Eloquent\Builder|Comic create($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Comic find($value)
+ * @method static Comic find($value)
  * @method static Comic|null firstWhere($column, $value = null)
  * @mixin \Eloquent
  */
@@ -228,5 +229,15 @@ class Comic extends Model
                 }
             }
         }
+    }
+
+    public static function findByTitle(?string $title): ?Comic
+    {
+        if ($title == null) {
+            return null;
+        }
+
+        /** @var Comic */
+        return Comic::where("title", $title)->first();
     }
 }

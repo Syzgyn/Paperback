@@ -7,6 +7,7 @@ use App\Models\Comic;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Collection;
 
 /**
  * App\Models\Issue
@@ -48,8 +49,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static \Illuminate\Database\Eloquent\Builder|Issue create($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Issue updateOrCreate($value, $params = null)
  * @method static \Illuminate\Database\Eloquent\Builder|Issue|null firstWhere($column, $value = null)
- * @method static \Illuminate\Database\Eloquent\Builder|Issue find($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Issue findMany($value)
+ * @method static Issue find($value)
+ * @method static \Illuminate\Support\Collection findMany($value)
  * @method static \Illuminate\Database\Eloquent\Builder join($model, $remote, $op, $local)
  * @mixin \Eloquent
  */

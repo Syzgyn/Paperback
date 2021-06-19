@@ -108,19 +108,11 @@ class InteractiveImportModalContentConnector extends Component {
       if (isSelected) {
         const {
           comic,
-          seasonNumber,
           issues,
-          quality,
-          language
         } = item;
 
         if (!comic) {
           this.setState({ interactiveImportErrorMessage: 'Comic must be chosen for each selected file' });
-          return false;
-        }
-
-        if (isNaN(seasonNumber)) {
-          this.setState({ interactiveImportErrorMessage: 'Season must be chosen for each selected file' });
           return false;
         }
 
@@ -129,23 +121,11 @@ class InteractiveImportModalContentConnector extends Component {
           return false;
         }
 
-        if (!quality) {
-          this.setState({ interactiveImportErrorMessage: 'Quality must be chosen for each selected file' });
-          return false;
-        }
-
-        if (!language) {
-          this.setState({ interactiveImportErrorMessage: 'Language must be chosen for each selected file' });
-          return false;
-        }
-
         files.push({
           path: item.path,
           folderName: item.folderName,
           comicId: comic.id,
-          issueIds: issues.map((e) => e.id),
-          quality,
-          language,
+          issueIds: issues.map((e) => e.cvid),
           downloadId: this.props.downloadId
         });
       }

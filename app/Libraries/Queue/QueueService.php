@@ -155,7 +155,7 @@ class QueueService
             title: $trackedDownload->downloadItem->title,
             sizeLeft: $trackedDownload->downloadItem->remainingSize ?? 0,
             timeLeft: $trackedDownload->downloadItem->remainingTime,
-            status: $trackedDownload->downloadItem->status,
+            status: TrackedDownloadStatus::toString($trackedDownload->downloadItem->status),
             trackedDownloadStatus: TrackedDownloadStatus::toString($trackedDownload->status),
             trackedDownloadState: TrackedDownloadState::toString($trackedDownload->state),
             statusMessages: $trackedDownload->statusMessages,

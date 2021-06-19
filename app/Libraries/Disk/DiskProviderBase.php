@@ -120,6 +120,7 @@ abstract class DiskProviderBase
         return !(new \FilesystemIterator($path))->valid();
     }
 
+    /** @return string[] */
     public function getDirectories(string $path): array
     {
         $path = rtrim($path, DIRECTORY_SEPARATOR);

@@ -64,7 +64,8 @@ Route::post('command', 'CommandController@start');
 Route::get('command/{id}', 'CommandController@get');
 Route::delete('command/{id}', 'CommandController@cancel');
 
-
+Route::get('manualimport', 'ManualimportController@get');
+Route::post('manualimport', 'ManualimportController@reprocessItems');
 
 Route::get('filesystem', 'FilesystemController@filesystem');
 
