@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\ComicVine;
 
+use App\Libraries\Organizer\FileNameBuilder;
 use App\Models\Comic;
 use App\Traits\TruncateHtml;
 use App\Traits\ChangeComicLinks;
@@ -23,6 +24,12 @@ class Volume extends JsonResource
      */
     public function toArray($request)
     {
+        $comic = new Comic([
+            'cvid' => $this->resource->id,
+            'title' => $this->resource->name,
+            'year' => $this->resource->start_year,
+        ]);
+
         return [
             'title' => $this->resource->name,
             'sortName' => $this->getSortName(),
@@ -38,7 +45,7 @@ class Volume extends JsonResource
             'inLibrary' => $this->checkLibrary($this->resource->id),
             'issueCount' => $this->resource->count_of_issues,
             'status' => $this->getStatus(),
-            'folder' => $this->getFolderName(),
+            'folder' => FileNameBuilder::getComicFolder($comic),
             'comicType' => 'standard',
         ];
     }
