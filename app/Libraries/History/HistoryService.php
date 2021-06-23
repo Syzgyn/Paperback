@@ -2,6 +2,7 @@
 
 namespace App\Libraries\History;
 
+use App\Events\ComicDeletedEvent;
 use App\Libraries\Download\DownloadFailedEvent;
 use App\Libraries\Download\DownloadIgnoredEvent;
 use Illuminate\Events\Dispatcher;
@@ -164,6 +165,11 @@ class HistoryService
         }
     }
 
+    public function handleComicDeletedEvent(ComicDeletedEvent $event): void
+    {
+        IssueHistory::deleteForComic($event->comic->cvid);
+    }
+
     public function subscribe(Dispatcher $events): void
     {
         $events->listen(
@@ -184,6 +190,11 @@ class HistoryService
         $events->listen(
             IssueImportedEvent::class,
             [$this, 'handleIssueImportedEvent']
+        );
+
+        $events->listen(
+            ComicDeletedEvent::class,
+            [$this, 'handleComicDeletedEvent']
         );
     }
 }

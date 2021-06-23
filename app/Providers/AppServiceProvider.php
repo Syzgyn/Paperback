@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Libraries\Comic\IssueAddedService;
 use GuzzleHttp\Client;
 use App\Services\FileManager;
 use App\Services\ParserService as OldParserService;
@@ -70,6 +71,7 @@ class AppServiceProvider extends ServiceProvider
         'DownloadProcessingService' => DownloadProcessingService::class,
         'DiskTransferService' => DiskTransferService::class,
         'FileNameSampleService' => FileNameSampleService::class,
+        'IssueAddedService' => IssueAddedService::class,
     ];
 
     /**

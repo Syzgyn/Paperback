@@ -2,6 +2,8 @@
 
 namespace App\Libraries\Download\TrackedDownloads;
 
+use App\Events\ComicDeletedEvent;
+use App\Events\IssueInfoRefreshedEvent;
 use App\Libraries\Download\DownloadClientItem;
 use App\Libraries\Download\DownloadClientModelBase;
 use App\Libraries\Download\DownloadProtocol;
@@ -13,6 +15,7 @@ use App\Models\Comic;
 use App\Models\DownloadHistory;
 use App\Models\Issue;
 use Exception;
+use Illuminate\Events\Dispatcher;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
@@ -25,6 +28,56 @@ class TrackedDownloadService
     {
        /** @var TrackedDownload[] */
         self::$cache = Cache::get("trackedDownloads", []);
+    }
+
+    public function subscribe(Dispatcher $events): void
+    {
+        $events->listen(
+            IssueInfoRefreshedEvent::class,
+            [$this, 'handleIssueInfoRefreshedEvent']
+        );
+
+        $events->listen(
+            ComicDeletedEvent::class,
+            [$this, 'handleComicDeletedEvent']
+        );
+    }
+
+    public function handleComicDeletedEvent(ComicDeletedEvent $event): void
+    {
+        $cachedItems = array_filter(self::$cache, fn(TrackedDownload $t) => $t->remoteIssue?->comic != null && $t->remoteIssue?->comic?->cvid == $event->comic->cvid);
+
+        if (!empty($cachedItems)) {
+            foreach ($cachedItems as $cachedItem) {
+                $this->updateCachedItem($cachedItem);
+            }
+
+            $this->saveCache();
+
+            event(new TrackedDownloadRefreshedEvent($this->getTrackedDownloads()));
+        }
+    }
+
+    public function handleIssueInfoRefreshedEvent(IssueInfoRefreshedEvent $event): void
+    {
+        $needsToUpdate = false;
+
+        foreach ($event->removed as $issue) {
+            //Get tracked downloads that match a cvid with the issue
+            $cachedItems = array_filter(self::$cache, fn(TrackedDownload $t) => $t->remoteIssue != null && !empty($t->remoteIssue->issues) && !empty(array_filter($t->remoteIssue->issues, fn(Issue $i) => $i->cvid == $issue->cvid)));
+
+            if (!empty($cachedItems)) {
+                $needsToUpdate = true;
+            }
+
+            foreach ($cachedItems as $cachedItem) {
+                $this->updateCachedItem($cachedItem);
+            }
+        }
+
+        if ($needsToUpdate) {
+            event(new TrackedDownloadRefreshedEvent($this->getTrackedDownloads()));
+        }
     }
 
     /** @return TrackedDownload[] */

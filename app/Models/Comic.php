@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property bool $monitored
  * @property string|null $publisher
  * @property int|null $year
+ * @property DateTime $last_info_sync
  * @property array $tags
  * @property \Illuminate\Support\Carbon $created_at
  * @property string $table
@@ -48,7 +49,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Comic whereYear($value)
  * @method static \Illuminate\Database\Eloquent\Builder where($column, $op = null, $value = null)
- * @method static \Illuminate\Database\Eloquent\Builder|Comic create($value)
+ * @method static Comic create($value)
  * @method static Comic find($value)
  * @method static Comic|null firstWhere($column, $value = null)
  * @mixin \Eloquent
@@ -79,6 +80,8 @@ class Comic extends Model
         'monitored' => 'boolean',
         'images' => 'array',
         'tags' => 'array',
+        'last_info_sync' => 'datetime',
+        'add_options' => 'array',
     ];
 
     public function issues(): HasMany
@@ -182,15 +185,15 @@ class Comic extends Model
         }
     }
 
-    protected static function booted()
-    {
-        static::created(function (Comic $comic) {
-            /** @var FileManager */
-            $fileManager = resolve('FileManager');
-            $fileManager->getOrCreateComicDir($comic);
-            $comic->fetchIssues();
-        });
-    }
+    // protected static function booted()
+    // {
+    //     static::created(function (Comic $comic) {
+    //         /** @var FileManager */
+    //         $fileManager = resolve('FileManager');
+    //         $fileManager->getOrCreateComicDir($comic);
+    //         $comic->fetchIssues();
+    //     });
+    // }
 
     public function getOverviewAttribute(): string
     {

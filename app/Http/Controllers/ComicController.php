@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ComicAddedEvent;
+use App\Events\ComicDeletedEvent;
 use App\Models\Comic;
 use Illuminate\Http\Request;
 use App\Http\Requests\ComicRequest;
@@ -35,6 +37,8 @@ class ComicController extends Controller
     public function store(ComicRequest $request): ComicResource
     {
         $comic = Comic::create($request->validated());
+        event(new ComicAddedEvent($comic));
+        
         return new ComicResource($comic);
     }
 
@@ -54,16 +58,12 @@ class ComicController extends Controller
     }
 
     /** @return JsonResponse */
-    public function destroy(Comic $comic): JsonResponse
+    public function destroy(Request $request, Comic $comic): JsonResponse
     {
-        /** @var Request */
-        $request = request();
-        if ($request->query('deleteFiles') === 'true') {
-            /** @var FileManager */
-            $fileManager = resolve('FileManager');
-            $fileManager->removeDir($comic->path);
-        }
+        $deleteFiles = (bool) $request->input("deleteFiles", false);
+        event(new ComicDeletedEvent($comic, $deleteFiles));
         $comic->delete();
+
 
         /** @var JsonResponse */
         return response()->json(['status' => 'OK']);

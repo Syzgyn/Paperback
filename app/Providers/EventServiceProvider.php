@@ -9,9 +9,11 @@ use App\Events\Listeners\ImportListener;
 use App\Events\Listeners\IssueFileListener;
 use App\Events\Listeners\IssueListener;
 use App\Events\Listeners\LogListener;
+use App\Libraries\Comic\RefreshComicService;
 use App\Libraries\Download\DownloadProcessingService;
 use App\Libraries\Download\History\DownloadHistoryService;
 use App\Libraries\Download\TrackedDownloads\DownloadMonitoringService;
+use App\Libraries\Download\TrackedDownloads\TrackedDownloadService;
 use App\Libraries\History\HistoryService;
 use App\Libraries\EventSource\EventSourceService;
 use App\Libraries\Queue\QueueService;
@@ -37,6 +39,8 @@ class EventServiceProvider extends ServiceProvider
         HistoryService::class,
         EventSourceService::class,
         QueueService::class,
+        TrackedDownloadService::class,
+        RefreshComicService::class,
 
         //Listeners
         IssueListener::class,

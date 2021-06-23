@@ -109,7 +109,7 @@ class RootFolder extends Model
             }
 
             //TODO: Implement for windows
-            while (dirname($childPath) != "/" && dirname($childPath) != ".") {
+            while (dirname($childPath) != "/" && dirname($childPath) != "." && dirname($childPath) != "") {
                 if (dirname($childPath) == $parentPath) {
                     return true;
                 }

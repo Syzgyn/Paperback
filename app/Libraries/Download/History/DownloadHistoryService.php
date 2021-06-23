@@ -2,6 +2,7 @@
 
 namespace App\Libraries\Download\History;
 
+use App\Events\ComicDeletedEvent;
 use App\Events\DownloadCompletedEvent;
 use App\Libraries\Download\DownloadFailedEvent;
 use App\Libraries\Download\DownloadIgnoredEvent;
@@ -187,6 +188,11 @@ class DownloadHistoryService
 
         $history->save();
     }
+
+    public function handleComicDeletedEvent(ComicDeletedEvent $event): void
+    {
+        DownloadHistory::deleteByComicId($event->comic->cvid);
+    }
     
     public function subscribe(Dispatcher $events): void
     {
@@ -213,6 +219,11 @@ class DownloadHistoryService
         $events->listen(
             DownloadCompletedEvent::class,
             [$this, 'handleDownloadCompletedEvent']
+        );
+
+        $events->listen(
+            ComicDeletedEvent::class,
+            [$this, 'handleComicDeletedEvent']
         );
     }
 }

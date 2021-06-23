@@ -12,27 +12,17 @@ function ComicMonitoringOptionsPopoverContent() {
 
       <DescriptionListItem
         title="Future Issues"
-        data="Monitor issues that have not aired yet"
+        data="Monitor issues that have not been released yet"
       />
 
       <DescriptionListItem
         title="Missing Issues"
-        data="Monitor issues that do not have files or have not aired yet"
+        data="Monitor issues that do not have files or have not been released yet"
       />
 
       <DescriptionListItem
         title="Existing Issues"
-        data="Monitor issues that have files or have not aired yet"
-      />
-
-      <DescriptionListItem
-        title="First Season"
-        data="Monitor all issues of the first season. All other seasons will be ignored"
-      />
-
-      <DescriptionListItem
-        title="Latest Season"
-        data="Monitor all issues of the latest season and future seasons"
+        data="Monitor issues that have files or have not been released yet"
       />
 
       <DescriptionListItem

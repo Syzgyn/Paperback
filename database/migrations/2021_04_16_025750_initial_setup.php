@@ -25,6 +25,7 @@ class InitialSetup extends Migration
             $table->unsignedInteger('year')->nullable();
             $table->text('tags');
             $table->timestamp('created_at');
+            $table->timestamp('last_info_sync')->nullable();
             $table->text('add_options')->nullable();
 
             $table->primary('cvid');

@@ -84,6 +84,7 @@ class ComicVineRepository
         return Volume::make($volume->results)->resolve();
     }
 
+    /** @return array[] */
     public function volumeIssues(int $cvid, int $offset = 0): array
     {
         $this->bypassCache = true;
@@ -99,6 +100,7 @@ class ComicVineRepository
             $issues->results = array_merge((array) $issues->results, (array) $moreIssues->results);
         }
 
+        /** @var array[] */
         return IssueCollection::make($issues->results)->resolve();
     }
 

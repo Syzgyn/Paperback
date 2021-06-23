@@ -44,6 +44,14 @@ class ComicRequest extends FormRequest
     {
         $this->merge([
             'path' => $this->rootFolderPath . DIRECTORY_SEPARATOR . $this->folder,
+            'add_options' => (array) $this->addOptions,
         ]);
+    }
+
+    public function messages()
+    {
+        return [
+            'rootFolderPath.required' => "Root Folder required"
+        ];
     }
 }

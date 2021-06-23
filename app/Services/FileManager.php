@@ -4,11 +4,7 @@ namespace App\Services;
 
 use Exception;
 use App\Models\Comic;
-use App\Models\IssueFile;
-use App\Models\TrackedDownload;
 use Illuminate\Support\Facades\Log;
-use \wapmorgan\UnifiedArchive\UnifiedArchive;
-use \SimpleXMLElement;
 
 class FileManager
 {
