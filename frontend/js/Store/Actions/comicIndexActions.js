@@ -35,11 +35,9 @@ export const defaultState = {
     detailedProgressBar: false,
     size: 'medium',
     showMonitored: true,
-    showNetwork: true,
-    showQualityProfile: true,
+    showPublisher: true,
     showPreviousAiring: false,
     showAdded: false,
-    showSeasonCount: true,
     showPath: false,
     showSizeOnDisk: false,
     showSearchAction: false

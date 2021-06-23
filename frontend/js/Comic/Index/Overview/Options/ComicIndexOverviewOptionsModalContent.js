@@ -30,11 +30,9 @@ class ComicIndexOverviewOptionsModalContent extends Component {
       detailedProgressBar: props.detailedProgressBar,
       size: props.size,
       showMonitored: props.showMonitored,
-      showNetwork: props.showNetwork,
-      showQualityProfile: props.showQualityProfile,
+      showPublisher: props.showPublisher,
       showPreviousAiring: props.showPreviousAiring,
       showAdded: props.showAdded,
-      showSeasonCount: props.showSeasonCount,
       showPath: props.showPath,
       showSizeOnDisk: props.showSizeOnDisk,
       showSearchAction: props.showSearchAction
@@ -46,11 +44,9 @@ class ComicIndexOverviewOptionsModalContent extends Component {
       detailedProgressBar,
       size,
       showMonitored,
-      showNetwork,
-      showQualityProfile,
+      showPublisher,
       showPreviousAiring,
       showAdded,
-      showSeasonCount,
       showPath,
       showSizeOnDisk,
       showSearchAction
@@ -70,12 +66,8 @@ class ComicIndexOverviewOptionsModalContent extends Component {
       state.showMonitored = showMonitored;
     }
 
-    if (showNetwork !== prevProps.showNetwork) {
-      state.showNetwork = showNetwork;
-    }
-
-    if (showQualityProfile !== prevProps.showQualityProfile) {
-      state.showQualityProfile = showQualityProfile;
+    if (showPublisher !== prevProps.showPublisher) {
+      state.showPublisher = showPublisher;
     }
 
     if (showPreviousAiring !== prevProps.showPreviousAiring) {
@@ -84,10 +76,6 @@ class ComicIndexOverviewOptionsModalContent extends Component {
 
     if (showAdded !== prevProps.showAdded) {
       state.showAdded = showAdded;
-    }
-
-    if (showSeasonCount !== prevProps.showSeasonCount) {
-      state.showSeasonCount = showSeasonCount;
     }
 
     if (showPath !== prevProps.showPath) {
@@ -130,11 +118,9 @@ class ComicIndexOverviewOptionsModalContent extends Component {
       detailedProgressBar,
       size,
       showMonitored,
-      showNetwork,
-      showQualityProfile,
+      showPublisher,
       showPreviousAiring,
       showAdded,
-      showSeasonCount,
       showPath,
       showSizeOnDisk,
       showSearchAction
@@ -184,23 +170,12 @@ class ComicIndexOverviewOptionsModalContent extends Component {
             </FormGroup>
 
             <FormGroup>
-              <FormLabel>Show Network</FormLabel>
+              <FormLabel>Show Publisher</FormLabel>
 
               <FormInputGroup
                 type={inputTypes.CHECK}
-                name="showNetwork"
-                value={showNetwork}
-                onChange={this.onChangeOverviewOption}
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <FormLabel>Show Quality Profile</FormLabel>
-
-              <FormInputGroup
-                type={inputTypes.CHECK}
-                name="showQualityProfile"
-                value={showQualityProfile}
+                name="showPublisher"
+                value={showPublisher}
                 onChange={this.onChangeOverviewOption}
               />
             </FormGroup>
@@ -223,17 +198,6 @@ class ComicIndexOverviewOptionsModalContent extends Component {
                 type={inputTypes.CHECK}
                 name="showAdded"
                 value={showAdded}
-                onChange={this.onChangeOverviewOption}
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <FormLabel>Show Season Count</FormLabel>
-
-              <FormInputGroup
-                type={inputTypes.CHECK}
-                name="showSeasonCount"
-                value={showSeasonCount}
                 onChange={this.onChangeOverviewOption}
               />
             </FormGroup>
@@ -290,11 +254,9 @@ ComicIndexOverviewOptionsModalContent.propTypes = {
   size: PropTypes.string.isRequired,
   detailedProgressBar: PropTypes.bool.isRequired,
   showMonitored: PropTypes.bool.isRequired,
-  showNetwork: PropTypes.bool.isRequired,
-  showQualityProfile: PropTypes.bool.isRequired,
+  showPublisher: PropTypes.bool.isRequired,
   showPreviousAiring: PropTypes.bool.isRequired,
   showAdded: PropTypes.bool.isRequired,
-  showSeasonCount: PropTypes.bool.isRequired,
   showPath: PropTypes.bool.isRequired,
   showSizeOnDisk: PropTypes.bool.isRequired,
   showSearchAction: PropTypes.bool.isRequired,

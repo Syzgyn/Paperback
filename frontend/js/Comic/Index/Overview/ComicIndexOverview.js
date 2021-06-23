@@ -220,8 +220,6 @@ class ComicIndexOverview extends Component {
                 height={overviewHeight}
                 monitored={monitored}
                 nextAiring={nextAiring}
-                seasonCount={seasonCount}
-                qualityProfile={qualityProfile}
                 sizeOnDisk={sizeOnDisk}
                 showRelativeDates={showRelativeDates}
                 shortDateFormat={shortDateFormat}

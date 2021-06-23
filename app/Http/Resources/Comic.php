@@ -46,7 +46,9 @@ class Comic extends JsonResource
             'path' => $this->path,
             'ratings' => ['value' => 5],
             'useSceneNumbering' => false,
-            'tags' => $this->tags
+            'tags' => $this->tags,
+            'added' => $this->created_at,
+            'previousAiring' => $this->issues->last()?->cover_date,
         ];
     }
 

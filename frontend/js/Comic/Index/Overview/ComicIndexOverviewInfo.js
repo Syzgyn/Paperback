@@ -17,14 +17,9 @@ const rows = [
     valueProp: 'monitored'
   },
   {
-    name: 'network',
-    showProp: 'showNetwork',
-    valueProp: 'network'
-  },
-  {
-    name: 'qualityProfileId',
-    showProp: 'showQualityProfile',
-    valueProp: 'qualityProfileId'
+    name: 'publisher',
+    showProp: 'showPublisher',
+    valueProp: 'publisher'
   },
   {
     name: 'previousAiring',
@@ -35,11 +30,6 @@ const rows = [
     name: 'added',
     showProp: 'showAdded',
     valueProp: 'added'
-  },
-  {
-    name: 'seasonCount',
-    showProp: 'showSeasonCount',
-    valueProp: 'seasonCount'
   },
   {
     name: 'path',
@@ -80,19 +70,11 @@ function getInfoRowProps(row, props) {
     };
   }
 
-  if (name === 'network') {
+  if (name === 'publisher') {
     return {
-      title: 'Network',
+      title: 'publisher',
       iconName: icons.NETWORK,
-      label: props.network
-    };
-  }
-
-  if (name === 'qualityProfileId') {
-    return {
-      title: 'Quality Profile',
-      iconName: icons.PROFILE,
-      label: props.qualityProfile.name
+      label: props.publisher
     };
   }
 
@@ -141,23 +123,6 @@ function getInfoRowProps(row, props) {
           timeForToday: true
         }
       )
-    };
-  }
-
-  if (name === 'seasonCount') {
-    const { seasonCount } = props;
-    let seasons = '1 season';
-
-    if (seasonCount === 0) {
-      seasons = 'No seasons';
-    } else if (seasonCount > 1) {
-      seasons = `${seasonCount} seasons`;
-    }
-
-    return {
-      title: 'Season Count',
-      iconName: icons.CIRCLE,
-      label: seasons
     };
   }
 
@@ -238,21 +203,17 @@ function ComicIndexOverviewInfo(props) {
 
 ComicIndexOverviewInfo.propTypes = {
   height: PropTypes.number.isRequired,
-  showNetwork: PropTypes.bool.isRequired,
+  showPublisher: PropTypes.bool.isRequired,
   showMonitored: PropTypes.bool.isRequired,
-  showQualityProfile: PropTypes.bool.isRequired,
   showPreviousAiring: PropTypes.bool.isRequired,
   showAdded: PropTypes.bool.isRequired,
-  showSeasonCount: PropTypes.bool.isRequired,
   showPath: PropTypes.bool.isRequired,
   showSizeOnDisk: PropTypes.bool.isRequired,
   monitored: PropTypes.bool.isRequired,
   nextAiring: PropTypes.string,
-  network: PropTypes.string,
-  qualityProfile: PropTypes.object.isRequired,
+  publisher: PropTypes.string,
   previousAiring: PropTypes.string,
   added: PropTypes.string,
-  seasonCount: PropTypes.number.isRequired,
   path: PropTypes.string.isRequired,
   sizeOnDisk: PropTypes.number,
   sortKey: PropTypes.string.isRequired,
