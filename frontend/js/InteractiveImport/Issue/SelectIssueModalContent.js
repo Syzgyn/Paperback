@@ -31,8 +31,13 @@ const columns = [
     isVisible: true
   },
   {
-    name: 'releaseDate',
-    label: 'Air Date',
+    name: 'storeDate',
+    label: 'Store Date',
+    isVisible: true
+  },
+  {
+    name: 'coverDate',
+    label: 'Cover Date',
     isVisible: true
   }
 ];
@@ -173,10 +178,9 @@ class SelectIssueModalContent extends Component {
                               key={item.id}
                               id={item.id}
                               issueNumber={item.issueNumber}
-                              absoluteIssueNumber={item.absoluteIssueNumber}
                               title={item.title}
-                              releaseDate={item.releaseDate}
-                              isAnime={isAnime}
+                              storeDate={item.storeDate}
+                              coverDate={item.coverDate}
                               isSelected={selectedState[item.id]}
                               onSelectedChange={this.onSelectedChange}
                             />

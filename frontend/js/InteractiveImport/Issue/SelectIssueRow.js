@@ -25,10 +25,9 @@ class SelectIssueRow extends Component {
     const {
       id,
       issueNumber,
-      absoluteIssueNumber,
       title,
-      releaseDate,
-      isAnime,
+      storeDate,
+      coverDate,
       isSelected,
       onSelectedChange
     } = this.props;
@@ -43,7 +42,6 @@ class SelectIssueRow extends Component {
 
         <TableRowCell>
           {issueNumber}
-          {isAnime ? ` (${absoluteIssueNumber})` : ''}
         </TableRowCell>
 
         <TableRowCell>
@@ -51,7 +49,11 @@ class SelectIssueRow extends Component {
         </TableRowCell>
 
         <TableRowCell>
-          {releaseDate}
+          {storeDate}
+        </TableRowCell>
+
+        <TableRowCell>
+          {coverDate}
         </TableRowCell>
       </TableRowButton>
     );
@@ -61,10 +63,9 @@ class SelectIssueRow extends Component {
 SelectIssueRow.propTypes = {
   id: PropTypes.number.isRequired,
   issueNumber: PropTypes.number.isRequired,
-  absoluteIssueNumber: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  releaseDate: PropTypes.string.isRequired,
-  isAnime: PropTypes.bool.isRequired,
+  coverDate: PropTypes.string.isRequired,
+  storeDate: PropTypes.string,
   isSelected: PropTypes.bool,
   onSelectedChange: PropTypes.func.isRequired
 };
