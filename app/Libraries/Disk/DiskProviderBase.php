@@ -134,11 +134,45 @@ abstract class DiskProviderBase
         });
     }
 
+    public function getRelativePath(string $parentPath, string $childPath): string
+    {
+        if (!$this->isParentPath($parentPath, $childPath)) {
+            throw new Exception(sprintf("%s is not a child of %s", $childPath, $parentPath));
+        }
+
+        return trim(substr($childPath, strlen($parentPath)), DIRECTORY_SEPARATOR);
+    }
+
+    public function combinePaths(string ...$args): string
+    {
+        $paths = [];
+
+        foreach ($args as $arg) {
+            if ($arg !== '') {
+                $paths[] = $arg; 
+            }
+        }
+
+        $dirsep = DIRECTORY_SEPARATOR;
+        $pattern = "#$dirsep+#";
+        return preg_replace($pattern,$dirsep,join($dirsep, $paths));
+    }
+
     public function createFolder(string $path): void
     {
         mkdir($path, 777, true);
     }
 
+    public function setLastWriteTime(string $path, ?DateTime $dateTime = null): void
+    {
+        if (!PathService::isPathValid($path)) {
+            throw new Exception("Invalid Path");
+        }
+
+        touch($path, (int) $dateTime?->format('U'));
+    }
+
+    /** @return string[] */
     public function getFiles(string $path): array
     {
         $contents = scandir($path);
@@ -152,6 +186,7 @@ abstract class DiskProviderBase
         );
     }
 
+    /** @return string[] */
     public function getFilesRecursive(string $path): array
     {
         $contents = scandir($path);
@@ -167,7 +202,7 @@ abstract class DiskProviderBase
                 continue;
             }
 
-            if (is_dir($path . $item)) {
+            if (is_dir($path . DIRECTORY_SEPARATOR . $item)) {
                 $output += $this->getFilesRecursive($path . DIRECTORY_SEPARATOR . $item);
             } else {
                 $output[] = $path . DIRECTORY_SEPARATOR . $item;

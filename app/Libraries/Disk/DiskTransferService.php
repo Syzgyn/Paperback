@@ -15,7 +15,7 @@ class DiskTransferService
         }
 
         $realParentPath = realpath($parentPath);
-        $partialChildPath = substr($path, strlen($realParentPath));
+        $partialChildPath = substr($path, strlen($parentPath));
 
         return $realParentPath . $partialChildPath;
     }
@@ -73,6 +73,113 @@ class DiskTransferService
         }
 
         return TransferMode::NONE;
+    }
+
+    /**
+     * @param TransferMode::* $mode
+     * 
+     * @return TransferMode::*
+     */
+    public function transferFolder(string $sourcePath, string $targetPath, int $mode): int
+    {
+        if (!PathService::isPathValid($sourcePath) || !PathService::isPathValid($targetPath)) {
+            throw new Exception("Invalid Path");
+        }
+
+        $diskProviderService = resolve("DiskProviderService");
+
+        $sourcePath = $this->resolveRealParentPath($sourcePath);
+        $targetPath = $this->resolveRealParentPath($targetPath);
+
+        Log::debug(sprintf("%s Directory [%s] > [%s]", TransferMode::toString($mode), $sourcePath, $targetPath));
+
+        if ($sourcePath == $targetPath) {
+            throw new Exception("Source and destination can't be the same " . $sourcePath);
+        }
+
+        if ($mode == TransferMode::MOVE && strcasecmp($sourcePath, $targetPath) && is_dir($targetPath)) {
+            // Move folder out of the way to allow case-insensitive renames
+            $tempPath = $sourcePath . ".backup~";
+
+            Log::debug(sprintf("Rename intermediate directory [%s] > [%s]", $sourcePath, $tempPath));
+            $diskProviderService->moveFolder($sourcePath, $tempPath);
+
+            if (!is_dir($targetPath)) {
+                Log::debug(sprintf("Rename intermediate directory [%s] > [%s]", $tempPath, $targetPath));
+                $diskProviderService->moveFolder($tempPath, $targetPath);
+                return $mode;
+            }
+
+            // There were two separate folders, revert the intermediate rename and let the recursion deal with it
+            Log::debug(sprintf("Rename intermediate directory [%s] > [%s]", $tempPath, $sourcePath));
+            $diskProviderService->moveFolder($tempPath, $sourcePath);
+        }
+
+        if ($mode == TransferMode::MOVE && !is_dir($targetPath)) {
+            Log::debug(sprintf("Rename directory [%s] > [%s]", $sourcePath, $targetPath));
+            $diskProviderService->moveFolder($sourcePath, $targetPath);
+            return $mode;
+        }
+
+        if (!is_dir($targetPath)) {
+            $diskProviderService->createFolder($targetPath);
+            $diskProviderService->copyPermissions($sourcePath, $targetPath);
+        }
+
+        $result = $mode;
+
+        foreach($diskProviderService->getDirectories($sourcePath) as $subDir) {
+            if ($this->shouldIgnoreDir($subDir)) {
+                continue;
+            }
+
+            $result &= $this->transferFolder($subDir, PathService::combine($targetPath, pathinfo($subDir, PATHINFO_FILENAME)), $mode);
+        }
+
+        foreach($diskProviderService->getFiles($sourcePath) as $sourceFile) {
+            if ($this->shouldIgnoreFile($sourceFile)) {
+                continue;
+            }
+
+            $destFile = PathService::combine($targetPath, pathinfo($sourceFile, PATHINFO_FILENAME));
+            $result &= $this->transferFile($sourceFile, $destFile, $mode, true);
+        }
+
+        if (($mode & TransferMode::MOVE) == TransferMode::MOVE) {
+            $remainingFiles = $diskProviderService->getFilesRecursive($sourcePath);
+            $totalSize = array_reduce($remainingFiles, fn(int $c, string $path) => $c + filesize($path), 0);
+
+            if ($totalSize > (5 * 1024 * 1024)) {
+                throw new Exception("Large files still exist in $sourcePath after folder move, not deleting source folder");
+            }
+
+            $diskProviderService->deleteFolder($sourcePath);
+        }
+
+        /** @var TransferMode::* */
+        return $result;
+    }
+
+    protected function shouldIgnoreDir(string $path): bool
+    {
+        if (str_starts_with(pathinfo($path, PATHINFO_FILENAME), ".nfs")) {
+            Log::debug("Ignoring folder " . $path);
+            return true;
+        }
+
+        return false;
+    }
+
+    protected function shouldIgnoreFile(string $path): bool
+    {
+        $fileName = pathinfo($path, PATHINFO_FILENAME);
+
+        if (str_starts_with($fileName, ".nfs") || $fileName == "debug.log" || str_ends_with($fileName, ".socket")) {
+            Log::debug("Ignoring file " . $path);
+            return true;
+        }
+
+        return false;
     }
 
     protected function clearTargetPath(string $targetPath, bool $overwrite): void

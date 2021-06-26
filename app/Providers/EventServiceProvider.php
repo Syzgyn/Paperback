@@ -16,6 +16,8 @@ use App\Libraries\Download\TrackedDownloads\DownloadMonitoringService;
 use App\Libraries\Download\TrackedDownloads\TrackedDownloadService;
 use App\Libraries\History\HistoryService;
 use App\Libraries\EventSource\EventSourceService;
+use App\Libraries\MediaFiles\IssueFileDeletionService;
+use App\Libraries\MediaFiles\RecycleBinService;
 use App\Libraries\Queue\QueueService;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -41,6 +43,8 @@ class EventServiceProvider extends ServiceProvider
         QueueService::class,
         TrackedDownloadService::class,
         RefreshComicService::class,
+        IssueFileDeletionService::class,
+        RecycleBinService::class,
 
         //Listeners
         IssueListener::class,

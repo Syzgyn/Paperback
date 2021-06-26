@@ -34,8 +34,8 @@ class UpgradeIssueFileService
             $subfolder = substr(dirname($issueFilePath), strlen($rootFolder));
 
             if (is_file($issueFilePath)) {
-                Log::debug("Removing existing issue file: " . $file->path);
-                //TODO: Recycle delete file
+                Log::debug("Removing existing issue file: " . $issueFilePath);
+                resolve("RecycleBinService")->deleteFile($issueFilePath, $subfolder);
             }
 
             $moveFileResult->oldFiles[] = $file;

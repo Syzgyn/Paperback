@@ -32,6 +32,7 @@ use App\Libraries\MediaFiles\DownloadedIssuesImportService;
 use App\Libraries\MediaFiles\IssueFileMovingService;
 use App\Libraries\MediaFiles\IssueImport\Aggregation\AggregationService;
 use App\Libraries\MediaFiles\IssueImport\ImportDecisionMakerService;
+use App\Libraries\MediaFiles\RecycleBinService;
 use App\Libraries\MediaFiles\UpgradeIssueFileService;
 use App\Libraries\Organizer\FileNameSampleService;
 use App\Libraries\Queue\QueueService;
@@ -72,6 +73,7 @@ class AppServiceProvider extends ServiceProvider
         'DiskTransferService' => DiskTransferService::class,
         'FileNameSampleService' => FileNameSampleService::class,
         'IssueAddedService' => IssueAddedService::class,
+        'RecycleBinService' => RecycleBinService::class,
     ];
 
     /**
