@@ -15,6 +15,8 @@ class Parser
                 return null;
             }
 
+            Log::debug("Parsing string: $title");
+
             $releaseTitle = self::removeFileExtension($title);
             $releaseTitle = str_replace(["【", "】"], ["[", "]"], $releaseTitle);
 
@@ -27,6 +29,7 @@ class Parser
                     $result = self::ParseTitleMatches($matches, $releaseTitle);
 
                     if ($result) {
+                        Log::debug($regex);
                         //$result->fileType = self::parseFileType($title); //TODO
                         $result->releaseGroup = self::parseReleaseGroup($releaseTitle);
                         
@@ -35,9 +38,11 @@ class Parser
                  }
             }
         } catch (Exception $e) {
-            //TODO: add logger
+            Log::error("An error has occured when trying to parse $title", ['exception' => $e]);
         }
 
+        Log::debug("Unable to parse $title");
+        
         return null;
     }
 
@@ -183,7 +188,7 @@ class Parser
         }
 
         $parentDir = dirname($fileInfo['dirname']);
-        $currentDir = substr($fileInfo['dirname'], strlen($parentDir));
+        $currentDir = trim(substr($fileInfo['dirname'], strlen($parentDir)), DIRECTORY_SEPARATOR);
 
         $result = self::parseTitle($fileInfo['filename']);
 
@@ -194,7 +199,7 @@ class Parser
 
         if ($result == null) {
             Log::debug("Attempting to parse issue info using directory name. " . $currentDir);
-            $result = self::parseTitle($currentDir . $fileInfo['extension']);
+            $result = self::parseTitle($currentDir);
         }
 
         return $result;

@@ -19,8 +19,18 @@ class LinuxDiskProvider extends DiskProviderBase
 
     public function setPermissions(string $path, string $mask, string $group): void
     {
-        if (!chmod($path, (int) $mask)) {
+        if (strlen($mask) === 3) {
+            $mask = "0" . $mask;
+        }
+
+        Log::debug("Setting permissions for $path: $mask, $group");
+        
+        if (!chmod($path, intval($mask, 8))) {
             throw new Exception("Error setting permissions: " . $path);
+        }
+
+        if (is_numeric($group)) {
+            $group = intval($group);
         }
 
         if (!empty($group) && !chgrp($path, $group)) {

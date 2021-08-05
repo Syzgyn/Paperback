@@ -160,7 +160,8 @@ abstract class DiskProviderBase
 
     public function createFolder(string $path): void
     {
-        mkdir($path, 777, true);
+        $result = mkdir($path, 0777, true);
+        Log::debug("created folder: $path.  Result: " . ($result ? "success" : "failure"));
     }
 
     public function setLastWriteTime(string $path, ?DateTime $dateTime = null): void

@@ -52,7 +52,7 @@ class FileNameBuilder
             throw new Exception("Issue format cannot be empty");
         }
 
-        if (!empty($extension) && str_starts_with($extension, '.')) {
+        if (!empty($extension) && !str_starts_with($extension, '.')) {
             $extension = ".$extension";
         }
 

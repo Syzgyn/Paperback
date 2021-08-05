@@ -146,7 +146,7 @@ class DiskScanService
     {
         if (resolve("AppSettings")->get("mediamanagement", "deleteEmptyFolders")) {
             /** @var DiskProviderBase */
-            $diskService = resolve("DiskServiceProvider");
+            $diskService = resolve("DiskProviderService");
             $diskService->removeEmptySubfolders($path);
 
             if ($diskService->folderEmpty($path)) {
