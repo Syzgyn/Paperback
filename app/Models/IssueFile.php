@@ -8,6 +8,7 @@ use App\Libraries\MediaFiles\Events\IssueFileCreatedEvent;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Log;
 
 /**
  * App\Models\IssueFile
@@ -69,13 +70,14 @@ class IssueFile extends Model
      */
     public static function filterExistingFiles(array $files, Comic $comic)
     {
-        $issueFiles = IssueFile::whereComicId($comic->cvid)->get(['relative_path'])->all();
+        $issueFiles = IssueFile::whereComicId($comic->cvid)->pluck('relative_path')->all();
 
         if (empty($issueFiles)) {
             return $files;
         }
 
-        array_walk($issueFiles, fn(string &$path) => $comic->path . DIRECTORY_SEPARATOR . $path);
+        array_walk($issueFiles, 
+            fn(string &$path) => $path = $comic->path . DIRECTORY_SEPARATOR . ltrim($path, DIRECTORY_SEPARATOR));
 
         return array_diff($files, $issueFiles);
     }

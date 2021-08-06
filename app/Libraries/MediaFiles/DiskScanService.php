@@ -65,7 +65,7 @@ class DiskScanService
 
         $this->cleanFiles($comic, $issueFileList);
 
-        $decisions = resolve("ImportDecisionMakerService")->getImportDecisions($issueFileList, $comic);
+        $decisions = resolve("ImportDecisionMakerService")->getImportDecisions($issueFileList, $comic, null, null, true);
         Log::debug("Import decisions complete for: " . $comic->title);
         
         ImportApprovedIssues::import($decisions, false);
